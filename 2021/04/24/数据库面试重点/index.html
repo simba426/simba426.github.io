@@ -1,0 +1,966 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yoursite.com","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.8.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="MySQL  隔离级别 7 并发一致性问题  丢失修改：一个事务对数据的修改被另一个事务对数据的修改覆盖 脏读：一个事务读取了被另一个事务修改，但是未提交的数据。如果修改被撤销，那么此次读到的就是脏数据 不可重复读：是指一个事务在执行期间多次读取某一行数据。这期间如果有另一个事务对这个数据进行了修改（更新或删除），会导致两次读取的数据结果不同。 幻读：同一查询多次执行时，由于其他事务在这个数据范围">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据库面试重点">
+<meta property="og:url" content="http://yoursite.com/2021/04/24/%E6%95%B0%E6%8D%AE%E5%BA%93%E9%9D%A2%E8%AF%95%E9%87%8D%E7%82%B9/index.html">
+<meta property="og:site_name" content="ABMIS">
+<meta property="og:description" content="MySQL  隔离级别 7 并发一致性问题  丢失修改：一个事务对数据的修改被另一个事务对数据的修改覆盖 脏读：一个事务读取了被另一个事务修改，但是未提交的数据。如果修改被撤销，那么此次读到的就是脏数据 不可重复读：是指一个事务在执行期间多次读取某一行数据。这期间如果有另一个事务对这个数据进行了修改（更新或删除），会导致两次读取的数据结果不同。 幻读：同一查询多次执行时，由于其他事务在这个数据范围">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-04-24T05:36:04.000Z">
+<meta property="article:modified_time" content="2021-06-09T09:28:56.000Z">
+<meta property="article:author" content="abmis">
+<meta property="article:tag" content="Redis">
+<meta property="article:tag" content="数据库">
+<meta property="article:tag" content="MySQL">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://yoursite.com/2021/04/24/%E6%95%B0%E6%8D%AE%E5%BA%93%E9%9D%A2%E8%AF%95%E9%87%8D%E7%82%B9/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://yoursite.com/2021/04/24/%E6%95%B0%E6%8D%AE%E5%BA%93%E9%9D%A2%E8%AF%95%E9%87%8D%E7%82%B9/","path":"2021/04/24/数据库面试重点/","title":"数据库面试重点"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>数据库面试重点 | ABMIS</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">ABMIS</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-照片"><a href="/photos/" rel="section"><i class="fa fa-camera fa-fw"></i>照片</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#MySQL"><span class="nav-number">1.</span> <span class="nav-text">MySQL</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB-7"><span class="nav-number">1.1.</span> <span class="nav-text">隔离级别 7</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B4%A2%E5%BC%95-6"><span class="nav-number">1.2.</span> <span class="nav-text">索引 6</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ACID-5"><span class="nav-number">1.3.</span> <span class="nav-text">ACID 5</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B4%A2%E5%BC%95%E7%9A%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-4"><span class="nav-number">1.4.</span> <span class="nav-text">索引的数据结构 4</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8B%E5%8A%A1-3"><span class="nav-number">1.5.</span> <span class="nav-text">事务 3</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E5%BC%95%E6%93%8E-3"><span class="nav-number">1.6.</span> <span class="nav-text">数据库引擎 3</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Redo%E3%80%81Undo-Log-3"><span class="nav-number">1.7.</span> <span class="nav-text">Redo、Undo Log 3</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%94%81%E7%9B%B8%E5%85%B3-2"><span class="nav-number">1.8.</span> <span class="nav-text">锁相关 2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MVCC-2"><span class="nav-number">1.9.</span> <span class="nav-text">MVCC 2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%9E%E6%8E%A5%E8%A1%A8-2"><span class="nav-number">1.10.</span> <span class="nav-text">连接表 2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6"><span class="nav-number">1.11.</span> <span class="nav-text">主从复制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%89%E5%A4%A7%E8%8C%83%E5%BC%8F"><span class="nav-number">1.12.</span> <span class="nav-text">三大范式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%86%E5%9B%BE"><span class="nav-number">1.13.</span> <span class="nav-text">视图</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Redis"><span class="nav-number">2.</span> <span class="nav-text">Redis</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-9"><span class="nav-number">2.1.</span> <span class="nav-text">数据结构 9</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8C%81%E4%B9%85%E5%8C%96%E6%9C%BA%E5%88%B6-5"><span class="nav-number">2.2.</span> <span class="nav-text">持久化机制 5</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6-3"><span class="nav-number">2.3.</span> <span class="nav-text">主从复制 3</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Redis%E4%B8%BA%E4%BB%80%E4%B9%88%E9%80%9F%E5%BA%A6%E5%BF%AB-2"><span class="nav-number">2.4.</span> <span class="nav-text">Redis为什么速度快 2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B7%B3%E8%A1%A8-2"><span class="nav-number">2.5.</span> <span class="nav-text">跳表 2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%83%AD%E7%82%B9%E7%BC%93%E5%AD%98"><span class="nav-number">2.6.</span> <span class="nav-text">热点缓存</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%93%E5%AD%98%E7%A9%BF%E9%80%8F%E3%80%81%E7%BC%93%E5%AD%98%E5%87%BB%E7%A9%BF%E3%80%81%E7%BC%93%E5%AD%98%E9%9B%AA%E5%B4%A9%E6%A6%82%E5%BF%B5%E5%92%8C%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95"><span class="nav-number">2.7.</span> <span class="nav-text">缓存穿透、缓存击穿、缓存雪崩概念和解决办法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B8%83%E9%9A%86%E8%BF%87%E6%BB%A4%E5%99%A8"><span class="nav-number">2.8.</span> <span class="nav-text">布隆过滤器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8B%E5%8A%A1%E7%9B%B8%E5%85%B3"><span class="nav-number">2.9.</span> <span class="nav-text">事务相关</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E9%97%AE%E9%A2%98"><span class="nav-number">2.10.</span> <span class="nav-text">其他问题</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="abmis"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">abmis</p>
+  <div class="site-description" itemprop="description">Know your game.</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">30</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/simba426" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;simba426" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://instagram.com/woody_simba" title="Instagram → https:&#x2F;&#x2F;instagram.com&#x2F;woody_simba" rel="noopener" target="_blank"><i class="fab fa-instagram fa-fw"></i>Instagram</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://t.me/abmis_reverse" title="Telegram → https:&#x2F;&#x2F;t.me&#x2F;abmis_reverse" rel="noopener" target="_blank"><i class="fab fa-telegram fa-fw"></i>Telegram</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/04/24/%E6%95%B0%E6%8D%AE%E5%BA%93%E9%9D%A2%E8%AF%95%E9%87%8D%E7%82%B9/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="abmis">
+      <meta itemprop="description" content="Know your game.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ABMIS">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          数据库面试重点
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-04-24 13:36:04" itemprop="dateCreated datePublished" datetime="2021-04-24T13:36:04+08:00">2021-04-24</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-06-09 17:28:56" itemprop="dateModified" datetime="2021-06-09T17:28:56+08:00">2021-06-09</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index"><span itemprop="name">面试</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="MySQL">MySQL</h2>
+<hr>
+<h3 id="隔离级别-7">隔离级别 7</h3>
+<p><strong>并发一致性问题</strong></p>
+<ul>
+<li>丢失修改：一个事务对数据的修改被另一个事务对数据的修改覆盖</li>
+<li>脏读：一个事务读取了被另一个事务修改，但是未提交的数据。如果修改被撤销，那么此次读到的就是脏数据</li>
+<li>不可重复读：是指一个事务在执行期间多次读取某一行数据。这期间如果有另一个事务对这个数据进行了修改（更新或删除），会导致两次读取的数据结果不同。</li>
+<li>幻读：同一查询多次执行时，由于其他事务在这个数据范围内执行了插入操作，会导致每次返回不同结果</li>
+</ul>
+<span id="more"></span>
+<p><strong>隔离级别</strong></p>
+<ul>
+<li><strong>未提交读</strong>：其他事务可以读取到一个事务还未提交的数据，会导致脏读、不可重复读和幻读</li>
+<li><strong>提交读</strong>：事务只能看见已提交的事务对数据库进行的修改，避免脏读，但是会有不可重复读和幻读</li>
+<li><strong>可重复读（MySQL默认隔离级别）</strong>：一个事务在多次读取同一个数据时读取到的都是相同的结果，可以避免不可重复读</li>
+<li><strong>可串行化</strong>：强制事务串行执行，不可能发生冲突，从而解决幻读</li>
+</ul>
+<p><strong>不可重复读和幻读的区别</strong></p>
+<p>不可重复度针对的是一个数据整体（对单个学生的信息进行修改），而幻读针对的是一个数据范围，并且需要是<strong>插入操作</strong>（就比如查询成绩在某个范围内的学生，在此期间不断进行插入操作）</p>
+<hr>
+<h3 id="索引-6">索引 6</h3>
+<hr>
+<p><strong>为什么要索引</strong></p>
+<p><strong>优点</strong></p>
+<ul>
+<li>加快数据的检索速度</li>
+<li>创建唯一性索引可以保证表中每一行数据的唯一性</li>
+</ul>
+<p><strong>缺点</strong></p>
+<ul>
+<li><strong>创建和维护索引消耗很大</strong>，对数据进行增删时，如果数据有索引，对应的索引也需要修改，降低 SQL 的执行效率</li>
+<li><strong>占用物理内存</strong>，索引也需要物理文件进行存储</li>
+</ul>
+<hr>
+<p><strong>聚簇索引</strong>的索引树叶子节点存放的是<strong>整行数据</strong>，表中行内容在物理存储中的顺序和索引顺序一致。一个表只能包含一个聚簇索引，因为索引只能按照一种方法进行排列</p>
+<p><strong>优点</strong>是查询速度快，定位到索引的节点就相当于定位到数据；<strong>缺点</strong>是修改代价大，修改数据就相当于修改了索引</p>
+<p><strong>非聚簇索引</strong>的叶子节点内容是<strong>主键的值</strong>，不存储数据。在 InnoDB 中非主键索引也被称为二级索引，因为根据定位到的主键再用主键索引树查一遍数据，这个过程叫做<strong>回表</strong></p>
+<p><strong>优点</strong>是更新代价相比聚簇索引小，因为叶子节点不存放数据，<strong>缺点</strong>是会需要<strong>回表（二次查询）</strong>，这样查找速度会慢些</p>
+<hr>
+<p><strong>覆盖索引</strong>是指在普通索引树上的查询已经提供了结果，不需要回表操作。覆盖索引可以显著提高查询效率。是常见的 MySQL 优化手段，所以可以对经常作为查询条件的列加索引</p>
+<blockquote>
+<p>非主键索引 叶子节点存储的是 <strong>列值 + 主键</strong></p>
+</blockquote>
+<p><strong>联合索引</strong>是由多列组成的索引，需要遵循<strong>最左前缀原则</strong></p>
+<p>假设创建的联合索引由三个字段组成:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ALTER TABLE table ADD INDEX index_name (num,name,age)</span><br></pre></td></tr></table></figure>
+<p>那么当查询的条件有为:num / (num AND name) / (num AND name AND age)时，索引才生效。所以在创建联合索引时，尽量把查询最频繁的那个字段作为最左(第一个)字段。查询的时候也尽量以这个字段为第一条件。</p>
+<hr>
+<p><strong>适合作为索引的字段</strong>：经常被查询的字段、经常被作为查询条件的字段、频繁用于连接的字段、经常出现在 ORDER BY / GROUP BY 后面的字段</p>
+<p><strong>索引失效的场景</strong>：以 % 开头的 LIKE 语句（表示匹配任意个字符）、OR 语句前后没有同时使用索引、数据出现隐式转换（例如 varchar 不加单引号可能会转为 int）</p>
+<hr>
+<h3 id="ACID-5">ACID 5</h3>
+<ul>
+<li><strong>原子性</strong>，一个事务不可分割，要么全部成功提交，要么全部失败回滚</li>
+<li><strong><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/31346392">一致性</a></strong>，是基于AID的，保证事务只能把数据库从一个正确的状态转移到另一个正确的状态。所谓<strong>正确的状态</strong>就是要满足数据库提前定义的一些规则：例如值不能小于0等。因为数据库只保证一个 transaction 是否符合定义的规则，不保证它在逻辑上是否正确，逻辑上的正确性要由使用者决定。</li>
+<li><strong>隔离性</strong>，多个事务并发执行时，一个事务的执行不影响其他事务的执行，保证数据库的执行结果和每个事务先后单独执行的结果一致</li>
+<li><strong>持久性</strong>，一个事务一旦提交，对数据库的修改应该永久保存</li>
+</ul>
+<hr>
+<h3 id="索引的数据结构-4">索引的数据结构 4</h3>
+<hr>
+<p><strong>B树 / B+树</strong></p>
+<ul>
+<li>B+树和B树都不是二叉树，<strong>一个节点可以存放多个值</strong>，并且指向多个子节点，指向子节点的值在节点左边的 key 和右边的 key 范围之间</li>
+<li>因为可以容纳更多子节点，并且节点容纳的信息更多，所以树更加矮胖，树的高度增长也很慢</li>
+<li>适合于数据库是因为较低的树高，如果每读取一个节点就要进行一次磁盘IO（将节点大小设置为磁盘页大小），那么高度越少，进行磁盘IO的次数也越少。因为磁盘读写速度远低于内存读写速度，所以宁可读取一个节点后在内存中进行多次比较，也不多次进行磁盘IO</li>
+</ul>
+<p><strong>区别</strong></p>
+<p>主要在于节点中存储的信息，<strong>B+树</strong>中间节点只存放索引，数据都在叶子节点；<strong>B树</strong>中间节点既存放数据又存放索引，叶子节点不携带任何信息</p>
+<p><strong>B+树相对于B树的好处</strong></p>
+<ul>
+<li><strong>IO次数更少</strong>：中间节点只存放索引，数据都在叶子节点，中间节点可以存放更多的索引数据，数结构可以更矮胖，访问子节点次数少了，进行磁盘IO次数也少了</li>
+<li><strong>查询效率更高稳定</strong>：因为每次查询从根节点到叶子节点的路径长度都相同，查询时间都差不多</li>
+<li><strong>范围查询更高效</strong>：因为数据都在叶子节点，所以只需要遍历叶子节点的链表；而B树因为每个子节点都存在数据，所以要遍历的节点更多</li>
+<li><strong>遍历更高效</strong>：B+树只需要遍历叶子节点，B树需要层次遍历整棵树</li>
+</ul>
+<hr>
+<p><strong>B+树索引 和 哈希索引 的区别</strong></p>
+<p><strong>B+树索引</strong></p>
+<ul>
+<li>有序，除了查找还可以进行排序分组</li>
+</ul>
+<p><strong>哈希索引</strong></p>
+<ul>
+<li>哈希索引时间为O(1)</li>
+<li>失去有序性，无法用于排序分组</li>
+<li>只能进行精确查找，不能用于范围查找</li>
+</ul>
+<p>InnoDB有一个自适应哈希索引，当某个索引值使用很频繁，会在B+Tree索引之上在创建一个哈希索引，让原来的索引具有哈希索引的快速查找功能。</p>
+<hr>
+<p><strong>红黑树</strong>和<strong>AVL树</strong>因为本质上都是二叉树，树的高度远高于 B树，所以需要进行 磁盘IO 的次数过多，不适合作为索引</p>
+<hr>
+<h3 id="事务-3">事务 3</h3>
+<p>事务是一个操作序列，其中的操作要么都执行，要么都不执行，以 BEGIN TRANSACTION 开始， 以 ROLLBACK/COMMIT 结束</p>
+<p><strong>实现原理</strong></p>
+<ul>
+<li>日志文件 - redo log / undo log</li>
+<li>锁技术</li>
+<li>MVCC</li>
+</ul>
+<p>原子性通过 undo log 实现</p>
+<p>持久性通过 redo log 实现</p>
+<p>隔离性通过 读写锁 + MVCC 实现</p>
+<p>一致性 通过 原子性、持久性、隔离性 来实现</p>
+<hr>
+<h3 id="数据库引擎-3">数据库引擎 3</h3>
+<p><strong>InnoDB和MyISAM区别</strong></p>
+<ul>
+<li><strong>事务</strong>：MyISAM 不支事务；lnnoDB 是事务类存储引擎</li>
+<li><strong>并发</strong>：MyISAM 只支持表级锁；InnoDB 支持表级锁和行级锁，默认为行级锁</li>
+<li><strong>外键</strong>：MyISAM 不支持外键；InnoDB 支持外键</li>
+<li><strong>备份</strong>：MyISAM 不支持在线热备份；InnoDB 支持在线热备份；</li>
+<li><strong>崩溃恢复</strong>：MyISAM 崩溃后发生损坏的概率比 InnoDB 高，而且恢复速度也慢</li>
+<li><strong>其他</strong>：MyISAM 支持空间数据索引（地理信息）和压缩表（减小所占空间）；InnoDB 相对的要占用更多磁盘空间</li>
+</ul>
+<p><strong>InnoDB 内部做了很多优化</strong></p>
+<ul>
+<li>从磁盘读数据时采用<strong>可预测读</strong>（将用户很可能用到的数据预先加载到缓存池）</li>
+<li>会创建<strong>自适应哈希索引</strong>，加快读的速度</li>
+<li>有<strong>插入缓冲区</strong>（主要是针对非聚集索引，叶子节点的插入不再是顺序的了）来加速插入操作</li>
+</ul>
+<hr>
+<h3 id="Redo、Undo-Log-3"><a target="_blank" rel="noopener" href="https://www.cnblogs.com/xinysu/p/6555082.html">Redo、Undo Log 3</a></h3>
+<p><strong>Undo Log</strong></p>
+<p>Undo Log 用于存放数据被修改前的值，如果修改出现异常，可以通过 undo log 实现回滚操作，因为要实现回滚，所以 undo log 也是逻辑日志。Undo Log 也是实现 MVCC 的关键</p>
+<p><strong>Redo Log</strong></p>
+<p>Redo Log 用于记录事务对数据页的修改，是物理日志</p>
+<p>对数据库中数据进行 UPDATE 操作时，需要将数据从磁盘读取到 buffer pool，然后在 buffer pool 中修改数据， redo log 中就记录了这些修改操作。如果更新的数据还没有同步到磁盘但是发生 crash 了，可以通过 redo log 中的记录恢复之前的修改操作（重做），保证了事务的持久性</p>
+<p>redo log 和 binary log 的主要区别在于</p>
+<ul>
+<li>redo log 是物理日志，用于记录对数据页做了什么修改； binary log 是逻辑日志，记录的是 sql 语句的原始逻辑</li>
+<li>redo log 是存储引擎层产生的，用来实现事务的持久性，binary log 是数据库层产生的，用于恢复数据库和实现主从复制</li>
+<li>redo log 是循环写，空间用完后会覆盖之前的记录；binary log 是追加写，文件到达一定大小会换一个文件，不会覆盖之前的记录</li>
+<li>在事务开始后，修改操作就开始写在 redo log 中。事务提交之前，所执行的操作记录才会被写到 binary log 中，然后事务被提交。</li>
+</ul>
+<hr>
+<h3 id="锁相关-2">锁相关 2</h3>
+<p>乐观锁、悲观锁、行锁、表锁、意向锁</p>
+<hr>
+<p><strong>乐观锁和悲观锁</strong></p>
+<ul>
+<li><strong>悲观锁</strong>：总是假设最坏的情况，每次去拿数据的时候都认为别人会修改，所以每次在拿数据的时候都会上锁，这样别人想拿这个数据就会阻塞直到它拿到锁。<strong>应用于数据更新比较频繁的场景</strong>，ReentrantLock sychronized 这些独占锁就是悲观锁的实现。</li>
+<li><strong>乐观锁</strong>：总是假设最好的情况，每次去拿数据的时候都认为别人不会修改，所以不会上锁，但是在更新的时候会判断一下在此期间别人有没有去更新这个数据，可以使用版本号机制和CAS算法实现。<strong>应用于读多写少的场景</strong></li>
+</ul>
+<p><strong>ABA 问题</strong></p>
+<p>当前事务读取的数据值是 A ，在此期间数据被改成 B 后又被改成 A。在此期间数据被修改过，但是系统认为它没有被修改过。<strong>解决办法</strong>是添加一个版本号，在比较数据时通过比较版本号来确认数据是否被修改</p>
+<hr>
+<p><strong>封锁粒度</strong></p>
+<p>MySQL提供两种封锁粒度：<strong>表级锁</strong>和<strong>行级锁</strong></p>
+<p><strong>好处</strong>：封锁粒度越细，发生锁争用的可能性就越小，系统并发性就越高</p>
+<p><strong>坏处</strong>：系统开销大，因为加锁、释放锁、检查锁的状态都要消耗资源</p>
+<hr>
+<p><strong>互斥锁 X 锁</strong>：对数据加上 X 锁之后只允许该事务对数据进行读和修改，其他事务不能对该数据加任何锁</p>
+<p><strong>共享锁 S 锁</strong>：对数据加 S 锁之后事务能对数据进行读操作但是不能进行修改，其他事务只能对该数据加 S 锁</p>
+<p><strong>意向锁</strong></p>
+<ul>
+<li>一个事务在获取某一行对象的S锁之前必须要获得整个表的IS锁或更强的锁</li>
+<li>一个事务在获得某一行对象的X锁之前，必须先获得整个表的IX锁</li>
+<li><strong>锁的兼容关系</strong>：X 锁不兼容任何锁，S 锁和 IX 锁不兼容，其余均兼容</li>
+</ul>
+<p>在存在行级锁的情况下，如果没有意向锁，一个事务要对表加X锁就要检查是否有其他事务对表中任意一行加了X锁。有意向锁之后，要对表加X锁只需要检查有没有其他事务对表加了X/IS/IX/S锁。如果有，表示其他事务正在使用这个表，加X锁失败</p>
+<p>InnoDB 对 INSERT、UPDATE、UPDATE 语句会自动加 X 锁。对于普通 SELECT 语句不会加任何锁。显式加锁方法为：</p>
+<p><strong>加S锁</strong>：SELECT * FROM table_name WHERE … <strong>LOCK IN SHARE MODE</strong></p>
+<p><strong>加X锁</strong>：SELECT * FROM table_name WHERE … <strong>FOR UPDATE</strong></p>
+<p>InnoDB的行锁是<strong>基于索引</strong>实现的，如果不通过索引访问数据，InnoDB会使用表锁。</p>
+<p>（２）InnoDB<strong>间隙锁机制</strong>，以及InnoDB使用间隙锁的原因。</p>
+<p>（３）在不同的<strong>隔离级别</strong>下，InnoDB的锁机制和<strong>一致性</strong>读策略不同。</p>
+<p>（４）ＭySQL的恢复和复制对InnoDB锁机制和一致性读策略也有较大影响。</p>
+<p>（５）锁冲突甚至死锁很难完全避免。</p>
+<hr>
+<h3 id="MVCC-2">MVCC 2</h3>
+<p>多版本并发控制，用于实现 <strong>读提交</strong> 和 <strong>可重复读</strong> 两种隔离级别，<strong>通过一份数据临时保留多个版本的方法来实现并发控制</strong></p>
+<p>MVCC 的做法是让每个事务读到的是当前数据库的一个快照。 MVCC 更新一条数据时，不是用新数据覆盖旧数据，旧数据只会被标记为过时，然后在别处增加新数据。这样就会存储多个版本的数据，但是只有一个是最新的</p>
+<p>数据库每个表中有两列关于 MVCC 的隐藏记录</p>
+<ul>
+<li><strong>数据行版本号</strong> (TRX_ID)：表示该行数据的版本</li>
+<li><strong>回滚指针</strong> (ROLL_PTR)：指向上一个 Undo log</li>
+</ul>
+<p>通过控制读取数据的版本来实现并发控制：</p>
+<ul>
+<li><strong>读提交</strong>：事务总是读这个数据最近一次被 commit 的版本</li>
+<li><strong>可重复读</strong>：事务只读取当前事务开始前最后一次被 commit 的版本</li>
+</ul>
+<p>通过加锁来实现并发的效率可能会非常差，一旦表被加上互斥锁，其他事务就不能进行读操作了。<strong>通过版本号减少了锁的争用，提高了系统性能</strong></p>
+<hr>
+<p><strong>Undo Log</strong></p>
+<p>InnoDB 通过 Undo log 实现 MVCC。当对数据进行修改操作后，会生成一个 Undo log，Undo 中存储的是老版本的数据(被修改之前的值)，然后新数据行的回滚指针指向该 Undo log，当一个旧事务需要读取数据，需要通过回滚指针在undo链找到<strong>满足其可见性的记录</strong></p>
+<p>其中 INSERT 生成的日志在提交后会被删除，DELETE 作为一种特殊的 UPDATE，还会将 DEL 位改为1</p>
+<hr>
+<p><strong>Read View</strong></p>
+<p>在InnoDB中，创建一个新事务的时候还会将<strong>当前活跃着的事务</strong>列表创建一个 Read View</p>
+<p><strong>可见性算法比较</strong></p>
+<p>就是当前知道了读的数据行版本号，还有一个还活跃着的事务的一个数组。然后判断当前数据行在当前隔离级别下是否可读</p>
+<p>假设当前正在读的数据行的版本号为 trx_id</p>
+<p>read view中最老的事务id为trx_ id_min，最新的事务为 trx_id_max</p>
+<ul>
+<li>如果 trx_id &lt; trx_ id_min，说明这个数据在当前事务开始之前已经被提交，是可见的</li>
+<li>如果 trx_id_current &gt; trx_id_max ，说明该行数据在当前事务创建后才被创建并提交，不应该被看见。</li>
+<li>如果trx_ id_min &lt;= trx_id &lt;= trx_id_max
+<ul>
+<li>如果trx_id在表中，表示对应的事务还没有提交，快照不可用</li>
+<li>反之表示已经提交，可以读</li>
+</ul>
+</li>
+</ul>
+<p>如果不可读，会通过回滚指针查找undo log，返回一条可见的记录。</p>
+<p><strong>根据隔离级别</strong></p>
+<ul>
+<li>提交读会在事务每次进行 SELECT 操作的时候创建一个 READ VIEW</li>
+<li>重复读只会在第一次读的时候创建一个 READ VIEW ，以后都是复用之前的 READ VIEW</li>
+</ul>
+<hr>
+<p><strong>快照读和当前读</strong></p>
+<p>只有 SELECT 操作是快照读，读取的快照数据</p>
+<p>修改操作都是当前读，对数据进行加锁确保读取到的是最新的数据</p>
+<p>MVCC 只是避免了 SELECT 操作的锁争用</p>
+<hr>
+<p><strong>MySQL 如何解决幻读</strong></p>
+<p>MVCC 在可重复读隔离级别下加上 Next-Key Lock 可以避免幻读</p>
+<p>Next-Key Lock 是由 Record Lock 和 Gap Lock 组成</p>
+<p><strong>两者结合后，在搜索的区域内，InnoDB首先会给区域内的索引项加锁（Record Lock），还会给键值在范围内但不存在的记录加锁（Gap Lock），这样就实现了整个区域的上锁。</strong></p>
+<p>举例来说，假如user表中只有101条记录，其empid的值分别是 1,2,…,100,101，下面的SQL：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select * from  user where user_id &gt; 100 for update;</span><br></pre></td></tr></table></figure>
+<p>是一个范围条件的检索，InnoDB不仅会对符合条件的user_id值为101的记录加锁，也会对user_id大于101（这些记录并不存在）的“间隙”加锁。</p>
+<p>产生幻读的原因是，行锁只能锁住行，但是新插入记录这个动作，要更新的是记录之间的“间隙”。因此，为了解决幻读问题，InnoDB 只好引入新的锁，也就是间隙锁 (Gap Lock)。</p>
+<hr>
+<h3 id="连接表-2">连接表 2</h3>
+<p>inner join/left join/right join区别</p>
+<ul>
+<li>只返回两张表匹配的记录，这叫内连接（inner join）</li>
+<li>返回匹配的记录，以及表 A 多余的记录，这叫左连接（left join）</li>
+<li>返回匹配的记录，以及表 B 多余的记录，这叫右连接（right join）</li>
+<li>返回匹配的记录，以及表 A 和表 B 各自的多余记录，这叫全连接（full join）</li>
+</ul>
+ <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">//连接语句</span><br><span class="line">select * from tableA inner join tableB on tableA.id = tableB.id;</span><br></pre></td></tr></table></figure>
+<p>inner join 不加条件的结果和 cross join 一样；cross join 加上条件的结果和 inner join 一样</p>
+<p>inner join 属于内连接；left join / right join / full join 属于外连接；cross join 属于交叉连接</p>
+<hr>
+<h3 id="主从复制">主从复制</h3>
+<p>主从复制就是指把数据从一个MySQL主服务器复制到多个从服务器。从服务器可以复制主服务的所有数据或特定的表，采用异步方式。</p>
+<p><strong>实现原理</strong></p>
+<ul>
+<li>主服务器 <strong>binary log dump</strong>：将主服务器中数据增删改日志写到binary log中</li>
+<li>从服务器<strong>IO线程</strong>：将主服务器binary log中的信息读取并写入到到自己的relay log中</li>
+<li>从服务器<strong>SQL线程</strong>：读取relay log，解析出主服务器进行的数据修改并在从服务器重新执行，来保证数据的一致性</li>
+</ul>
+<p><strong>实现了读写分离</strong>，主服务器用来写，从服务器用来读</p>
+<ul>
+<li>缓解了锁的争用，即使主服务器被锁，从服务器依然可以读数据</li>
+<li>从服务器可以使用MyISAM，提升查询性能并节省系统开销</li>
+<li>增加冗余，提高可靠性</li>
+<li>降低单个服务器磁盘IO访问频率，提高单个机器IO性能</li>
+</ul>
+<hr>
+<h3 id="三大范式">三大范式</h3>
+<ul>
+<li><strong>1NF</strong>：属性不可分割
+<ul>
+<li>根据<strong>实际需求</strong>来定，以地址为例</li>
+</ul>
+</li>
+<li><strong>2NF</strong>：非主属性完全依赖于主属性
+<ul>
+<li>B 完全依赖于 A ，就是指 A 中的所有属性<strong>唯一</strong>决定 B ，少了不能唯一决定，多了会冗余。不满足这个规则会导致出现冗余数据</li>
+<li><strong>依赖</strong>是指主属性确定的情况下可以唯一确定非主属性，不可能寻在两条记录，主属性相同但是非主属性不一致</li>
+<li><strong>完全依赖</strong>是指一旦主属性少一个值，依赖关系就不存在</li>
+</ul>
+</li>
+<li><strong>3NF</strong>：非主属性不传递依赖于主属性
+<ul>
+<li>例如：学生 -&gt; 所在学院 -&gt; 学院院长</li>
+</ul>
+</li>
+</ul>
+<h3 id="视图">视图</h3>
+<p>是从一张或多张表中导出的虚拟的表，其中的内容由查询语句定义，视图中不存储数据，其中的数据还是从实际的表中查询得来</p>
+<ul>
+<li><strong>单表视图</strong>一般用于查询和修改，会改变基本表的数据</li>
+<li><strong>多表视图</strong>一般用于查询，不会改变基本表的数据</li>
+</ul>
+<hr>
+<h2 id="Redis">Redis</h2>
+<hr>
+<h3 id="数据结构-9">数据结构 9</h3>
+<p>几种数据结构和底层实现，用来做什么，<strong>zset底层原理</strong></p>
+<hr>
+<p><strong>String</strong></p>
+<ul>
+<li>普通的 key/value 存储都可以归结为 string 类型</li>
+<li>value 不仅是 string， 也可以是数字</li>
+<li>是动态字符串，可以被修改，底层类似于 ArrayList，是一个字符数组</li>
+<li>有三种编码：int 保存整数值；raw 保存长字符串；embstr 保存短字符串</li>
+</ul>
+<p><strong>应用场景</strong></p>
+<ul>
+<li>因为是二进制安全的，可以存放图片</li>
+<li>可以作为计数器，统计在线人数，关注者人数</li>
+<li>实现分布式 session</li>
+</ul>
+<hr>
+<p><strong>List</strong></p>
+<ul>
+<li>简单的字符串列表</li>
+<li>底层是双向链表 linkedlist，并不是数组，所以插入删除很快，定位很慢</li>
+<li>可以实现 栈、队列、阻塞队列 的功能</li>
+</ul>
+<p><strong>应用场景</strong></p>
+<ul>
+<li>实现消息列表或者简单的消息队列</li>
+<li>利用 lrange 实现分页功能</li>
+</ul>
+<hr>
+<p><strong>Set</strong></p>
+<ul>
+<li>String 类型的<strong>无序</strong>集合，集合中的元素没有重复，相当于 Java 中的 HashSet</li>
+<li>整数也会转为 String 类型进行存储</li>
+<li>内部实现是 hashtable 相当于一个特殊字典，每个 key 都是一个字符串对象，value 都为 NULL</li>
+</ul>
+<p><strong>应用场景</strong></p>
+<ul>
+<li>利用交集操作实现共同关注者的查询</li>
+<li>根据 set 的特性可以进行全局去重</li>
+</ul>
+<hr>
+<p><strong>Zset（重点）</strong></p>
+<p><a target="_blank" rel="noopener" href="https://zsr.github.io/2017/07/03/redis-zset%E5%86%85%E9%83%A8%E5%AE%9E%E7%8E%B0/">https://zsr.github.io/2017/07/03/redis-zset%E5%86%85%E9%83%A8%E5%AE%9E%E7%8E%B0/</a></p>
+<ul>
+<li>和 set 相比， zset 中的对象是有序的，每个元素有一个 score 属性，以此作为排序依据</li>
+<li>同时包含一个<strong>字典 hash</strong>  和一个<strong>跳跃表 skiplist</strong></li>
+<li><strong>跳跃表</strong>按 score 大小从小到大保存所有集合元素，根据 score 查 member</li>
+<li><strong>字典</strong>保存 member 到 score 的映射，根据 member 查找 score 的复杂度 O(1)</li>
+<li>两个数据结构通过指针来共享相同元素，不会浪费额外内存</li>
+</ul>
+<p><strong>跳跃表 skiplist 底层实现</strong></p>
+<p>理想的跳跃表是上下两层链表的节点数有严格对应，查找过程就类似于二分查找，复杂度为 O(logN)，但是插入节点会破坏这种关系，维持这种关系要调整后面所有的节点，时间复杂度又会退化到O(n)，<strong>为了避免这一情况，Redis 的 skiplist 采用的实现方法是</strong></p>
+<ul>
+<li>上下两层节点没有严格对应关系</li>
+<li>每个节点随机出一个层数 n，在第一层到第 n 层都插入这个节点</li>
+<li>最大层数为 32</li>
+<li>score 允许重复，score 相同的情况下根据数据内容进行字典排序</li>
+<li>第一层是一个双向链表，可以以倒序获取一个范围的元素</li>
+<li>每一个 forward 指针还有一个 <strong>span 变量</strong>，表示当前指针跨过多少节点，该变量用于<strong>计算元素排名</strong></li>
+</ul>
+<p><strong>skiplist 和 平衡树 的比较</strong></p>
+<ul>
+<li>skiplist 插入和删除操作只要修改相邻节点指针；平衡树会引发树结构的改变</li>
+<li>skiplist 范围查找更简单，找到最小值之后对第一层进行若干遍历即可；平衡树还要通过中序遍历查找</li>
+<li>实现相对来说更简单</li>
+</ul>
+<p><strong>应用场景</strong></p>
+<ul>
+<li>范围查找，TOP N 排行榜应用</li>
+</ul>
+<hr>
+<p><strong>Hash</strong></p>
+<ul>
+<li>key 是一个字符串类型，value 是键值对集合</li>
+<li>相当于 Java 中的 HashMap，也是通过 数组 + 链表 解决哈希冲突</li>
+</ul>
+<p><strong>应用场景</strong></p>
+<ul>
+<li>存储用户信息、商品信息等</li>
+</ul>
+<hr>
+<h3 id="持久化机制-5">持久化机制 5</h3>
+<hr>
+<p><strong>快照 RDB 持久化</strong></p>
+<p>通过创建快照来获取内存中的数据在某个时间点上的副本</p>
+<p>生成快照时，程序会对数据库中的键进行检查，已过期的键不会被保存到新建的 RDB 文件中</p>
+<p>Redis 使用操作系统的多进程**写时复制技术（Copy On Write）**来实现快照持久化，保证在子线程生成 RDB 快照的同时，主线程依然可以写入数据，具体步骤为：</p>
+<ul>
+<li>持久化时， Redis 使用 bgsave 命令调用 glibc 函数 fork 一个子进程，快照持久化完全交给子进程处理，继续处理客户端请求。子进程刚产生时和父进程共享内存中的代码段和数据段，所以子进程刚刚被创建时，内存的增长几乎没有明显变化</li>
+<li>bgsave 的子进程可以共享主进程的所有内存数据，读取主线程的数据并写入到 RDB 快照中</li>
+<li>主线程执行写指令修改数据时，会生成一个修改后的数据的副本，子进程直接读取这个副本数据写入到 RDB 快照中，所以不会出现数据不一致的情况</li>
+</ul>
+<p>可以把这个快照复制到其他服务器中来创建具有相同数据副本（主从结构）</p>
+<p>系统发生故障会丢失最后一次创建快照后的数据</p>
+<p>频繁生成 RDB 快照的问题：</p>
+<ul>
+<li>频繁对磁盘进行写入操作，磁盘压力过大</li>
+<li>使用 bgsave 来 fork 子进程的过程会阻塞主线程，</li>
+</ul>
+<p>默认配置是：</p>
+<ul>
+<li>15分钟后有1个key发生变化就创建快照</li>
+<li>5分钟后有10个key发生变化就创建快照</li>
+<li>1分钟后有10000个key发生变化就创建快照</li>
+</ul>
+<hr>
+<p><strong>AOF 持久化</strong></p>
+<p>将写命令添加到AOF文件中</p>
+<p>可以设置同步频率，每秒将写入操作同步到磁盘中，这样系统崩溃时只会丢失1秒的数据</p>
+<p><strong>问题是</strong>，随着写请求越来越多，AOF文件会越来越大。Redis提供了将AOF<strong>重写</strong>的特性来去除冗余的写命令。新的 AOF 文件和旧 AOF 文件保存的数据库状态完全一致，但是体积小的多。通过精简指令，（例如，原 AOF 对数据进行了一系列增删，新 AOF 只保留创建最终结果的那一句语句）</p>
+<ul>
+<li>重写的时候 fork 一个子进程，主进程仍然接收新的命令，子进程对原 AOF 文件扫描并把新的写命令追加到新创建的 AOF 文件中。子进程执行期间，主进程接收到的新写命令会存入到<strong>重写缓冲区</strong>，子进程完成重写之后，会先把缓冲区的命令追加到新的 AOF 文件，然后用新 AOF 文件替换旧 AOF 文件</li>
+</ul>
+<p>Redis4.0有一个混合持久化，AOF重写的时候直接把内存副本以 RDB 的方式写到 AOF 文件的开头，然后再将重写缓冲区的写命令以 AOF 方式写入到文件，然后用新 AOF 替换旧 AOF。兼顾了 RDB 的快速加载特性和 AOF 的特性来避免丢失过多数据。</p>
+<hr>
+<h3 id="主从复制-3"><a target="_blank" rel="noopener" href="https://www.cnblogs.com/yangming1996/p/12594991.html">主从复制 3</a></h3>
+<p><strong>复制过程</strong></p>
+<ul>
+<li>从服务器向主服务器发送 SYNC 命令</li>
+<li>主服务器创建快照文件，发送给从服务器，期间在缓冲区中记录写命令，快照发送完成之后，服务器先执行缓冲区的写命令，并向从服务器发送缓冲区中的写命令</li>
+<li>从服务器丢弃所有旧数据并阻塞自己，载入主服务器发来的快照文件，然后接收主服务器发来的写命令</li>
+<li>主服务器每执行一次写命令，就向从服务器发送一次写命令</li>
+</ul>
+<p>主服务器中的复制缓冲区是一个 FIFO 的队列，大小默认 1M，存储了最近的一些写命令，存储形式是 偏移量 + 字节值。每次加入新的写操作都会更新偏移量值，从服务器收到传输的命令后也会更新自己的偏移量值。</p>
+<ul>
+<li>主从节点的偏移量相同说明数据是同步的</li>
+<li>缓冲区中新命令写入后旧命令就会出队列</li>
+<li>某个从服务器断线重连之后发送同步命令给主服务器并带上自己的偏移量
+<ul>
+<li>如果偏移量在缓冲区中，就把偏移量之后的所有命令发送给从服务器</li>
+<li>如果不在缓冲区，就要进行一次全量复制（此时主服务器进行 <strong>全量备份</strong> 时可能会造成毫秒级卡顿）</li>
+</ul>
+</li>
+</ul>
+<p>从服务器不会主动淘汰过期 key，主服务器处理掉过期的 key 后会向从服务器发送 del 命令来同步淘汰数据</p>
+<p>主从复制可能存在的问题：</p>
+<ul>
+<li>一旦<strong>主节点宕机</strong>，<strong>从节点</strong>晋升<strong>主节点</strong>，同时需要修改<strong>应用方</strong>的<strong>主节点地址</strong>，还需要命令所有<strong>从节点</strong>去<strong>复制</strong>新的主节点，整个过程需要<strong>人工干预</strong>。</li>
+<li>如果<strong>从节点发生中断</strong>之后发起重新同步不成功，需要进行全量同步，此时主服务器进行<strong>全量备份</strong>时可能会造成<strong>毫秒级卡顿</strong></li>
+</ul>
+<p><strong>主从链</strong></p>
+<p>随着负载上升，主服务器可能无法很快更新所有从服务器，主从链通过中间加入一层服务器来分担主服务器的复制工作。中间层服务器是主服务器的从服务器，又是下层服务器的主服务器。</p>
+<hr>
+<p><strong>实现 Redis 集群高可用</strong></p>
+<p>哨兵机制，是一个管理多个 Redis 实例的工具</p>
+<ul>
+<li><strong>集群监控</strong>：监控 主从 服务器的 Redis 是否正常工作</li>
+<li><strong>消息通知</strong>：如果有 Redis 实例有故障，会发送消息给管理员</li>
+<li><strong>故障转移</strong>：如果主节点不能正常工作，，会自动将其中一个从节点升级为新的主节点，然后将其他从节点指向新的主节点</li>
+</ul>
+<p><strong><a target="_blank" rel="noopener" href="https://www.cnblogs.com/kevingrace/p/9004460.html">哨兵节点工作方式</a></strong></p>
+<ul>
+<li>每个哨兵节点以<strong>每秒一次</strong>的频率向<strong>主服务器、从服务器和其他哨兵节点</strong>发送 PING 命令</li>
+<li>如果一个<strong>实例</strong>距离最后一次回复 PING 的事件超过了限定值，这个实例就会被哨兵标记为<strong>主观下线</strong></li>
+<li>如果主服务器被标记为<strong>主观下线</strong>，其他正在监视该服务器的哨兵节点要以每秒一次的频率确认主服务器进入了主观下线状态</li>
+<li>如果一个主服务器被判定为主观下线，并且有一定数量的哨兵节点在指定时间范围内同意该判断，这个主服务器就被标记为<strong>客观下线</strong>，进入客观下线后才可以进行<strong>故障转移</strong>操作，实施故障转移还需要获得大多数哨兵的授权。</li>
+<li>一般情况下哨兵会每10秒向主服务器和从服务器发送 INFO 命令。当主服务器被标记为客观下线，哨兵向所有从服务器发送 INFO 命令的频率从 10 秒一次改为 每秒一次</li>
+<li>如果没有足够数量的哨兵同意主节点下线，<strong>客观下线状态就被移除</strong>；如果主节点重新向哨兵返回 PING 的有效回复，<strong>主观下线会被解除</strong></li>
+</ul>
+<hr>
+<h3 id="Redis为什么速度快-2"><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/81195864">Redis为什么速度快 2</a></h3>
+<ul>
+<li>纯内存操作，不需要进行磁盘 IO</li>
+<li>单线程，保证了系统没有上下文切换的开销
+<ul>
+<li>单线程只是只有一个线程来处理网络请求</li>
+<li>为了发挥多核 CPU 优势，可以创建多个 Redis 实例来处理网络请求</li>
+</ul>
+</li>
+<li>数据结构简单，对数据的操作也简单</li>
+<li>采用 IO多路复用机制来同时监听多个 socket，非阻塞 IO</li>
+</ul>
+<hr>
+<p>Redis 是单线程是因为内部使用<strong>文件事件处理器</strong>，这个处理器是单线程的</p>
+<p>Redis采用<strong>IO多路复用机制来同时监听多个socket</strong>，根据socket的事件选择对应的事件处理器进行处理。</p>
+<p>文件处理器包括4个结构：</p>
+<ul>
+<li>多个socket</li>
+<li>IO多路复用程序</li>
+<li>文件事件分派器</li>
+<li>事件处理器</li>
+</ul>
+<p><strong>多个socket可能会并发产生不同的操作，每个操作对应不同的文件事件；IO多路复用程序会监听多个socket，将socket产生的事件放入队列中排队；事件分派器每次从队列中取出一个事件，把它交给对应的事件处理器处理。</strong></p>
+<hr>
+<h3 id="跳表-2">跳表 2</h3>
+<p>构造方法，为什么不用红黑树</p>
+<ul>
+<li>是一个多层结构，最下层是双向链表，按序存储所有的元素，上层是逐渐稀疏的链表</li>
+<li>上层的节点记录了 forward 指针指向的下一个节点地址</li>
+<li>查找的时候从上往下快速找到对应区间，然后找到对应位置</li>
+</ul>
+<p><strong>和红黑树相比</strong></p>
+<ul>
+<li>实现更加简单</li>
+<li>插入删除节点只涉及前后节点指针的改变；平衡树则会涉及到旋转，子树结构的改变</li>
+<li>范围查找时跳表只要找到端点值然后在底层链表遍历即可；平衡树还要通过一定中序遍历算法</li>
+</ul>
+<hr>
+<h3 id="热点缓存">热点缓存</h3>
+<p><strong>MySQL 里有 2000w 数据，Redis 中只存 20w 的数据，如何保证 Redis 中的数据都是热点数据?</strong></p>
+<ol>
+<li>volatile-lru：从设置过期时间的数据集中挑选最近最少使用的数据淘汰</li>
+<li>volatile-ttl：从设置过期时间的数据集中挑选将要过期的数据淘汰</li>
+<li>volatile-random：从设置过期时间的数据集中任意选择数据淘汰</li>
+<li>allkeys-lru：内存不足时，从所有键中淘汰最近最少使用的key</li>
+<li>allkeys-random：内存不足时，选择任意的键淘汰</li>
+<li>volatile-lfu：从设置过期时间的数据集中选择访问频率最低的淘汰</li>
+<li>allkeys-lfu：从所有键中选择访问频率最低的淘汰</li>
+</ol>
+<p>lfu（Least Frequently Used）统计的是访问频率，将一定时间内被访问次数最少的键淘汰</p>
+<hr>
+<h3 id="缓存穿透、缓存击穿、缓存雪崩概念和解决办法">缓存穿透、缓存击穿、缓存雪崩概念和解决办法</h3>
+<hr>
+<p><strong>缓存穿透</strong></p>
+<p>客户端大量请求一些根本不存在于缓存中的 key，导致这些请求穿过缓存直接落到数据库上</p>
+<p><strong>解决办法</strong></p>
+<ul>
+<li>将所有可能的请求值放入布隆过滤器，收到的请求如果不在过滤器中直接拦截</li>
+<li>如果一个 key 的查询结果为 null，将 key-null 键值对也加入缓存，并设置一个过期时间</li>
+</ul>
+<hr>
+<p><strong>缓存击穿</strong></p>
+<p>某个热点缓存突然失效，大量请求落到服务器上（和缓存雪崩的区别是<strong>针对某一个 key 的缓存</strong>）</p>
+<p><strong>解决办法</strong></p>
+<ul>
+<li>设置热点数据不过期</li>
+<li>如果有多个线程向服务器查询该数据，就用一个互斥锁锁住该数据，等到查询到了数据并存入缓存，其他线程直接从缓存中取数据</li>
+</ul>
+<hr>
+<p><strong>缓存雪崩</strong></p>
+<p>缓存在同一时间内大面积失效，所有请求都落到数据库上，导致数据库短时间受到大量请求</p>
+<ul>
+<li>缓存集体到了过期时间</li>
+<li>服务器突然宕机，Redis 服务不可用</li>
+</ul>
+<p><strong>解决办法</strong></p>
+<ul>
+<li>随机设置缓存的过期时间，可以在原来过期时间的基础上加上一个随机值</li>
+<li>使用 redis 集群并将热点数据分布在不同的 redis 服务器上</li>
+</ul>
+<hr>
+<h3 id="布隆过滤器">布隆过滤器</h3>
+<p><strong>为什么不用 HashMap</strong></p>
+<ul>
+<li>HashMap 存储容量占比更高，而且负载因子的存在导致空间不能被用满</li>
+<li>布隆过滤器的数据结构占用空间少，但是返回结果是概率性</li>
+</ul>
+<p><strong>原理</strong></p>
+<ul>
+<li>初始是一个 m 位的列表，每一位都置 0</li>
+<li>添加数据时
+<ul>
+<li>使用多个 hash 函数对 key 进行计算得到一个索引值</li>
+<li>然后对列表长度 m 进行取模运算得到一个位置</li>
+<li>每个 hash 函数都会计算得到不同的位置</li>
+<li>将这些位置的值都置 1</li>
+</ul>
+</li>
+<li>查询时
+<ul>
+<li>也对 key 使用多个 hash 函数计算最后得到位置</li>
+<li>查看每个位置是否都为 1</li>
+<li>如果有一个不为 1，就肯定不存在这个 key</li>
+<li>如果都为 1，这个 key 可能存在，因为这个位置的 1 也有可能是其他 key 导致的</li>
+</ul>
+</li>
+<li>性能需要在 <strong>hash 函数数量</strong> 和 <strong>布隆过滤器长度</strong> 之间做权衡</li>
+</ul>
+<p><strong>应用场景</strong></p>
+<ul>
+<li>解决 redis 的缓存穿透问题</li>
+<li>业务中判断用户是否读过某文章，看过某视频。会有一定误判率，可能实际没读过但被判定为读过</li>
+</ul>
+<hr>
+<h3 id="事务相关">事务相关</h3>
+<p>Redis 中的事务</p>
+<ul>
+<li>是一组命令的集合</li>
+<li>是一个单独的隔离操作
+<ul>
+<li>其中所有的命令都会按顺序执行，执行过程中不会其他请求打断</li>
+</ul>
+</li>
+<li>事务是一个原子操作，其中命令要么全部执行，要么全部不执行</li>
+<li>操作无法回滚</li>
+</ul>
+<p><strong>开启事务的步骤</strong></p>
+<ul>
+<li>用 <strong>MULTI</strong> 命令开启一个事务</li>
+<li>输入要执行的指令，这些指令会被放到队列中</li>
+<li>调用 <strong>EXEC</strong> 命令会让队列中的所有命令被执行</li>
+<li>调用 <strong>DISCARD</strong> 命令会清空事务队列，并放弃执行事务</li>
+<li>如果发送 EXEC 命令前用户掉线， redis 也会清空事务队列</li>
+<li><strong>WATCH</strong> 命令可以监控一个或多个键，一旦其中有一个键被修改或删除，之后的事务就不会被执行
+<ul>
+<li>类似于 乐观锁 CAS 的机制</li>
+<li>对键的监视从执行 WATCH 开始，到 EXEC 结束，保证事务在所监视的键没有被修改的前提下被执行</li>
+</ul>
+</li>
+</ul>
+<p><strong>报错机制</strong></p>
+<ul>
+<li>命令有<strong>语法错误</strong>，执行 EXEC 会直接报错，任何指令都不会执行</li>
+<li>命令出现<strong>运行错误</strong>，错误的命令不会执行，但是事务中的其他命令仍然会被执行</li>
+</ul>
+<hr>
+<p><strong>Redis 分布式锁</strong></p>
+<p><strong>SETNX 指令</strong></p>
+<p>使用 SETNX 指令插入一个键值对，如果 Key 存在，就会返回 False，说明对象正处于锁定状态，获取锁失败；否则插入成功，返回 True。可以使用 EXPIRE 指令为一个键值对设置一个过期时间，避免锁释放失败的问题</p>
+<p><strong>RedLock算法</strong></p>
+<p>使用多个 Redis 实例来实现分布式锁，保证发生单点故障时仍然可用</p>
+<ul>
+<li>尝试从 N 个互相独立的 Redis 实例获取锁</li>
+<li>只有当获取锁消耗的时间小于锁过期的时间，并且获取超过半数的锁时，才认为锁获取成功</li>
+<li>如果获取失败，就释放每个实例上的锁</li>
+</ul>
+<hr>
+<h3 id="其他问题">其他问题</h3>
+<p><strong>加入主服务器写入新的数据，但是从服务器没有来得及复制，该如何查询</strong></p>
+<hr>
+<p><strong>10亿个用户点赞 判断是否点过赞</strong></p>
+<ul>
+<li>布隆过滤器，但是不一定精确，可能用户没有点过赞但被判定为点过</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Redis/" rel="tag"># Redis</a>
+              <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag"># 数据库</a>
+              <a href="/tags/MySQL/" rel="tag"># MySQL</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/04/24/%E9%9D%A2%E8%AF%95%E5%B8%B8%E8%80%83%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="prev" title="面试常考设计模式">
+                  <i class="fa fa-chevron-left"></i> 面试常考设计模式
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/04/24/Java%E9%9D%A2%E8%AF%95%E9%87%8D%E7%82%B9/" rel="next" title="Java面试重点">
+                  Java面试重点 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ABMIS Version 2.0</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

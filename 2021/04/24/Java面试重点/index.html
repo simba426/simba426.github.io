@@ -1,0 +1,1083 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yoursite.com","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.8.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="基础  Object类方法 4 getClass() 获取运行时对象的Class对象 hashCode() 获取对象的哈希码，在哈希表中被使用 toString() 输出 类名@实例的十六进制哈希码 clone() 返回当前对象的一份拷贝 equals() 比较对象是否等价">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java面试重点">
+<meta property="og:url" content="http://yoursite.com/2021/04/24/Java%E9%9D%A2%E8%AF%95%E9%87%8D%E7%82%B9/index.html">
+<meta property="og:site_name" content="ABMIS">
+<meta property="og:description" content="基础  Object类方法 4 getClass() 获取运行时对象的Class对象 hashCode() 获取对象的哈希码，在哈希表中被使用 toString() 输出 类名@实例的十六进制哈希码 clone() 返回当前对象的一份拷贝 equals() 比较对象是否等价">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-04-24T05:39:04.000Z">
+<meta property="article:modified_time" content="2021-06-09T09:29:23.000Z">
+<meta property="article:author" content="abmis">
+<meta property="article:tag" content="Java">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://yoursite.com/2021/04/24/Java%E9%9D%A2%E8%AF%95%E9%87%8D%E7%82%B9/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://yoursite.com/2021/04/24/Java%E9%9D%A2%E8%AF%95%E9%87%8D%E7%82%B9/","path":"2021/04/24/Java面试重点/","title":"Java面试重点"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Java面试重点 | ABMIS</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">ABMIS</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-照片"><a href="/photos/" rel="section"><i class="fa fa-camera fa-fw"></i>照片</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E7%A1%80"><span class="nav-number">1.</span> <span class="nav-text">基础</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Object%E7%B1%BB%E6%96%B9%E6%B3%95-4"><span class="nav-number">1.1.</span> <span class="nav-text">Object类方法 4</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#BIO%E3%80%81NIO%E3%80%81AIO-3"><span class="nav-number">1.2.</span> <span class="nav-text">BIO、NIO、AIO 3</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%8D%E5%B0%84-2"><span class="nav-number">1.3.</span> <span class="nav-text">反射 2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%81equals-%E5%8C%BA%E5%88%AB-2"><span class="nav-number">1.4.</span> <span class="nav-text">&#x3D;&#x3D;、equals()区别 2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B7%B1%E6%8B%B7%E8%B4%9D%E5%92%8C%E6%B5%85%E6%8B%B7%E8%B4%9D-2"><span class="nav-number">1.5.</span> <span class="nav-text">深拷贝和浅拷贝 2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Java-%E7%9A%84%E4%B8%89%E5%A4%A7%E7%89%B9%E6%80%A7"><span class="nav-number">1.6.</span> <span class="nav-text">Java 的三大特性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#static%E3%80%81final%E5%85%B3%E9%94%AE%E5%AD%97"><span class="nav-number">1.7.</span> <span class="nav-text">static、final关键字</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%B9%E5%99%A8"><span class="nav-number">2.</span> <span class="nav-text">容器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#HashMap-11"><span class="nav-number">2.1.</span> <span class="nav-text">HashMap 11</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Hashcode%E6%96%B9%E6%B3%95-3"><span class="nav-number">2.2.</span> <span class="nav-text">Hashcode方法 3</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ArrayList%E5%92%8CLinkedList%E5%8C%BA%E5%88%AB-3"><span class="nav-number">2.3.</span> <span class="nav-text">ArrayList和LinkedList区别 3</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HashSet-2"><span class="nav-number">2.4.</span> <span class="nav-text">HashSet  2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B3%9B%E5%9E%8B-2"><span class="nav-number">2.5.</span> <span class="nav-text">泛型 2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%93%88%E5%B8%8C%E5%86%B2%E7%AA%81-2"><span class="nav-number">2.6.</span> <span class="nav-text">哈希冲突 2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Map%E5%92%8CList"><span class="nav-number">2.7.</span> <span class="nav-text">Map和List</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Vector-%E5%92%8C-ArrayList"><span class="nav-number">2.8.</span> <span class="nav-text">Vector 和 ArrayList</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B9%B6%E5%8F%91"><span class="nav-number">3.</span> <span class="nav-text">并发</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%9B%E7%A8%8B%E5%92%8C%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%8C%BA%E5%88%AB-16"><span class="nav-number">3.1.</span> <span class="nav-text">进程和线程的区别 16</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BA%BF%E7%A8%8B%E7%8A%B6%E6%80%81"><span class="nav-number">3.2.</span> <span class="nav-text">线程状态</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8"><span class="nav-number">3.3.</span> <span class="nav-text">线程安全</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#sychronized-8"><span class="nav-number">3.4.</span> <span class="nav-text">sychronized 8</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#volatile-5"><span class="nav-number">3.5.</span> <span class="nav-text">volatile 5</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Threadlocal-3"><span class="nav-number">3.6.</span> <span class="nav-text">Threadlocal 3</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CAS-3"><span class="nav-number">3.7.</span> <span class="nav-text">CAS 3</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Java%E9%94%81-3"><span class="nav-number">3.8.</span> <span class="nav-text">Java锁 3</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BA%BF%E7%A8%8B%E5%88%9B%E5%BB%BA-2"><span class="nav-number">3.9.</span> <span class="nav-text">线程创建 2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BA%BF%E7%A8%8B%E6%B1%A0%E5%8F%82%E6%95%B0-2"><span class="nav-number">3.10.</span> <span class="nav-text">线程池参数 2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#AQS"><span class="nav-number">3.11.</span> <span class="nav-text">AQS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JUC%E5%8C%85%E4%B8%8B%E7%9A%84%E7%B1%BB"><span class="nav-number">3.12.</span> <span class="nav-text">JUC包下的类</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JVM"><span class="nav-number">4.</span> <span class="nav-text">JVM</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%85%E5%AD%98%E7%BB%93%E6%9E%84-6"><span class="nav-number">4.1.</span> <span class="nav-text">内存结构 6</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6-6"><span class="nav-number">4.2.</span> <span class="nav-text">垃圾回收 6</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B1%BB%E5%8A%A0%E8%BD%BD-3"><span class="nav-number">4.3.</span> <span class="nav-text">类加载 3</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%9B%E7%A7%8D%E5%BC%95%E7%94%A8%E7%B1%BB%E5%9E%8B"><span class="nav-number">4.4.</span> <span class="nav-text">四种引用类型</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="abmis"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">abmis</p>
+  <div class="site-description" itemprop="description">Know your game.</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">30</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/simba426" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;simba426" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://instagram.com/woody_simba" title="Instagram → https:&#x2F;&#x2F;instagram.com&#x2F;woody_simba" rel="noopener" target="_blank"><i class="fab fa-instagram fa-fw"></i>Instagram</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://t.me/abmis_reverse" title="Telegram → https:&#x2F;&#x2F;t.me&#x2F;abmis_reverse" rel="noopener" target="_blank"><i class="fab fa-telegram fa-fw"></i>Telegram</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/04/24/Java%E9%9D%A2%E8%AF%95%E9%87%8D%E7%82%B9/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="abmis">
+      <meta itemprop="description" content="Know your game.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ABMIS">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Java面试重点
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-04-24 13:39:04" itemprop="dateCreated datePublished" datetime="2021-04-24T13:39:04+08:00">2021-04-24</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-06-09 17:29:23" itemprop="dateModified" datetime="2021-06-09T17:29:23+08:00">2021-06-09</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index"><span itemprop="name">面试</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="基础">基础</h2>
+<hr>
+<h3 id="Object类方法-4">Object类方法 4</h3>
+<p>getClass() 获取运行时对象的Class对象</p>
+<p>hashCode() 获取对象的哈希码，在哈希表中被使用</p>
+<p>toString() 输出 类名@实例的十六进制哈希码</p>
+<p>clone() 返回当前对象的一份拷贝</p>
+<p>equals() 比较对象是否等价</p>
+<span id="more"></span>
+<hr>
+<h3 id="BIO、NIO、AIO-3"><a target="_blank" rel="noopener" href="https://snailclimb.gitee.io/javaguide/#/docs/java/BIO-NIO-AIO">BIO、NIO、AIO</a> 3</h3>
+<p>是 Java 对各种 IO 模型的封装，Java 中的 IO 都是依赖操作系统内核进行的，其实调用的是内核中的read 和 write 两大系统调用</p>
+<hr>
+<p><strong>IO交互的步骤</strong></p>
+<ul>
+<li>网卡接收网络传输过来的数据，并将数据写入内存</li>
+<li>写入完成后，发送一个中断信号给 CPU，操作系统便得知有数据到来，然后通过网卡中断去处理数据</li>
+<li>将内存中的数据写到对应的 socket 接收缓冲区中</li>
+<li>接收缓冲区数据写好后，应用程序开始进行数据处理</li>
+</ul>
+<hr>
+<p><strong>同步和异步</strong></p>
+<p><strong>同步</strong>：两个任务相互依赖，一个任务要依赖另一个任务的执行</p>
+<p><strong>异步</strong>：两个任务完全独立，一方的执行不需要等待另一方执行完成</p>
+<p><strong>阻塞和非阻塞</strong></p>
+<p><strong>阻塞</strong>：发起一个请求，一直在等结果返回，期间会被挂起，不执行后续操作</p>
+<p><strong>非阻塞</strong>：在等待结果返回时，先去做其他工作，隔段时间查看同步是否完成</p>
+<hr>
+<p><strong>BIO Blocking I/O</strong></p>
+<p>是传统的 <a target="_blank" rel="noopener" href="http://java.io">java.io</a> 包，交互的方式是同步阻塞，就是在发起一个读写请求后，在读写操作完成之前时，线程会一直阻塞，直到读写操作完成才会继续执行。代码简单直观但是效率低。适用于连接数目小且固定的结构。在网络通信中使用 BIO，如果想要同时处理多个客户端请求，就需要创建多个线程。</p>
+<p><strong>NIO Non-Blocking IO</strong></p>
+<p>是 Java 1.4 以后引入的 java.nio 包，提供<strong>Channel，Selector，Buffer</strong>等抽象。它支持面向缓冲的，基于通道的 IO 操作方法</p>
+<p>线程发起 IO 请求后，立即返回去做其他工作，定期检查 IO 缓冲区数据是否就绪。 等到读写完成之后线程再继续处理数据。Java 中的 NIO 加入多路复用技术，会轮询一堆 IO 缓冲区中有哪些准备就绪。</p>
+<p><strong>IO 面向流</strong>，直接将数据写到 Stream 中；<strong>NIO 面向缓冲区 Buffer</strong>，直接将数据读读到 Buffer 中进行操作，任何时候访问 NIO 中的数据，都是通过缓冲区进行操作</p>
+<p><strong>NIO</strong> 通过 Channel 进行读写，通道是双向的，可读也可写，通道只能和 Buffer 进行交互；<strong>IO</strong> 的流是单向的，分输入流和输出流</p>
+<p><strong>NIO</strong> 使用 Selector 来基于单线程处理多个通道</p>
+<p><strong>AIO</strong></p>
+<p>Java 7 中引入了 NIO 2，是异步非阻塞 IO。线程在执行 IO 操作后，马上返回继续执行操作，等到缓冲区就绪，由内核通知线程或者执行回调函数来进行后续操作。</p>
+<hr>
+<h3 id="反射-2">反射 2</h3>
+<p><strong>反射</strong>是指<strong>在运行时</strong>，对任意一个类都能知道这个类的所有属性和方法。对于任何一个对象，都能调用它的任意一个方法和属性。这种<strong>动态获取信息和动态调用对象方法的功能</strong>称为反射机制。</p>
+<p><strong>原理</strong>：反射是由Class类对象开始的。当一个类被加载以后，JVM就会自动产生一个Class对象，通过Class对象我们就能获得加载到虚拟机中的这个类的方法和属性。</p>
+<p>获取类的方法有</p>
+<ul>
+<li>Class.forName()</li>
+<li>类名.class</li>
+<li>对象.getClass()</li>
+</ul>
+<p><strong>使用场景：框架开发的动态配置</strong></p>
+<p>在properties里写好了配置，在Java类里面解析配置内容，得到对应实体类的字节码字符串，使用反射机制获取到某个类的Class实例，然后动态配置实例的属性。</p>
+<hr>
+<h3 id="、equals-区别-2">==、equals()区别 2</h3>
+<p>对于基本数据类型，==比较他们的值是否相等，基本数据类型没有equals()方法</p>
+<p>对于引用数据类型，==比较他们是否引用同一对象，而equals()判断引用的对象是否等价，如果equals没有被重写，就比较指向的地址是否相等，如果被重写，会比较地址中的内容，例如String中比较的是字符是否都相同。</p>
+<p>判断方法是：</p>
+<ul>
+<li>如果是同一对象的引用，返回true</li>
+<li>检查是否是同一类型，如果不是，返回false</li>
+<li>将Object对象转型然后判断关键域是否相等</li>
+</ul>
+<hr>
+<h3 id="深拷贝和浅拷贝-2">深拷贝和浅拷贝 2</h3>
+<p><strong>浅拷贝</strong>是按位拷贝，会创建一个新的对象，拥有原始对象属性值的拷贝。对于基本数据类型，拷贝的就是他们的值，但是对于引用数据类型，只是拷贝了引用地址，与原对象相比，在内存中指向的还是同一个对象</p>
+<p><strong>深拷贝</strong>相比浅拷贝，还把其中引用其他对象的变量指向了一个被复制过的新对象。也就是把拷贝对象所引用的对象也复制了一遍。所以深拷贝很慢。</p>
+<hr>
+<h3 id="Java-的三大特性">Java 的三大特性</h3>
+<p><strong>封装性</strong></p>
+<p>就是把相关属性和方法都封装到一个类中，保留特定的借口供外界调用</p>
+<p><strong>继承性</strong></p>
+<p>可以从一个已知的类中派生出一个新的类，具有父类的一些方法和属性，也可以通过重写父类方法来扩展新的功能</p>
+<p><strong>多态性</strong></p>
+<p>本质就是一个程序<strong>存在同名的多个不同方法</strong>，主要通过：</p>
+<ul>
+<li>子类重写父类方法</li>
+<li>类中对方法进行重载</li>
+<li>将子类对象作为父类对象来使用</li>
+</ul>
+<hr>
+<h3 id="static、final关键字">static、final关键字</h3>
+<p><strong>static</strong></p>
+<p><strong>内部类</strong>就是定义在类内部的类，分为非静态内部类和静态内部类，其中只有内部类才可以被声明为静态。</p>
+<p><strong>非静态内部类</strong></p>
+<ul>
+<li>依赖于外部的实例创建，外部类要先创建实例，再通过实例创建内部类</li>
+<li>内部成员不能是静态的</li>
+<li>可以访问外部类的所有属性</li>
+</ul>
+<p><strong>静态内部类</strong></p>
+<ul>
+<li>可以直接通过外部类访问创建。内部成员可以是静态也可以是非静态</li>
+<li>成员可以是静态也可以是非静态</li>
+<li>只能访问外部类静态成员</li>
+</ul>
+<p>其中<strong>静态方法</strong>在类加载的时候就存在，<strong>静态成员</strong>和<strong>静态语句块</strong>则是在类初始化的时候才被初始化</p>
+<p><strong>静态方法</strong>必须要有实现，只能访问所属类的静态成员，方法中不能有this，super因为他们都对应了具体实例</p>
+<hr>
+<p><strong>final</strong></p>
+<p>final类不能被继承，final方法不能被重写，final变量值无法改变</p>
+<hr>
+<h2 id="容器">容器</h2>
+<h3 id="HashMap-11">HashMap 11</h3>
+<hr>
+<p><strong>HashMap</strong></p>
+<p><strong>JDK1.8之前</strong>HashMap是由数组加链表的结构实现的，数组是主体，链表是用来解决哈希冲突而存在的（拉链法）。<strong>JDK1.8以后</strong>，如果链表长度大于8，会转化为红黑树；但是如果数组长度小于64，则会选择先对数组进行扩容，而不是转化为红黑树。使用红黑树是为了减少搜索时间。</p>
+<p>HashMap会使用<strong>扰动函数</strong>处理key的hashcode得到一个hash，根据这个hash决定插入位置，扰动函数可以减少碰撞。JDK1.8的操作是<strong>无符号右移16位然后异或</strong>。</p>
+<p><strong>初始容量</strong>为16，<strong>加载因子</strong>0.75，扩容是翻倍。当元素个数超过容量的四分之三（0.75）会进行扩容。</p>
+<hr>
+<p><strong>线程不安全</strong></p>
+<p>线程不安全主要考虑到多线程情况下扩容会出现<strong>HashMap死循环</strong>，由于「扩容会建个新哈希，然后把数据从老的hash表迁移」这个过程。</p>
+<p>快速失败fail-fast机制：多个线程改变集合结构的时候程序会抛出CocurrentModificationException异常，发生fail-fast</p>
+<hr>
+<p><strong>大小和扩容</strong></p>
+<p>默认的初始化大小是16，之后每次扩容会变为原来的两倍；如果设置了初始值，会把其扩容到2的幂次方大小。<strong>扩容是指对数组长度扩容</strong>，数组是主体。但是判断是否要扩容，是根据map中元素的个数与threshold进行比较，threshold是当前容量乘以加载因子</p>
+<p><strong>为什么大小是2的幂次</strong></p>
+<p>计算数组下标一般会考虑到取余。有一个规律是:</p>
+<p><strong>hash % length == hash &amp; (length - 1)</strong></p>
+<p>也就是一个数与除数取余等于这个数和比除数小1的数进行与操作，但是<strong>前提是除数为2的幂次</strong>。因为数组下标的计算方式选择 (n - 1) &amp; hash，所以 n 要满足是2的幂次。<strong>与操作运算速度更快</strong>。</p>
+<p><strong>并且resize之后，元素要么在原位置，要么在原位置移动2次幂的位置，不用每个元素都移动位置</strong></p>
+<hr>
+<p><strong>HashMap如何计算下标</strong></p>
+<p>用扰动函数hash计算key的hashcode得到一个hash，方法是将原来hashcode无符号右移16位然后异或。之后对hash进行取模运算，函数中的运算方法是 hash &amp; (length - 1) length为数组长度</p>
+<hr>
+<p><strong>CocurrentHashMap下标空如何操作</strong></p>
+<p>通过CAS操作进行赋值，将key、value、hash生成的节点放入桶中</p>
+<hr>
+<p><strong>插入方法</strong></p>
+<p>1.7是头插法，1.8是尾插法</p>
+<hr>
+<p><strong>遍历方式</strong></p>
+<ul>
+<li>迭代器 entrySet 遍历，同时获取key和value</li>
+<li>迭代器 keySet 遍历，只获取key，value通过key来get</li>
+<li>ForEach entrySet 同上</li>
+<li>ForEach keySet 同上</li>
+<li>lambada表达式遍历</li>
+<li>Streams API 进行遍历</li>
+</ul>
+<hr>
+<p><strong>HashMap和HashTable的区别</strong></p>
+<ul>
+<li>HashMap是线程不安全的；HashTable使用了synchronized关键字，是线程安全的</li>
+<li>HashMap允许null作为Key；HashTable不允许null作为Key，也不允许value为null</li>
+</ul>
+<hr>
+<p><strong><a target="_blank" rel="noopener" href="https://www.cnblogs.com/aspirant/p/8623864.html">CocurrentHashMap</a></strong></p>
+<p><strong>底层数据结构</strong>还是数组加链表/红黑树的形式。</p>
+<p>在<strong>JDK1.8之前</strong>是由<strong>Segment数组</strong>来实现的，Segment数组将一个大table分割成多个小table来进行加锁，每个Segment元素存储的是<strong>HashEntry数组和链表（和HashMap结构一样）</strong>，会有分段锁锁住一个Segment，多线程访问不同数据段的数据，就不会存在锁竞争，提高并发率。Segment默认大小为16，HashEntry最小容量为2。在这个版本需要经过两次 hash 才能到达指定 hashEntry，第一次先到达 Segment，第二次再到达 Segment 中的 hashEntry，然后再遍历 entry 链表</p>
+<p><strong>JDK1.8之后</strong>摒弃了Segment概念，直接使用 <strong>Node数组 + 链表 + 红黑树</strong>的数据结构来实现，<strong>并发控制使用 sychronized 和 CAS</strong>，sychronized只锁定当前链表或者红黑树的首节点，只要不发生哈希冲突，就不存在并发问题。不过 Node 只适用于链表情况，转换为红黑树后要转为TreeNode</p>
+<p>HashTable也是线程安全，但是只用一把锁，会出现锁竞争，效率低下</p>
+<hr>
+<p><strong>如何线程安全地使用HashMap</strong></p>
+<p><strong>HashMap线程不安全</strong>是因为两个进程同时进行put操作可能导致数据被覆盖；多个线程同时进行扩容还可能导致死循环，Node形成环状数据结构</p>
+<p><strong>HashTable</strong>是线程安全的，实现方式是 get 和 put 方法加了sychronized 关键字保证线程安全，但是所有线程竞争一把锁，效率很低</p>
+<p><strong>CocurrentHashMap</strong>把数据分段，每段数据配一把锁，一个线程占用一段数据时，其他线程还可以访问其他数据，并发性更高。1.8中加锁粒度细分到桶。</p>
+<p><strong>Sychronized Map</strong>中对每个方法加了sychronized关键字来保证线程安全，也是对整个表加锁</p>
+<hr>
+<h3 id="Hashcode方法-3">Hashcode方法 3</h3>
+<p>hashCode()方法默认是对堆上的对象产生独特值，是对象地址的一个映射。如果不重写hashCode()，即使两个对象指向相同的数据，也不会有相同的哈希值。</p>
+<p><strong>在重写equals方法的同时，必须重写hashCode方法</strong></p>
+<hr>
+<h3 id="ArrayList和LinkedList区别-3">ArrayList和LinkedList区别 3</h3>
+<ul>
+<li>两者都不保证线程安全</li>
+<li>ArrayList底层使用Object数组；LinkedList使用双向链表</li>
+<li>ArrayList在<strong>随机存取</strong>方面效率高于LinkedList</li>
+<li>LinkedList在节点的<strong>增删</strong>方面效率高于ArrayList</li>
+<li>ArrayList的空间浪费主要是因为尾部会预留一定空间；LinkedList则是每个节点都需要额外保存信息，前驱后驱节点</li>
+</ul>
+<p><strong>遍历长度很大的数组和链表，哪个效率更快</strong></p>
+<p>数组，局部性原理，数组中的元素是连续的，周围的数据会提前加载到高速缓存cache中来</p>
+<hr>
+<h3 id="HashSet-2">HashSet  2</h3>
+<p>实现Set接口，底层基于HashMap实现，对象不重复。因为底层基于HashMap，所以扩容机制也是一样的</p>
+<p>加入对象时会先计算对象的哈希值来判断对象加入的位置，同时与其他已加入对象的hashcode比较，如果没有相等的，就默认没有重复出现；如果发现有相同的hashcode，再调用equals()判断两个对象是否等价，如果等价，添加操作就不成功。</p>
+<hr>
+<h3 id="泛型-2">泛型 2</h3>
+<ul>
+<li>泛型就是把属性的类型进行参数化，数据的类别也能像参数一样从外部传入</li>
+<li>提供了类型检测机制，只有相匹配的数据才能正常赋值，否则编译无法通过</li>
+</ul>
+<p>泛型是通过<strong>类型擦除</strong>实现的，泛型信息只存在于代码编译阶段，在进入JVM前所有类相关的信息会被擦掉，在运行时是无法访问到类型参数的。<strong>是为了与之前版本的代码兼容</strong>。</p>
+<p><strong>通配符</strong></p>
+<p>限定通配符：&lt;? extends T&gt; 必须是T的子类 &lt;? super T&gt; 必须是T的父类</p>
+<p>非限定通配符：&lt;?&gt; 经常与容器类配合使用，所涉及的操作肯定和具体类无关</p>
+<hr>
+<h3 id="哈希冲突-2">哈希冲突 2</h3>
+<ul>
+<li>
+<p>拉链法，将冲突值加到链表中。JDK1.8之后会在一定条件下把链表转为红黑树来减少搜索时间</p>
+</li>
+<li>
+<p>使用扰动函数重新计算key的哈希值（避免哈希冲突）</p>
+</li>
+</ul>
+<hr>
+<h3 id="Map和List">Map和List</h3>
+<p>Map是和Collection并列的所有集合框架的上层接口，List和Set是Collection的子接口。</p>
+<hr>
+<h3 id="Vector-和-ArrayList">Vector 和 ArrayList</h3>
+<p>底层，扩容为什么是1.5倍</p>
+<p><strong>Vector 和 ArrayList 都是 List 的实现</strong>，前者是古老实现类，底层都是Object数组，Vector线程安全，ArrayList线程不安全</p>
+<p><strong>Vector扩容默认2倍，ArrayList是1.5倍</strong></p>
+<p>默认大小是10</p>
+<p>为什么扩容是1.5倍，因为函数中</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//将oldCapacity 右移一位，其效果相当于oldCapacity /2，</span></span><br><span class="line">        <span class="comment">//我们知道位运算的速度远远快于整除运算，整句运算式的结果就是将新容量更新为旧容量的1.5倍，</span></span><br><span class="line">        <span class="keyword">int</span> newCapacity = oldCapacity + (oldCapacity &gt;&gt; <span class="number">1</span>);</span><br></pre></td></tr></table></figure>
+<p>加上原本容量右移一位后的值，就相当于加上原来值的二分之一，变成1.5倍</p>
+<hr>
+<h2 id="并发">并发</h2>
+<hr>
+<h3 id="进程和线程的区别-16">进程和线程的区别 16</h3>
+<ul>
+<li>进程是一个执行中的程序，是系统进行资源分配的基本单位</li>
+<li>线程是进程的一个实体，一个进程中一般会有多个线程，他们共享进程的共享地址空间和其他资源（Java中是堆和方法区资源）</li>
+<li>线程一般不拥有系统资源，但是ThreadLocal会存储一些线程的专有资源（Java线程有自己的程序计数器、本地方法栈和虚拟机栈）</li>
+<li>线程的上下文切换比进程快很多</li>
+</ul>
+<p><strong>线程的上下文切换快</strong>是因为线程切换只需要保存和设置少量寄存器内容，但是进程切换需要涉及当前CPU环境的保存和新运行进程CPU环境的设置。</p>
+<p><strong>任务从保存到再加载的过程就是一次上下文切换</strong></p>
+<hr>
+<p><strong>守护线程</strong></p>
+<ul>
+<li>虚拟机要确保用户线程执行完毕</li>
+<li>虚拟机不必等待守护线程执行完毕</li>
+<li>设置 thread.setDaemon(true)</li>
+<li>例如 GC 线程</li>
+</ul>
+<hr>
+<h3 id="线程状态">线程状态</h3>
+<p>线程状态包括 <strong>新建态，运行态，阻塞态，消亡态</strong></p>
+<ul>
+<li>NEW 线程被创建但是还没有调用start方法启动</li>
+<li>Runnable 创建线程并启动后就处于Runnable状态，此时有可能正在运行Running（运行），也可能在等待CPU资源（Ready就绪）</li>
+<li>Blocked 表示线程阻塞于锁</li>
+<li>Waiting 在等待另一个线程执行一些操作后将其唤醒(执行wait方法后进入waiting，收到notify后被唤醒)</li>
+<li>Time_waiting 与waiting类似，不过有明确等待时间，在到达等待时间会自动返回(执行了sleep(second) wait(second)方法)</li>
+<li>Terminated 表示线程执行完毕后关闭</li>
+</ul>
+<p><strong>sleep()和wait()的区别</strong></p>
+<ul>
+<li>都能<strong>暂停</strong>线程的执行</li>
+<li>sleep是Thread类的方法；wait是Object类的方法</li>
+<li><strong>sleep没有释放锁；wait会释放锁</strong></li>
+<li>wait常用于线程间交互通信；sleep用于暂停线程执行</li>
+<li>wait()方法调用后需要其他线程使用notify()方法唤醒。sleep()方法执行完后线程会自己苏醒。wait()也可以设置时间实现超时自动苏醒。</li>
+</ul>
+<p><strong>blocked和wait的区别</strong></p>
+<p>blocked阻塞于锁；wait是等待另一个线程执行一些操作后将该线程唤醒（notify）</p>
+<p><strong>可不可以直接调用run()方法而不通过start()方法</strong></p>
+<p>调用start()方法才会启动一个线程并让线程进入就绪态。直接运行run()方法只会把run()方法当成main进程下的一个普通方法去执行，并不是多线程。</p>
+<hr>
+<h3 id="线程安全">线程安全</h3>
+<p>多线程环境下的线程安全主要体现在<strong>原子性，可见性和有序性</strong>方面</p>
+<hr>
+<p><strong>原子性</strong></p>
+<p>对于涉及到共享变量访问的操作，如果<strong>在外部变量看来操作是不可分割的，那操作就具有原子性</strong>。即其他线程不会看到执行操作的中间部分结果。例如转账流程中，外部只能看到A账户少100，B账户多100；而不会看到A账户少100，B账户不变的情况</p>
+<ul>
+<li>Java中 <strong>synchronized</strong> 关键字可以保证代码片段的原子性</li>
+</ul>
+<hr>
+<p><strong>可见性</strong></p>
+<p>指一个线程更新了变量后其他线程可以立马看到修改后的最新值。 <strong>volatile 关键字可以保证共享变量的可见性</strong></p>
+<p>Java线程可能将变量的值保存在本地寄存器来读取。如果一个线程在主存中修改了变量值，而另一个线程还是读它本地寄存器中变量的值，造成<strong>数据不一致</strong>。volatile指示 JVM 每次读取变量都去主存读。</p>
+<hr>
+<p><strong>有序性</strong></p>
+<p>指代码在执行过程中的先后顺序。因为 Java 的优化可能导致执行顺序未必是编写代码时的顺序。 volatile 关键字可以禁止指令重排。</p>
+<hr>
+<h3 id="sychronized-8">sychronized 8</h3>
+<p>sychronized是一个<strong>内部锁</strong>，它使用在方法和语句块上。它可以保证被它修饰的方法或语句块在任意时刻只能有一个线程执行。</p>
+<p>是重量级锁，为什么重量级？因为每次发生冲突都会把线程阻塞，而每次阻塞和唤醒都要 CPU 在用户态和内核态之间进行切换，上下文切换开销大。</p>
+<hr>
+<p><strong>最主要的三种使用方式</strong></p>
+<p><strong>修饰实例方法</strong>：作用于对象实例加锁，进入同步方法前要获得当前对象实例的锁</p>
+<p><strong>修饰静态方法</strong>：给当前类加锁，会作用于类的所有实例。如果一个线程 A 调用一个实例对象的非静态 synchronized 方法，而线程 B 需要调用这个实例对象所属类的静态 synchronized 方法，是允许的，不会发生互斥现象，<strong>因为访问静态 synchronized 方法占用的锁是当前类的锁，而访问非静态 synchronized 方法占用的锁是当前实例对象锁</strong>。<strong>是两把不同的锁</strong></p>
+<p><strong>修饰语句块</strong>：指定加锁对象</p>
+<hr>
+<p><strong>内部锁底层实现</strong></p>
+<ol>
+<li><strong>sychronized 同步语句块</strong></li>
+</ol>
+<ul>
+<li>进入时，执行 monitorenter指令 ，计数器+1，获取到 monitor 锁，执行monitorexit 指令后，计数器 -1，归为0，表明锁被释放。</li>
+<li>当一个线程判断计数器为0时，当前锁空闲，可以占用；反之，当前线程进入阻塞等待状态</li>
+</ul>
+<ol start="2">
+<li><strong>sychronized 修饰方法</strong></li>
+</ol>
+<ul>
+<li>给方法添加一个ACC_SYNCHRONIZED标示，表明该方法是一个同步方法，从而执行相应同步调用。线程在执行方法前会先去尝试获取对象的 monitor 对象，完成之后释放 monitor 对象；如果 monitor 已经被其他对象获取，当前线程被阻塞</li>
+</ul>
+<hr>
+<p><strong>sychronized 和 ReentrantLock 的区别</strong></p>
+<ul>
+<li>（ReentrantLock就是可重入锁的意思）<strong>两者都是可重入锁</strong>，可重入锁就是指在获取到锁之后，在内部还可以多次获取到锁，这样在递归调用带锁的方法时就不会发生死锁</li>
+<li><strong>sychronized 是一个修饰符，JVM实现的； 而 ReentrantLock 是JDK实现的</strong></li>
+<li><strong>ReentrantLock等待可中断</strong>，通过 lock.lockInterruptibly() 可以让线程放弃等待转而去执行其他事；synchronized 不可以</li>
+<li>ReentrantLock <strong>可以实现公平锁</strong>（默认是非公平锁），就是先等待的线程先获得锁；synchronized 是非公平锁</li>
+<li>ReentrantLock可以绑定多个 Condition 条件</li>
+</ul>
+<hr>
+<p><strong>synchronized 和 volatile 的区别</strong></p>
+<ul>
+<li>volatile 只能用于修饰变量；synchronized 可以修饰方法和代码块</li>
+<li>volatile 可以保证数据的可见性，但不能保证原子性； sychronized 两者都能保证（因为加了互斥锁）</li>
+<li>volatile 主要是解决变量在多个线程间的可见性；synchronized主要解决的事多个线程访问资源的同步性</li>
+</ul>
+<hr>
+<h3 id="volatile-5">volatile 5</h3>
+<p>语义，虚拟机如何实现</p>
+<p>volatile 关键字是一个轻量级的锁，主要保证数据可见性，但是不保证原子性。声明一个变量是不稳定的，要求每次读取都去主内存读取。</p>
+<p>加上 volatile 关键字之后会多一个 lock 指令，它相当于一个内存屏障，可以阻止指令重排，还会立刻将对变量的修改操作写入主存。</p>
+<hr>
+<h3 id="Threadlocal-3"><a target="_blank" rel="noopener" href="https://github.com/CyC2018/CS-Notes/blob/master/notes/Java%20%E5%B9%B6%E5%8F%91.md#2-%E7%BA%BF%E7%A8%8B%E6%9C%AC%E5%9C%B0%E5%AD%98%E5%82%A8thread-local-storage">Threadlocal 3</a></h3>
+<p>通常我们创建的每个变量是可以被任何线程访问并修改的。<strong>ThreadLocal 是一个创建线程局部变量的类</strong>。</p>
+<p>在主线程中创建一个Threadlocal变量，在其他线程中访问这个变量，都只能通过这个threadlocal变量访问到属于当前线程自己的变量，一个 threadlocal 对象获取到的值就是当前线程的局部变量</p>
+<p>对于以下代码，thread1 中设置 threadLocal 为 1，而 thread2 设置 threadLocal 为 2。过了一段时间之后，thread1 读取 threadLocal 依然是 1，不受 thread2 的影响。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ThreadLocalExample</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        ThreadLocal threadLocal = <span class="keyword">new</span> ThreadLocal();</span><br><span class="line">        Thread thread1 = <span class="keyword">new</span> Thread(() -&gt; &#123;</span><br><span class="line">            threadLocal.set(<span class="number">1</span>);</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                Thread.sleep(<span class="number">1000</span>);</span><br><span class="line">            &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">            System.out.println(threadLocal.get());</span><br><span class="line">            threadLocal.remove();</span><br><span class="line">        &#125;);</span><br><span class="line">        Thread thread2 = <span class="keyword">new</span> Thread(() -&gt; &#123;</span><br><span class="line">            threadLocal.set(<span class="number">2</span>);</span><br><span class="line">            threadLocal.remove();</span><br><span class="line">        &#125;);</span><br><span class="line">        thread1.start();</span><br><span class="line">        thread2.start();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>底层原理</strong></p>
+<p>Thread 类中有两个 ThreadLocalMap 类型的变量： threadLocals 和 inheritableThreadLocals</p>
+<ul>
+<li>ThreadLocalMap可以理解为ThreadLocal定制化的HashMap</li>
+<li>默认情况下这两个变量都为null，只有调用 ThreadLocal 类的 get 和 set 方法时才被创建</li>
+<li>其实所调用的 get 和 set 方法就是 ThreadLocalMap 对应的 get set 方法</li>
+</ul>
+<p>所以线程的局部变量其实是保存在当前线程的 ThreadLocalMap 中，ThreadLocal 类的变量只是一个接口，用来访问当前线程的 ThreadLocalMap 中的数据。而 ThreadLocalMap 中存储的是以 ThreadLocal 为 key ，Object 对象为 value 的键值对，所以通过一个ThreadLocal 变量可以获取到一个线程的局部变量，如果要设置多个局部变量，就需要创建多个 ThreadLocal 对象然后通过 set 赋局部变量值</p>
+<p><strong>ThreadLocal 内存泄露</strong></p>
+<p>会出现内存泄露是因为 ThreadLocalMap 中的 key 为 ThreadLocal 的弱引用，而 value 是强引用。所以如果 ThreadLocal 没有被外部强引用，在下一次GC回收的时候就会被清理掉，而 value 没有被清理，就会出现很多 key 为 null 的 Entry，如果不采取任何措施， value 永远不会被 GC 回收，就会发生内存泄漏。</p>
+<p>TreadLocalMap 在调用 get set remove 方法的时候会清除 key 为 null 的记录，所以使用完 ThreadLocal 方法后最好手动调用remove 方法</p>
+<hr>
+<h3 id="CAS-3"><a target="_blank" rel="noopener" href="https://juejin.im/post/6844903558937051144">CAS</a> 3</h3>
+<p>传统的加锁方式 synchronized 和 ReentrantLock 叫做<strong>互斥同步</strong>，又叫阻塞同步，这种同步方式最主要的问题就是<strong>线程阻塞和唤醒带来的性能问题</strong></p>
+<p>CAS 相比之下是一种乐观方式，争用失败的线程不会被阻塞挂起。CompareAndSwap 函数会进行一次比较，比较内存中 object 的value 是否和预期的 expect （即最初获取到的 value）相等，如果相等，就证明没有其他线程改变过这个变量，就更新它为 update，否则就采用自旋的方式继续进行 CAS 操作</p>
+<p>底层使用 JNI 调用 C 代码实现的，这个操作其实是 JNI 调用一个CPU指令完成的，所以具备<strong>原子性</strong></p>
+<p>但是有 ABA 问题存在，就是变量初次读取的是 A 值，后来被改为 B，后来又被改为 A，CAS就会认为这个变量从来没被改变过</p>
+<hr>
+<h3 id="Java锁-3"><a target="_blank" rel="noopener" href="https://www.cnblogs.com/myseries/p/12213997.html">Java锁 3</a></h3>
+<p>主要是针对 synchronized 的锁优化</p>
+<p>锁升级过程：无锁 -&gt; 偏向锁 -&gt; 轻量级锁 -&gt; 重量级锁</p>
+<p><strong>自旋锁</strong></p>
+<p>自旋锁的思想就是让线程在请求一个共享数据的锁时循环一段时间，如果在这段时间获取到了锁，就可以避免被阻塞。虽然能避免线程进入阻塞而减少开销，但是会占用CPU时间，所以适合那些锁定状态很短的共享数据。</p>
+<p>JDK1.6引入了自适应的自旋锁，自旋次数不再固定，而是由上一次在该锁上的自旋次数和使用者的状态决定</p>
+<p><strong>偏向锁</strong></p>
+<p>就是让第一个获取锁对象的线程，在之后获取该锁时不要进行同步操作，甚至 CAS 也不需要。如果有第二个线程尝试去获取这个锁，偏向状态就结束</p>
+<p><strong>轻量级锁</strong></p>
+<p>轻量级锁使用 CAS 操作来避免使用互斥量的开销，先用 CAS 进行同步，失败再改用互斥量同步</p>
+<p><strong>锁消除</strong></p>
+<p>如果检测出共享数据不可能存在竞争，就把锁消除</p>
+<p><strong>锁粗化</strong></p>
+<p>如果有一串连续的操作对一个对象加锁解锁，就会把锁的范围扩大到整个序列之外，避免反复加锁解锁</p>
+<p>synchronized的执行过程：</p>
+<ol>
+<li>检测Mark Word里面是不是当前线程的ID，如果是，表示当前线程处于偏向锁</li>
+<li>如果不是，则使用CAS将当前线程的ID替换Mard Word，如果成功则表示当前线程获得偏向锁，置偏向标志位1</li>
+<li>如果失败，则说明发生竞争，撤销偏向锁，进而升级为轻量级锁。</li>
+<li>当前线程使用CAS将对象头的Mark Word替换为锁记录指针，如果成功，当前线程获得锁</li>
+<li>如果失败，表示其他线程竞争锁，当前线程便尝试使用自旋来获取锁。</li>
+<li>如果自旋成功则依然处于轻量级状态。</li>
+<li>如果自旋失败，则升级为重量级锁。</li>
+</ol>
+<p>作者：自负的鱼<br>
+链接：<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/704eb56aa52a">https://www.jianshu.com/p/704eb56aa52a</a><br>
+来源：简书<br>
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</p>
+<hr>
+<h3 id="线程创建-2"><a target="_blank" rel="noopener" href="https://juejin.im/post/5d6e5d0be51d4561d54de9d9">线程创建 2</a></h3>
+<ol>
+<li>
+<p>Thread 类</p>
+<ul>
+<li>继承 Thread 类并重写 run() 方法；</li>
+<li>创建线程对象</li>
+<li>调用该对象的 start() 方法启动线程</li>
+</ul>
+</li>
+<li>
+<p>Runnable 接口</p>
+<ul>
+<li>定义一个类实现 Runnable 接口，并重写接口中的 run() 方法</li>
+<li>创建类实例，将其作为创建的 Thread 类的 target 参数， Thread 对象才是真正的线程对象</li>
+<li>调用 Thread 对象的 start() 方法启动线程</li>
+</ul>
+</li>
+<li>
+<p>Callable 和 Future</p>
+</li>
+</ol>
+<p><strong>Callable 接口提供了 call() 方法作为线程的执行体，相比 run() ，它可以有返回值，还可以抛出异常。Future 接口可以用来接受 call() 方法中的返回值。</strong></p>
+<p><strong>Callable 不是 Runnable 子接口，不能作为 target 传入 Thread，RunnableFuture 接口解决了这个问题</strong>。它是 Future 接口和 Runnable 接口的子接口，该接口的实现类可以作为 target 参数传入。其中 <strong>FutureTask</strong> 就是官方的实现类，可以作为 target 参数</p>
+<ul>
+<li>定义一个类实现 Callable 接口，并重写 call() 方法</li>
+<li>创建 Callable 实现类的实例，并用 FutureTask 类的实例包装</li>
+<li>将 FutureTask 的实例作为 target 传入 Thread 对象, 并启动线程</li>
+<li>调用 FutureTask 对象的 get() 方法获取返回值</li>
+</ul>
+<ol start="4">
+<li>线程池</li>
+</ol>
+<p><strong>三种方法的区别</strong></p>
+<p>采用 Runnable 和 Callable 接口实现</p>
+<ul>
+<li>Thread 只是实现了接口，还可以继承其他类</li>
+<li>同一个 target 可以共享给多个线程，适合让多个线程操作同一份资源</li>
+<li>线程池只能放入 Runnable 和 Callable 接口的实现类，不能放入 Thread 子类</li>
+</ul>
+<hr>
+<h3 id="线程池参数-2"><a target="_blank" rel="noopener" href="https://juejin.im/post/5d1882b1f265da1ba84aa676">线程池参数 2</a></h3>
+<p>看这一篇就够了 <a target="_blank" rel="noopener" href="https://juejin.im/post/5d1882b1f265da1ba84aa676">https://juejin.im/post/5d1882b1f265da1ba84aa676</a></p>
+<hr>
+<p><strong>线程池作用</strong></p>
+<ul>
+<li>线程池帮助<strong>管理线程</strong>，减少创建和销毁线程的资源损耗</li>
+<li>任务到达<strong>直接从线程池取</strong>线程，相比创建线程<strong>响应更快</strong></li>
+<li>线程用完再放回池子，可以<strong>复用</strong></li>
+</ul>
+<hr>
+<p><strong>核心参数</strong></p>
+<ul>
+<li><strong>corePoolSize：</strong> 线程池核心线程数最大值</li>
+<li><strong>maximumPoolSize：</strong> 线程池最大线程数大小（任务队列满后会创建非核心线程）</li>
+<li><strong>keepAliveTime：</strong> 线程池中非核心线程空闲的存活时间大小</li>
+<li><strong>unit：</strong> keepAliveTime 的时间单位</li>
+<li><strong>workQueue：</strong> 存放任务的阻塞队列</li>
+<li><strong>threadFactory：</strong> 用于设置创建线程的工厂，可以给创建的线程设置有意义的名字，可方便排查问题。</li>
+<li><strong>handler：</strong>  线城池的饱和策略事件，主要有四种类型：默认直接抛异常；丢弃任务；</li>
+</ul>
+<p><strong>任务执行流程：</strong></p>
+<ul>
+<li>收到一个任务，先检查核心线程池是否已满，如过没满，创建核心线程执行任务</li>
+<li>如果核心线程池满了，看队列是否满，如果没满，把任务放入队列</li>
+<li>如果队列满了，查看线程池是否满了，如果没满，创建一个非核心线程执行任务</li>
+<li>如果线程池也满了，无法执行任务</li>
+</ul>
+<hr>
+<p>通过 ThreadPoolExcutor 创建线程池，<strong>常见的线程池</strong>有：</p>
+<ul>
+<li>
+<p><strong>newFixedThreadPool</strong></p>
+<p>一个<strong>线程数量固定</strong>的线程池，核心线程数和最大线程数一样</p>
+<p>如果新任务提交时线程池中有空闲线程，就执行任务；如果没有，就放到一个任务队列中，等到线程空闲执行队列中的任务</p>
+<p>使用了无界阻塞队列 <strong>LinkedBlockingQueue</strong> 如果任务越积越多，会导致内存飙升最后OOM</p>
+<p><strong>适用于CPU密集型任务，适用于执行长期任务</strong></p>
+</li>
+<li>
+<p><strong>newSingleThreadExcutor</strong></p>
+<p><strong>只有一个线程</strong>的线程池，进入的任务按照一定顺序依次执行</p>
+<p><strong>适用于需要串行执行任务的场景</strong></p>
+</li>
+<li>
+<p><strong>newCachedThreadPool</strong></p>
+<p>没有核心线程，收到任务先放入阻塞队列，如果池中有空闲线程就使用，没有就创建新线程，线程空闲60秒后会被销毁</p>
+<p>因为没有线程数量限制，如果一次性有很多任务，会导致创建很多线程，内存飙升</p>
+<p><strong>用于并发执行大量短期小任务</strong></p>
+</li>
+</ul>
+<hr>
+<h3 id="AQS">AQS</h3>
+<p>AbstractQueuedSynchronizer 是一个在 JUC 之下用来实现锁和同步器的框架，它底层用了 CAS 技术来保证操作的原子性</p>
+<p>内部实现的关键是</p>
+<ul>
+<li>用 volatile 修饰的 state 状态来保证可见性，表示同步状态，通过 getState 和 setState 来操作同步状态</li>
+<li>用 FIFO 队列来实现进程间的竞争和等待</li>
+<li>还提供了各种基于 CAS 的原子操作方法</li>
+</ul>
+<p>AQS 提供了独占锁 ReentrantLock 和 共享锁 semaphore 机制等</p>
+<h3 id="JUC包下的类">JUC包下的类</h3>
+<p>各种基本类型的原子类：AtomicInteger，AtomicLong，AtomicBoolean</p>
+<p>线程安全的容器：CopyOnWriteArrayList，CocurrentHashMap，BlockingQueue等</p>
+<ul>
+<li><strong>CopyOnWriteArrayList</strong>：写操作在一个复制数组上进行，完成后将原数组指向新的复制数组。写操作需要加锁，防止并发写入导致数据丢失。<strong>缺陷</strong>是：增加内存占用，以及写操作的数据没有同步到读数组时，会导致读写不一致。</li>
+</ul>
+<p>一些锁：ReentrantLock</p>
+<p>一些工具：Semaphore信号量</p>
+<hr>
+<h2 id="JVM">JVM</h2>
+<h3 id="内存结构-6">内存结构 6</h3>
+<hr>
+<p><strong>内存结构</strong></p>
+<p>公共部分为</p>
+<ul>
+<li>堆</li>
+<li>方法区</li>
+<li>直接内存</li>
+</ul>
+<p>线程私有的</p>
+<ul>
+<li>程序计数器</li>
+<li>本地方法栈</li>
+<li>虚拟机栈</li>
+</ul>
+<hr>
+<p><strong>具体功能</strong></p>
+<hr>
+<p><strong>程序计数器</strong></p>
+<p>记录的是正在执行的那条字节码指令的地址，不会出现OOM</p>
+<ol>
+<li>字节码解释器通过改变计数器的值来依次读取指令</li>
+<li>多线程下，程序计数器记录当前线程的执行位置，切换回来之后能从上次的位置继续执行</li>
+</ol>
+<hr>
+<p><strong>虚拟机栈</strong></p>
+<p>Java 虚拟机栈为每个即将运行的 Java 方法创建一个栈帧，每个栈帧中中有局部变量表、操作数栈等信息。</p>
+<p><strong>局部变量表</strong>随着栈帧的创建而创建，大小在编译时就确定，运行时大小不变，其中存放了<strong>8种基本数据类型</strong>和<strong>堆内存中对象的引用变量</strong></p>
+<p>栈顶的栈帧是当前正在执行的方法对应的栈，只有这个栈帧中的局部变量能被操作数栈使用，如果方法中调用了新的方法，就压一个新栈在原来的栈之上，执行新栈；方法结束后，栈帧被移除，如果有返回值，会作为之后栈的操作数栈中的一个操作数</p>
+<p><strong>会出现的问题</strong></p>
+<ul>
+<li>如果栈内存不能动态扩展，当线程请求栈的深度超出当前栈的最大深度时，会出现StackOverFlowError</li>
+<li>如果栈内存可以扩展，但是线程请求时内存用完了，就会出现 OOM</li>
+</ul>
+<hr>
+<p><strong>本地方法栈</strong></p>
+<p>和虚拟机栈类似，区别是虚拟机栈是为 Java 方法服务，而本地方法栈是为本地方法服务。</p>
+<hr>
+<p><strong>堆</strong></p>
+<p>是 Java 虚拟机管理内存中最大的一块，主要作用就是<strong>存放对象实例</strong>，几乎所有的对象实例和数组都在这里分配内存。这里也是<strong>垃圾回收的主要场所</strong>。</p>
+<p><strong>分代就是在这块区域</strong>，可以被细分为新生代和老年代，分代是为了更好地回收内存，更快地分配内存</p>
+<hr>
+<p><strong>方法区</strong></p>
+<p>方法区中主要存放已被加载的类信息，还存有常量、静态变量和 JIT 编译后的代码。</p>
+<p>JDK 1.8 之后，方法区（永久代）被移除，原先的数据，被加载的类信息被放到元空间（使用直接内存）、静态变量和常量池被放入堆内存。</p>
+<p><strong>运行时常量池</strong>是方法区的一部分，存放一些编译期间生成的<strong>字面量</strong>和<strong>类的符号引用</strong></p>
+<p>符号引用就是字符串，通过这个字符串可以定位到指定数据，直接引用就是指向地址</p>
+<hr>
+<h3 id="垃圾回收-6">垃圾回收 6</h3>
+<p>GC算法和垃圾收集器，GC如何分代，为什么要分代（根据分代使用不同的垃圾收集算法，提高内存回收的效率）</p>
+<hr>
+<p><strong>GC 分代</strong></p>
+<p>分为<strong>新生代</strong>和<strong>老年代</strong></p>
+<p><strong>新生代</strong>分为 Eden、From Survivor、To Survivor，Old Memory区属于<strong>老年代</strong></p>
+<p>大多数对象在新生代Eden区分配内存，当Eden区内存不够时，虚拟机将发起一次<strong>Minor GC</strong></p>
+<ul>
+<li>Minor GC：回收新生代（包括Eden 和 Survivor），Minor GC 发生频繁，并且速度很快</li>
+<li>Major / Full GC：回收老年代，速度很慢。发生 Full GC 往往是老年代空间不足（大对象进入老年代）或者出现分配担保失败</li>
+</ul>
+<p><strong>大对象直接进入老年代</strong>，避免在 Eden 和两个 Survivor 区发生大量内存拷贝，降低效率</p>
+<p><strong>长期存活的对象进入老年代</strong>，每进行一次 Minor GC，存活下的对象年龄加1，当年龄大于晋升年龄，就被转移到老年区。晋升年龄因垃圾收集器的不同而不同。</p>
+<p><strong>动态年龄判定</strong>，如果 Survivor 区中相同年龄的对象大小大于 Survivor 空间的一半，把年龄大于等于这个数字的对象都移入老年区</p>
+<p><strong>空间分配担保</strong></p>
+<p>在发生 Minor GC 之前，虚拟机先检查老年代最大连续空间是否大于新生代所有对象总空间，如果大于， Minor GC 可以确认安全</p>
+<p>如果不成立，并且不允许分配担保，就会进行Full GC ；如果允许分配担保，会检查老年代连续内存空间是否大于历次晋升到老年代对象的平均大小，如果大于，将尝试进行一次 Minor GC；如果小于，进行 Full GC</p>
+<hr>
+<p><strong>如何判断对象已经死亡</strong></p>
+<ul>
+<li>
+<p><strong>引用计数法</strong></p>
+<p>对象头维护一个计数器，被引用，计数器+1，引用失效，计数器-1，如果计数为0该对象就被判定无效</p>
+<p>JVM 没有实现这个方法，因为无法解决循环引用，如果两个对象互相引用，就无法被回收</p>
+</li>
+<li>
+<p><strong>可达性分析法</strong></p>
+<p>以 GC Roots 为起点进行搜索，可达的对象都有效，不可达对象被回收</p>
+<p>GC Roots 包括：</p>
+<ul>
+<li>虚拟机栈局部变量表引用的对象</li>
+<li>本地方法栈JNI引用的对象</li>
+<li>方法区类静态属性引用的对象</li>
+<li>方法区常量引用的对象</li>
+</ul>
+<p>用finalize()方法可能可以自救（在该方法中使用 this 让这个对象重新被引用），如果finalize方法没有被重写，或者已经被执行过一次，就真的回收对象了。</p>
+</li>
+</ul>
+<p><strong>回收方法区</strong></p>
+<ul>
+<li>
+<p><strong>常量的回收</strong>：如果常量没有被引用，就会被清除</p>
+</li>
+<li>
+<p><strong>类什么情况下会被回收</strong></p>
+</li>
+<li>
+<p>该类的所有实例已被回收</p>
+</li>
+<li>
+<p>加载该类的 classLoader已被回收</p>
+</li>
+<li>
+<p>该类的Class对象没有被引用，无法通过反射访问该类的方法</p>
+</li>
+</ul>
+<hr>
+<p><strong>垃圾收集算法</strong></p>
+<p><strong>标记-清除</strong></p>
+<ul>
+<li><strong>标记</strong>：遍历GC Roots，将可达的对象标记为存活对象</li>
+<li><strong>清除</strong>：遍历堆中所有对象，将没有标记的对象清除，将标记过对象的标记清除</li>
+<li><strong>不足</strong>：标记和清除的效率不高；会产生大量不连续的内存碎片</li>
+</ul>
+<p><strong>复制算法（新生代）</strong></p>
+<ul>
+<li>思想是把内存等分为两块，其中一块进行垃圾收集后，把存活的对象复制到另一块，清除原来的区域。但是这样可用内存减少了一半</li>
+<li>在新生代中把内存分为三块区域，Eden， From Survivor，To Survivor，比例8:1:1. 每次使用Eden和其中一块Survivor，然后把存活的对象复制到另一块Survivor，清除剩余两块区域</li>
+</ul>
+<p><strong>标记-整理（老年代）</strong></p>
+<ul>
+<li><strong>标记</strong>：第一阶段也是遍历GC Roots，将存活的对象标记</li>
+<li><strong>整理</strong>：将所有存活的对象向一端移动，按地址排序，然后把末端内存地址以后的内存全部回收</li>
+</ul>
+<p>因为老年代每次都会有大量对象存活，如果采用复制算法开销很大</p>
+<p><strong>分代收集算法</strong></p>
+<p><strong>新生代</strong>使用复制算法；<strong>老年代</strong>使用 标记-清除 或者 标记-整理 算法</p>
+<hr>
+<p><strong>垃圾收集器</strong></p>
+<p><strong>Serial 收集器</strong></p>
+<p>单线程进行垃圾收集，会暂停所有用户线程</p>
+<p><strong>ParNew 收集器</strong></p>
+<p>Serial的多线程版本</p>
+<p><strong>Parallel Scavenge 收集器</strong></p>
+<p>多线程，关注吞吐量</p>
+<p><strong>Serial Old 收集器</strong></p>
+<p>老年代版 Serial</p>
+<p><strong>Parallel Old 收集器</strong></p>
+<p>老年代版 Parallel Scavenge</p>
+<p><strong>CMS收集器</strong></p>
+<p>追求低停顿的收集器，在垃圾收集时使用户线程和GC线程并发执行，用户不会感到明显停顿</p>
+<ul>
+<li><strong>初始标记</strong>：Stop The World，仅对GC Roots直接关联的标记进行标记，速度很快</li>
+<li><strong>并发标记</strong>：使用多条标记线程，与用户线程并发执行。进行可达性分析，标记所有可达对象，</li>
+<li><strong>重新标记</strong>：重新标记<strong>新分配到老年代的对象</strong>以及<strong>并发阶段被修改了的对象</strong></li>
+<li><strong>并发清除</strong>：开启用户线程，同时GC线程对未标记的区域进行清理</li>
+</ul>
+<p><strong>缺点</strong>是：吞吐量低；无法处理浮动垃圾；标记-清除算法会产生大量内存碎片</p>
+<p><strong>吞吐量低</strong>是因为并发阶段，虽然不会导致用户线程停顿，但是因为 GC 线程占用了一部分 CPU 资源导致应用程序变慢，最后导致吞吐量降低</p>
+<p><strong>浮动垃圾</strong>是因为并发清除阶段用户线程继续运行而产生的垃圾，这部分垃圾只能到下次GC时才能回收，因此收集器一般需要预留出20%的空间存放浮动垃圾。如果预留的空间不够存放浮动垃圾，会临时启用Serial Old进行垃圾清理。</p>
+<p><strong><a target="_blank" rel="noopener" href="https://juejin.im/entry/6844903603103072263">G1 收集器</a></strong></p>
+<p>将堆划分为若干个大小相等的 Region，每格块中的内存是连续的。G1 中每个块也会充当Eden，Survivor，Old。跟踪每个区域垃圾堆积的价值大小，在后台维护一个优先列表，每次回收优先级最高（根据回收获得的空间大小和回收所需的时间得出）的区域</p>
+<ul>
+<li><strong>初始标记</strong>：标记 GC Roots 能直接关联到的对象，这一段需要 STW ，但其实是进行 Minor GC 的时候同步完成的，所以并没有额外停顿</li>
+<li><strong>并发标记</strong>：</li>
+<li><strong>最终标记</strong></li>
+<li><strong>筛选回收</strong></li>
+</ul>
+<p>高吞吐，低停顿，基于标记整理算法，不会产生空间碎片</p>
+<hr>
+<h3 id="类加载-3">类加载 3</h3>
+<p>类加载机制（过程、<strong>类加载器</strong>、类初始化、实例化），双亲委派</p>
+<hr>
+<p><strong>类加载</strong></p>
+<p>包括 加载、验证、准备、解析、初始化5个阶段</p>
+<p><strong>加载</strong></p>
+<ul>
+<li>通过类的完全限定名获取到定义该类的二进制字节流（class文件）</li>
+<li>将二进制字节流代表的静态存储结构转化为方法区的运行时存储结构</li>
+<li>在内存中生成一个代表该类的Class对象，用于作为方法区中该类各数据的访问入口</li>
+</ul>
+<p><strong>验证</strong></p>
+<ul>
+<li>确保 Class 文件的内容符合虚拟机规范</li>
+</ul>
+<p><strong>准备</strong></p>
+<ul>
+<li>为类变量分配内存和初始化值</li>
+<li>普通类变量初始化值为零值，final类变量直接赋定义的值</li>
+</ul>
+<p><strong>解析</strong></p>
+<ul>
+<li>将运行时常量池的符号引用替换为直接引用的过程，也就是获得类或者方法在内存中的指针或者偏移量</li>
+</ul>
+<p><strong>初始化</strong></p>
+<ul>
+<li>初始化就是真正执行类中定义的 Java 程序代码，初始化静态变量的值，执行静态语句块</li>
+</ul>
+<p><strong>初始化的时机</strong></p>
+<ul>
+<li>遇到new，getstatic，putstatic，invokestatic这四条指令时</li>
+<li>对类进行反射调用时</li>
+<li>初始化一个类时发现父类还没有初始化时</li>
+<li>虚拟机启动时先初始化包含main方法的类</li>
+</ul>
+<hr>
+<p><strong>类加载器</strong></p>
+<p>Java 中内置了三个类加载器</p>
+<ul>
+<li><strong>BootstrapClassLoader(启动类加载器)</strong> 最顶层的加载类，负责加载 JAVA_HOME/lib 下的类和jar包</li>
+<li><strong>ExtensionClassLoader(扩展类加载器)</strong> 负责加载 JAVA_HOME/lib/ext 下的类和jar包</li>
+<li><strong>AppClassLoader(应用程序类加载器)</strong> 面向用户的加载器，负责加载当前路径下的所有类和jar包</li>
+</ul>
+<hr>
+<p><strong>双亲委派</strong></p>
+<p><strong>要求除了顶层启动类加载器外，其余类加载器都要有自己的父类加载器</strong>（这里的父子关系不是继承关系，而是通过<strong>组合关系</strong>来复用父类加载器的代码）</p>
+<p><strong>如果一个类加载器收到了类加载请求，会先把请求委托个父类加载器执行，如果父类加载器还有父类，就继续向上委托，最终都会到达启动类加载器。如果父类加载器能够完成加载，就成功返回，如果父类无法加载，子类才会尝试加载。</strong></p>
+<p>使得同名类有优先级关系，上层加载器加载的类优先级更高，使用的就都是上层加载器加载的类。一个例子就是 Object 类。</p>
+<p><strong>两个类相等，需要类本身相等，并且是由同一类加载器加载</strong></p>
+<hr>
+<p><strong>类实例化（Java 对象创建的过程）</strong></p>
+<ol>
+<li>
+<p><strong>类加载检查</strong></p>
+<p>一般通过 new 指令来创建对象，虚拟机遇见 new 指令时先根据指令参数看是否能在常量池中定位到某个类的符号引用，并且检查这个类是否已经被加载、解析和初始化。如果没有，会进行初始化过程。类加载完成后，会在堆中划分出一块内存，然后在这块内存上进行类的实例化。</p>
+</li>
+<li>
+<p><strong>内存分配</strong></p>
+<p>内存分配有两种方式，<strong>指针碰撞</strong>和<strong>空闲列表</strong>。这两种方式取决于堆内存是否规整，取决于垃圾收集器的算法是“<strong>标记-清除</strong>”还是“<strong>标记-整理</strong>”</p>
+</li>
+</ol>
+<ul>
+<li>
+<p><strong>指针碰撞</strong>：内存是规整的，用过的放一边，没用过的放另一边，只要沿着没用过的地方将指针移动一个对象的大小就行</p>
+</li>
+<li>
+<p><strong>空闲列表</strong>：内存不规整，但是虚拟机会维护一个列表记录哪些内存块可以用。内存分配时选择一块足够大的内存分配给对象，然后更新列表</p>
+<p><strong>如何保证线程安全</strong>：</p>
+<ul>
+<li>采用 <strong>CAS + 失败重试</strong>，采用乐观的方式，假设没有冲突去完成某项操作，如果因为冲突失败，就重试</li>
+<li><strong>TLAB</strong> 为每个线程在 Eden 区先分配一块内存，如果要为对象分配内存，先在 TLAB 尝试分配，这块内存不够时再使用上面的方法</li>
+</ul>
+</li>
+</ul>
+<ol start="3">
+<li>
+<p><strong>初始化零值</strong></p>
+<p>将分配到的内存空间都赋0值，这样对象的实例字段在 Java 中不赋初值就可以使用</p>
+</li>
+<li>
+<p><strong>设置对象头</strong></p>
+<p>将 <strong>对象是哪个类的实例、对象的哈希码、GC分代年龄</strong> 等信息放入对象头</p>
+</li>
+<li>
+<p><strong>执行 init 方法</strong></p>
+<p>内存中的值全为0，将这块内存区域按照程序员的意愿进行初始化，才是一个真正可用的对象</p>
+</li>
+</ol>
+<hr>
+<p><strong>对象访问时是如何被找到的</strong></p>
+<p><strong>句柄访问</strong>：Java堆中会划分出一块内存来作为句柄池，引用变量存储的就是对象的句柄地址，其中存放了实例数据和类数据各自的具体地址，由于不是直接访问，速度较慢</p>
+<p><strong>直接指针</strong>：对象引用存储的就是对象在堆内存的地址，然后指向类信息的地址存放在对象地址中</p>
+<hr>
+<h3 id="四种引用类型">四种引用类型</h3>
+<p><strong>强引用</strong>类似 Object obj = new Object() 就是强引用，只要强引用存在，被引用对象就永远不会被GC回收。但是如果<strong>错误保持了强引用</strong>，就会导致对象一直不会被回收。例如声明了static，只要类不被回收，引用就会一直存在。</p>
+<p><strong>软引用</strong>相对强引用弱一些，只有内存不足时才会回收软引用对象。JVM会在抛出OutOfMemeryError之前回收软引用对象。<strong>软引用可以加速 JVM 对垃圾内存的回收速度。防止内存溢出</strong></p>
+<p><strong>弱引用</strong>比软引用弱一些，JVM进行垃圾回收时，无论内存是否充足，都会回收弱引用指向的对象。</p>
+<p><strong>虚引用</strong>是最弱的一种引用关系，有无弱引用的存在不会对对象的生存周期产生影响。只是用于跟踪对象被GC回收的活动。<strong>和前几个引用的区别是，虚引用必须要和引用队列一起使用，当GC准备回收一个对象，如果发现它还有虚引用，就会在回收之前把虚引用加入到引用队列中。程序通过判断引用队列中是否有虚引用，来了解被引用的对象是否要被回收，从而采取相应措施</strong></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Java/" rel="tag"># Java</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/04/24/%E6%95%B0%E6%8D%AE%E5%BA%93%E9%9D%A2%E8%AF%95%E9%87%8D%E7%82%B9/" rel="prev" title="数据库面试重点">
+                  <i class="fa fa-chevron-left"></i> 数据库面试重点
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/04/24/Java%E5%B8%B8%E7%94%A8%E5%AE%B9%E5%99%A8%E5%8F%8A%E5%85%B6%E6%96%B9%E6%B3%95/" rel="next" title="Java常用容器及其方法">
+                  Java常用容器及其方法 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ABMIS Version 2.0</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yoursite.com","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.8.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="HashSet HashSet  hash &#x3D; new HashSet&lt;&gt;();  add() 添加元素,返回boolean类型。如果不存在该元素，则添加指定元素并返回true。否则不更改set并返回false clear() 移除set所有元素 remove(Object o) 如果指定元素存在于set中，移除指定元素 isEmpty() 如果set不包含任何元素，返回true co">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java常用容器及其方法">
+<meta property="og:url" content="http://yoursite.com/2021/04/24/Java%E5%B8%B8%E7%94%A8%E5%AE%B9%E5%99%A8%E5%8F%8A%E5%85%B6%E6%96%B9%E6%B3%95/index.html">
+<meta property="og:site_name" content="ABMIS">
+<meta property="og:description" content="HashSet HashSet  hash &#x3D; new HashSet&lt;&gt;();  add() 添加元素,返回boolean类型。如果不存在该元素，则添加指定元素并返回true。否则不更改set并返回false clear() 移除set所有元素 remove(Object o) 如果指定元素存在于set中，移除指定元素 isEmpty() 如果set不包含任何元素，返回true co">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-04-24T05:39:04.000Z">
+<meta property="article:modified_time" content="2021-06-10T08:19:44.000Z">
+<meta property="article:author" content="abmis">
+<meta property="article:tag" content="Java">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://yoursite.com/2021/04/24/Java%E5%B8%B8%E7%94%A8%E5%AE%B9%E5%99%A8%E5%8F%8A%E5%85%B6%E6%96%B9%E6%B3%95/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://yoursite.com/2021/04/24/Java%E5%B8%B8%E7%94%A8%E5%AE%B9%E5%99%A8%E5%8F%8A%E5%85%B6%E6%96%B9%E6%B3%95/","path":"2021/04/24/Java常用容器及其方法/","title":"Java常用容器及其方法"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Java常用容器及其方法 | ABMIS</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">ABMIS</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-照片"><a href="/photos/" rel="section"><i class="fa fa-camera fa-fw"></i>照片</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#HashSet"><span class="nav-number">1.</span> <span class="nav-text">HashSet</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HashMap"><span class="nav-number">2.</span> <span class="nav-text">HashMap</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#HashMap-%E9%81%8D%E5%8E%86%E6%96%B9%E6%B3%95"><span class="nav-number">2.1.</span> <span class="nav-text">HashMap 遍历方法</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LinkedList"><span class="nav-number">3.</span> <span class="nav-text">LinkedList</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C"><span class="nav-number">3.0.1.</span> <span class="nav-text">基本操作</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%A0%88%E6%93%8D%E4%BD%9C"><span class="nav-number">3.0.2.</span> <span class="nav-text">栈操作</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%98%9F%E5%88%97%E6%93%8D%E4%BD%9C"><span class="nav-number">3.0.3.</span> <span class="nav-text">队列操作</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%8F%8C%E7%AB%AF%E9%98%9F%E5%88%97-%E5%8F%AF%E5%AE%9E%E7%8E%B0%E5%8D%95%E8%B0%83%E9%98%9F%E5%88%97"><span class="nav-number">3.0.4.</span> <span class="nav-text">双端队列 - 可实现单调队列</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ArrayList"><span class="nav-number">4.</span> <span class="nav-text">ArrayList</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Stack"><span class="nav-number">5.</span> <span class="nav-text">Stack</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#StringBuilder"><span class="nav-number">6.</span> <span class="nav-text">StringBuilder</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#String"><span class="nav-number">7.</span> <span class="nav-text">String</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#System"><span class="nav-number">8.</span> <span class="nav-text">System</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="abmis"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">abmis</p>
+  <div class="site-description" itemprop="description">Know your game.</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">30</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/simba426" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;simba426" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://instagram.com/woody_simba" title="Instagram → https:&#x2F;&#x2F;instagram.com&#x2F;woody_simba" rel="noopener" target="_blank"><i class="fab fa-instagram fa-fw"></i>Instagram</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://t.me/abmis_reverse" title="Telegram → https:&#x2F;&#x2F;t.me&#x2F;abmis_reverse" rel="noopener" target="_blank"><i class="fab fa-telegram fa-fw"></i>Telegram</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/04/24/Java%E5%B8%B8%E7%94%A8%E5%AE%B9%E5%99%A8%E5%8F%8A%E5%85%B6%E6%96%B9%E6%B3%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="abmis">
+      <meta itemprop="description" content="Know your game.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ABMIS">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Java常用容器及其方法
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-04-24 13:39:04" itemprop="dateCreated datePublished" datetime="2021-04-24T13:39:04+08:00">2021-04-24</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-06-10 16:19:44" itemprop="dateModified" datetime="2021-06-10T16:19:44+08:00">2021-06-10</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index"><span itemprop="name">技术</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h3 id="HashSet">HashSet</h3>
+<p>HashSet<T>  hash = new HashSet&lt;&gt;();</p>
+<ul>
+<li>add() 添加元素,返回boolean类型。如果不存在该元素，则添加指定元素并返回true。否则不更改set并返回false</li>
+<li>clear() 移除set所有元素</li>
+<li>remove(Object o) 如果指定元素存在于set中，移除指定元素</li>
+<li>isEmpty() 如果set不包含任何元素，返回true</li>
+<li>contains(Object o) 如果set包含指定元素，返回true</li>
+<li>size() 返回set中元素数量</li>
+</ul>
+<span id="more"></span>
+<h3 id="HashMap">HashMap</h3>
+<p>HashMap&lt;T, T&gt; hashMap = new HashMap&lt;&gt;();</p>
+<ul>
+<li>put(key, value) 添加键值对，如果key已经存在，就返回旧value，并更新成新value。如果不存在，就返回null</li>
+<li>putIfAbsent(key, value); 不会覆盖原有的value</li>
+<li>remove(key) 删除元素。删除成功返回对应的value，否则返回null</li>
+<li>get(key) 获取key对应的value</li>
+<li>containsKey(key) 判断key是否存在</li>
+<li>containsValue(value) 判断value是否存在</li>
+<li>replace(key, value) 对于已经存在的key，替换其value</li>
+</ul>
+<h4 id="HashMap-遍历方法">HashMap 遍历方法</h4>
+<p>一、for-each循环中使用entries遍历</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Map&lt;Integer, Integer&gt; hash = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line"><span class="keyword">for</span>(Map.Entry&lt;Integer, Integer&gt; entry : hash.entrySet()) &#123;</span><br><span class="line">    entry.getKey() + entry.getValue()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>二、在for-each中遍历key或者value集合</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Map&lt;Integer, Integer&gt; hash = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line"><span class="keyword">for</span>(Integer key : hash.keySet()) &#123;</span><br><span class="line">  key;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">for</span>(Integer value : hash.values()) &#123;</span><br><span class="line">  value;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>三、通过键找值</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Map&lt;Integer, Integer&gt; hash = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line"><span class="keyword">for</span>(Integer key : hash.keySet()) &#123;</span><br><span class="line">  value = hash.get(key);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这种方法效率低，因为通过键来取值很耗时</p>
+<hr>
+<h3 id="LinkedList">LinkedList</h3>
+<p>LinkedList<T> list = new LinkedList&lt;&gt;();</p>
+<h5 id="基本操作">基本操作</h5>
+<p><strong>add</strong></p>
+<ul>
+<li>add() 在链表后添加元素</li>
+<li>addFirst() 在链表头部插入一个元素</li>
+<li>addLast() 在链表尾部添加一个元素</li>
+<li>add(index, element) 在指定位置插入一个元素</li>
+</ul>
+<p><strong>remove</strong></p>
+<ul>
+<li>remove() 移除链表第一个元素</li>
+<li>remove(Obejct o) 移除链表中指定元素</li>
+<li>remove(index) 移除链表中指定位置元素</li>
+<li>removeFirst() 移除链表中第一个元素，与remove类似</li>
+<li>removeLast() 移除链表中最后一个元素</li>
+</ul>
+<p><strong>get</strong></p>
+<ul>
+<li>getFirst() 获取第一个元素</li>
+<li>getLast() 获取最后一个元素</li>
+</ul>
+<h5 id="栈操作">栈操作</h5>
+<ul>
+<li>push() 与addFirst一样</li>
+<li>pop() 与removeFirst一样</li>
+<li>poll() 查询并移除第一个元素</li>
+<li>peek() 获取第一个元素，但是不移除</li>
+</ul>
+<h5 id="队列操作">队列操作</h5>
+<p>Queue&lt;&gt; queue = new LinkedList&lt;&gt;();</p>
+<ul>
+<li>offer() 在队列尾部插入元素</li>
+<li>add() 让元素入队</li>
+<li>poll() 首部元素出队列</li>
+</ul>
+<p><strong>其他</strong></p>
+<ul>
+<li>contains(e) 是否包含某元素</li>
+</ul>
+<h5 id="双端队列-可实现单调队列">双端队列 - 可实现单调队列</h5>
+<p>Deque&lt;&gt; deque = new LinkedList&lt;&gt;();</p>
+<p>peekLast() 获取队列尾端值</p>
+<p>peekFirst() 获取队列尾部值</p>
+<p>removeFirst() 移除队列头部第一个值</p>
+<p>removeLast() 移除队列尾部第一个值</p>
+<hr>
+<h3 id="ArrayList">ArrayList</h3>
+<ul>
+<li>add() 顺序添加元素</li>
+<li>get(i) 获取第i个元素</li>
+<li>Arrays.sort() 列表排序</li>
+<li>remove(index) 删除对应索引的元素</li>
+</ul>
+<hr>
+<h3 id="Stack">Stack</h3>
+<p>是Vector的子类</p>
+<p>push()</p>
+<p>pop()</p>
+<p>peek()</p>
+<hr>
+<h3 id="StringBuilder">StringBuilder</h3>
+<p>append() 向尾部添加字符串</p>
+<p>deleteCharAt(i) 定点删除字符</p>
+<h3 id="String">String</h3>
+<p>//把字符串去头尾后以“，”为分隔符分割成字符串数组</p>
+<p>String[] list = data.substring(1, data.length() - 1).split(“,”);</p>
+<hr>
+<h3 id="System">System</h3>
+<p>arraycopy(Object src, int srcPos, Object dest, int destPos, int length)</p>
+<p>src:源数组;</p>
+<p>srcPos:源数组要复制的起始位置;</p>
+<p>dest:目的数组;</p>
+<p>destPos:目的数组放置的起始位置;</p>
+<p>length:复制的长度.</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Java/" rel="tag"># Java</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/04/24/Java%E9%9D%A2%E8%AF%95%E9%87%8D%E7%82%B9/" rel="prev" title="Java面试重点">
+                  <i class="fa fa-chevron-left"></i> Java面试重点
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/04/24/Java%20I:O/" rel="next" title="Java I/O">
+                  Java I/O <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ABMIS Version 2.0</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
