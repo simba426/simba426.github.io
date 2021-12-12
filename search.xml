@@ -1,6 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Hexo 常用</title>
+    <url>/2021/04/24/Hexo-%E5%B8%B8%E7%94%A8%E6%8C%87%E4%BB%A4/</url>
+    <content><![CDATA[<p>收录编辑、发布博客时常用到的 Hexo 指令等</p>
+<span id="more"></span>
+<h3 id="新建文章">新建文章</h3>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hexo new &quot;title&quot; </span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>path -&gt; /source/_posts/</p>
+</blockquote>
+<h3 id="本地测试">本地测试</h3>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hexo s</span><br></pre></td></tr></table></figure>
+<h3 id="部署">部署</h3>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hexo clean &amp;&amp; hexo g &amp;&amp; hexo d</span><br></pre></td></tr></table></figure>
+<h3 id="图标">图标</h3>
+<p>原生支持图标库 Font Awesome<br>
+<a href="https://fontawesome.com/icons?d=gallery&amp;p=2">https://fontawesome.com/icons?d=gallery&amp;p=2</a></p>
+<h3 id="参考">参考</h3>
+<p><a href="https://winney07.github.io/2018/08/02/%E5%9C%A8Hexo%E5%8D%9A%E5%AE%A2%E4%B8%AD%E5%8F%91%E5%B8%83%E6%96%87%E7%AB%A0/">在Hexo博客中发布文章</a></p>
+]]></content>
+      <categories>
+        <category>效率</category>
+      </categories>
+      <tags>
+        <tag>Hexo</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Guava cache 介绍和简单使用</title>
     <url>/2021/04/26/Guava-cache-%E4%BB%8B%E7%BB%8D%E5%92%8C%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8/</url>
     <content><![CDATA[<blockquote>
@@ -62,76 +89,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Hexo 常用</title>
-    <url>/2021/04/24/Hexo-%E5%B8%B8%E7%94%A8%E6%8C%87%E4%BB%A4/</url>
-    <content><![CDATA[<p>收录编辑、发布博客时常用到的 Hexo 指令等</p>
-<span id="more"></span>
-<h3 id="新建文章">新建文章</h3>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hexo new &quot;title&quot; </span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>path -&gt; /source/_posts/</p>
-</blockquote>
-<h3 id="本地测试">本地测试</h3>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hexo s</span><br></pre></td></tr></table></figure>
-<h3 id="部署">部署</h3>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hexo clean &amp;&amp; hexo g &amp;&amp; hexo d</span><br></pre></td></tr></table></figure>
-<h3 id="图标">图标</h3>
-<p>原生支持图标库 Font Awesome<br>
-<a href="https://fontawesome.com/icons?d=gallery&amp;p=2">https://fontawesome.com/icons?d=gallery&amp;p=2</a></p>
-<h3 id="参考">参考</h3>
-<p><a href="https://winney07.github.io/2018/08/02/%E5%9C%A8Hexo%E5%8D%9A%E5%AE%A2%E4%B8%AD%E5%8F%91%E5%B8%83%E6%96%87%E7%AB%A0/">在Hexo博客中发布文章</a></p>
-]]></content>
-      <categories>
-        <category>效率</category>
-      </categories>
-      <tags>
-        <tag>Hexo</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Java Excel 相关操作</title>
-    <url>/2021/05/10/Java-Excel/</url>
-    <content><![CDATA[<p>Excel 文件导入导出的相关操作</p>
-<h3 id="引入-poi-相关依赖">引入 poi 相关依赖</h3>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.poi<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>poi<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>3.16<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.poi<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>poi-ooxml<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>3.16<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<h3 id="解析-Excel">解析 Excel</h3>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> org.apache.poi.xssf.usermodel.*;</span><br><span class="line"></span><br><span class="line"><span class="meta">@CrossOrigin</span></span><br><span class="line"><span class="meta">@RequestMapping(value = &#123;&quot;/parseExcel&quot;&#125;, method = RequestMethod.POST, produces = &#123;&quot;application/json;charset=UTF-8&quot;&#125;)</span></span><br><span class="line"><span class="meta">@ResponseBody</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Result&lt;Boolean&gt; <span class="title">parseExcel</span><span class="params">(<span class="meta">@RequestParam(&quot;file&quot;)</span> MultipartFile file)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// @RequestParam(&quot;file&quot;)MultipartFile file 用来接受前端传过来的 Excel 文件</span></span><br><span class="line">        <span class="comment">// 创建 Workbook 对象，读取整个文档</span></span><br><span class="line">        InputStream inputStream = file.getInputStream();</span><br><span class="line">        XSSFWorkbook xssfWorkbook = <span class="keyword">new</span> XSSFWorkbook(inputStream);</span><br><span class="line">        <span class="comment">// 读取页脚 sheet</span></span><br><span class="line">        XSSFSheet xssfSheet = xssfWorkbook.getSheetAt(<span class="number">0</span>);</span><br><span class="line">        <span class="comment">// 循环取每行的数据</span></span><br><span class="line">        <span class="comment">// rowIndex 为 1 是为了跳过标题行</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> rowIndex = <span class="number">1</span>; rowIndex &lt; xssfSheet.getPhysicalNumberOfRows(); rowIndex++) &#123;</span><br><span class="line">            XSSFRow xssfRow = xssfSheet.getRow(rowIndex);</span><br><span class="line">            <span class="keyword">if</span> (xssfRow == <span class="keyword">null</span>) &#123;</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// 获取单元格数据</span></span><br><span class="line">            Long id = ExcelUtils.getLong(xssfRow.getCell(<span class="number">0</span>));</span><br><span class="line">            String str = ExcelUtils.getString(xssfRow.getCell(<span class="number">1</span>)));</span><br><span class="line">            Integer num = ExcelUtils.getInteger(xssfRow.getCell(<span class="number">2</span>));</span><br><span class="line">            Boolean isFalse = ExcelUtils.getBoolean(xssfRow.getCell(<span class="number">3</span>));</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="导出-Excel">导出 Excel</h3>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> org.apache.poi.xssf.usermodel.*;</span><br><span class="line"></span><br><span class="line"><span class="meta">@ApiOperation(value = &quot;exportExcel&quot;)</span></span><br><span class="line"><span class="meta">@RequestMapping(value = &#123;&quot;/exportExcel&quot;&#125;, method = RequestMethod.GET)</span></span><br><span class="line"><span class="meta">@ResponseBody</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Result&lt;Boolean&gt; <span class="title">exportExcel</span><span class="params">(HttpServletResponse response)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 设置要导出的文件的名字</span></span><br><span class="line">    String fileName = <span class="string">&quot;data&quot;</span>  + <span class="keyword">new</span> Date() + <span class="string">&quot;.xlsx&quot;</span>;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        XSSFWorkbook workbook = <span class="keyword">new</span> XSSFWorkbook();</span><br><span class="line">        XSSFSheet sheet = workbook.createSheet(<span class="string">&quot;信息表&quot;</span>);</span><br><span class="line">        <span class="comment">// headers表示excel表中第一行的表头 在excel表中添加表头</span></span><br><span class="line">        String[] headers = &#123; <span class="string">&quot;id&quot;</span>, <span class="string">&quot;名称&quot;</span>, <span class="string">&quot;类型&quot;</span>&#125;;</span><br><span class="line">        XSSFRow head = sheet.createRow(<span class="number">0</span>);</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; headers.length; i++)&#123;</span><br><span class="line">            XSSFCell cell = head.createCell(i);</span><br><span class="line">            XSSFRichTextString text = <span class="keyword">new</span> XSSFRichTextString(headers[i]);</span><br><span class="line">            cell.setCellValue(text);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 新增数据行，并且设置单元格数据</span></span><br><span class="line">        XSSFRow row =sheet.createRow(<span class="number">1</span>);</span><br><span class="line">        row.createCell(<span class="number">0</span>).setCellValue(id);</span><br><span class="line">        row.createCell(<span class="number">1</span>).setCellValue(name);</span><br><span class="line">        row.createCell(<span class="number">2</span>).setCellValue(type);</span><br><span class="line">        response.setContentType(<span class="string">&quot;application/octet-stream&quot;</span>);</span><br><span class="line">        response.setHeader(<span class="string">&quot;Content-disposition&quot;</span>, <span class="string">&quot;attachment;filename=&quot;</span> + fileName);</span><br><span class="line">        response.flushBuffer();</span><br><span class="line">        workbook.write(response.getOutputStream());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="单元格数据类型转换">单元格数据类型转换</h3>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> org.apache.poi.xssf.usermodel.*;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 把单元格值转为 String</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">getString</span><span class="params">(XSSFCell xssfCell)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (xssfCell == <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (xssfCell.getCellTypeEnum() == CellType.NUMERIC) &#123;</span><br><span class="line">        <span class="keyword">return</span> String.valueOf(xssfCell.getNumericCellValue());</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (xssfCell.getCellTypeEnum() == CellType.BOOLEAN) &#123;</span><br><span class="line">        <span class="keyword">return</span> String.valueOf(xssfCell.getBooleanCellValue());</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> xssfCell.getStringCellValue();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 切割是为了去除小数点</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Long <span class="title">getLong</span><span class="params">(XSSFCell xssfCell)</span> </span>&#123;</span><br><span class="line">    String s = getString(xssfCell);</span><br><span class="line">    <span class="keyword">return</span> Long.valueOf(s.substring(<span class="number">0</span>, s.length() - <span class="number">2</span>));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Integer <span class="title">getInteger</span><span class="params">(XSSFCell xssfCell)</span> </span>&#123;</span><br><span class="line">    String s = getString(xssfCell);</span><br><span class="line">    <span class="keyword">return</span> Integer.valueOf(s.substring(<span class="number">0</span>, s.length() - <span class="number">2</span>));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Boolean <span class="title">getBoolean</span><span class="params">(XSSFCell xssfCell)</span> </span>&#123;</span><br><span class="line">    String s = getString(xssfCell);</span><br><span class="line">    <span class="keyword">return</span> Boolean.valueOf(s.substring(<span class="number">0</span>, s.length() - <span class="number">2</span>));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>技术</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Java常用日志框架</title>
-    <url>/2021/12/12/Java%E5%B8%B8%E7%94%A8%E6%97%A5%E5%BF%97%E6%A1%86%E6%9E%B6/</url>
-    <content><![CDATA[<p>2021年12月10日，Log4j2 被爆出存在<a href="https://nosec.org/home/detail/4917.html">严重安全漏洞</a>，攻击者可以通过 JNDI 注入的方式远程在目标机器上执行任意代码来发动攻击，一种场景就是，如果有一个接口会将入参用log4j2打印出来，攻击者就可以传入形如<code>$&#123;jndi:rmi//xxxxxx&#125;</code>的命令，在目标机器上执行远程代码。</p>
-<p>在排查最近在开发的一个 Java 项目是否存在该漏洞时，发现这个项目打印的日志并不会触发漏洞，但是项目中又确实存在 log4j2 的依赖。仔细看了一下项目的日志方法，原来这个项目使用的日志框架是 logback 而非 log4j2。这也刚好勾起了我的疑问，平时在使用日志时知道有 slf4j，log4j 这类字眼，logback 很少有见到，对于日志这一块，也是只需要能打印出来供线上问题排查即可。那么 Java 中的各种日志框架各自的区别又是什么呢？</p>
-<h3 id="Slf4j">Slf4j</h3>
-<p>很长一段时间，我都以为 slf4j 是和 log4j 一样的一种日志框架，但其实它的全称（Simple Logging Facade for Java）告诉我们，这是专门针对 Java 提供的一种简单日志门面。它本身不提供日志服务，而是统一了接口，供其他日志框架来接入。优点就是，如果后续项目升级时需要更换日志框架，省去了对代码的改动，只需要更换日志框架的 jar 包即可。</p>
-<h3 id="Log4j">Log4j</h3>
-<p>Log4j 一款比较早的日志框架，log4j2 是在此基础上的升级版，有更强大的性能。两者在获取 Logger 的路径上有差异，配置方式也有区别。如果要使用 slf4j + log4j 的方式输出日志，需要引入额外的桥接 jar 包。</p>
-<h3 id="Logback">Logback</h3>
-<p>Logback 是 Log4j 的升级版，由 Slf4j 的作者开发，使用 xml 进行配置。该框架默认实现了 Slf4j 标准，所使用的 Logger 和 LoggerFactory 都是 Slf4j 的实现，使用 slf4j + logback 的组合不需要引入额外的 jar 包。</p>
-<h3 id="参考">参考</h3>
-<p><a href="https://nosec.org/home/detail/4917.html">【安全通报】Apache Log4j2 远程代码执行漏洞</a><br>
-<a href="https://juejin.cn/post/7033021644142542878">log4j、log4j2、slf4j、logback什么关系？到底该使用哪些jar??</a><br>
-<a href="https://www.codenong.com/cs105272888/">Slf4j与log4j及log4j2的关系及使用方法</a></p>
-]]></content>
-      <categories>
-        <category>技术</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Java I/O</title>
     <url>/2021/04/24/Java%20I:O/</url>
     <content><![CDATA[<h3 id="Java-I-O分类">Java I/O分类</h3>
@@ -188,6 +145,26 @@
 ]]></content>
       <categories>
         <category>面试</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Java Excel 相关操作</title>
+    <url>/2021/05/10/Java-Excel/</url>
+    <content><![CDATA[<p>Excel 文件导入导出的相关操作</p>
+<h3 id="引入-poi-相关依赖">引入 poi 相关依赖</h3>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.poi<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>poi<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>3.16<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.poi<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>poi-ooxml<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>3.16<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="解析-Excel">解析 Excel</h3>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> org.apache.poi.xssf.usermodel.*;</span><br><span class="line"></span><br><span class="line"><span class="meta">@CrossOrigin</span></span><br><span class="line"><span class="meta">@RequestMapping(value = &#123;&quot;/parseExcel&quot;&#125;, method = RequestMethod.POST, produces = &#123;&quot;application/json;charset=UTF-8&quot;&#125;)</span></span><br><span class="line"><span class="meta">@ResponseBody</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Result&lt;Boolean&gt; <span class="title">parseExcel</span><span class="params">(<span class="meta">@RequestParam(&quot;file&quot;)</span> MultipartFile file)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// @RequestParam(&quot;file&quot;)MultipartFile file 用来接受前端传过来的 Excel 文件</span></span><br><span class="line">        <span class="comment">// 创建 Workbook 对象，读取整个文档</span></span><br><span class="line">        InputStream inputStream = file.getInputStream();</span><br><span class="line">        XSSFWorkbook xssfWorkbook = <span class="keyword">new</span> XSSFWorkbook(inputStream);</span><br><span class="line">        <span class="comment">// 读取页脚 sheet</span></span><br><span class="line">        XSSFSheet xssfSheet = xssfWorkbook.getSheetAt(<span class="number">0</span>);</span><br><span class="line">        <span class="comment">// 循环取每行的数据</span></span><br><span class="line">        <span class="comment">// rowIndex 为 1 是为了跳过标题行</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> rowIndex = <span class="number">1</span>; rowIndex &lt; xssfSheet.getPhysicalNumberOfRows(); rowIndex++) &#123;</span><br><span class="line">            XSSFRow xssfRow = xssfSheet.getRow(rowIndex);</span><br><span class="line">            <span class="keyword">if</span> (xssfRow == <span class="keyword">null</span>) &#123;</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// 获取单元格数据</span></span><br><span class="line">            Long id = ExcelUtils.getLong(xssfRow.getCell(<span class="number">0</span>));</span><br><span class="line">            String str = ExcelUtils.getString(xssfRow.getCell(<span class="number">1</span>)));</span><br><span class="line">            Integer num = ExcelUtils.getInteger(xssfRow.getCell(<span class="number">2</span>));</span><br><span class="line">            Boolean isFalse = ExcelUtils.getBoolean(xssfRow.getCell(<span class="number">3</span>));</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="导出-Excel">导出 Excel</h3>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> org.apache.poi.xssf.usermodel.*;</span><br><span class="line"></span><br><span class="line"><span class="meta">@ApiOperation(value = &quot;exportExcel&quot;)</span></span><br><span class="line"><span class="meta">@RequestMapping(value = &#123;&quot;/exportExcel&quot;&#125;, method = RequestMethod.GET)</span></span><br><span class="line"><span class="meta">@ResponseBody</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Result&lt;Boolean&gt; <span class="title">exportExcel</span><span class="params">(HttpServletResponse response)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 设置要导出的文件的名字</span></span><br><span class="line">    String fileName = <span class="string">&quot;data&quot;</span>  + <span class="keyword">new</span> Date() + <span class="string">&quot;.xlsx&quot;</span>;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        XSSFWorkbook workbook = <span class="keyword">new</span> XSSFWorkbook();</span><br><span class="line">        XSSFSheet sheet = workbook.createSheet(<span class="string">&quot;信息表&quot;</span>);</span><br><span class="line">        <span class="comment">// headers表示excel表中第一行的表头 在excel表中添加表头</span></span><br><span class="line">        String[] headers = &#123; <span class="string">&quot;id&quot;</span>, <span class="string">&quot;名称&quot;</span>, <span class="string">&quot;类型&quot;</span>&#125;;</span><br><span class="line">        XSSFRow head = sheet.createRow(<span class="number">0</span>);</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; headers.length; i++)&#123;</span><br><span class="line">            XSSFCell cell = head.createCell(i);</span><br><span class="line">            XSSFRichTextString text = <span class="keyword">new</span> XSSFRichTextString(headers[i]);</span><br><span class="line">            cell.setCellValue(text);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 新增数据行，并且设置单元格数据</span></span><br><span class="line">        XSSFRow row =sheet.createRow(<span class="number">1</span>);</span><br><span class="line">        row.createCell(<span class="number">0</span>).setCellValue(id);</span><br><span class="line">        row.createCell(<span class="number">1</span>).setCellValue(name);</span><br><span class="line">        row.createCell(<span class="number">2</span>).setCellValue(type);</span><br><span class="line">        response.setContentType(<span class="string">&quot;application/octet-stream&quot;</span>);</span><br><span class="line">        response.setHeader(<span class="string">&quot;Content-disposition&quot;</span>, <span class="string">&quot;attachment;filename=&quot;</span> + fileName);</span><br><span class="line">        response.flushBuffer();</span><br><span class="line">        workbook.write(response.getOutputStream());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="单元格数据类型转换">单元格数据类型转换</h3>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> org.apache.poi.xssf.usermodel.*;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 把单元格值转为 String</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">getString</span><span class="params">(XSSFCell xssfCell)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (xssfCell == <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (xssfCell.getCellTypeEnum() == CellType.NUMERIC) &#123;</span><br><span class="line">        <span class="keyword">return</span> String.valueOf(xssfCell.getNumericCellValue());</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (xssfCell.getCellTypeEnum() == CellType.BOOLEAN) &#123;</span><br><span class="line">        <span class="keyword">return</span> String.valueOf(xssfCell.getBooleanCellValue());</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> xssfCell.getStringCellValue();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 切割是为了去除小数点</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Long <span class="title">getLong</span><span class="params">(XSSFCell xssfCell)</span> </span>&#123;</span><br><span class="line">    String s = getString(xssfCell);</span><br><span class="line">    <span class="keyword">return</span> Long.valueOf(s.substring(<span class="number">0</span>, s.length() - <span class="number">2</span>));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Integer <span class="title">getInteger</span><span class="params">(XSSFCell xssfCell)</span> </span>&#123;</span><br><span class="line">    String s = getString(xssfCell);</span><br><span class="line">    <span class="keyword">return</span> Integer.valueOf(s.substring(<span class="number">0</span>, s.length() - <span class="number">2</span>));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Boolean <span class="title">getBoolean</span><span class="params">(XSSFCell xssfCell)</span> </span>&#123;</span><br><span class="line">    String s = getString(xssfCell);</span><br><span class="line">    <span class="keyword">return</span> Boolean.valueOf(s.substring(<span class="number">0</span>, s.length() - <span class="number">2</span>));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>技术</category>
       </categories>
       <tags>
         <tag>Java</tag>
@@ -312,319 +289,130 @@
       </tags>
   </entry>
   <entry>
-    <title>Java 虚拟机</title>
-    <url>/2021/04/24/Java%E8%99%9A%E6%8B%9F%E6%9C%BA/</url>
-    <content><![CDATA[<h2 id="Java虚拟机">Java虚拟机</h2>
-<hr>
-<h3 id="一、运行时数据区域">一、运行时数据区域</h3>
-<hr>
-<p>JVM执行Java程序时会把内存分为多个数据区域，其中：</p>
-<p>堆、方法区（包括运行时常量池）和直接内存被线程共享</p>
-<p>每个线程有自己的程序计数器、本地方法栈和虚拟机栈</p>
-<span id="more"></span>
-<hr>
-<h4 id="程序计数器">程序计数器</h4>
-<p>可以看作是当前线程正在执行的那条字节码指令的地址，如果执行的是本地方法，程序计数器的值是<code>undefined</code></p>
-<p>字节码解释器通过改变计数器的值来选取下一条需要执行的字节码指令</p>
-<p>每条线程有独立的程序计数器，所以在线程切换后能恢复到正确的执行位置</p>
-<p><strong>程序计数器主要的两个作用：</strong></p>
-<ol>
-<li>字节码解释器通过改变计数器的值依次读取指令，从而实现代码的流程控制</li>
-<li>多线程下，程序计数器记录当前线程的执行位置，切换回来后可以知道上次运行到哪</li>
-</ol>
-<p><strong>程序计数器是唯一一个不会出现OutOfMemoryError的内存区域，它的生命周期随着线程的创建而创建，随着线程的结束而死亡。</strong></p>
-<hr>
-<h4 id="Java虚拟机栈">Java虚拟机栈</h4>
-<p>Java虚拟机栈为每个即将运行的Java方法创建一个栈帧</p>
-<p>Java内存可以粗糙分为堆内存和栈内存，栈就是虚拟机栈</p>
-<p>Java虚拟机栈是由一个个栈帧组成，每个栈帧中都有局部变量表、操作数栈、动态链接、方法出口信息。</p>
-<p><strong>局部变量表随着栈帧的创建而创建，大小在编译时就确定，运行时大小不会改变</strong></p>
-<p><strong>存放了编译器可知的8种基本数据类型、对象的引用</strong>（不同于对象本身，可能是对象某个位置的引用）</p>
-<p>方法需要创建局部变量时，就将值放入局部变量表</p>
-<p>Java 虚拟机栈的栈顶的栈帧是当前正在执行的活动栈，也就是当前正在执行的方法，PC 寄存器也会指向这个地址。只有这个活动的栈帧的本地变量可以被操作数栈使用，当在这个栈帧中调用另一个方法，与之对应的栈帧又会被创建，新创建的栈帧压入栈顶，变为当前的活动栈帧。</p>
-<p>方法结束后，当前栈帧被移出，栈帧的返回值变成新的活动栈帧中操作数栈的一个操作数。如果没有返回值，那么新的活动栈帧中操作数栈的操作数没有变化。</p>
-<p><strong>Java 虚拟机栈会出现两种异常：StackOverFlowError 和 OutOfMemoryError。</strong></p>
-<ul>
-<li><strong>StackOverFlowError：</strong> 若Java虚拟机栈的内存大小不允许动态扩展，那么当线程请求栈的深度超过当前Java虚拟机栈的最大深度的时候，就抛出StackOverFlowError异常。</li>
-<li><strong>OutOfMemoryError：</strong> 若 Java 虚拟机栈的内存大小允许动态扩展，且当线程请求栈时内存用完了，无法再动态扩展了，此时抛出OutOfMemoryError异常。</li>
-</ul>
-<p>随着线程的创建而创建，随着线程的死亡而死亡</p>
-<hr>
-<h4 id="本地方法栈">本地方法栈</h4>
-<p>虚拟机栈为虚拟机执行Java方法（也就是字节码）服务，而本地方法栈则为虚拟机使用到的<strong>Native方法服务</strong>，本地方法栈是描述本地方法运行过程的内存模型。</p>
-<p>本地方法被执行的时候，在本地方法栈也会创建一个栈帧，用于存放该本地方法的局部变量表、操作数栈、动态链接、出口信息。</p>
-<p>方法执行完毕后相应的栈帧也会出栈并释放内存空间，也会出现 StackOverFlowError 和 OutOfMemoryError 两种异常。</p>
-<hr>
-<h4 id="堆">堆</h4>
-<p>虚拟机管理内存中最大的一块。**此内存区域的唯一目的就是存放对象实例，几乎所有的对象实例以及数组都在这里分配内存。**在虚拟机启动时创建。</p>
-<p>Java堆是垃圾收集器管理的主要区域，所以也被称作<strong>GC堆（Garbage Collection Heap）</strong></p>
-<p>Java堆会被进一步划分（新生代、老年代、永久代，其中前两种使用的是Java程序可以使用的堆内存），这样可以更好地回收内存和分配内存。永久代是对JVM方法区的实现</p>
-<p>因为是被所有线程共享的，所以访问要注意同步的问题</p>
-<p>对于主流虚拟机，堆是可扩展的。如果线程请求分配内存，但是堆满了，内存也无法扩展，就会抛出OutOfMemoryError异常</p>
-<p>JDK1.8中移除了永久代，用元空间（Metaspace）取代。元空间使用物理内存，永久代使用JVM堆内存</p>
-<p>方法区是一个 JVM 规范，永久代与元空间都是其一种实现方式。在 JDK 1.8 之后，原来永久代的数据被分到了堆和元空间中。<strong>元空间存储类的元信息，静态变量和常量池等放入堆中</strong>。</p>
-<hr>
-<h4 id="方法区">方法区</h4>
-<p>是堆的一个逻辑部分，和Java堆不一样。存储被虚拟机加载的类信息、常量、静态变量、即时编译器编译的代码等。</p>
-<p>方法区被称为“永久代”，因为其中的信息一般都需要长久存在。对方法区的主要回收目标是：对常量池回收；对类的卸载</p>
-<p><strong>相对而言，垃圾收集行为在这个区域是比较少出现的，但并非数据进入方法区后就“永久存在”了。</strong></p>
-<p><strong>运行时常量池</strong>是方法区的一部分，存放编译期间生成的常量（<strong>字面量</strong>和<strong>符号引用</strong>）</p>
-<p>字面量包括：文本字符串，final常量，基本数据类型</p>
-<p>符号引用：类的完全限定名，字段名和描述符，方法名和描述符</p>
-<p>受到方法区内存的限制，无法申请到内存时会抛出OutOfMemoryError异常</p>
-<p>JDK1.7之后的版本将运行时常量池从方法区移到了Java堆中</p>
-<hr>
-<h4 id="直接内存">直接内存</h4>
-<p>不是虚拟机运行时数据区的一部分，也不是虚拟机规范中定义的内存区，但会被频繁使用，也会出现内存超出</p>
-<p>直接内存申请空间耗费更高的性能</p>
-<p>直接内存读取 IO 的性能要优于普通的堆内存。</p>
-<hr>
-<h4 id="Java对象的创建过程">Java对象的创建过程</h4>
-<p>类加载检查 – 分配内存 – 初始化零值 – 设置对象头 – 执行init方法</p>
-<p>类加载检查：遇到new指令，先去检查能否在常量池中定位到类的符号引用，并检查其代表的类是否被加载、解析和初始化过，如果没有，要先执行相应的类加载过程</p>
-<p>分配内存：通过类加载检查后为新生对象分配内存，所需内存大小在类加载完成后就确定，从Java堆中分出一块确定大小的区域，分配方式有<strong>指针碰撞</strong>和<strong>空闲列表</strong>两种</p>
-<p>两种方式取决于堆是否规整，取决于垃圾收集器的算法是“标记-清除”还是“标记-整理”</p>
-<p>指针碰撞：用过的内存放一边，没用过的放一边，只要沿着没用过的地方移动指针就行</p>
-<p>空闲列表：虚拟机会维护一个列表，记录哪些内存块可用。分配内存时找一块足够大的内存块分配给对象，更新列表</p>
-<p>初始化零值：将对象分配到的内存都初始化为零值，保证对象的实例可以不赋初始值就使用</p>
-<p>设置对象头：虚拟机对对象进行必要的设置，将对象的相关信息如：是哪个类的实例、对象的哈希码等放到对象头中</p>
-<p>执行init方法：虚拟机已经产生一个新的对象，但是Java程序中才刚刚开始，init执行后一个新的对象才算产生</p>
-<hr>
-<h4 id="对象的内存布局">对象的内存布局</h4>
-<p>分为3块：对象头、实例数据和对其填充</p>
-<p>对象头包括：自身的运行时数据（哈希码，GC分代年龄）、类型指针（指向类元数据的指针，确定对象是哪个类的实例）</p>
-<p>实例数据：对象的成员变量</p>
-<p>对其填充：起占位作用</p>
-<p>访问对象的方式：</p>
-<p>创建对象时在两个地方分配了内存。引用存在Java虚拟机栈的局部变量表中，但是实际对象存储在堆中</p>
-<p>句柄访问：引用类型的变量存储了对象的句柄地址，通过访问句柄池找到对象，包括对象实例数据（java堆）和对象所属类的数据（方法区）</p>
-<p>直接指针访问：对象的变量直接存放Java堆中对象的地址，但是Java堆中的对象实例还需要额外存储方法区中对象所属类信息的地址。</p>
-<p>hotspot采用直接指针访问，只要一次寻址速度比前者快一倍，但是需要额外策略来存储地址。</p>
-<hr>
-<p>常量池</p>
-<p>直接使用双引号声明出来的 String 对象会直接存储在常量池中， new出来的在堆内存中。</p>
-<ul>
-<li><strong>Byte,Short,Integer,Long,Character,Boolean；这5种包装类默认创建了数值[-128，127]的相应类型的缓存数据，但是超出此范围仍然会去创建新的对象。</strong></li>
-<li><strong>两种浮点数类型的包装类 Float,Double 并没有实现常量池技术。</strong></li>
-</ul>
-<hr>
-<h3 id="二、垃圾收集策略">二、垃圾收集策略</h3>
-<hr>
-<p>关注Java堆和方法区的内存，因为只有运行时才知道创建了哪些对象，这部分内存的分配和回收都是动态的</p>
-<h4 id="判断对象是否存活">判断对象是否存活</h4>
-<hr>
-<p>如果一个对象不被任何对象引用，就是无效对象，会被回收</p>
-<h5 id="引用计数器法">引用计数器法</h5>
-<p>对象头维护一个counter计数器，被引用一次+1，引用失效-1，如果计数器为0该对象就无效</p>
-<p>实现简单，判定效率搞。但主流Java虚拟机没有采用这个方法，因为很难解决对象间循环引用的问题 – 如果两个对象互相引用，计数器都不为0，就无法被回收。</p>
-<h5 id="可达性分析法">可达性分析法</h5>
-<p>所有和GC Roots直接或间接关联的对象都是有效对象，否则是无效对象</p>
-<p>GC Roots 指：</p>
-<ul>
-<li>Java虚拟机栈（栈帧中的局部变量表）中引用的对象</li>
-<li>本地方法栈中引用的对象</li>
-<li>方法区中常量引用的对象</li>
-<li>方法区中静态属性引用的对象</li>
-</ul>
-<p>不包括堆中对象引用的对象，所以不会有循环引用</p>
-<h4 id="引用的种类">引用的种类</h4>
-<hr>
-<h5 id="强引用-Strong">强引用 Strong</h5>
-<p>类似Object obj = new Object()就是强引用，只要强引用存在。GC永远不会回收被引用的对象。但是，如果我们<strong>错误地保持了强引用</strong>，比如：赋值给了 static 变量，那么对象在很长一段时间内不会被回收，会产生内存泄漏。</p>
-<h5 id="软引用-Soft">软引用 Soft</h5>
-<p>软引用是一种相对强引用弱化一些的引用，可以让对象豁免一些垃圾收集，只有当 JVM 认为内存不足时，才会去试图回收软引用指向的对象。JVM 会确保在抛出 OutOfMemoryError 之前，清理软引用指向的对象。软引用通常用来<strong>实现内存敏感的缓存</strong>，如果还有空闲内存，就可以暂时保留缓存，当内存不足时清理掉，这样就保证了使用缓存的同时，不会耗尽内存。</p>
-<h5 id="弱引用-Weak">弱引用 Weak</h5>
-<p>弱引用的<strong>强度比软引用更弱</strong>一些。当 JVM 进行垃圾回收时，<strong>无论内存是否充足，都会回收</strong>只被弱引用关联的对象。</p>
-<h5 id="虚引用-Phantom">虚引用 Phantom</h5>
-<p>虚引用也称幽灵引用或者幻影引用，它是<strong>最弱</strong>的一种引用关系。一个对象是否有虚引用的存在，完全不会对其生存时间构成影响。它仅仅是提供了一种确保对象被 finalize 以后，做某些事情的机制，比如，通常用来做所谓的 Post-Mortem 清理机制。</p>
-<h4 id="回收堆中无效对象">回收堆中无效对象</h4>
-<hr>
-<h5 id="判断finalize-是否有必要执行">判断finalize()是否有必要执行</h5>
-<p>对于不可达的对象，会判断finalize()方法是否有必要执行，如果已经被执行过（任何一个对象的 finalize() 方法只会被系统自动调用一次）或者该方法没有被对象重写，对象就会真的被回收。</p>
-<p>如果被判定为有必要执行finalize()方法，就会放入一个F-Queue队列以较低优先级执行方法，但不确保会执行结束。</p>
-<h5 id="对象重生或死亡">对象重生或死亡</h5>
-<p>之所以提finalize()，是因为如果在方法中将this赋给某一引用，对象就重生了。否则对象就会被GC清除。</p>
-<h4 id="回收方法区内存">回收方法区内存</h4>
-<hr>
-<p>方法区中主要清除2类垃圾：废弃常量、无用的类</p>
-<h5 id="判定废弃常量">判定废弃常量</h5>
-<p>对于常量，只要常量池中的常量没有被任何的变量或对象引用，就会被清除</p>
-<h5 id="判定无用的类">判定无用的类</h5>
-<p>条件较为苛刻：</p>
-<ul>
-<li>该类的所有对象都被清除</li>
-<li>加载该类的classLoader已经被回收</li>
-<li>该类的java.lang.Class对象没有在任何地方被引用，无法在任何地方通过反射访问到该类的方法</li>
-</ul>
-<p><strong>一个类被虚拟机加载进方法区，在堆中就会有一个代表该类的对象：java.lang.Class。这个对象在类被加载到方法区时被创建，在方法区该类被删除时清除。</strong></p>
-<h4 id="垃圾收集算法">垃圾收集算法</h4>
-<hr>
-<p>常见的垃圾收集算法</p>
-<p>见： <a href="https://github.com/doocs/jvm/blob/master/docs/03-gc-algorithms.md">https://github.com/doocs/jvm/blob/master/docs/03-gc-algorithms.md</a></p>
-<h3 id="三、内存分配与回收策略">三、内存分配与回收策略</h3>
-<hr>
-<p>对象的内存分配就是在堆上分配</p>
-<h4 id="对象优先在Eden分配">对象优先在Eden分配</h4>
-<hr>
-<p>多数情况下对象在新生代Eden区进行分配，Eden区内存不够时，虚拟机将发起一次Minor GC。</p>
-<ul>
-<li>Minor GC：回收新生代（包括 Eden 和 Survivor 区域），因为 Java 对象大多都具备朝生夕灭的特性，所以 Minor GC 非常频繁，一般回收速度也比较快。</li>
-<li>Major GC / Full GC: 回收老年代，出现了 Major GC，经常会伴随至少一次的 Minor GC，但这并非绝对。Major GC 的速度一般会比 Minor GC 慢 10 倍 以上。</li>
-</ul>
-<h4 id="大对象直接进入老年代">大对象直接进入老年代</h4>
-<hr>
-<p>大对象指需要大量连续内存空间的Java对象，例如很长的字符串或数据</p>
-<p>一个大对象能够存入 Eden 区的概率比较小，发生分配担保的概率比较大，而分配担保需要涉及大量的复制，就会造成效率低下。</p>
-<p>虚拟机提供了一个 -XX:PretenureSizeThreshold 参数，令大于这个设置值的对象直接在老年代分配，这样做的目的是避免在 Eden 区及两个 Survivor 区之间发生大量的内存复制。</p>
-<h4 id="长期存活的对象将进入老年代">长期存活的对象将进入老年代</h4>
-<hr>
-<p>JVM给每个对象定义一个年龄计数器，每次发生Minor GC存活时，存活下的对象年龄+1，超过一定值就转移到老年代</p>
-<p>使用 -XXMaxTenuringThreshold 设置新生代的最大年龄，只要超过该参数的新生代对象都会被转移到老年代中去。</p>
-<h4 id="动态对象年龄判定">动态对象年龄判定</h4>
-<hr>
-<p>如果新生代Survivor中相同年龄所有对象的总和大于Survivor空间的一半，将年龄&gt;=该年龄的对象直接放入老年代。</p>
-<h4 id="空间分配担保">空间分配担保</h4>
-<hr>
-<p>JDK 6 Update24 之后</p>
-<p>只要老年代的连续空间大于历次晋升的平均大小，就进行Minor GC，否则进行Full GC。</p>
-<p>通过清除老年代中飞起数据来扩大老年代空闲空间，为新生代作担保，这个过程就是分配担保。</p>
-<hr>
-<h4 id="会触发JVM进行Full-GC的情况">会触发JVM进行Full GC的情况</h4>
-<p>System.gc()的调用</p>
-<p>老年代空间不足</p>
-<p>发生空间分配担保</p>
-<hr>
-<h3 id="四、JVM-类加载">四、JVM 类加载</h3>
-<h4 id="JVM的“无关性”">JVM的“无关性”</h4>
-<hr>
-<p>谈论 JVM 的无关性，主要有以下两个：</p>
-<ul>
-<li>平台无关性：任何操作系统都能运行 Java 代码</li>
-<li>语言无关性： JVM 能运行除 Java 以外的其他代码</li>
-</ul>
-<p>Java 源代码首先需要使用 Javac 编译器编译成 .class 文件，然后由 JVM 执行 .class 文件，从而程序开始运行。</p>
-<p><strong>JVM 只认识 .class 文件，它不关心是何种语言生成了 .class 文件，只要 .class 文件符合 JVM 的规范就能运行。</strong> 目前已经有 JRuby、Jython、Scala 等语言能够在 JVM 上运行。它们有各自的语法规则，不过它们的编译器 都能将各自的源码编译成符合 JVM 规范的 .class 文件，从而能够借助 JVM 运行它们。</p>
-<h4 id="类加载的时机">类加载的时机</h4>
-<hr>
-<p>详细查看：<a href="https://github.com/doocs/jvm/blob/master/docs/08-load-class-time.md">https://github.com/doocs/jvm/blob/master/docs/08-load-class-time.md</a></p>
-<h4 id="接口的加载过程">接口的加载过程</h4>
-<p>接口加载过程与类加载过程稍有不同。</p>
-<p>当一个类在初始化时，要求其父类全部都已经初始化过了，但是一个接口在初始化时，并不要求其父接口全部都完成了初始化，当真正用到父接口的时候才会初始化。</p>
-<h4 id="类加载的过程">类加载的过程</h4>
-<hr>
-<p>类加载过程包括5个阶段：加载、验证、准备、解析、初始化</p>
-<h5 id="加载">加载</h5>
-<p>“加载”是“类加载”过程的一个阶段，不能混淆这两个名词。在加载阶段，虚拟机需要完成 3 件事：</p>
-<ul>
-<li>通过类的全限定名获取该类的二进制字节流。</li>
-<li>将二进制字节流所代表的静态结构转化为方法区的运行时数据结构</li>
-<li>在内存中创建一个java.lang.Class对象，作为方法区这个类的各种数据的访问入口</li>
-</ul>
-<p><strong>二进制字节流</strong>（Class文件）从哪获取：</p>
-<ul>
-<li>压缩包，如jar、war包</li>
-<li>网络中，applet</li>
-<li>由jsp文件生成对应的class</li>
-</ul>
-<h5 id="“数组类”和“非数组类”加载比较">“数组类”和“非数组类”加载比较</h5>
-<p>在Java中数组是一个Java类</p>
-<ul>
-<li>数组类本身不通过类加载器创建，是由Java虚拟机直接创建的，再由类加载器创建数组中的元素类</li>
-<li>非数组类加载阶段可以使用系统提供的引导类加载器，也可以由用户自定义的加载器完成</li>
-</ul>
-<h5 id="注意事项">注意事项</h5>
-<ul>
-<li>虚拟机没有规定class对象（java.lang.Class）的存储位置，对于Hotspot来说，class对象虽然是对象，但是存在方法区中。</li>
-<li>加载和连接阶段交叉进行，加载没有完成就可能开始连接了。</li>
-</ul>
-<h4 id="验证">验证</h4>
-<hr>
-<h5 id="验证阶段的重要性">验证阶段的重要性</h5>
-<p>保证class文件的字节流包含的信息符合当前虚拟机的要求。不会危害虚拟机自身的安全。</p>
-<h5 id="验证的过程">验证的过程</h5>
-<p>文件格式验证、元数据验证、字节码验证、符号引用验证</p>
-<h4 id="准备">准备</h4>
-<hr>
-<p>准备阶段是正式为类变量（或称“静态成员变量”）分配内存并设置初始值的阶段。这些变量（不包括实例变量）所使用的内存都在方法区中进行分配。</p>
-<p>类变量的初始值通常是数据类型的零值（0， null）</p>
-<p>但如果这个类变量被声明为常量，就会被初始化为所指定的值</p>
-<p>如 <code>public static final int value = 123;</code> 在准备阶段，jvm会将value赋值为123</p>
-<h4 id="解析">解析</h4>
-<hr>
-<p>解析阶段是虚拟机将常量池内的符号引用替换为直接引用的过程</p>
-<p>符号引用：符号引用以一组符号来描述所引用的目标，符号可以是任何形式的字面量，只要使用时能够无歧义的定位到目标即可。</p>
-<p>直接引用可以是：</p>
-<ul>
-<li>
-<p>直接指向目标的指针（比如，指向“类型”【Class对象】、类变量、类方法的直接引用可能是指向方法区的指针）</p>
-</li>
-<li>
-<p>相对偏移量（比如，指向实例变量、实例方法的直接引用都是偏移量）</p>
-</li>
-<li>
-<p>一个能间接定位到目标的句柄</p>
-</li>
-</ul>
-<p>直接引用是和虚拟机的布局相关的，同一个符号引用在不同的虚拟机实例上翻译出来的直接引用一般不会相同。如果有了直接引用，那引用的目标必定已经被加载入内存中了。</p>
-<h4 id="初始化">初始化</h4>
-<hr>
-<p>类初始化阶段是类加载过程的最后一步，是执行类构造器<clinit>()方法的过程。</p>
-<p><clinit>()方法是由编译器自动收集类中所有类变量的赋值动作和静态语句块（static{}块）中的语句产生</p>
-<p><clinit>() 方法不需要显式调用父类构造器，虚拟机会保证在子类的 <clinit>() 方法执行之前，父类的 <clinit>() 方法已经执行完毕。</p>
-<p>由于父类的 <clinit>() 方法先执行，意味着父类中定义的静态语句块要优先于子类的变量赋值操作。</p>
-<p><clinit>() 方法不是必需的，如果一个类没有静态语句块，也没有对类变量的赋值操作，那么编译器可以不为这个类生成 <clinit>() 方法。</p>
-<p>接口中不能使用静态代码块，但接口也需要通过 <clinit>() 方法为接口中定义的静态成员变量显式初始化。但接口与类不同，接口的 <clinit>() 方法不需要先执行父类的 <clinit>() 方法，只有当父接口中定义的变量使用时，父接口才会初始化。</p>
-<p>虚拟机会保证一个类的 <clinit>() 方法在多线程环境中被正确加锁、同步。如果多个线程同时去初始化一个类，那么只会有一个线程去执行这个类的 <clinit>() 方法。</p>
-<h3 id="五、Java类加载器">五、Java类加载器</h3>
-<hr>
-<ul>
-<li>见：<a href="https://github.com/doocs/jvm/blob/master/docs/10-class-loader.md">https://github.com/doocs/jvm/blob/master/docs/10-class-loader.md</a></li>
-</ul>
-<h4 id="双亲委派模型">双亲委派模型</h4>
-<h5 id="什么是双亲委派模型">什么是双亲委派模型</h5>
-<p>双亲委派模型是描述类加载器之间的层次关系。它要求除了顶层的启动类加载器外，其余的类加载器都应当有自己的父类加载器。（父子关系一般不会以继承的关系实现，而是以组合关系来复用父加载器的代码）</p>
-<p>在类加载的时候，系统会首先判断当前类是否被加载过。已经被加载的类会直接返回，否则才会尝试加载。加载的时候，首先会把该请求委派该父类加载器的 <code>loadClass()</code> 处理，因此所有的请求最终都应该传送到顶层的启动类加载器 <code>BootstrapClassLoader</code> 中。当父类加载器无法处理时，才由自己来处理。当父类加载器为null时，会使用启动类加载器 <code>BootstrapClassLoader</code> 作为父类加载器。</p>
-]]></content>
-      <categories>
-        <category>面试</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-        <tag>JVM</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Redis 实现分布式锁</title>
-    <url>/2021/06/10/Redis-%E5%AE%9E%E7%8E%B0%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/</url>
-    <content><![CDATA[<h3 id="Redis-实现">Redis 实现</h3>
-<p>Redis 分布式锁的实现主要基于 <code>SETNX key value</code> 这个指令</p>
-<ul>
-<li>如果 key 不存在，就创建对应的键值对，创建成功，返回 1</li>
-<li>如果 key 存在，创建失败，返回 0</li>
-</ul>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">&gt;</span><span class="bash"> setnx 1 xin</span></span><br><span class="line">(integer) 1</span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> setnx 1 xin2</span></span><br><span class="line">(integer) 0</span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> setnx 2 xin</span></span><br><span class="line">(integer) 1</span><br></pre></td></tr></table></figure>
-<p>除此之外还需要解决键值对长期有效的问题，还需要为键值对设置一个过期时间，对应的 redis 指令为 <code>EXPIRE key seconds</code>，到期之后键值会自动删除</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">&gt;</span><span class="bash"> get 1</span></span><br><span class="line">&quot;xin&quot;</span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> expire 1 2</span></span><br><span class="line">(integer) 1</span><br><span class="line">// 2秒后</span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> get 1</span></span><br><span class="line">(nil)</span><br></pre></td></tr></table></figure>
-<p>在 redis 2.6.12 以后的版本，可以用组合指令来实现上述的分布式锁<br>
-<code>SET key value [EX seconds] NX</code></p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">&gt;</span><span class="bash"> <span class="built_in">set</span> 1 xin ex 10 nx</span></span><br><span class="line">OK</span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> get 1</span></span><br><span class="line">&quot;xin&quot;</span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> ttl 1</span></span><br><span class="line">(integer) 4</span><br><span class="line">// 10秒后</span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> ttl 1</span></span><br><span class="line">(integer) -2</span><br></pre></td></tr></table></figure>
-<p><code>ttl key</code> 命令用于查看键值对的剩余过期时间</p>
-<ul>
-<li>对于设置了过期时间并且尚未过期的键值对，ttl 命令返回剩余过期时间；</li>
-<li>对于已过期不存在的键值对，ttl 命令返回 -2；</li>
-<li>对于没有过期时间的键值对，ttl 命令返回 -1；</li>
-</ul>
-<h3 id="Jedis-实现">Jedis 实现</h3>
-<p>在 Jedis 中可以实现一个 <code>setNxAndExp</code> 方法来实现分布式锁的功能</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> Integer <span class="title">setNxAndExp</span><span class="params">(String key, String val, <span class="keyword">int</span> expSecond)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 如果键值对创建成功，设置一个过期时间</span></span><br><span class="line">    <span class="keyword">if</span> (jedisCluster.setNx(key, val) &gt; <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (expSecond &gt; <span class="number">0</span>) &#123;</span><br><span class="line">            jedisCluster.expire(key, expSecond);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">// 如果创建失败，并且已有的键值对没有过期时间，为其设置一个过期时间，一段时间后释放锁</span></span><br><span class="line">        <span class="keyword">if</span> (jedisCluster.ttl(key).longValue() == -<span class="number">1</span>) &#123;</span><br><span class="line">            jedisCluster.expire(key, expSecond);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 创建成功返回 1，创建失败返回 0，与 setNx 返回值相同</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+    <title>Java常用日志框架</title>
+    <url>/2021/12/12/Java%E5%B8%B8%E7%94%A8%E6%97%A5%E5%BF%97%E6%A1%86%E6%9E%B6/</url>
+    <content><![CDATA[<p>2021年12月10日，Log4j2 被爆出存在<a href="https://nosec.org/home/detail/4917.html">严重安全漏洞</a>，攻击者可以通过 JNDI 注入的方式远程在目标机器上执行任意代码来发动攻击，一种场景就是，如果有一个接口会将入参用log4j2打印出来，攻击者就可以传入形如<code>$&#123;jndi:rmi//xxxxxx&#125;</code>的命令，在目标机器上执行远程代码。</p>
+<p>在排查最近在开发的一个 Java 项目是否存在该漏洞时，发现这个项目打印的日志并不会触发漏洞，但是项目中又确实存在 log4j2 的依赖。仔细看了一下项目的日志方法，原来这个项目使用的日志框架是 logback 而非 log4j2。这也刚好勾起了我的疑问，平时在使用日志时知道有 slf4j，log4j 这类字眼，logback 很少有见到，对于日志这一块，也是只需要能打印出来供线上问题排查即可。那么 Java 中的各种日志框架各自的区别又是什么呢？</p>
+<h3 id="Slf4j">Slf4j</h3>
+<p>很长一段时间，我都以为 slf4j 是和 log4j 一样的一种日志框架，但其实它的全称（Simple Logging Facade for Java）告诉我们，这是专门针对 Java 提供的一种简单日志门面。它本身不提供日志服务，而是统一了接口，供其他日志框架来接入。优点就是，如果后续项目升级时需要更换日志框架，省去了对代码的改动，只需要更换日志框架的 jar 包即可。</p>
+<h3 id="Log4j">Log4j</h3>
+<p>Log4j 一款比较早的日志框架，log4j2 是在此基础上的升级版，有更强大的性能。两者在获取 Logger 的路径上有差异，配置方式也有区别。如果要使用 slf4j + log4j 的方式输出日志，需要引入额外的桥接 jar 包。</p>
+<h3 id="Logback">Logback</h3>
+<p>Logback 是 Log4j 的升级版，由 Slf4j 的作者开发，使用 xml 进行配置。该框架默认实现了 Slf4j 标准，所使用的 Logger 和 LoggerFactory 都是 Slf4j 的实现，使用 slf4j + logback 的组合不需要引入额外的 jar 包。</p>
 <h3 id="参考">参考</h3>
-<p><a href="https://blog.csdn.net/CoreyXuu/article/details/89019869">redis 基于SETNX和EXPIRE的用法 实现redis 分布式锁</a></p>
+<p><a href="https://nosec.org/home/detail/4917.html">【安全通报】Apache Log4j2 远程代码执行漏洞</a><br>
+<a href="https://juejin.cn/post/7033021644142542878">log4j、log4j2、slf4j、logback什么关系？到底该使用哪些jar??</a><br>
+<a href="https://www.codenong.com/cs105272888/">Slf4j与log4j及log4j2的关系及使用方法</a></p>
 ]]></content>
       <categories>
         <category>技术</category>
       </categories>
       <tags>
-        <tag>Redis</tag>
+        <tag>Java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Linux 常用命令</title>
+    <url>/2021/04/22/Linux-%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</url>
+    <content><![CDATA[<p>收录工作中常用的 Linux 命令</p>
+<blockquote>
+<p>文件操作、服务器问题排查等</p>
+</blockquote>
+<span id="more"></span>
+<h3 id="Linux-常用命令">Linux 常用命令</h3>
+<h4 id="查看服务器信息">查看服务器信息</h4>
+<h5 id="top">top</h5>
+<p>查看 CPU 占用率</p>
+<h5 id="free">free</h5>
+<p>查看内存使用情况<br>
+各项指标的意义如下：</p>
+<ul>
+<li>total：总表示物理内存的大小;</li>
+<li>used：已使用的内存大小;</li>
+<li>free：可用内存大小;</li>
+<li>shared：多个进程共享的内存总额;</li>
+<li>buff/cached：磁盘缓存的大小;</li>
+<li>available：应用程序能使用的物理内存大小。</li>
+</ul>
+<h5 id="ps">ps</h5>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ps -ef | grep svn     # 查看指定进程</span><br></pre></td></tr></table></figure>
+<h5 id="查看磁盘使用情况">查看磁盘使用情况</h5>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">df -h</span><br></pre></td></tr></table></figure>
+<h4 id="文件操作">文件操作</h4>
+<h5 id="tail-查看日志">tail 查看日志</h5>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">tail -fn 1000 xxx.log    # 循环实时查看最后 1000 条记录</span><br></pre></td></tr></table></figure>
+<h5 id="ls">ls</h5>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ls -lh    # 列出显示文件详细信息</span><br><span class="line">ls -lrS     # 按大小反序显示文件详细信息</span><br><span class="line">ls -l t*    # 列出当前目录中所有以&quot;t&quot;开头的目录的详细内容 </span><br></pre></td></tr></table></figure>
+<h5 id="I-O-信息">I/O 信息</h5>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">iostat -d -k 1 10       #查看TPS和吞吐量信息</span><br><span class="line">iostat -d -x -k 1 10    #查看设备使用率（%util）、响应时间（await）</span><br><span class="line">iostat -c 1 10          #查看cpu状态</span><br><span class="line"></span><br><span class="line">指标</span><br><span class="line"><span class="meta">%</span><span class="bash">iowait：每一个IO请求的处理的平均时间（单位是毫秒），这里可以理解为IO的响应时间，一般地系统IO响应时间应该低于5ms，如果大于10ms就比较大了。</span> </span><br><span class="line">kB_read/s：每秒读K字节数 </span><br><span class="line">kB_wrtn/s ：每秒写K字节数 </span><br><span class="line">r/s： 每秒完成的读 I/O 设备次数。即 delta（rio）/s </span><br><span class="line">w/s： 每秒完成的写 I/O 设备次数。即 delta（wio）/s </span><br><span class="line">rsec/s： 每秒读扇区数。即 delta（rsect）/s </span><br><span class="line">wsec/s： 每秒写扇区数。即 delta（wsect）/s </span><br><span class="line">tps：该设备每秒的传输次数 ，“一次传输”意思是“一次I/O请求”。多个逻辑请求可能会被合并为“一次I/O请求”。</span><br></pre></td></tr></table></figure>
+<h5 id="du-查看文件-文件夹大小">du 查看文件/文件夹大小</h5>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">du -sh * | sort -hr # 列出文件夹下所有文件大小并降序排序</span><br><span class="line">du -b /home         # 以字节为单位显示/home 文件夹下各个子文件夹的大小</span><br><span class="line">du -h ./            # 以mb为单位显示当前 文件夹下各个子文件夹的大小</span><br><span class="line">du -ks /home        # 以千字节KB 为单位显示/home 文件夹的总大小 </span><br></pre></td></tr></table></figure>
+<h5 id="找出最大的-5-个目录">找出最大的 5 个目录</h5>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">du -hm / --max-depth=1 | sort -nr | head -5 </span><br></pre></td></tr></table></figure>
+<h4 id="查询操作">查询操作</h4>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">which     # 查看可执行文件的位置。</span><br><span class="line">whereis   # 查看文件的位置。</span><br><span class="line">locate    # 配合数据库查看文件位置。</span><br><span class="line">find      # 实际搜寻硬盘查询文件名称。</span><br></pre></td></tr></table></figure>
+<h5 id="which">which</h5>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">which     # 搜索某个 系统命令/可执行文件 的路径</span><br></pre></td></tr></table></figure>
+<h5 id="whereis">whereis</h5>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 只能用于程序名的搜索</span></span><br><span class="line">-b   # 定位可执行文件。</span><br><span class="line">-m   # 定位帮助文件。</span><br><span class="line">-s   # 定位源代码文件。</span><br><span class="line">-u   # 搜索默认路径下除可执行文件、源代码文件、帮助文件以外的其它文件。</span><br></pre></td></tr></table></figure>
+<h5 id="find">find</h5>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">find -atime -2         # 查找 48 小时内修改过的文件</span><br><span class="line">find ./ -name &#x27;*.log&#x27;  # 在当前目录查找 以 .log 结尾的文件。 . 代表当前目录</span><br><span class="line">find -size +1000c      # 查找大于 1K 的文件</span><br></pre></td></tr></table></figure>
+<h4 id="用户操作">用户操作</h4>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo -s                # 切换到 root 用户</span><br><span class="line">sudo su username       # 切换用户</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>效率</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Junit 单元测试</title>
+    <url>/2021/04/24/Junit-%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/</url>
+    <content><![CDATA[<p>Junit 单元测试学习</p>
+<span id="more"></span>
+<h3 id="POM-依赖">POM 依赖</h3>
+<p>在使用 IDEA 新建 SpringBoot 项目时一般会自动引入此依赖</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-test<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">scope</span>&gt;</span>test<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span> </span><br></pre></td></tr></table></figure>
+<h3 id="测试类基类">测试类基类</h3>
+<p>测试类文件夹和项目的 main 文件夹在同一层级<br>
+测试类存放的位置和项目的 Application 类在同一相对目录下<br>
+自动生成的测试类名称为 XXXApplicationTests<br>
+在这个类下补齐所需要的注解，之后的测试类直接继承该类</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@RunWith(SpringRunner.class)</span></span><br><span class="line"><span class="meta">@SpringBootTest(classes = xxxApplication.class)</span></span><br><span class="line"><span class="meta">@WebAppConfiguration</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">xxxApplicationTests</span> </span>&#123;</span><br><span class="line"> </span><br><span class="line">    <span class="meta">@Before</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">init</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;开始测试-----------------&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="meta">@After</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">after</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;测试结束-----------------&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+<h3 id="测试类">测试类</h3>
+<p>测试类继承测试基类<br>
+通过 @Autowired 引入想要测试的类 DAO, Service ……</p>
+<h3 id="测试方法">测试方法</h3>
+<p>在真正的测试方法前要加上 @Test 注解<br>
+加上 @Transactional 后方法会回滚，不会在数据库中产生脏数据<br>
+如果想要跳过其中一个测试方法，在方法前加上 @Ignore(message) 即可忽略该方法</p>
+<h4 id="Service-单元测试">Service 单元测试</h4>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* value 是想要测试的变量值</span></span><br><span class="line"><span class="comment">* matcher statement 接收 value 并判断是否符合条件</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line">Assert.assertThat([value], [matcher statement]);</span><br></pre></td></tr></table></figure>
+<h4 id="Assert-断言">Assert 断言</h4>
+<h5 id="字符相关匹配符">字符相关匹配符</h5>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* equalTo匹配符断言被测的testedValue等于expectedValue，</span></span><br><span class="line"><span class="comment">* equalTo可以断言数值之间，字符串之间和对象之间是否相等，相当于Object的equals方法</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line">assertThat(testedValue, equalTo(expectedValue));</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* equalToIgnoringCase匹配符断言被测的字符串testedString</span></span><br><span class="line"><span class="comment">* 在忽略大小写的情况下等于expectedString</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line">assertThat(testedString, equalToIgnoringCase(expectedString));</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* equalToIgnoringWhiteSpace匹配符断言被测的字符串testedString</span></span><br><span class="line"><span class="comment">* 在忽略头尾的任意个空格的情况下等于expectedString，</span></span><br><span class="line"><span class="comment">* 注意：字符串中的空格不能被忽略</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line">assertThat(testedString, equalToIgnoringWhiteSpace(expectedString);</span><br><span class="line"><span class="comment">/**containsString匹配符断言被测的字符串testedString包含子字符串subString**/</span></span><br><span class="line">assertThat(testedString, containsString(subString) );</span><br><span class="line"><span class="comment">/**endsWith匹配符断言被测的字符串testedString以子字符串suffix结尾*/</span></span><br><span class="line">assertThat(testedString, endsWith(suffix));</span><br><span class="line"><span class="comment">/**startsWith匹配符断言被测的字符串testedString以子字符串prefix开始*/</span></span><br><span class="line">assertThat(testedString, startsWith(prefix));</span><br></pre></td></tr></table></figure>
+<h5 id="一般匹配符">一般匹配符</h5>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**nullValue()匹配符断言被测object的值为null*/</span></span><br><span class="line">assertThat(object,nullValue());</span><br><span class="line"><span class="comment">/**notNullValue()匹配符断言被测object的值不为null*/</span></span><br><span class="line">assertThat(object,notNullValue());</span><br><span class="line"><span class="comment">/**is匹配符断言被测的object等于后面给出匹配表达式*/</span></span><br><span class="line">assertThat(testedString, is(equalTo(expectedValue)));</span><br><span class="line"><span class="comment">/**is匹配符简写应用之一，is(equalTo(x))的简写，断言testedValue等于expectedValue*/</span></span><br><span class="line">assertThat(testedValue, is(expectedValue));</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* is匹配符简写应用之二，is(instanceOf(SomeClass.class))的简写，</span></span><br><span class="line"><span class="comment">* 断言testedObject为Cheddar的实例</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line">assertThat(testedObject, is(Cheddar.class));</span><br><span class="line"><span class="comment">/**not匹配符和is匹配符正好相反，断言被测的object不等于后面给出的object*/</span></span><br><span class="line">assertThat(testedString, not(expectedString));</span><br><span class="line"><span class="comment">/**allOf匹配符断言符合所有条件，相当于“与”（&amp;&amp;）*/</span></span><br><span class="line">assertThat(testedNumber, allOf( greaterThan(<span class="number">8</span>), lessThan(<span class="number">16</span>) ) );</span><br><span class="line"><span class="comment">/**anyOf匹配符断言符合条件之一，相当于“或”（||）*/</span></span><br><span class="line">assertThat(testedNumber, anyOf( greaterThan(<span class="number">16</span>), lessThan(<span class="number">8</span>) ) );</span><br></pre></td></tr></table></figure>
+<h5 id="数值相关匹配符">数值相关匹配符</h5>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**closeTo匹配符断言被测的浮点型数testedDouble在20.0¡À0.5范围之内*/</span></span><br><span class="line">assertThat(testedDouble, closeTo( <span class="number">20.0</span>, <span class="number">0.5</span> ));</span><br><span class="line"><span class="comment">/**greaterThan匹配符断言被测的数值testedNumber大于16.0*/</span></span><br><span class="line">assertThat(testedNumber, greaterThan(<span class="number">16.0</span>));</span><br><span class="line"><span class="comment">/** lessThan匹配符断言被测的数值testedNumber小于16.0*/</span></span><br><span class="line">assertThat(testedNumber, lessThan (<span class="number">16.0</span>));</span><br><span class="line"><span class="comment">/** greaterThanOrEqualTo匹配符断言被测的数值testedNumber大于等于16.0*/</span></span><br><span class="line">assertThat(testedNumber, greaterThanOrEqualTo (<span class="number">16.0</span>));</span><br><span class="line"><span class="comment">/** lessThanOrEqualTo匹配符断言被测的testedNumber小于等于16.0*/</span></span><br><span class="line">assertThat(testedNumber, lessThanOrEqualTo (<span class="number">16.0</span>));</span><br></pre></td></tr></table></figure>
+<h5 id="集合相关匹配符">集合相关匹配符</h5>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**hasEntry匹配符断言被测的Map对象mapObject含有一个键值为&quot;key&quot;对应元素值为&quot;value&quot;的Entry项*/</span></span><br><span class="line">assertThat(mapObject, hasEntry(<span class="string">&quot;key&quot;</span>, <span class="string">&quot;value&quot;</span> ) );</span><br><span class="line"><span class="comment">/**hasItem匹配符表明被测的迭代对象iterableObject含有元素element项则测试通过*/</span></span><br><span class="line">assertThat(iterableObject, hasItem (element));</span><br><span class="line"><span class="comment">/** hasKey匹配符断言被测的Map对象mapObject含有键值“key”*/</span></span><br><span class="line">assertThat(mapObject, hasKey (<span class="string">&quot;key&quot;</span>));</span><br><span class="line"><span class="comment">/** hasValue匹配符断言被测的Map对象mapObject含有元素值value*/</span></span><br><span class="line">assertThat(mapObject, hasValue(value));</span><br></pre></td></tr></table></figure>
+<h4 id="Controller-单元测试">Controller 单元测试</h4>
+<p>会用到 MockMvc，MockMvc 实现了对 HTTP 请求的模拟，可以不用启动工程来测试接口</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@RunWith(SpringRunner.class)</span></span><br><span class="line"><span class="meta">@SpringBootTest</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">xxxControllerTest</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Autowired</span> </span><br><span class="line">    <span class="keyword">private</span> WebApplicationContext wac;</span><br><span class="line">    <span class="keyword">private</span> MockMvc mvc;</span><br><span class="line">    <span class="keyword">private</span> MockHttpSession session; </span><br><span class="line">    </span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">    * 使用 MockMvc 时要先使用 MockMvcBuilders 构建 MockMvc 对象</span></span><br><span class="line"><span class="comment">    * 加入 session 部分代码时因为拦截器那边会判断用户是否登录，所以注入一个用户</span></span><br><span class="line"><span class="comment">    * 如果修改了拦截器取消验证，可以不需要该部分代码</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">    <span class="meta">@Before</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setupMockMvc</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="comment">// 初始化MockMvc对象</span></span><br><span class="line">        mvc = MockMvcBuilders.webAppContextSetup(wac).build(); </span><br><span class="line">        session = <span class="keyword">new</span> MockHttpSession();</span><br><span class="line">        User user =<span class="keyword">new</span> User(<span class="string">&quot;root&quot;</span>,<span class="string">&quot;root&quot;</span>);</span><br><span class="line">        session.setAttribute(<span class="string">&quot;user&quot;</span>,user); </span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * GET方法测试用例</span></span><br><span class="line"><span class="comment">     * mockMvc.perform 负责执行一个请求</span></span><br><span class="line"><span class="comment">     *     MockMvcRequestBuilders.get(&quot;/path&quot;) 构造一个请求，根据请求类型调用相应的方法</span></span><br><span class="line"><span class="comment">     *     contentType(MediaType.APPLICATION_JSON_UTF8) 代表发送端的数据格式为 application/json;charset=UTF-8</span></span><br><span class="line"><span class="comment">     *     accept(MediaType.APPLICATION_JSON_UTF8) 代表客户端希望接受的数据格式为 accept(MediaType.APPLICATION_JSON_UTF8)</span></span><br><span class="line"><span class="comment">     *     session.(session) 注入一个 session 来通过拦截器</span></span><br><span class="line"><span class="comment">     * ResultActions.andExpect 添加执行完成后的断言</span></span><br><span class="line"><span class="comment">     *    ResultActions.andExpect(MockMvcResultMatchers.status().isOk()) 查看请求返回的状态码是否为 200，如果不是，抛出异常，测试不通过</span></span><br><span class="line"><span class="comment">     *    ResultActions.andExpect(MockMvcResultMatchers.jsonPath(&quot;$.key1&quot;).value(&quot;value1&quot;)) 查看是否得到预期的返回值，如果不是，测试不通过</span></span><br><span class="line"><span class="comment">     *    ResultActions.andDo() 添加一个结果处理器, 比如 MockMvcResultHandlers.print() 输出整个响应结果信息</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@throws</span> Exception</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">getTest</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        mvc.perform(MockMvcRequestBuilders.get(<span class="string">&quot;/path&quot;</span>)</span><br><span class="line">                    .contentType(MediaType.APPLICATION_JSON_UTF8)</span><br><span class="line">                    .accept(MediaType.APPLICATION_JSON_UTF8)</span><br><span class="line">                    .session(session)</span><br><span class="line">            )</span><br><span class="line">           .andExpect(MockMvcResultMatchers.status().isOk())</span><br><span class="line">           .andExpect(MockMvcResultMatchers.jsonPath(<span class="string">&quot;$.key1&quot;</span>).value(<span class="string">&quot;value1&quot;</span>))</span><br><span class="line">           .andExpect(MockMvcResultMatchers.jsonPath(<span class="string">&quot;$.key2&quot;</span>).value(<span class="string">&quot;value2&quot;</span>))</span><br><span class="line">           .andDo(MockMvcResultHandlers.print());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="打包测试">打包测试</h3>
+<p>用一个 TestSuits 类整理所有测试类然后打包执行测试方法</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Created by simba</span></span><br><span class="line"><span class="comment"> * Date 2021/2/2</span></span><br><span class="line"><span class="comment"> * Description:打包测试</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@RunWith(Suite.class)</span></span><br><span class="line"><span class="meta">@Suite</span>.SuiteClasses(&#123;xxxTest.class,xxxTest2.class&#125;)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestSuits</span> </span>&#123;</span><br><span class="line"> </span><br><span class="line">    <span class="comment">//不用写代码，只需要注解即可</span></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="参考">参考</h3>
+<p><a href="https://blog.csdn.net/weixin_39800144/article/details/79241620">https://blog.csdn.net/weixin_39800144/article/details/79241620</a><br>
+<a href="http://tengj.top/2017/12/28/springboot12/#Service%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95">http://tengj.top/2017/12/28/springboot12/#Service单元测试</a></p>
+]]></content>
+      <categories>
+        <category>技术</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
       </tags>
   </entry>
   <entry>
@@ -1368,55 +1156,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Junit 单元测试</title>
-    <url>/2021/04/24/Junit-%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/</url>
-    <content><![CDATA[<p>Junit 单元测试学习</p>
-<span id="more"></span>
-<h3 id="POM-依赖">POM 依赖</h3>
-<p>在使用 IDEA 新建 SpringBoot 项目时一般会自动引入此依赖</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-test<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">scope</span>&gt;</span>test<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span> </span><br></pre></td></tr></table></figure>
-<h3 id="测试类基类">测试类基类</h3>
-<p>测试类文件夹和项目的 main 文件夹在同一层级<br>
-测试类存放的位置和项目的 Application 类在同一相对目录下<br>
-自动生成的测试类名称为 XXXApplicationTests<br>
-在这个类下补齐所需要的注解，之后的测试类直接继承该类</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@RunWith(SpringRunner.class)</span></span><br><span class="line"><span class="meta">@SpringBootTest(classes = xxxApplication.class)</span></span><br><span class="line"><span class="meta">@WebAppConfiguration</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">xxxApplicationTests</span> </span>&#123;</span><br><span class="line"> </span><br><span class="line">    <span class="meta">@Before</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">init</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;开始测试-----------------&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="meta">@After</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">after</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;测试结束-----------------&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
-<h3 id="测试类">测试类</h3>
-<p>测试类继承测试基类<br>
-通过 @Autowired 引入想要测试的类 DAO, Service ……</p>
-<h3 id="测试方法">测试方法</h3>
-<p>在真正的测试方法前要加上 @Test 注解<br>
-加上 @Transactional 后方法会回滚，不会在数据库中产生脏数据<br>
-如果想要跳过其中一个测试方法，在方法前加上 @Ignore(message) 即可忽略该方法</p>
-<h4 id="Service-单元测试">Service 单元测试</h4>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* value 是想要测试的变量值</span></span><br><span class="line"><span class="comment">* matcher statement 接收 value 并判断是否符合条件</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line">Assert.assertThat([value], [matcher statement]);</span><br></pre></td></tr></table></figure>
-<h4 id="Assert-断言">Assert 断言</h4>
-<h5 id="字符相关匹配符">字符相关匹配符</h5>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* equalTo匹配符断言被测的testedValue等于expectedValue，</span></span><br><span class="line"><span class="comment">* equalTo可以断言数值之间，字符串之间和对象之间是否相等，相当于Object的equals方法</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line">assertThat(testedValue, equalTo(expectedValue));</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* equalToIgnoringCase匹配符断言被测的字符串testedString</span></span><br><span class="line"><span class="comment">* 在忽略大小写的情况下等于expectedString</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line">assertThat(testedString, equalToIgnoringCase(expectedString));</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* equalToIgnoringWhiteSpace匹配符断言被测的字符串testedString</span></span><br><span class="line"><span class="comment">* 在忽略头尾的任意个空格的情况下等于expectedString，</span></span><br><span class="line"><span class="comment">* 注意：字符串中的空格不能被忽略</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line">assertThat(testedString, equalToIgnoringWhiteSpace(expectedString);</span><br><span class="line"><span class="comment">/**containsString匹配符断言被测的字符串testedString包含子字符串subString**/</span></span><br><span class="line">assertThat(testedString, containsString(subString) );</span><br><span class="line"><span class="comment">/**endsWith匹配符断言被测的字符串testedString以子字符串suffix结尾*/</span></span><br><span class="line">assertThat(testedString, endsWith(suffix));</span><br><span class="line"><span class="comment">/**startsWith匹配符断言被测的字符串testedString以子字符串prefix开始*/</span></span><br><span class="line">assertThat(testedString, startsWith(prefix));</span><br></pre></td></tr></table></figure>
-<h5 id="一般匹配符">一般匹配符</h5>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**nullValue()匹配符断言被测object的值为null*/</span></span><br><span class="line">assertThat(object,nullValue());</span><br><span class="line"><span class="comment">/**notNullValue()匹配符断言被测object的值不为null*/</span></span><br><span class="line">assertThat(object,notNullValue());</span><br><span class="line"><span class="comment">/**is匹配符断言被测的object等于后面给出匹配表达式*/</span></span><br><span class="line">assertThat(testedString, is(equalTo(expectedValue)));</span><br><span class="line"><span class="comment">/**is匹配符简写应用之一，is(equalTo(x))的简写，断言testedValue等于expectedValue*/</span></span><br><span class="line">assertThat(testedValue, is(expectedValue));</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* is匹配符简写应用之二，is(instanceOf(SomeClass.class))的简写，</span></span><br><span class="line"><span class="comment">* 断言testedObject为Cheddar的实例</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line">assertThat(testedObject, is(Cheddar.class));</span><br><span class="line"><span class="comment">/**not匹配符和is匹配符正好相反，断言被测的object不等于后面给出的object*/</span></span><br><span class="line">assertThat(testedString, not(expectedString));</span><br><span class="line"><span class="comment">/**allOf匹配符断言符合所有条件，相当于“与”（&amp;&amp;）*/</span></span><br><span class="line">assertThat(testedNumber, allOf( greaterThan(<span class="number">8</span>), lessThan(<span class="number">16</span>) ) );</span><br><span class="line"><span class="comment">/**anyOf匹配符断言符合条件之一，相当于“或”（||）*/</span></span><br><span class="line">assertThat(testedNumber, anyOf( greaterThan(<span class="number">16</span>), lessThan(<span class="number">8</span>) ) );</span><br></pre></td></tr></table></figure>
-<h5 id="数值相关匹配符">数值相关匹配符</h5>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**closeTo匹配符断言被测的浮点型数testedDouble在20.0¡À0.5范围之内*/</span></span><br><span class="line">assertThat(testedDouble, closeTo( <span class="number">20.0</span>, <span class="number">0.5</span> ));</span><br><span class="line"><span class="comment">/**greaterThan匹配符断言被测的数值testedNumber大于16.0*/</span></span><br><span class="line">assertThat(testedNumber, greaterThan(<span class="number">16.0</span>));</span><br><span class="line"><span class="comment">/** lessThan匹配符断言被测的数值testedNumber小于16.0*/</span></span><br><span class="line">assertThat(testedNumber, lessThan (<span class="number">16.0</span>));</span><br><span class="line"><span class="comment">/** greaterThanOrEqualTo匹配符断言被测的数值testedNumber大于等于16.0*/</span></span><br><span class="line">assertThat(testedNumber, greaterThanOrEqualTo (<span class="number">16.0</span>));</span><br><span class="line"><span class="comment">/** lessThanOrEqualTo匹配符断言被测的testedNumber小于等于16.0*/</span></span><br><span class="line">assertThat(testedNumber, lessThanOrEqualTo (<span class="number">16.0</span>));</span><br></pre></td></tr></table></figure>
-<h5 id="集合相关匹配符">集合相关匹配符</h5>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**hasEntry匹配符断言被测的Map对象mapObject含有一个键值为&quot;key&quot;对应元素值为&quot;value&quot;的Entry项*/</span></span><br><span class="line">assertThat(mapObject, hasEntry(<span class="string">&quot;key&quot;</span>, <span class="string">&quot;value&quot;</span> ) );</span><br><span class="line"><span class="comment">/**hasItem匹配符表明被测的迭代对象iterableObject含有元素element项则测试通过*/</span></span><br><span class="line">assertThat(iterableObject, hasItem (element));</span><br><span class="line"><span class="comment">/** hasKey匹配符断言被测的Map对象mapObject含有键值“key”*/</span></span><br><span class="line">assertThat(mapObject, hasKey (<span class="string">&quot;key&quot;</span>));</span><br><span class="line"><span class="comment">/** hasValue匹配符断言被测的Map对象mapObject含有元素值value*/</span></span><br><span class="line">assertThat(mapObject, hasValue(value));</span><br></pre></td></tr></table></figure>
-<h4 id="Controller-单元测试">Controller 单元测试</h4>
-<p>会用到 MockMvc，MockMvc 实现了对 HTTP 请求的模拟，可以不用启动工程来测试接口</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@RunWith(SpringRunner.class)</span></span><br><span class="line"><span class="meta">@SpringBootTest</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">xxxControllerTest</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Autowired</span> </span><br><span class="line">    <span class="keyword">private</span> WebApplicationContext wac;</span><br><span class="line">    <span class="keyword">private</span> MockMvc mvc;</span><br><span class="line">    <span class="keyword">private</span> MockHttpSession session; </span><br><span class="line">    </span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">    * 使用 MockMvc 时要先使用 MockMvcBuilders 构建 MockMvc 对象</span></span><br><span class="line"><span class="comment">    * 加入 session 部分代码时因为拦截器那边会判断用户是否登录，所以注入一个用户</span></span><br><span class="line"><span class="comment">    * 如果修改了拦截器取消验证，可以不需要该部分代码</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">    <span class="meta">@Before</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setupMockMvc</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="comment">// 初始化MockMvc对象</span></span><br><span class="line">        mvc = MockMvcBuilders.webAppContextSetup(wac).build(); </span><br><span class="line">        session = <span class="keyword">new</span> MockHttpSession();</span><br><span class="line">        User user =<span class="keyword">new</span> User(<span class="string">&quot;root&quot;</span>,<span class="string">&quot;root&quot;</span>);</span><br><span class="line">        session.setAttribute(<span class="string">&quot;user&quot;</span>,user); </span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * GET方法测试用例</span></span><br><span class="line"><span class="comment">     * mockMvc.perform 负责执行一个请求</span></span><br><span class="line"><span class="comment">     *     MockMvcRequestBuilders.get(&quot;/path&quot;) 构造一个请求，根据请求类型调用相应的方法</span></span><br><span class="line"><span class="comment">     *     contentType(MediaType.APPLICATION_JSON_UTF8) 代表发送端的数据格式为 application/json;charset=UTF-8</span></span><br><span class="line"><span class="comment">     *     accept(MediaType.APPLICATION_JSON_UTF8) 代表客户端希望接受的数据格式为 accept(MediaType.APPLICATION_JSON_UTF8)</span></span><br><span class="line"><span class="comment">     *     session.(session) 注入一个 session 来通过拦截器</span></span><br><span class="line"><span class="comment">     * ResultActions.andExpect 添加执行完成后的断言</span></span><br><span class="line"><span class="comment">     *    ResultActions.andExpect(MockMvcResultMatchers.status().isOk()) 查看请求返回的状态码是否为 200，如果不是，抛出异常，测试不通过</span></span><br><span class="line"><span class="comment">     *    ResultActions.andExpect(MockMvcResultMatchers.jsonPath(&quot;$.key1&quot;).value(&quot;value1&quot;)) 查看是否得到预期的返回值，如果不是，测试不通过</span></span><br><span class="line"><span class="comment">     *    ResultActions.andDo() 添加一个结果处理器, 比如 MockMvcResultHandlers.print() 输出整个响应结果信息</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@throws</span> Exception</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">getTest</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        mvc.perform(MockMvcRequestBuilders.get(<span class="string">&quot;/path&quot;</span>)</span><br><span class="line">                    .contentType(MediaType.APPLICATION_JSON_UTF8)</span><br><span class="line">                    .accept(MediaType.APPLICATION_JSON_UTF8)</span><br><span class="line">                    .session(session)</span><br><span class="line">            )</span><br><span class="line">           .andExpect(MockMvcResultMatchers.status().isOk())</span><br><span class="line">           .andExpect(MockMvcResultMatchers.jsonPath(<span class="string">&quot;$.key1&quot;</span>).value(<span class="string">&quot;value1&quot;</span>))</span><br><span class="line">           .andExpect(MockMvcResultMatchers.jsonPath(<span class="string">&quot;$.key2&quot;</span>).value(<span class="string">&quot;value2&quot;</span>))</span><br><span class="line">           .andDo(MockMvcResultHandlers.print());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="打包测试">打包测试</h3>
-<p>用一个 TestSuits 类整理所有测试类然后打包执行测试方法</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Created by simba</span></span><br><span class="line"><span class="comment"> * Date 2021/2/2</span></span><br><span class="line"><span class="comment"> * Description:打包测试</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@RunWith(Suite.class)</span></span><br><span class="line"><span class="meta">@Suite</span>.SuiteClasses(&#123;xxxTest.class,xxxTest2.class&#125;)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestSuits</span> </span>&#123;</span><br><span class="line"> </span><br><span class="line">    <span class="comment">//不用写代码，只需要注解即可</span></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="参考">参考</h3>
-<p><a href="https://blog.csdn.net/weixin_39800144/article/details/79241620">https://blog.csdn.net/weixin_39800144/article/details/79241620</a><br>
-<a href="http://tengj.top/2017/12/28/springboot12/#Service%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95">http://tengj.top/2017/12/28/springboot12/#Service单元测试</a></p>
-]]></content>
-      <categories>
-        <category>技术</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>@RequestParam、@RequestBody 和 @ModelAttribute 的区别</title>
     <url>/2021/05/17/RequestParam%E3%80%81-RequestBody-%E5%92%8C-ModelAttribute-%E7%9A%84%E5%8C%BA%E5%88%AB/</url>
     <content><![CDATA[<p>三种注解的区别和使用场景</p>
@@ -1450,46 +1189,37 @@ POST 请求通过 HttpEntity 传输的参数，要在请求中声明 Content-Typ
       </tags>
   </entry>
   <entry>
-    <title>Spring Boot AOP 入门</title>
-    <url>/2021/06/08/Spring-Boot-AOP-%E5%85%A5%E9%97%A8/</url>
-    <content><![CDATA[<p>本文展示了在 Spring Boot 项目中 AOP 的简单实现</p>
-<h3 id="Pom-依赖">Pom 依赖</h3>
-<p>为了实现 AOP，需要在项目中引入 <code>aspectjweaver</code> 和 <code>aspectjrt</code> 两个依赖，其中 <code>aspectjweaver</code> 是 aspectj 的织入包， <code>aspectjrt</code> 是 aspectj 的运行时包</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!-- AOP 依赖 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.aspectj<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>aspectjweaver<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.aspectj<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>aspectjrt<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<h3 id="AOP-层类">AOP 层类</h3>
-<p>在类上添加 <code>@Aspect</code> 注释表明这是一个 AOP 类，<code>@Component</code> 注释表明这个类可以作为一个 JavaBean 被注入到 Spring 容器中。</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.ziqian.yudao.aop;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.aspectj.lang.ProceedingJoinPoint;</span><br><span class="line"><span class="keyword">import</span> org.aspectj.lang.annotation.*;</span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Component;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Aspect</span></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LoginAspect</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Pointcut(&quot;execution( * com.ziqian.yudao.controller.*.*(..)) &amp;&amp; @annotation(Login)&quot;)</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">cut</span><span class="params">()</span></span>&#123;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Before(&quot;cut()&quot;)</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">before</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;已经记录下操作日志@Before 方法执行前&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Around(&quot;cut()&quot;)</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">around</span><span class="params">(ProceedingJoinPoint proceedingJoinPoint)</span> <span class="keyword">throws</span> Throwable</span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;已经记录下操作日志@Around 方法执行前&quot;</span>);</span><br><span class="line">        Object object = proceedingJoinPoint.proceed();</span><br><span class="line">        System.out.println(<span class="string">&quot;已经记录下操作日志@Around 方法执行后&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> object;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@After(&quot;cut()&quot;)</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">after</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;已经记录下操作日志@After 方法执行后&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>切入 AOP 代码需要一个切入点 PointCut，代码中 <code>@Pointcut(&quot;execution( * com.ziqian.yudao.controller.*.*(..)) &amp;&amp; @annotation(Login)&quot;)</code> 声明的切入点是 <code>com.ziqian.yudao.controller</code> 下面的类中的所有带有 <code>@Login</code> 注释的方法。也就是 AOP 代码会被插入到满足上述条件的方法中。引入注解作为触发 AOP 的条件后可以更方便地在需要的地方切入代码，声明注解的方法如下：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.ziqian.yudao.aop;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.lang.annotation.ElementType;</span><br><span class="line"><span class="keyword">import</span> java.lang.annotation.Retention;</span><br><span class="line"><span class="keyword">import</span> java.lang.annotation.RetentionPolicy;</span><br><span class="line"><span class="keyword">import</span> java.lang.annotation.Target;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Retention(RetentionPolicy.RUNTIME)</span></span><br><span class="line"><span class="meta">@Target(&#123;ElementType.METHOD&#125;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> Login &#123;</span><br><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">loginRequired</span><span class="params">()</span> <span class="keyword">default</span> <span class="keyword">true</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>在切入代码时我们也需要控制代码插入的位置，为此 Spring 提供了 <code>@Before</code>，<code>@After</code>，<code>@Around</code> 三个注解来帮助控制代码插入的大致位置。其中：</p>
+    <title>Redis 实现分布式锁</title>
+    <url>/2021/06/10/Redis-%E5%AE%9E%E7%8E%B0%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/</url>
+    <content><![CDATA[<h3 id="Redis-实现">Redis 实现</h3>
+<p>Redis 分布式锁的实现主要基于 <code>SETNX key value</code> 这个指令</p>
 <ul>
-<li><code>@Before</code> 在所拦截方法执行前执行一段逻辑</li>
-<li><code>@After</code> 在所拦截方法执行后执行一段逻辑</li>
-<li><code>@Around</code> 可以同时在所拦截方法前后执行一段逻辑<br>
-同样是在拦截方法的前后，三个注解也存在优先关系。为了搞清楚三者的先后关系，实现一个 http 接口进行测试</li>
+<li>如果 key 不存在，就创建对应的键值对，创建成功，返回 1</li>
+<li>如果 key 存在，创建失败，返回 0</li>
 </ul>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.ziqian.yudao.controller;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.ziqian.yudao.aop.Login;</span><br><span class="line"><span class="keyword">import</span> com.ziqian.yudao.service.UserService;</span><br><span class="line"><span class="keyword">import</span> com.ziqian.yudao.vo.UserVO;</span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.*;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.ArrayList;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="meta">@RequestMapping(&quot;/users&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserController</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    UserService userService;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 查询用户列表</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> 用户列表</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Login</span></span><br><span class="line">    <span class="meta">@GetMapping(&quot;/list&quot;)</span> <span class="comment">// URL 修改成 /list</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> List&lt;UserVO&gt; <span class="title">list</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 查询列表</span></span><br><span class="line">        UserVO user1 = <span class="keyword">new</span> UserVO(); user1.setId(<span class="number">1L</span>); user1.setUserName(<span class="string">&quot;yudaoyuanma&quot;</span>);</span><br><span class="line">        UserVO user2 = <span class="keyword">new</span> UserVO(); user2.setId(<span class="number">2L</span>); user2.setUserName(<span class="string">&quot;woshiyutou&quot;</span>);</span><br><span class="line">        UserVO user3 = <span class="keyword">new</span> UserVO(); user3.setId(<span class="number">3L</span>); user3.setUserName(<span class="string">&quot;chifanshuijiao&quot;</span>);</span><br><span class="line">        List&lt;UserVO&gt; result = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        result.add(user1);</span><br><span class="line">        result.add(user2);</span><br><span class="line">        result.add(user3);</span><br><span class="line">        <span class="comment">// 返回列表</span></span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>最后命令行的打印结果为：</p>
-<blockquote>
-<p>已经记录下操作日志@Around 方法执行前<br>
-已经记录下操作日志@Before 方法执行前<br>
-已经记录下操作日志@After 方法执行后<br>
-已经记录下操作日志@Around 方法执行后</p>
-</blockquote>
-<p>可见 <code>@Around</code> 中的逻辑在最外层</p>
-<blockquote>
-<p>需要注意的是，<code>@Around</code> 注解下的 around() 方法中，proceedingJoinPoint.proceed(); 相当于切入的 list() 方法的方法体。如果 around() 的返回值为空，list() 对应的 /list 接口的返回值也为空。所以一定要为 around() 方法设定一个返回值。其中 Object object = proceedingJoinPoint.proceed(); 中的 obejct 对象就是原接口返回的值。</p>
-</blockquote>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">&gt;</span><span class="bash"> setnx 1 xin</span></span><br><span class="line">(integer) 1</span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> setnx 1 xin2</span></span><br><span class="line">(integer) 0</span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> setnx 2 xin</span></span><br><span class="line">(integer) 1</span><br></pre></td></tr></table></figure>
+<p>除此之外还需要解决键值对长期有效的问题，还需要为键值对设置一个过期时间，对应的 redis 指令为 <code>EXPIRE key seconds</code>，到期之后键值会自动删除</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">&gt;</span><span class="bash"> get 1</span></span><br><span class="line">&quot;xin&quot;</span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> expire 1 2</span></span><br><span class="line">(integer) 1</span><br><span class="line">// 2秒后</span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> get 1</span></span><br><span class="line">(nil)</span><br></pre></td></tr></table></figure>
+<p>在 redis 2.6.12 以后的版本，可以用组合指令来实现上述的分布式锁<br>
+<code>SET key value [EX seconds] NX</code></p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">&gt;</span><span class="bash"> <span class="built_in">set</span> 1 xin ex 10 nx</span></span><br><span class="line">OK</span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> get 1</span></span><br><span class="line">&quot;xin&quot;</span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> ttl 1</span></span><br><span class="line">(integer) 4</span><br><span class="line">// 10秒后</span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> ttl 1</span></span><br><span class="line">(integer) -2</span><br></pre></td></tr></table></figure>
+<p><code>ttl key</code> 命令用于查看键值对的剩余过期时间</p>
+<ul>
+<li>对于设置了过期时间并且尚未过期的键值对，ttl 命令返回剩余过期时间；</li>
+<li>对于已过期不存在的键值对，ttl 命令返回 -2；</li>
+<li>对于没有过期时间的键值对，ttl 命令返回 -1；</li>
+</ul>
+<h3 id="Jedis-实现">Jedis 实现</h3>
+<p>在 Jedis 中可以实现一个 <code>setNxAndExp</code> 方法来实现分布式锁的功能</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> Integer <span class="title">setNxAndExp</span><span class="params">(String key, String val, <span class="keyword">int</span> expSecond)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 如果键值对创建成功，设置一个过期时间</span></span><br><span class="line">    <span class="keyword">if</span> (jedisCluster.setNx(key, val) &gt; <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (expSecond &gt; <span class="number">0</span>) &#123;</span><br><span class="line">            jedisCluster.expire(key, expSecond);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">// 如果创建失败，并且已有的键值对没有过期时间，为其设置一个过期时间，一段时间后释放锁</span></span><br><span class="line">        <span class="keyword">if</span> (jedisCluster.ttl(key).longValue() == -<span class="number">1</span>) &#123;</span><br><span class="line">            jedisCluster.expire(key, expSecond);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 创建成功返回 1，创建失败返回 0，与 setNx 返回值相同</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h3 id="参考">参考</h3>
-<p><a href="https://blog.csdn.net/fuck487/article/details/52593204">spring AOP @Around @Before @After 区别</a><br>
-<a href="https://www.cnblogs.com/Andya/p/12685428.html">SpringBoot—集成AOP详解（面向切面编程Aspect）</a></p>
+<p><a href="https://blog.csdn.net/CoreyXuu/article/details/89019869">redis 基于SETNX和EXPIRE的用法 实现redis 分布式锁</a></p>
 ]]></content>
       <categories>
         <category>技术</category>
       </categories>
       <tags>
-        <tag>Java</tag>
-        <tag>Spring</tag>
+        <tag>Redis</tag>
       </tags>
   </entry>
   <entry>
@@ -1567,6 +1297,49 @@ Scope 有 5 种可用的限定范围：</p>
       </tags>
   </entry>
   <entry>
+    <title>Spring Boot AOP 入门</title>
+    <url>/2021/06/08/Spring-Boot-AOP-%E5%85%A5%E9%97%A8/</url>
+    <content><![CDATA[<p>本文展示了在 Spring Boot 项目中 AOP 的简单实现</p>
+<h3 id="Pom-依赖">Pom 依赖</h3>
+<p>为了实现 AOP，需要在项目中引入 <code>aspectjweaver</code> 和 <code>aspectjrt</code> 两个依赖，其中 <code>aspectjweaver</code> 是 aspectj 的织入包， <code>aspectjrt</code> 是 aspectj 的运行时包</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!-- AOP 依赖 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.aspectj<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>aspectjweaver<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.aspectj<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>aspectjrt<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="AOP-层类">AOP 层类</h3>
+<p>在类上添加 <code>@Aspect</code> 注释表明这是一个 AOP 类，<code>@Component</code> 注释表明这个类可以作为一个 JavaBean 被注入到 Spring 容器中。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.ziqian.yudao.aop;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.aspectj.lang.ProceedingJoinPoint;</span><br><span class="line"><span class="keyword">import</span> org.aspectj.lang.annotation.*;</span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Component;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Aspect</span></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LoginAspect</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Pointcut(&quot;execution( * com.ziqian.yudao.controller.*.*(..)) &amp;&amp; @annotation(Login)&quot;)</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">cut</span><span class="params">()</span></span>&#123;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Before(&quot;cut()&quot;)</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">before</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;已经记录下操作日志@Before 方法执行前&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Around(&quot;cut()&quot;)</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">around</span><span class="params">(ProceedingJoinPoint proceedingJoinPoint)</span> <span class="keyword">throws</span> Throwable</span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;已经记录下操作日志@Around 方法执行前&quot;</span>);</span><br><span class="line">        Object object = proceedingJoinPoint.proceed();</span><br><span class="line">        System.out.println(<span class="string">&quot;已经记录下操作日志@Around 方法执行后&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> object;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@After(&quot;cut()&quot;)</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">after</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;已经记录下操作日志@After 方法执行后&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>切入 AOP 代码需要一个切入点 PointCut，代码中 <code>@Pointcut(&quot;execution( * com.ziqian.yudao.controller.*.*(..)) &amp;&amp; @annotation(Login)&quot;)</code> 声明的切入点是 <code>com.ziqian.yudao.controller</code> 下面的类中的所有带有 <code>@Login</code> 注释的方法。也就是 AOP 代码会被插入到满足上述条件的方法中。引入注解作为触发 AOP 的条件后可以更方便地在需要的地方切入代码，声明注解的方法如下：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.ziqian.yudao.aop;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.lang.annotation.ElementType;</span><br><span class="line"><span class="keyword">import</span> java.lang.annotation.Retention;</span><br><span class="line"><span class="keyword">import</span> java.lang.annotation.RetentionPolicy;</span><br><span class="line"><span class="keyword">import</span> java.lang.annotation.Target;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Retention(RetentionPolicy.RUNTIME)</span></span><br><span class="line"><span class="meta">@Target(&#123;ElementType.METHOD&#125;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> Login &#123;</span><br><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">loginRequired</span><span class="params">()</span> <span class="keyword">default</span> <span class="keyword">true</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在切入代码时我们也需要控制代码插入的位置，为此 Spring 提供了 <code>@Before</code>，<code>@After</code>，<code>@Around</code> 三个注解来帮助控制代码插入的大致位置。其中：</p>
+<ul>
+<li><code>@Before</code> 在所拦截方法执行前执行一段逻辑</li>
+<li><code>@After</code> 在所拦截方法执行后执行一段逻辑</li>
+<li><code>@Around</code> 可以同时在所拦截方法前后执行一段逻辑<br>
+同样是在拦截方法的前后，三个注解也存在优先关系。为了搞清楚三者的先后关系，实现一个 http 接口进行测试</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.ziqian.yudao.controller;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.ziqian.yudao.aop.Login;</span><br><span class="line"><span class="keyword">import</span> com.ziqian.yudao.service.UserService;</span><br><span class="line"><span class="keyword">import</span> com.ziqian.yudao.vo.UserVO;</span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.*;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.ArrayList;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="meta">@RequestMapping(&quot;/users&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserController</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    UserService userService;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 查询用户列表</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> 用户列表</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Login</span></span><br><span class="line">    <span class="meta">@GetMapping(&quot;/list&quot;)</span> <span class="comment">// URL 修改成 /list</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> List&lt;UserVO&gt; <span class="title">list</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 查询列表</span></span><br><span class="line">        UserVO user1 = <span class="keyword">new</span> UserVO(); user1.setId(<span class="number">1L</span>); user1.setUserName(<span class="string">&quot;yudaoyuanma&quot;</span>);</span><br><span class="line">        UserVO user2 = <span class="keyword">new</span> UserVO(); user2.setId(<span class="number">2L</span>); user2.setUserName(<span class="string">&quot;woshiyutou&quot;</span>);</span><br><span class="line">        UserVO user3 = <span class="keyword">new</span> UserVO(); user3.setId(<span class="number">3L</span>); user3.setUserName(<span class="string">&quot;chifanshuijiao&quot;</span>);</span><br><span class="line">        List&lt;UserVO&gt; result = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        result.add(user1);</span><br><span class="line">        result.add(user2);</span><br><span class="line">        result.add(user3);</span><br><span class="line">        <span class="comment">// 返回列表</span></span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>最后命令行的打印结果为：</p>
+<blockquote>
+<p>已经记录下操作日志@Around 方法执行前<br>
+已经记录下操作日志@Before 方法执行前<br>
+已经记录下操作日志@After 方法执行后<br>
+已经记录下操作日志@Around 方法执行后</p>
+</blockquote>
+<p>可见 <code>@Around</code> 中的逻辑在最外层</p>
+<blockquote>
+<p>需要注意的是，<code>@Around</code> 注解下的 around() 方法中，proceedingJoinPoint.proceed(); 相当于切入的 list() 方法的方法体。如果 around() 的返回值为空，list() 对应的 /list 接口的返回值也为空。所以一定要为 around() 方法设定一个返回值。其中 Object object = proceedingJoinPoint.proceed(); 中的 obejct 对象就是原接口返回的值。</p>
+</blockquote>
+<h3 id="参考">参考</h3>
+<p><a href="https://blog.csdn.net/fuck487/article/details/52593204">spring AOP @Around @Before @After 区别</a><br>
+<a href="https://www.cnblogs.com/Andya/p/12685428.html">SpringBoot—集成AOP详解（面向切面编程Aspect）</a></p>
+]]></content>
+      <categories>
+        <category>技术</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>Spring</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>MySQL 避免重复添加记录</title>
     <url>/2021/05/10/mysql-%E9%81%BF%E5%85%8D%E9%87%8D%E5%A4%8D%E6%B7%BB%E5%8A%A0%E8%AE%B0%E5%BD%95/</url>
     <content><![CDATA[<p>如果不在 Service 层进行判断而是直接使用 INSERT 语句添加时</p>
@@ -1585,6 +1358,133 @@ Scope 有 5 种可用的限定范围：</p>
       <tags>
         <tag>数据库</tag>
         <tag>MySQL</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>《高并发架构设计入门》笔记</title>
+    <url>/2021/08/10/%E3%80%8A%E9%AB%98%E5%B9%B6%E5%8F%91%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1%E5%85%A5%E9%97%A8%E3%80%8B%E7%AC%94%E8%AE%B0/</url>
+    <content><![CDATA[<h3 id="高性能的5大设计思想">高性能的5大设计思想</h3>
+<h5 id="扩展">扩展</h5>
+<p><strong>垂直扩展-针对单台机器</strong></p>
+<ul>
+<li>扩容机器，增加配置</li>
+<li>分表，减少数据量</li>
+<li>无锁，减少锁竞争</li>
+</ul>
+<p><strong>水平扩展-多机器均衡</strong></p>
+<ul>
+<li>nginx 负载均衡</li>
+<li>无状态</li>
+<li>分布式</li>
+</ul>
+<h5 id="缓存">缓存</h5>
+<p>数据前置，开辟新的数据交换区，解决原始数据获取代价太大的问题</p>
+<p>常用缓存策略：CDN 静态数据、热点数据缓存、服务缓存 Redis、内存缓存、数据库缓存、分布式缓存</p>
+<p>缓存不一致：捕捉更新结果，如果失败就重试；</p>
+<h5 id="分离">分离</h5>
+<p>动静分离、读写分离、主从主备、冷热分离</p>
+<h5 id="异步">异步</h5>
+<p>消息队列，削峰填谷，解耦</p>
+<h5 id="复用">复用</h5>
+<p>线程池、连接池复用，减少资源创建销毁的时间</p>
+<h3 id="高可用的5大设计思想">高可用的5大设计思想</h3>
+<h5 id="隔离">隔离</h5>
+<ul>
+<li>核心/非核心服务隔离部署</li>
+<li>机房隔离</li>
+<li>读写隔离</li>
+</ul>
+<h5 id="限流">限流</h5>
+<p>识别恶意流量</p>
+<ul>
+<li>接入层限流：nginx</li>
+<li>应用层限流：队列满后丢弃后续数据</li>
+<li>分布式限流</li>
+</ul>
+<h5 id="降级">降级</h5>
+<ul>
+<li>有损服务：系统繁忙页面</li>
+<li>熔断</li>
+<li>保底：出现异常时的保底策略</li>
+</ul>
+<h5 id="超时和失败重试">超时和失败重试</h5>
+<h5 id="可回滚">可回滚</h5>
+<p>事务、版本、数据的可回滚，保证及时解决数据问题</p>
+<h5 id="保障手段">*保障手段</h5>
+<p>压测、应急预案演练（多机房容灾等）、线上监控报警</p>
+]]></content>
+      <categories>
+        <category>技术</category>
+      </categories>
+      <tags>
+        <tag>架构</tag>
+        <tag>笔记</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>基于 rsync 实现文件远程同步</title>
+    <url>/2021/10/18/%E4%BD%BF%E7%94%A8rsync%E4%BC%A0%E8%BE%93%E6%96%87%E4%BB%B6/</url>
+    <content><![CDATA[<p>两台机器之间同步文件常用的方式有 <code>scp</code> 和 <code>rsync</code> 两种，两者的主要区别在于：</p>
+<ul>
+<li><code>scp</code> 会将整个文件进行传输；<code>rsync</code> 只对差异文件做更新（通过比较最后修改时间和文件的大小），支持分块传输，可以只传输修改的部分</li>
+<li><code>scp</code> 是加密传输；<code>rsync</code> 不是加密传输</li>
+</ul>
+<p>在项目中我使用的是 <code>rsync --daemon</code> 的方式进行文件同步，这种方式需要在目标同步机器上的 <code>rsyncd.conf</code> 配置文件中配置模块名，存储路径等信息。具体配置方法参考：<a href="https://blog.csdn.net/imliuqun123/article/details/85232769">参考</a></p>
+<p>我的测试用例中使用的配置项是</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">uid = 0 </span><br><span class="line">gid = 0</span><br><span class="line">pid file = /var/run/rsyncd.pid</span><br><span class="line">log file = /var/log/rsyncd.log </span><br><span class="line"></span><br><span class="line">[user]</span><br><span class="line">path=/data</span><br><span class="line">ignore errors = yes # 忽略IO问题</span><br><span class="line">read only = no </span><br><span class="line">use chroot = no # 连接时可以不需要root权限</span><br><span class="line">list = yes #当客户请求列出可以使用的模块列表时，该模块可以被列出</span><br></pre></td></tr></table></figure>
+<p>模块名称为 <code>user</code> ，文件的默认保存路径为 <code>/data</code><br>
+服务器通过 <code>rsync --daemon</code> 启动守护进程</p>
+<p>在另一台机器上通过指令</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">rsync -avz [local_path] [server_address]::user</span><br></pre></td></tr></table></figure>
+<p>可以将<code>local_path</code>目录下的文件增量写入到目标服务器的<code>/data</code>目录下</p>
+<h3 id="参考">参考</h3>
+<p><a href="https://blog.csdn.net/imliuqun123/article/details/85232769">【Linux】rsync 守护进程的配置</a><br>
+<a href="https://www.cnblogs.com/kevingrace/p/8529792.html">SCP和Rsync远程拷贝的几个技巧</a></p>
+]]></content>
+      <categories>
+        <category>技术</category>
+      </categories>
+      <tags>
+        <tag>Rsync</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>使用ShardingSphere需要注意的问题</title>
+    <url>/2021/06/24/%E4%BD%BF%E7%94%A8ShardingSphere%E9%9C%80%E8%A6%81%E6%B3%A8%E6%84%8F%E7%9A%84%E9%97%AE%E9%A2%98/</url>
+    <content><![CDATA[<h3 id="问题1">问题1</h3>
+<p>在配置文件中 datasource 的数据源名称设置为 yudao_orders_0 时出现如下错误</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Caused by: org.springframework.boot.context.properties.source.InvalidConfigurationPropertyNameException: Configuration property name &#x27;spring.shardingsphere.datasource.yudao_orders_0&#x27; is not valid</span><br></pre></td></tr></table></figure>
+<p>原因是配置文件中的 datasource 的命名中不能带下划线，改为 yudao-orders-0 即可</p>
+<h3 id="问题2">问题2</h3>
+<p>在 application.yaml 中配置 type 字段，即连接池类型时，如果选择的是 Druid，要注意 maven 依赖<br>
+pom.xml 文件中 druid-spring-boot-starter  和 sharding-jdbc-spring-boot-starter 不能同时出现</p>
+<ol>
+<li>因为数据连接池的starter（比如druid）可能会先加载并且其创建一个默认数据源，这将会使得ShardingSphere-JDBC创建数据源时发生冲突。<br>
+解决方法有2种：</li>
+<li>在启动类中排除 Druid 自动配置类<code>@SpringBootApplication(exclude = &#123;DruidDataSourceAutoConfigure.class&#125;)</code></li>
+<li>将 druid-spring-boot-starter 依赖替换为纯 Druid，如下</li>
+</ol>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.alibaba<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>druid<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.1.22<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="问题3">问题3</h3>
+<p>读写分离配置时注意配置的名称，其中的 <code>slave-data-source-names</code>最后有个<code>s</code></p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line">    <span class="attr">shardingsphere:</span></span><br><span class="line">        <span class="attr">masterslave:</span></span><br><span class="line">        <span class="attr">name:</span> <span class="string">ms</span> <span class="comment"># 名字，任意，需要保证唯一</span></span><br><span class="line">        <span class="attr">master-data-source-name:</span> <span class="string">ds-master</span> <span class="comment"># 主库数据源</span></span><br><span class="line">        <span class="attr">slave-data-source-names:</span> <span class="string">ds-slave-1,</span> <span class="string">ds-slave-2</span> <span class="comment"># 从库数据源</span></span><br></pre></td></tr></table></figure>
+<h3 id="问题4">问题4</h3>
+<p>Shardingsphere 4.1.1 和 Swagger 2.9.2 存在冲突<br>
+Swagger 2.9.2 依赖于 Guava 20.0 以上的版本，但是 Shardingsphere 4.1.1 中引入的是 Guava 18.0 版本，所以启动项目时会导致以下错误</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Caused by: org.springframework.context.ApplicationContextException: Failed to start bean &#x27;documentationPluginsBootstrapper&#x27;; nested exception is com.google.common.util.concurrent.ExecutionError: java.lang.NoSuchMethodError: com.google.common.collect.FluentIterable.concat(Ljava/lang/Iterable;Ljava/lang/Iterable;)Lcom/google/common/collect/FluentIterable;</span><br><span class="line">        at org.springframework.context.support.DefaultLifecycleProcessor.doStart(DefaultLifecycleProcessor.java:176)</span><br><span class="line">        at org.springframework.context.support.DefaultLifecycleProcessor.access$200(DefaultLifecycleProcessor.java:50)</span><br><span class="line">        at org.springframework.context.support.DefaultLifecycleProcessor$LifecycleGroup.start(DefaultLifecycleProcessor.java:346)</span><br><span class="line">        at org.springframework.context.support.DefaultLifecycleProcessor.startBeans(DefaultLifecycleProcessor.java:149)</span><br><span class="line">        at org.springframework.context.support.DefaultLifecycleProcessor.onRefresh(DefaultLifecycleProcessor.java:112)</span><br><span class="line">        at org.springframework.context.support.AbstractApplicationContext.finishRefresh(AbstractApplicationContext.java:880)</span><br><span class="line">        at org.springframework.boot.context.embedded.EmbeddedWebApplicationContext.finishRefresh(EmbeddedWebApplicationContext.java:144)</span><br><span class="line">        at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:546)</span><br><span class="line">        at org.springframework.boot.context.embedded.EmbeddedWebApplicationContext.refresh(EmbeddedWebApplicationContext.java:122)</span><br><span class="line">        at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:693)</span><br><span class="line">        at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:360)</span><br><span class="line">        at org.springframework.boot.SpringApplication.run(SpringApplication.java:303)</span><br><span class="line">        at org.springframework.boot.test.context.SpringBootContextLoader.loadContext(SpringBootContextLoader.java:120)</span><br><span class="line">        at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContextInternal(DefaultCacheAwareContextLoaderDelegate.java:98)</span><br><span class="line">        at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:116)</span><br><span class="line">        ... 25 more</span><br></pre></td></tr></table></figure>
+<p>手动引入 20.0 版本的 Guava 后可以解决该问题</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 主要因为 shardingsphere 中默认的 guava 依赖版本是 18.0 和 swagger 2.9.2 冲突，所以手动引入 20.0 版本的 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.google.guava<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>guava<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>20.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="参考">参考</h3>
+<p><a href="https://shardingsphere.apache.org/document/current/cn/faq/#20-%E4%B8%BA%E4%BB%80%E4%B9%88%E9%85%8D%E7%BD%AE%E4%BA%86%E6%9F%90%E4%B8%AA%E6%95%B0%E6%8D%AE%E8%BF%9E%E6%8E%A5%E6%B1%A0%E7%9A%84spring-boot-starter%E6%AF%94%E5%A6%82druid%E5%92%8Cshardingsphere-jdbc-spring-boot-starter%E6%97%B6%E7%B3%BB%E7%BB%9F%E5%90%AF%E5%8A%A8%E4%BC%9A%E6%8A%A5%E9%94%99">FAQ :: ShardingSphere</a><br>
+<a href="https://my.oschina.net/u/1046143/blog/3216500">【ShardingSphere】2. Spring Boot整合Sharding-JDBC实现读写分离 - 贺小康的个人空间 - OSCHINA - 中文开源技术交流社区</a><br>
+<a href="https://juejin.cn/post/6844903857835737095">SpringBoot 2.x ShardingSphere读写分离实战</a></p>
+]]></content>
+      <categories>
+        <category>问题</category>
+      </categories>
+      <tags>
+        <tag>Sharding</tag>
+        <tag>读写分离</tag>
       </tags>
   </entry>
   <entry>
@@ -1693,188 +1593,6 @@ Scope 有 5 种可用的限定范围：</p>
       <categories>
         <category>随笔</category>
       </categories>
-  </entry>
-  <entry>
-    <title>Linux 常用命令</title>
-    <url>/2021/04/22/Linux-%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</url>
-    <content><![CDATA[<p>收录工作中常用的 Linux 命令</p>
-<blockquote>
-<p>文件操作、服务器问题排查等</p>
-</blockquote>
-<span id="more"></span>
-<h3 id="Linux-常用命令">Linux 常用命令</h3>
-<h4 id="查看服务器信息">查看服务器信息</h4>
-<h5 id="top">top</h5>
-<p>查看 CPU 占用率</p>
-<h5 id="free">free</h5>
-<p>查看内存使用情况<br>
-各项指标的意义如下：</p>
-<ul>
-<li>total：总表示物理内存的大小;</li>
-<li>used：已使用的内存大小;</li>
-<li>free：可用内存大小;</li>
-<li>shared：多个进程共享的内存总额;</li>
-<li>buff/cached：磁盘缓存的大小;</li>
-<li>available：应用程序能使用的物理内存大小。</li>
-</ul>
-<h5 id="ps">ps</h5>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ps -ef | grep svn     # 查看指定进程</span><br></pre></td></tr></table></figure>
-<h5 id="查看磁盘使用情况">查看磁盘使用情况</h5>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">df -h</span><br></pre></td></tr></table></figure>
-<h4 id="文件操作">文件操作</h4>
-<h5 id="tail-查看日志">tail 查看日志</h5>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">tail -fn 1000 xxx.log    # 循环实时查看最后 1000 条记录</span><br></pre></td></tr></table></figure>
-<h5 id="ls">ls</h5>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ls -lh    # 列出显示文件详细信息</span><br><span class="line">ls -lrS     # 按大小反序显示文件详细信息</span><br><span class="line">ls -l t*    # 列出当前目录中所有以&quot;t&quot;开头的目录的详细内容 </span><br></pre></td></tr></table></figure>
-<h5 id="I-O-信息">I/O 信息</h5>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">iostat -d -k 1 10       #查看TPS和吞吐量信息</span><br><span class="line">iostat -d -x -k 1 10    #查看设备使用率（%util）、响应时间（await）</span><br><span class="line">iostat -c 1 10          #查看cpu状态</span><br><span class="line"></span><br><span class="line">指标</span><br><span class="line"><span class="meta">%</span><span class="bash">iowait：每一个IO请求的处理的平均时间（单位是毫秒），这里可以理解为IO的响应时间，一般地系统IO响应时间应该低于5ms，如果大于10ms就比较大了。</span> </span><br><span class="line">kB_read/s：每秒读K字节数 </span><br><span class="line">kB_wrtn/s ：每秒写K字节数 </span><br><span class="line">r/s： 每秒完成的读 I/O 设备次数。即 delta（rio）/s </span><br><span class="line">w/s： 每秒完成的写 I/O 设备次数。即 delta（wio）/s </span><br><span class="line">rsec/s： 每秒读扇区数。即 delta（rsect）/s </span><br><span class="line">wsec/s： 每秒写扇区数。即 delta（wsect）/s </span><br><span class="line">tps：该设备每秒的传输次数 ，“一次传输”意思是“一次I/O请求”。多个逻辑请求可能会被合并为“一次I/O请求”。</span><br></pre></td></tr></table></figure>
-<h5 id="du-查看文件-文件夹大小">du 查看文件/文件夹大小</h5>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">du -sh * | sort -hr # 列出文件夹下所有文件大小并降序排序</span><br><span class="line">du -b /home         # 以字节为单位显示/home 文件夹下各个子文件夹的大小</span><br><span class="line">du -h ./            # 以mb为单位显示当前 文件夹下各个子文件夹的大小</span><br><span class="line">du -ks /home        # 以千字节KB 为单位显示/home 文件夹的总大小 </span><br></pre></td></tr></table></figure>
-<h5 id="找出最大的-5-个目录">找出最大的 5 个目录</h5>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">du -hm / --max-depth=1 | sort -nr | head -5 </span><br></pre></td></tr></table></figure>
-<h4 id="查询操作">查询操作</h4>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">which     # 查看可执行文件的位置。</span><br><span class="line">whereis   # 查看文件的位置。</span><br><span class="line">locate    # 配合数据库查看文件位置。</span><br><span class="line">find      # 实际搜寻硬盘查询文件名称。</span><br></pre></td></tr></table></figure>
-<h5 id="which">which</h5>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">which     # 搜索某个 系统命令/可执行文件 的路径</span><br></pre></td></tr></table></figure>
-<h5 id="whereis">whereis</h5>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 只能用于程序名的搜索</span></span><br><span class="line">-b   # 定位可执行文件。</span><br><span class="line">-m   # 定位帮助文件。</span><br><span class="line">-s   # 定位源代码文件。</span><br><span class="line">-u   # 搜索默认路径下除可执行文件、源代码文件、帮助文件以外的其它文件。</span><br></pre></td></tr></table></figure>
-<h5 id="find">find</h5>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">find -atime -2         # 查找 48 小时内修改过的文件</span><br><span class="line">find ./ -name &#x27;*.log&#x27;  # 在当前目录查找 以 .log 结尾的文件。 . 代表当前目录</span><br><span class="line">find -size +1000c      # 查找大于 1K 的文件</span><br></pre></td></tr></table></figure>
-<h4 id="用户操作">用户操作</h4>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo -s                # 切换到 root 用户</span><br><span class="line">sudo su username       # 切换用户</span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>效率</category>
-      </categories>
-      <tags>
-        <tag>Linux</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>《高并发架构设计入门》笔记</title>
-    <url>/2021/08/10/%E3%80%8A%E9%AB%98%E5%B9%B6%E5%8F%91%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1%E5%85%A5%E9%97%A8%E3%80%8B%E7%AC%94%E8%AE%B0/</url>
-    <content><![CDATA[<h3 id="高性能的5大设计思想">高性能的5大设计思想</h3>
-<h5 id="扩展">扩展</h5>
-<p><strong>垂直扩展-针对单台机器</strong></p>
-<ul>
-<li>扩容机器，增加配置</li>
-<li>分表，减少数据量</li>
-<li>无锁，减少锁竞争</li>
-</ul>
-<p><strong>水平扩展-多机器均衡</strong></p>
-<ul>
-<li>nginx 负载均衡</li>
-<li>无状态</li>
-<li>分布式</li>
-</ul>
-<h5 id="缓存">缓存</h5>
-<p>数据前置，开辟新的数据交换区，解决原始数据获取代价太大的问题</p>
-<p>常用缓存策略：CDN 静态数据、热点数据缓存、服务缓存 Redis、内存缓存、数据库缓存、分布式缓存</p>
-<p>缓存不一致：捕捉更新结果，如果失败就重试；</p>
-<h5 id="分离">分离</h5>
-<p>动静分离、读写分离、主从主备、冷热分离</p>
-<h5 id="异步">异步</h5>
-<p>消息队列，削峰填谷，解耦</p>
-<h5 id="复用">复用</h5>
-<p>线程池、连接池复用，减少资源创建销毁的时间</p>
-<h3 id="高可用的5大设计思想">高可用的5大设计思想</h3>
-<h5 id="隔离">隔离</h5>
-<ul>
-<li>核心/非核心服务隔离部署</li>
-<li>机房隔离</li>
-<li>读写隔离</li>
-</ul>
-<h5 id="限流">限流</h5>
-<p>识别恶意流量</p>
-<ul>
-<li>接入层限流：nginx</li>
-<li>应用层限流：队列满后丢弃后续数据</li>
-<li>分布式限流</li>
-</ul>
-<h5 id="降级">降级</h5>
-<ul>
-<li>有损服务：系统繁忙页面</li>
-<li>熔断</li>
-<li>保底：出现异常时的保底策略</li>
-</ul>
-<h5 id="超时和失败重试">超时和失败重试</h5>
-<h5 id="可回滚">可回滚</h5>
-<p>事务、版本、数据的可回滚，保证及时解决数据问题</p>
-<h5 id="保障手段">*保障手段</h5>
-<p>压测、应急预案演练（多机房容灾等）、线上监控报警</p>
-]]></content>
-      <categories>
-        <category>技术</category>
-      </categories>
-      <tags>
-        <tag>架构</tag>
-        <tag>笔记</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>使用ShardingSphere需要注意的问题</title>
-    <url>/2021/06/24/%E4%BD%BF%E7%94%A8ShardingSphere%E9%9C%80%E8%A6%81%E6%B3%A8%E6%84%8F%E7%9A%84%E9%97%AE%E9%A2%98/</url>
-    <content><![CDATA[<h3 id="问题1">问题1</h3>
-<p>在配置文件中 datasource 的数据源名称设置为 yudao_orders_0 时出现如下错误</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Caused by: org.springframework.boot.context.properties.source.InvalidConfigurationPropertyNameException: Configuration property name &#x27;spring.shardingsphere.datasource.yudao_orders_0&#x27; is not valid</span><br></pre></td></tr></table></figure>
-<p>原因是配置文件中的 datasource 的命名中不能带下划线，改为 yudao-orders-0 即可</p>
-<h3 id="问题2">问题2</h3>
-<p>在 application.yaml 中配置 type 字段，即连接池类型时，如果选择的是 Druid，要注意 maven 依赖<br>
-pom.xml 文件中 druid-spring-boot-starter  和 sharding-jdbc-spring-boot-starter 不能同时出现</p>
-<ol>
-<li>因为数据连接池的starter（比如druid）可能会先加载并且其创建一个默认数据源，这将会使得ShardingSphere-JDBC创建数据源时发生冲突。<br>
-解决方法有2种：</li>
-<li>在启动类中排除 Druid 自动配置类<code>@SpringBootApplication(exclude = &#123;DruidDataSourceAutoConfigure.class&#125;)</code></li>
-<li>将 druid-spring-boot-starter 依赖替换为纯 Druid，如下</li>
-</ol>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.alibaba<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>druid<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.1.22<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<h3 id="问题3">问题3</h3>
-<p>读写分离配置时注意配置的名称，其中的 <code>slave-data-source-names</code>最后有个<code>s</code></p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line">    <span class="attr">shardingsphere:</span></span><br><span class="line">        <span class="attr">masterslave:</span></span><br><span class="line">        <span class="attr">name:</span> <span class="string">ms</span> <span class="comment"># 名字，任意，需要保证唯一</span></span><br><span class="line">        <span class="attr">master-data-source-name:</span> <span class="string">ds-master</span> <span class="comment"># 主库数据源</span></span><br><span class="line">        <span class="attr">slave-data-source-names:</span> <span class="string">ds-slave-1,</span> <span class="string">ds-slave-2</span> <span class="comment"># 从库数据源</span></span><br></pre></td></tr></table></figure>
-<h3 id="问题4">问题4</h3>
-<p>Shardingsphere 4.1.1 和 Swagger 2.9.2 存在冲突<br>
-Swagger 2.9.2 依赖于 Guava 20.0 以上的版本，但是 Shardingsphere 4.1.1 中引入的是 Guava 18.0 版本，所以启动项目时会导致以下错误</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Caused by: org.springframework.context.ApplicationContextException: Failed to start bean &#x27;documentationPluginsBootstrapper&#x27;; nested exception is com.google.common.util.concurrent.ExecutionError: java.lang.NoSuchMethodError: com.google.common.collect.FluentIterable.concat(Ljava/lang/Iterable;Ljava/lang/Iterable;)Lcom/google/common/collect/FluentIterable;</span><br><span class="line">        at org.springframework.context.support.DefaultLifecycleProcessor.doStart(DefaultLifecycleProcessor.java:176)</span><br><span class="line">        at org.springframework.context.support.DefaultLifecycleProcessor.access$200(DefaultLifecycleProcessor.java:50)</span><br><span class="line">        at org.springframework.context.support.DefaultLifecycleProcessor$LifecycleGroup.start(DefaultLifecycleProcessor.java:346)</span><br><span class="line">        at org.springframework.context.support.DefaultLifecycleProcessor.startBeans(DefaultLifecycleProcessor.java:149)</span><br><span class="line">        at org.springframework.context.support.DefaultLifecycleProcessor.onRefresh(DefaultLifecycleProcessor.java:112)</span><br><span class="line">        at org.springframework.context.support.AbstractApplicationContext.finishRefresh(AbstractApplicationContext.java:880)</span><br><span class="line">        at org.springframework.boot.context.embedded.EmbeddedWebApplicationContext.finishRefresh(EmbeddedWebApplicationContext.java:144)</span><br><span class="line">        at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:546)</span><br><span class="line">        at org.springframework.boot.context.embedded.EmbeddedWebApplicationContext.refresh(EmbeddedWebApplicationContext.java:122)</span><br><span class="line">        at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:693)</span><br><span class="line">        at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:360)</span><br><span class="line">        at org.springframework.boot.SpringApplication.run(SpringApplication.java:303)</span><br><span class="line">        at org.springframework.boot.test.context.SpringBootContextLoader.loadContext(SpringBootContextLoader.java:120)</span><br><span class="line">        at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContextInternal(DefaultCacheAwareContextLoaderDelegate.java:98)</span><br><span class="line">        at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:116)</span><br><span class="line">        ... 25 more</span><br></pre></td></tr></table></figure>
-<p>手动引入 20.0 版本的 Guava 后可以解决该问题</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 主要因为 shardingsphere 中默认的 guava 依赖版本是 18.0 和 swagger 2.9.2 冲突，所以手动引入 20.0 版本的 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.google.guava<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>guava<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>20.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<h3 id="参考">参考</h3>
-<p><a href="https://shardingsphere.apache.org/document/current/cn/faq/#20-%E4%B8%BA%E4%BB%80%E4%B9%88%E9%85%8D%E7%BD%AE%E4%BA%86%E6%9F%90%E4%B8%AA%E6%95%B0%E6%8D%AE%E8%BF%9E%E6%8E%A5%E6%B1%A0%E7%9A%84spring-boot-starter%E6%AF%94%E5%A6%82druid%E5%92%8Cshardingsphere-jdbc-spring-boot-starter%E6%97%B6%E7%B3%BB%E7%BB%9F%E5%90%AF%E5%8A%A8%E4%BC%9A%E6%8A%A5%E9%94%99">FAQ :: ShardingSphere</a><br>
-<a href="https://my.oschina.net/u/1046143/blog/3216500">【ShardingSphere】2. Spring Boot整合Sharding-JDBC实现读写分离 - 贺小康的个人空间 - OSCHINA - 中文开源技术交流社区</a><br>
-<a href="https://juejin.cn/post/6844903857835737095">SpringBoot 2.x ShardingSphere读写分离实战</a></p>
-]]></content>
-      <categories>
-        <category>问题</category>
-      </categories>
-      <tags>
-        <tag>Sharding</tag>
-        <tag>读写分离</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>基于 rsync 实现文件远程同步</title>
-    <url>/2021/10/18/%E4%BD%BF%E7%94%A8rsync%E4%BC%A0%E8%BE%93%E6%96%87%E4%BB%B6/</url>
-    <content><![CDATA[<p>两台机器之间同步文件常用的方式有 <code>scp</code> 和 <code>rsync</code> 两种，两者的主要区别在于：</p>
-<ul>
-<li><code>scp</code> 会将整个文件进行传输；<code>rsync</code> 只对差异文件做更新（通过比较最后修改时间和文件的大小），支持分块传输，可以只传输修改的部分</li>
-<li><code>scp</code> 是加密传输；<code>rsync</code> 不是加密传输</li>
-</ul>
-<p>在项目中我使用的是 <code>rsync --daemon</code> 的方式进行文件同步，这种方式需要在目标同步机器上的 <code>rsyncd.conf</code> 配置文件中配置模块名，存储路径等信息。具体配置方法参考：<a href="https://blog.csdn.net/imliuqun123/article/details/85232769">参考</a></p>
-<p>我的测试用例中使用的配置项是</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">uid = 0 </span><br><span class="line">gid = 0</span><br><span class="line">pid file = /var/run/rsyncd.pid</span><br><span class="line">log file = /var/log/rsyncd.log </span><br><span class="line"></span><br><span class="line">[user]</span><br><span class="line">path=/data</span><br><span class="line">ignore errors = yes # 忽略IO问题</span><br><span class="line">read only = no </span><br><span class="line">use chroot = no # 连接时可以不需要root权限</span><br><span class="line">list = yes #当客户请求列出可以使用的模块列表时，该模块可以被列出</span><br></pre></td></tr></table></figure>
-<p>模块名称为 <code>user</code> ，文件的默认保存路径为 <code>/data</code><br>
-服务器通过 <code>rsync --daemon</code> 启动守护进程</p>
-<p>在另一台机器上通过指令</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">rsync -avz [local_path] [server_address]::user</span><br></pre></td></tr></table></figure>
-<p>可以将<code>local_path</code>目录下的文件增量写入到目标服务器的<code>/data</code>目录下</p>
-<h3 id="参考">参考</h3>
-<p><a href="https://blog.csdn.net/imliuqun123/article/details/85232769">【Linux】rsync 守护进程的配置</a><br>
-<a href="https://www.cnblogs.com/kevingrace/p/8529792.html">SCP和Rsync远程拷贝的几个技巧</a></p>
-]]></content>
-      <categories>
-        <category>技术</category>
-      </categories>
-      <tags>
-        <tag>Rsync</tag>
-      </tags>
   </entry>
   <entry>
     <title>基于 Canel 数据实时同步到 Redis</title>
@@ -2058,156 +1776,6 @@ Swagger 2.9.2 依赖于 Guava 20.0 以上的版本，但是 Shardingsphere 4.1.1
         <tag>MySQL</tag>
         <tag>Canal</tag>
         <tag>Kafka</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>操作系统相关子问题</title>
-    <url>/2021/04/24/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%9B%B8%E5%85%B3%E5%AD%90%E9%97%AE%E9%A2%98/</url>
-    <content><![CDATA[<h3 id="进程相关">进程相关</h3>
-<h4 id="僵尸进程"><a href="https://www.cnblogs.com/anker/p/3271773.html">僵尸进程</a></h4>
-<p>一个进程使用fork创建子进程，子进程结束后 父进程并没有调用wait或者waitpid方法获取子进程的终止状态，子进程的描述符依然保存在操作系统的进程表中，这样的进程就是一个僵尸进程。</p>
-<p>僵尸进程是一个已经死亡的进程，但是没有被完全销毁。它几乎不占用任何内存资源，没有什么可执行的代码，只是在进程表中保留了一个位置，占用了一个进程id。</p>
-<p><strong>任何子进程在结束之后都会经历僵尸进程的阶段，状态为Z，直到被父进程处理。</strong></p>
-<span id="more"></span>
-<h5 id="产生原因">产生原因</h5>
-<p><strong>Unix的机制来保证父进程可以知道子进程结束时的状态信息</strong>：就是子进程<strong>结束后释放它占有的资源，包括打开的文件，内存等</strong>。但是<strong>还保留了一定信息，包括进程号，退出状态等</strong>，这些信息会直到父进程调用wait或者waitpid方法时才释放。其中<strong>wait会使父进程暂停执行，waitpid则可以加入wait-no-hang选项，如果没有结束的进程会立即返回，不回阻塞进程</strong></p>
-<h5 id="危害">危害</h5>
-<p>如果父进程没有调用上述方法，就会产生僵尸进程，保留的那些信息不会被释放，而进程号是有限的，有可能因此而不能产生新的进程</p>
-<h5 id="问题和解决方法">问题和解决方法</h5>
-<p><strong>问题</strong>：可能会有一个进程定期产生一个子进程，做了一些工作后就结束，但是没有被父进程处理，这样一段时间后就会产生大量僵尸进程。</p>
-<p><strong>方法</strong>：解决产生僵尸进程的进程，这样那些僵尸进程就会变成孤儿进程，由init来处理</p>
-<p>具体方法：</p>
-<p>通过信号机制：子进程结束时发送SIGCHILD信号给父进程，父进程处理信号，在信号处理函数中调用wait方法处理僵尸进程。</p>
-<h4 id="孤儿进程">孤儿进程</h4>
-<p>一个父进程已经退出，但是它的子进程还在运行当中，这些进程就成了孤儿进程。孤儿进程将被init进程（id号1）收养，并由init进程完成状态收集工作。<strong>孤儿进程并不会有什么危害</strong>。</p>
-<hr>
-<h3 id="几种常见的IO方式">几种常见的IO方式</h3>
-<h4 id="阻塞式IO">阻塞式IO</h4>
-<p>当用户进程调用IO操作，应用程序被阻塞，直到数据从内核缓冲区复制到进程缓冲区才恢复。进行拷贝过程时继续阻塞。所以IO的两个阶段：等待和拷贝，都处于阻塞状态</p>
-<p>但是阻塞期间其他进程还可以执行，所以CPU利用率挺高。</p>
-<h4 id="非阻塞式IO">非阻塞式IO</h4>
-<p>进程执行系统调用后，如果数据还没准备好，内核会返回一个错误码，进程可以继续执行。但是进程会定期执行系统调用来询问内核有没有准备好，如果准备好了并且收到了系统调用，就进行拷贝。第二阶段拷贝依然是阻塞的。</p>
-<p>不断主动询问占用了很多CPU资源</p>
-<h4 id="IO多路复用">IO多路复用</h4>
-<p><a href="https://www.cnblogs.com/aspirant/p/9166944.html">select/poll/epoll</a></p>
-<h4 id="异步IO">异步IO</h4>
-<p>进程执行IO操作后可以立即返回，并继续执行，不会被阻塞，内核会在所有操作完成之后发送信号。比如说要进行读操作，内核会在把读取的数据放到用户指定的缓冲区内后通知进程。</p>
-<h3 id="用户态和内核态">用户态和内核态</h3>
-<p>是系统的两个权限等级，代表了不同的访问能力，先说内核态，内核态可以访问内存的所有数据以及外围设备，例如硬盘网卡，但是用户态只能受限访问内存，并且不能访问外围设备，不能占用CPU。</p>
-<p>所有应用程序都运行在用户态，需要进行一些内核操作，例如读取硬盘数据时就要进行系统调用，CPU切换到内核态，执行完服务之后切换回用户态并返回系统调用的结果。</p>
-<h4 id="为什么要分">为什么要分</h4>
-<ul>
-<li>安全性：防止用户程序执行一些危险指令，恶意或无意破坏系统、内存、硬盘资源</li>
-<li>封装性：把系统层面的操作封装起来，通过操作系统来调用，操作系统可以检验一些操作的安全性</li>
-</ul>
-<h4 id="如何从用户态切换到内核态">如何从用户态切换到内核态</h4>
-<ul>
-<li>系统调用：</li>
-<li>异常：如果用户进程出现了某些异常，需要切换到内核态来通过某些程序处理该异常</li>
-<li>外设中断：当外设完成某些用户请求的操作后会发出一个中断请求，CPU会转而处理该请求。如果CPU正在处理用户态的程序，就会转而切换到内核态执行相关的处理方法。</li>
-</ul>
-<hr>
-<h3 id="死锁">死锁</h3>
-<p>死锁就是两个或者多个并发进程，都持有一定的资源，并且都等待其他进程释放他们持有的资源，进度无法推进，就发生了死锁</p>
-<h4 id="死锁产生的必要条件">死锁产生的必要条件</h4>
-<ul>
-<li>互斥：一个资源同一时间只能被一个进程使用</li>
-<li>占有等待：一个进程至少占有一个资源，并且在等待其他进程释放资源</li>
-<li>非抢占：一个进程一旦占有某样资源就不能被抢夺，只能等待它主动释放该资源</li>
-<li>循环等待：若干进程形成一个头尾相接的环形等待关系，每一个进程都在等待下一个进程释放资源</li>
-</ul>
-<h4 id="死锁的处理办法">死锁的处理办法</h4>
-<ul>
-<li>鸵鸟策略：直接忽视死锁 - 指发生死锁不会产生很严重的后果，或者死锁发生的概率很低</li>
-<li>死锁预防
-<ul>
-<li>破坏互斥：资源可以被多个进程访问，但是某些资源不具备这个属性，所以无法操作</li>
-<li>破坏占有等待
-<ul>
-<li>一次性申请所有需要的资源，否则不运行</li>
-<li>申请资源之前先释放自己占有的资源</li>
-<li>但是很多时候不知道一个进程需要的所有资源，降低系统并发性</li>
-</ul>
-</li>
-<li>破坏不可抢占：允许进程抢占别的已占有资源</li>
-<li>破坏循环等待：给资源同一编号，进程只能按照编号顺序来请求资源，只有占用小号资源才能申请大号资源</li>
-</ul>
-</li>
-<li>死锁避免
-<ul>
-<li>动态检测资源分配，确保系统处于安全状态，只有处于安全状态时才会进行资源分配。安全状态是指：即使所有进程突然请求所需要的资源，也有某种资源分配的顺序使得每一个进程执行完毕</li>
-<li>银行家算法</li>
-</ul>
-</li>
-<li>死锁解除
-<ul>
-<li>利用抢占，挂起某些进程然后占有它的资源</li>
-<li>回滚：让某些进程回滚到之前的状态，自愿释放资源到解除死锁的阶段</li>
-<li>杀死进程：按照优先级杀死进程直到解除死锁</li>
-</ul>
-</li>
-</ul>
-<hr>
-<h3 id="内存相关">内存相关</h3>
-<h4 id="分页和分段">分页和分段</h4>
-<p>页式存储：页是对虚拟地址空间的划分，页框是对物理内存空间的划分。内存管理单元MMU管理着地址空间和物理内存的转换。其中的页表存储着页（地址空间）和页框（物理内存空间）的映射表。虚拟地址分成两部分，一部分存储页面号，一部分存储偏移量。</p>
-<p>按进程需要的页数分配，逻辑上相邻的页物理上不一定相邻</p>
-<p>段式存储：将进程自己的地址空间按照逻辑划分成若干个段，如代码段、数据段等。内存空间页被动态划分成不同长度的区域，分配时以段为基本单位。</p>
-<p>段页式：用户进程的地址空间先按段划分，段内再按页划分，内存空间按照页来划分</p>
-<h5 id="区别是什么">区别是什么</h5>
-<p>目的：分页是为了管理内存，通过虚拟内存获得更大的地址空间。分段是为了满足用户需要，程序和数据可以被划分为逻辑上独立的地址空间</p>
-<p>大小：段的大小不固定，由其所完成的功能决定；页的大小固定，由系统决定</p>
-<p>地址空间维度：页是一维的，给定一个虚拟地址，页号和页偏移可以被计算出来；段是二维的，需要通过段号加段内偏移来确定。</p>
-<h4 id="虚拟内存">虚拟内存</h4>
-<p>每个程序都有自己的地址空间，地址空间被划分为大小相等的页，页映射到物理内存空间。但不需要所有页都在物理内存中，有一部分被存储在磁盘上。当程序需要用到某些不在物理内存空间中的页时，需要由操作系统把它从磁盘置换到内存中。这样，逻辑上有很大的内存空间，其实有一部分时存储在磁盘上的</p>
-<h5 id="地址空间到物理空间的映射">地址空间到物理空间的映射</h5>
-<p>由MMU内存管理单元实现，其中的页表存储了页到页框的映射表，其中还包含有效位（是在内存还是磁盘中）、访问位（是否被访问过）、修改位（是否被修改过）等</p>
-<h4 id="页面置换算法">页面置换算法</h4>
-<p>最佳页面置换算法：把未来很长一段时间内不会被用到的页面置换掉-理论算法</p>
-<p>最近未使用LRU：将最近最久未使用的页面置换出去。实现方式是链表，每次一个页面被访问，把它移动到链表头，置换时候置换掉链表尾部的页面</p>
-<p>先进先出FIFO：置换掉在内存中停留时间最长的页面-会把常用的页面置换出去</p>
-<p>第二次机会算法：相当于优化FIFO，解决了常用页面被置换的问题。为每一个页面设置一个R位，被读和写时置为1，需要置换链表头部的页时，检查R位，如果是0就置换，如果是1，就将R置0，放入链表尾部。</p>
-<p>时钟：省去第二次机会算法在链表中移动的开销，将页面首尾相连，指针指向最老的那个页面</p>
-<h5 id="局部性原理">局部性原理</h5>
-<p>时间上：最近被访问的页在不久的将来还会被访问</p>
-<p>空间上：内存中被访问的页周围的页也很可能被访问</p>
-<h5 id="颠簸">颠簸</h5>
-<p>指频繁的页调度，置换掉一个页，那个页有马上被需要，又置换回来，频繁发生缺页中断。</p>
-<p>解决方法（根本原因就是内存不足）</p>
-<ul>
-<li>降低运行的程序量（释放内存）</li>
-<li>增加物理内存（增加内存）</li>
-<li>修改页面置换算法</li>
-</ul>
-<h3 id="磁盘调度">磁盘调度</h3>
-<p>磁盘</p>
-<ul>
-<li>盘面（找到对应的盘面）</li>
-<li>磁道（盘面上的同心圆 - 寻道时间）</li>
-<li>扇区（旋转时间）</li>
-</ul>
-<h4 id="磁盘调度算法">磁盘调度算法</h4>
-<p>寻道时间最长，磁盘调度是使磁盘的平均寻道时间最短</p>
-<ul>
-<li>
-<p>先来先服务FCFS</p>
-<p>公平简单，但是不做任何优化，平均寻道时间较长</p>
-</li>
-<li>
-<p>最短寻道时间优先</p>
-<p>优先调度与所在磁道最近的磁道。平均时间较短，但是会出现饥饿</p>
-</li>
-<li>
-<p>电梯算法</p>
-<p>按照一个方向来进行磁盘调度，等到该方向没有未完成的请求，改变方向</p>
-</li>
-</ul>
-]]></content>
-      <categories>
-        <category>面试</category>
-      </categories>
-      <tags>
-        <tag>操作系统</tag>
       </tags>
   </entry>
   <entry>
@@ -2548,6 +2116,516 @@ Swagger 2.9.2 依赖于 Guava 20.0 以上的版本，但是 Shardingsphere 4.1.1
       </categories>
       <tags>
         <tag>操作系统</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>操作系统相关子问题</title>
+    <url>/2021/04/24/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%9B%B8%E5%85%B3%E5%AD%90%E9%97%AE%E9%A2%98/</url>
+    <content><![CDATA[<h3 id="进程相关">进程相关</h3>
+<h4 id="僵尸进程"><a href="https://www.cnblogs.com/anker/p/3271773.html">僵尸进程</a></h4>
+<p>一个进程使用fork创建子进程，子进程结束后 父进程并没有调用wait或者waitpid方法获取子进程的终止状态，子进程的描述符依然保存在操作系统的进程表中，这样的进程就是一个僵尸进程。</p>
+<p>僵尸进程是一个已经死亡的进程，但是没有被完全销毁。它几乎不占用任何内存资源，没有什么可执行的代码，只是在进程表中保留了一个位置，占用了一个进程id。</p>
+<p><strong>任何子进程在结束之后都会经历僵尸进程的阶段，状态为Z，直到被父进程处理。</strong></p>
+<span id="more"></span>
+<h5 id="产生原因">产生原因</h5>
+<p><strong>Unix的机制来保证父进程可以知道子进程结束时的状态信息</strong>：就是子进程<strong>结束后释放它占有的资源，包括打开的文件，内存等</strong>。但是<strong>还保留了一定信息，包括进程号，退出状态等</strong>，这些信息会直到父进程调用wait或者waitpid方法时才释放。其中<strong>wait会使父进程暂停执行，waitpid则可以加入wait-no-hang选项，如果没有结束的进程会立即返回，不回阻塞进程</strong></p>
+<h5 id="危害">危害</h5>
+<p>如果父进程没有调用上述方法，就会产生僵尸进程，保留的那些信息不会被释放，而进程号是有限的，有可能因此而不能产生新的进程</p>
+<h5 id="问题和解决方法">问题和解决方法</h5>
+<p><strong>问题</strong>：可能会有一个进程定期产生一个子进程，做了一些工作后就结束，但是没有被父进程处理，这样一段时间后就会产生大量僵尸进程。</p>
+<p><strong>方法</strong>：解决产生僵尸进程的进程，这样那些僵尸进程就会变成孤儿进程，由init来处理</p>
+<p>具体方法：</p>
+<p>通过信号机制：子进程结束时发送SIGCHILD信号给父进程，父进程处理信号，在信号处理函数中调用wait方法处理僵尸进程。</p>
+<h4 id="孤儿进程">孤儿进程</h4>
+<p>一个父进程已经退出，但是它的子进程还在运行当中，这些进程就成了孤儿进程。孤儿进程将被init进程（id号1）收养，并由init进程完成状态收集工作。<strong>孤儿进程并不会有什么危害</strong>。</p>
+<hr>
+<h3 id="几种常见的IO方式">几种常见的IO方式</h3>
+<h4 id="阻塞式IO">阻塞式IO</h4>
+<p>当用户进程调用IO操作，应用程序被阻塞，直到数据从内核缓冲区复制到进程缓冲区才恢复。进行拷贝过程时继续阻塞。所以IO的两个阶段：等待和拷贝，都处于阻塞状态</p>
+<p>但是阻塞期间其他进程还可以执行，所以CPU利用率挺高。</p>
+<h4 id="非阻塞式IO">非阻塞式IO</h4>
+<p>进程执行系统调用后，如果数据还没准备好，内核会返回一个错误码，进程可以继续执行。但是进程会定期执行系统调用来询问内核有没有准备好，如果准备好了并且收到了系统调用，就进行拷贝。第二阶段拷贝依然是阻塞的。</p>
+<p>不断主动询问占用了很多CPU资源</p>
+<h4 id="IO多路复用">IO多路复用</h4>
+<p><a href="https://www.cnblogs.com/aspirant/p/9166944.html">select/poll/epoll</a></p>
+<h4 id="异步IO">异步IO</h4>
+<p>进程执行IO操作后可以立即返回，并继续执行，不会被阻塞，内核会在所有操作完成之后发送信号。比如说要进行读操作，内核会在把读取的数据放到用户指定的缓冲区内后通知进程。</p>
+<h3 id="用户态和内核态">用户态和内核态</h3>
+<p>是系统的两个权限等级，代表了不同的访问能力，先说内核态，内核态可以访问内存的所有数据以及外围设备，例如硬盘网卡，但是用户态只能受限访问内存，并且不能访问外围设备，不能占用CPU。</p>
+<p>所有应用程序都运行在用户态，需要进行一些内核操作，例如读取硬盘数据时就要进行系统调用，CPU切换到内核态，执行完服务之后切换回用户态并返回系统调用的结果。</p>
+<h4 id="为什么要分">为什么要分</h4>
+<ul>
+<li>安全性：防止用户程序执行一些危险指令，恶意或无意破坏系统、内存、硬盘资源</li>
+<li>封装性：把系统层面的操作封装起来，通过操作系统来调用，操作系统可以检验一些操作的安全性</li>
+</ul>
+<h4 id="如何从用户态切换到内核态">如何从用户态切换到内核态</h4>
+<ul>
+<li>系统调用：</li>
+<li>异常：如果用户进程出现了某些异常，需要切换到内核态来通过某些程序处理该异常</li>
+<li>外设中断：当外设完成某些用户请求的操作后会发出一个中断请求，CPU会转而处理该请求。如果CPU正在处理用户态的程序，就会转而切换到内核态执行相关的处理方法。</li>
+</ul>
+<hr>
+<h3 id="死锁">死锁</h3>
+<p>死锁就是两个或者多个并发进程，都持有一定的资源，并且都等待其他进程释放他们持有的资源，进度无法推进，就发生了死锁</p>
+<h4 id="死锁产生的必要条件">死锁产生的必要条件</h4>
+<ul>
+<li>互斥：一个资源同一时间只能被一个进程使用</li>
+<li>占有等待：一个进程至少占有一个资源，并且在等待其他进程释放资源</li>
+<li>非抢占：一个进程一旦占有某样资源就不能被抢夺，只能等待它主动释放该资源</li>
+<li>循环等待：若干进程形成一个头尾相接的环形等待关系，每一个进程都在等待下一个进程释放资源</li>
+</ul>
+<h4 id="死锁的处理办法">死锁的处理办法</h4>
+<ul>
+<li>鸵鸟策略：直接忽视死锁 - 指发生死锁不会产生很严重的后果，或者死锁发生的概率很低</li>
+<li>死锁预防
+<ul>
+<li>破坏互斥：资源可以被多个进程访问，但是某些资源不具备这个属性，所以无法操作</li>
+<li>破坏占有等待
+<ul>
+<li>一次性申请所有需要的资源，否则不运行</li>
+<li>申请资源之前先释放自己占有的资源</li>
+<li>但是很多时候不知道一个进程需要的所有资源，降低系统并发性</li>
+</ul>
+</li>
+<li>破坏不可抢占：允许进程抢占别的已占有资源</li>
+<li>破坏循环等待：给资源同一编号，进程只能按照编号顺序来请求资源，只有占用小号资源才能申请大号资源</li>
+</ul>
+</li>
+<li>死锁避免
+<ul>
+<li>动态检测资源分配，确保系统处于安全状态，只有处于安全状态时才会进行资源分配。安全状态是指：即使所有进程突然请求所需要的资源，也有某种资源分配的顺序使得每一个进程执行完毕</li>
+<li>银行家算法</li>
+</ul>
+</li>
+<li>死锁解除
+<ul>
+<li>利用抢占，挂起某些进程然后占有它的资源</li>
+<li>回滚：让某些进程回滚到之前的状态，自愿释放资源到解除死锁的阶段</li>
+<li>杀死进程：按照优先级杀死进程直到解除死锁</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="内存相关">内存相关</h3>
+<h4 id="分页和分段">分页和分段</h4>
+<p>页式存储：页是对虚拟地址空间的划分，页框是对物理内存空间的划分。内存管理单元MMU管理着地址空间和物理内存的转换。其中的页表存储着页（地址空间）和页框（物理内存空间）的映射表。虚拟地址分成两部分，一部分存储页面号，一部分存储偏移量。</p>
+<p>按进程需要的页数分配，逻辑上相邻的页物理上不一定相邻</p>
+<p>段式存储：将进程自己的地址空间按照逻辑划分成若干个段，如代码段、数据段等。内存空间页被动态划分成不同长度的区域，分配时以段为基本单位。</p>
+<p>段页式：用户进程的地址空间先按段划分，段内再按页划分，内存空间按照页来划分</p>
+<h5 id="区别是什么">区别是什么</h5>
+<p>目的：分页是为了管理内存，通过虚拟内存获得更大的地址空间。分段是为了满足用户需要，程序和数据可以被划分为逻辑上独立的地址空间</p>
+<p>大小：段的大小不固定，由其所完成的功能决定；页的大小固定，由系统决定</p>
+<p>地址空间维度：页是一维的，给定一个虚拟地址，页号和页偏移可以被计算出来；段是二维的，需要通过段号加段内偏移来确定。</p>
+<h4 id="虚拟内存">虚拟内存</h4>
+<p>每个程序都有自己的地址空间，地址空间被划分为大小相等的页，页映射到物理内存空间。但不需要所有页都在物理内存中，有一部分被存储在磁盘上。当程序需要用到某些不在物理内存空间中的页时，需要由操作系统把它从磁盘置换到内存中。这样，逻辑上有很大的内存空间，其实有一部分时存储在磁盘上的</p>
+<h5 id="地址空间到物理空间的映射">地址空间到物理空间的映射</h5>
+<p>由MMU内存管理单元实现，其中的页表存储了页到页框的映射表，其中还包含有效位（是在内存还是磁盘中）、访问位（是否被访问过）、修改位（是否被修改过）等</p>
+<h4 id="页面置换算法">页面置换算法</h4>
+<p>最佳页面置换算法：把未来很长一段时间内不会被用到的页面置换掉-理论算法</p>
+<p>最近未使用LRU：将最近最久未使用的页面置换出去。实现方式是链表，每次一个页面被访问，把它移动到链表头，置换时候置换掉链表尾部的页面</p>
+<p>先进先出FIFO：置换掉在内存中停留时间最长的页面-会把常用的页面置换出去</p>
+<p>第二次机会算法：相当于优化FIFO，解决了常用页面被置换的问题。为每一个页面设置一个R位，被读和写时置为1，需要置换链表头部的页时，检查R位，如果是0就置换，如果是1，就将R置0，放入链表尾部。</p>
+<p>时钟：省去第二次机会算法在链表中移动的开销，将页面首尾相连，指针指向最老的那个页面</p>
+<h5 id="局部性原理">局部性原理</h5>
+<p>时间上：最近被访问的页在不久的将来还会被访问</p>
+<p>空间上：内存中被访问的页周围的页也很可能被访问</p>
+<h5 id="颠簸">颠簸</h5>
+<p>指频繁的页调度，置换掉一个页，那个页有马上被需要，又置换回来，频繁发生缺页中断。</p>
+<p>解决方法（根本原因就是内存不足）</p>
+<ul>
+<li>降低运行的程序量（释放内存）</li>
+<li>增加物理内存（增加内存）</li>
+<li>修改页面置换算法</li>
+</ul>
+<h3 id="磁盘调度">磁盘调度</h3>
+<p>磁盘</p>
+<ul>
+<li>盘面（找到对应的盘面）</li>
+<li>磁道（盘面上的同心圆 - 寻道时间）</li>
+<li>扇区（旋转时间）</li>
+</ul>
+<h4 id="磁盘调度算法">磁盘调度算法</h4>
+<p>寻道时间最长，磁盘调度是使磁盘的平均寻道时间最短</p>
+<ul>
+<li>
+<p>先来先服务FCFS</p>
+<p>公平简单，但是不做任何优化，平均寻道时间较长</p>
+</li>
+<li>
+<p>最短寻道时间优先</p>
+<p>优先调度与所在磁道最近的磁道。平均时间较短，但是会出现饥饿</p>
+</li>
+<li>
+<p>电梯算法</p>
+<p>按照一个方向来进行磁盘调度，等到该方向没有未完成的请求，改变方向</p>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>面试</category>
+      </categories>
+      <tags>
+        <tag>操作系统</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>操作系统补充</title>
+    <url>/2021/04/24/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%A1%A5%E5%85%85/</url>
+    <content><![CDATA[<h3 id="操作系统">操作系统</h3>
+<p>操作系统是一个管理软硬件资源，调度各类作业从而方便用户使用的软件</p>
+<p>管理 处理机、存储器、设备和文件</p>
+<span id="more"></span>
+<hr>
+<h3 id="进程间通信">进程间通信</h3>
+<p><strong>IPC 是什么</strong></p>
+<p>每个进程有自己的地址空间，进程的全局变量在另一个进程中是看不到的。所以进程间交换数据必须通过内核，通过在内核中开辟一块缓冲区，A进程把数据放进去，B进程把数据取走，这种机制叫 IPC</p>
+<h4 id="信号">信号</h4>
+<p>一般用来通知进程发生了异步事件，任何进程都不需要监听信号是否到来。信号例如键盘发来中断信号</p>
+<h4 id="消息队列">消息队列</h4>
+<p>是消息的链表，存放在内核中，可以向另一个进程发送数据块，每个数据块都有对应的类型。和管道一样，队列大小有限制，不过克服了管道只能承载无格式字节流的缺点，并且可以双向通信</p>
+<h4 id="共享内存">共享内存</h4>
+<p>两个进程中不同的虚拟地址空间映射到同一个物理地址，指向的这块区域就是共享内存</p>
+<h4 id="信号量">信号量</h4>
+<p>主要用来解决互斥同步的问题</p>
+<h4 id="管道">管道</h4>
+<h4 id="命名管道">命名管道</h4>
+<h4 id="socket">socket</h4>
+<h4 id="总结">总结</h4>
+<p>共享内存效率最高，但是不能跨主机通信</p>
+<hr>
+<h3 id="子进程">子进程</h3>
+<p>调用 fork ，根据现有的进程复制出一个新进程，是原进程的子进程，相当于克隆了自己。复制时，在虚拟地址空间中，子进程会复制父进程的代码段和数据段；在物理空间，子进程会先和父进程共享物理空间，等到父子进程涉及对物理空间修改时，再给子进程分配物理空间</p>
+<hr>
+<h3 id="进程上下文切换">进程上下文切换</h3>
+<p><strong>上下文</strong>就是指 CPU 寄存器和程序计数器，这些就是所谓的 CPU 环境</p>
+<ul>
+<li><strong>指令寄存器</strong>存储了当前要执行的指令</li>
+<li><strong>程序计数器</strong>存储下一条指令的地址</li>
+</ul>
+<p><strong>上下文分为</strong>用户级上下文、寄存器上下文和系统级上下文</p>
+<p>在进程开始运行前，要先设定好 CPU 寄存器 和 程序计数器</p>
+<p>进程在 用户态 和 内核态 进行切换时，也会发生上下文切换</p>
+<hr>
+<h3 id="进程组">进程组</h3>
+<p>进程组就是一些进程的组合，他们之间存在父子、兄弟之间的关系。进程组方便对进程进行批量管理</p>
+<hr>
+<h3 id="守护进程">守护进程</h3>
+<p>进程和一个会话关联，而会话又和一个控制中断关联。中断关闭后，对应的会话中的所有进程会被关闭。为了让进程可以不受终端的掌控，引入了<strong>守护进程</strong>，这种进程可以在后台服务，有较长的生命周期。</p>
+<p>大致步骤是：创建子进程，父进程退出，所有工作在子进程中进行，形式上脱离了终端；在子进程中创建新的会话，让进程完全独立</p>
+<hr>
+<h3 id="PCB-进程控制块">PCB 进程控制块</h3>
+<p>PCB 是系统为了描述和控制进程的运行而定义的一个数据结构，其中存储了操作系统所需的关于进程的全部信息，<strong>是进程存在的唯一标志</strong>。有不同的组织形式，索引表或者链表</p>
+<hr>
+<h3 id="进程到线程">进程到线程</h3>
+<ul>
+<li>最早的 CPU <strong>一次只能执行一个程序</strong></li>
+<li><strong>引入进程</strong>后可以支持多任务，但是也产生了新的问题
+<ul>
+<li>为每个进程分配资源开销较大</li>
+<li>进程频繁切换开销较大</li>
+<li>进程间通信复杂</li>
+</ul>
+</li>
+<li>之后就引入在进程中开辟“小进程”来实现多任务，也就是<strong>线程</strong>
+<ul>
+<li>线程在进程内部共享很多进程的资源，分配资源开销不大</li>
+<li>上下文切换只涉及寄存器内容的设置和保存</li>
+<li>线程可以共享进程的部分地址空间，通信也不麻烦</li>
+</ul>
+</li>
+</ul>
+<p>操作系统中每个线程一般都会有 线程ID，一组寄存器值，栈，线程私有数据等</p>
+<hr>
+<h3 id="用户态和内核态的线程">用户态和内核态的线程</h3>
+<p>现代的操作系统主要是，用户态实现线程在非阻塞时的切换，内核态实现内存阻塞时的切换</p>
+]]></content>
+      <categories>
+        <category>面试</category>
+      </categories>
+      <tags>
+        <tag>操作系统</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Java 虚拟机</title>
+    <url>/2021/04/24/Java%E8%99%9A%E6%8B%9F%E6%9C%BA/</url>
+    <content><![CDATA[<h2 id="Java虚拟机">Java虚拟机</h2>
+<hr>
+<h3 id="一、运行时数据区域">一、运行时数据区域</h3>
+<hr>
+<p>JVM执行Java程序时会把内存分为多个数据区域，其中：</p>
+<p>堆、方法区（包括运行时常量池）和直接内存被线程共享</p>
+<p>每个线程有自己的程序计数器、本地方法栈和虚拟机栈</p>
+<span id="more"></span>
+<hr>
+<h4 id="程序计数器">程序计数器</h4>
+<p>可以看作是当前线程正在执行的那条字节码指令的地址，如果执行的是本地方法，程序计数器的值是<code>undefined</code></p>
+<p>字节码解释器通过改变计数器的值来选取下一条需要执行的字节码指令</p>
+<p>每条线程有独立的程序计数器，所以在线程切换后能恢复到正确的执行位置</p>
+<p><strong>程序计数器主要的两个作用：</strong></p>
+<ol>
+<li>字节码解释器通过改变计数器的值依次读取指令，从而实现代码的流程控制</li>
+<li>多线程下，程序计数器记录当前线程的执行位置，切换回来后可以知道上次运行到哪</li>
+</ol>
+<p><strong>程序计数器是唯一一个不会出现OutOfMemoryError的内存区域，它的生命周期随着线程的创建而创建，随着线程的结束而死亡。</strong></p>
+<hr>
+<h4 id="Java虚拟机栈">Java虚拟机栈</h4>
+<p>Java虚拟机栈为每个即将运行的Java方法创建一个栈帧</p>
+<p>Java内存可以粗糙分为堆内存和栈内存，栈就是虚拟机栈</p>
+<p>Java虚拟机栈是由一个个栈帧组成，每个栈帧中都有局部变量表、操作数栈、动态链接、方法出口信息。</p>
+<p><strong>局部变量表随着栈帧的创建而创建，大小在编译时就确定，运行时大小不会改变</strong></p>
+<p><strong>存放了编译器可知的8种基本数据类型、对象的引用</strong>（不同于对象本身，可能是对象某个位置的引用）</p>
+<p>方法需要创建局部变量时，就将值放入局部变量表</p>
+<p>Java 虚拟机栈的栈顶的栈帧是当前正在执行的活动栈，也就是当前正在执行的方法，PC 寄存器也会指向这个地址。只有这个活动的栈帧的本地变量可以被操作数栈使用，当在这个栈帧中调用另一个方法，与之对应的栈帧又会被创建，新创建的栈帧压入栈顶，变为当前的活动栈帧。</p>
+<p>方法结束后，当前栈帧被移出，栈帧的返回值变成新的活动栈帧中操作数栈的一个操作数。如果没有返回值，那么新的活动栈帧中操作数栈的操作数没有变化。</p>
+<p><strong>Java 虚拟机栈会出现两种异常：StackOverFlowError 和 OutOfMemoryError。</strong></p>
+<ul>
+<li><strong>StackOverFlowError：</strong> 若Java虚拟机栈的内存大小不允许动态扩展，那么当线程请求栈的深度超过当前Java虚拟机栈的最大深度的时候，就抛出StackOverFlowError异常。</li>
+<li><strong>OutOfMemoryError：</strong> 若 Java 虚拟机栈的内存大小允许动态扩展，且当线程请求栈时内存用完了，无法再动态扩展了，此时抛出OutOfMemoryError异常。</li>
+</ul>
+<p>随着线程的创建而创建，随着线程的死亡而死亡</p>
+<hr>
+<h4 id="本地方法栈">本地方法栈</h4>
+<p>虚拟机栈为虚拟机执行Java方法（也就是字节码）服务，而本地方法栈则为虚拟机使用到的<strong>Native方法服务</strong>，本地方法栈是描述本地方法运行过程的内存模型。</p>
+<p>本地方法被执行的时候，在本地方法栈也会创建一个栈帧，用于存放该本地方法的局部变量表、操作数栈、动态链接、出口信息。</p>
+<p>方法执行完毕后相应的栈帧也会出栈并释放内存空间，也会出现 StackOverFlowError 和 OutOfMemoryError 两种异常。</p>
+<hr>
+<h4 id="堆">堆</h4>
+<p>虚拟机管理内存中最大的一块。**此内存区域的唯一目的就是存放对象实例，几乎所有的对象实例以及数组都在这里分配内存。**在虚拟机启动时创建。</p>
+<p>Java堆是垃圾收集器管理的主要区域，所以也被称作<strong>GC堆（Garbage Collection Heap）</strong></p>
+<p>Java堆会被进一步划分（新生代、老年代、永久代，其中前两种使用的是Java程序可以使用的堆内存），这样可以更好地回收内存和分配内存。永久代是对JVM方法区的实现</p>
+<p>因为是被所有线程共享的，所以访问要注意同步的问题</p>
+<p>对于主流虚拟机，堆是可扩展的。如果线程请求分配内存，但是堆满了，内存也无法扩展，就会抛出OutOfMemoryError异常</p>
+<p>JDK1.8中移除了永久代，用元空间（Metaspace）取代。元空间使用物理内存，永久代使用JVM堆内存</p>
+<p>方法区是一个 JVM 规范，永久代与元空间都是其一种实现方式。在 JDK 1.8 之后，原来永久代的数据被分到了堆和元空间中。<strong>元空间存储类的元信息，静态变量和常量池等放入堆中</strong>。</p>
+<hr>
+<h4 id="方法区">方法区</h4>
+<p>是堆的一个逻辑部分，和Java堆不一样。存储被虚拟机加载的类信息、常量、静态变量、即时编译器编译的代码等。</p>
+<p>方法区被称为“永久代”，因为其中的信息一般都需要长久存在。对方法区的主要回收目标是：对常量池回收；对类的卸载</p>
+<p><strong>相对而言，垃圾收集行为在这个区域是比较少出现的，但并非数据进入方法区后就“永久存在”了。</strong></p>
+<p><strong>运行时常量池</strong>是方法区的一部分，存放编译期间生成的常量（<strong>字面量</strong>和<strong>符号引用</strong>）</p>
+<p>字面量包括：文本字符串，final常量，基本数据类型</p>
+<p>符号引用：类的完全限定名，字段名和描述符，方法名和描述符</p>
+<p>受到方法区内存的限制，无法申请到内存时会抛出OutOfMemoryError异常</p>
+<p>JDK1.7之后的版本将运行时常量池从方法区移到了Java堆中</p>
+<hr>
+<h4 id="直接内存">直接内存</h4>
+<p>不是虚拟机运行时数据区的一部分，也不是虚拟机规范中定义的内存区，但会被频繁使用，也会出现内存超出</p>
+<p>直接内存申请空间耗费更高的性能</p>
+<p>直接内存读取 IO 的性能要优于普通的堆内存。</p>
+<hr>
+<h4 id="Java对象的创建过程">Java对象的创建过程</h4>
+<p>类加载检查 – 分配内存 – 初始化零值 – 设置对象头 – 执行init方法</p>
+<p>类加载检查：遇到new指令，先去检查能否在常量池中定位到类的符号引用，并检查其代表的类是否被加载、解析和初始化过，如果没有，要先执行相应的类加载过程</p>
+<p>分配内存：通过类加载检查后为新生对象分配内存，所需内存大小在类加载完成后就确定，从Java堆中分出一块确定大小的区域，分配方式有<strong>指针碰撞</strong>和<strong>空闲列表</strong>两种</p>
+<p>两种方式取决于堆是否规整，取决于垃圾收集器的算法是“标记-清除”还是“标记-整理”</p>
+<p>指针碰撞：用过的内存放一边，没用过的放一边，只要沿着没用过的地方移动指针就行</p>
+<p>空闲列表：虚拟机会维护一个列表，记录哪些内存块可用。分配内存时找一块足够大的内存块分配给对象，更新列表</p>
+<p>初始化零值：将对象分配到的内存都初始化为零值，保证对象的实例可以不赋初始值就使用</p>
+<p>设置对象头：虚拟机对对象进行必要的设置，将对象的相关信息如：是哪个类的实例、对象的哈希码等放到对象头中</p>
+<p>执行init方法：虚拟机已经产生一个新的对象，但是Java程序中才刚刚开始，init执行后一个新的对象才算产生</p>
+<hr>
+<h4 id="对象的内存布局">对象的内存布局</h4>
+<p>分为3块：对象头、实例数据和对其填充</p>
+<p>对象头包括：自身的运行时数据（哈希码，GC分代年龄）、类型指针（指向类元数据的指针，确定对象是哪个类的实例）</p>
+<p>实例数据：对象的成员变量</p>
+<p>对其填充：起占位作用</p>
+<p>访问对象的方式：</p>
+<p>创建对象时在两个地方分配了内存。引用存在Java虚拟机栈的局部变量表中，但是实际对象存储在堆中</p>
+<p>句柄访问：引用类型的变量存储了对象的句柄地址，通过访问句柄池找到对象，包括对象实例数据（java堆）和对象所属类的数据（方法区）</p>
+<p>直接指针访问：对象的变量直接存放Java堆中对象的地址，但是Java堆中的对象实例还需要额外存储方法区中对象所属类信息的地址。</p>
+<p>hotspot采用直接指针访问，只要一次寻址速度比前者快一倍，但是需要额外策略来存储地址。</p>
+<hr>
+<p>常量池</p>
+<p>直接使用双引号声明出来的 String 对象会直接存储在常量池中， new出来的在堆内存中。</p>
+<ul>
+<li><strong>Byte,Short,Integer,Long,Character,Boolean；这5种包装类默认创建了数值[-128，127]的相应类型的缓存数据，但是超出此范围仍然会去创建新的对象。</strong></li>
+<li><strong>两种浮点数类型的包装类 Float,Double 并没有实现常量池技术。</strong></li>
+</ul>
+<hr>
+<h3 id="二、垃圾收集策略">二、垃圾收集策略</h3>
+<hr>
+<p>关注Java堆和方法区的内存，因为只有运行时才知道创建了哪些对象，这部分内存的分配和回收都是动态的</p>
+<h4 id="判断对象是否存活">判断对象是否存活</h4>
+<hr>
+<p>如果一个对象不被任何对象引用，就是无效对象，会被回收</p>
+<h5 id="引用计数器法">引用计数器法</h5>
+<p>对象头维护一个counter计数器，被引用一次+1，引用失效-1，如果计数器为0该对象就无效</p>
+<p>实现简单，判定效率搞。但主流Java虚拟机没有采用这个方法，因为很难解决对象间循环引用的问题 – 如果两个对象互相引用，计数器都不为0，就无法被回收。</p>
+<h5 id="可达性分析法">可达性分析法</h5>
+<p>所有和GC Roots直接或间接关联的对象都是有效对象，否则是无效对象</p>
+<p>GC Roots 指：</p>
+<ul>
+<li>Java虚拟机栈（栈帧中的局部变量表）中引用的对象</li>
+<li>本地方法栈中引用的对象</li>
+<li>方法区中常量引用的对象</li>
+<li>方法区中静态属性引用的对象</li>
+</ul>
+<p>不包括堆中对象引用的对象，所以不会有循环引用</p>
+<h4 id="引用的种类">引用的种类</h4>
+<hr>
+<h5 id="强引用-Strong">强引用 Strong</h5>
+<p>类似Object obj = new Object()就是强引用，只要强引用存在。GC永远不会回收被引用的对象。但是，如果我们<strong>错误地保持了强引用</strong>，比如：赋值给了 static 变量，那么对象在很长一段时间内不会被回收，会产生内存泄漏。</p>
+<h5 id="软引用-Soft">软引用 Soft</h5>
+<p>软引用是一种相对强引用弱化一些的引用，可以让对象豁免一些垃圾收集，只有当 JVM 认为内存不足时，才会去试图回收软引用指向的对象。JVM 会确保在抛出 OutOfMemoryError 之前，清理软引用指向的对象。软引用通常用来<strong>实现内存敏感的缓存</strong>，如果还有空闲内存，就可以暂时保留缓存，当内存不足时清理掉，这样就保证了使用缓存的同时，不会耗尽内存。</p>
+<h5 id="弱引用-Weak">弱引用 Weak</h5>
+<p>弱引用的<strong>强度比软引用更弱</strong>一些。当 JVM 进行垃圾回收时，<strong>无论内存是否充足，都会回收</strong>只被弱引用关联的对象。</p>
+<h5 id="虚引用-Phantom">虚引用 Phantom</h5>
+<p>虚引用也称幽灵引用或者幻影引用，它是<strong>最弱</strong>的一种引用关系。一个对象是否有虚引用的存在，完全不会对其生存时间构成影响。它仅仅是提供了一种确保对象被 finalize 以后，做某些事情的机制，比如，通常用来做所谓的 Post-Mortem 清理机制。</p>
+<h4 id="回收堆中无效对象">回收堆中无效对象</h4>
+<hr>
+<h5 id="判断finalize-是否有必要执行">判断finalize()是否有必要执行</h5>
+<p>对于不可达的对象，会判断finalize()方法是否有必要执行，如果已经被执行过（任何一个对象的 finalize() 方法只会被系统自动调用一次）或者该方法没有被对象重写，对象就会真的被回收。</p>
+<p>如果被判定为有必要执行finalize()方法，就会放入一个F-Queue队列以较低优先级执行方法，但不确保会执行结束。</p>
+<h5 id="对象重生或死亡">对象重生或死亡</h5>
+<p>之所以提finalize()，是因为如果在方法中将this赋给某一引用，对象就重生了。否则对象就会被GC清除。</p>
+<h4 id="回收方法区内存">回收方法区内存</h4>
+<hr>
+<p>方法区中主要清除2类垃圾：废弃常量、无用的类</p>
+<h5 id="判定废弃常量">判定废弃常量</h5>
+<p>对于常量，只要常量池中的常量没有被任何的变量或对象引用，就会被清除</p>
+<h5 id="判定无用的类">判定无用的类</h5>
+<p>条件较为苛刻：</p>
+<ul>
+<li>该类的所有对象都被清除</li>
+<li>加载该类的classLoader已经被回收</li>
+<li>该类的java.lang.Class对象没有在任何地方被引用，无法在任何地方通过反射访问到该类的方法</li>
+</ul>
+<p><strong>一个类被虚拟机加载进方法区，在堆中就会有一个代表该类的对象：java.lang.Class。这个对象在类被加载到方法区时被创建，在方法区该类被删除时清除。</strong></p>
+<h4 id="垃圾收集算法">垃圾收集算法</h4>
+<hr>
+<p>常见的垃圾收集算法</p>
+<p>见： <a href="https://github.com/doocs/jvm/blob/master/docs/03-gc-algorithms.md">https://github.com/doocs/jvm/blob/master/docs/03-gc-algorithms.md</a></p>
+<h3 id="三、内存分配与回收策略">三、内存分配与回收策略</h3>
+<hr>
+<p>对象的内存分配就是在堆上分配</p>
+<h4 id="对象优先在Eden分配">对象优先在Eden分配</h4>
+<hr>
+<p>多数情况下对象在新生代Eden区进行分配，Eden区内存不够时，虚拟机将发起一次Minor GC。</p>
+<ul>
+<li>Minor GC：回收新生代（包括 Eden 和 Survivor 区域），因为 Java 对象大多都具备朝生夕灭的特性，所以 Minor GC 非常频繁，一般回收速度也比较快。</li>
+<li>Major GC / Full GC: 回收老年代，出现了 Major GC，经常会伴随至少一次的 Minor GC，但这并非绝对。Major GC 的速度一般会比 Minor GC 慢 10 倍 以上。</li>
+</ul>
+<h4 id="大对象直接进入老年代">大对象直接进入老年代</h4>
+<hr>
+<p>大对象指需要大量连续内存空间的Java对象，例如很长的字符串或数据</p>
+<p>一个大对象能够存入 Eden 区的概率比较小，发生分配担保的概率比较大，而分配担保需要涉及大量的复制，就会造成效率低下。</p>
+<p>虚拟机提供了一个 -XX:PretenureSizeThreshold 参数，令大于这个设置值的对象直接在老年代分配，这样做的目的是避免在 Eden 区及两个 Survivor 区之间发生大量的内存复制。</p>
+<h4 id="长期存活的对象将进入老年代">长期存活的对象将进入老年代</h4>
+<hr>
+<p>JVM给每个对象定义一个年龄计数器，每次发生Minor GC存活时，存活下的对象年龄+1，超过一定值就转移到老年代</p>
+<p>使用 -XXMaxTenuringThreshold 设置新生代的最大年龄，只要超过该参数的新生代对象都会被转移到老年代中去。</p>
+<h4 id="动态对象年龄判定">动态对象年龄判定</h4>
+<hr>
+<p>如果新生代Survivor中相同年龄所有对象的总和大于Survivor空间的一半，将年龄&gt;=该年龄的对象直接放入老年代。</p>
+<h4 id="空间分配担保">空间分配担保</h4>
+<hr>
+<p>JDK 6 Update24 之后</p>
+<p>只要老年代的连续空间大于历次晋升的平均大小，就进行Minor GC，否则进行Full GC。</p>
+<p>通过清除老年代中飞起数据来扩大老年代空闲空间，为新生代作担保，这个过程就是分配担保。</p>
+<hr>
+<h4 id="会触发JVM进行Full-GC的情况">会触发JVM进行Full GC的情况</h4>
+<p>System.gc()的调用</p>
+<p>老年代空间不足</p>
+<p>发生空间分配担保</p>
+<hr>
+<h3 id="四、JVM-类加载">四、JVM 类加载</h3>
+<h4 id="JVM的“无关性”">JVM的“无关性”</h4>
+<hr>
+<p>谈论 JVM 的无关性，主要有以下两个：</p>
+<ul>
+<li>平台无关性：任何操作系统都能运行 Java 代码</li>
+<li>语言无关性： JVM 能运行除 Java 以外的其他代码</li>
+</ul>
+<p>Java 源代码首先需要使用 Javac 编译器编译成 .class 文件，然后由 JVM 执行 .class 文件，从而程序开始运行。</p>
+<p><strong>JVM 只认识 .class 文件，它不关心是何种语言生成了 .class 文件，只要 .class 文件符合 JVM 的规范就能运行。</strong> 目前已经有 JRuby、Jython、Scala 等语言能够在 JVM 上运行。它们有各自的语法规则，不过它们的编译器 都能将各自的源码编译成符合 JVM 规范的 .class 文件，从而能够借助 JVM 运行它们。</p>
+<h4 id="类加载的时机">类加载的时机</h4>
+<hr>
+<p>详细查看：<a href="https://github.com/doocs/jvm/blob/master/docs/08-load-class-time.md">https://github.com/doocs/jvm/blob/master/docs/08-load-class-time.md</a></p>
+<h4 id="接口的加载过程">接口的加载过程</h4>
+<p>接口加载过程与类加载过程稍有不同。</p>
+<p>当一个类在初始化时，要求其父类全部都已经初始化过了，但是一个接口在初始化时，并不要求其父接口全部都完成了初始化，当真正用到父接口的时候才会初始化。</p>
+<h4 id="类加载的过程">类加载的过程</h4>
+<hr>
+<p>类加载过程包括5个阶段：加载、验证、准备、解析、初始化</p>
+<h5 id="加载">加载</h5>
+<p>“加载”是“类加载”过程的一个阶段，不能混淆这两个名词。在加载阶段，虚拟机需要完成 3 件事：</p>
+<ul>
+<li>通过类的全限定名获取该类的二进制字节流。</li>
+<li>将二进制字节流所代表的静态结构转化为方法区的运行时数据结构</li>
+<li>在内存中创建一个java.lang.Class对象，作为方法区这个类的各种数据的访问入口</li>
+</ul>
+<p><strong>二进制字节流</strong>（Class文件）从哪获取：</p>
+<ul>
+<li>压缩包，如jar、war包</li>
+<li>网络中，applet</li>
+<li>由jsp文件生成对应的class</li>
+</ul>
+<h5 id="“数组类”和“非数组类”加载比较">“数组类”和“非数组类”加载比较</h5>
+<p>在Java中数组是一个Java类</p>
+<ul>
+<li>数组类本身不通过类加载器创建，是由Java虚拟机直接创建的，再由类加载器创建数组中的元素类</li>
+<li>非数组类加载阶段可以使用系统提供的引导类加载器，也可以由用户自定义的加载器完成</li>
+</ul>
+<h5 id="注意事项">注意事项</h5>
+<ul>
+<li>虚拟机没有规定class对象（java.lang.Class）的存储位置，对于Hotspot来说，class对象虽然是对象，但是存在方法区中。</li>
+<li>加载和连接阶段交叉进行，加载没有完成就可能开始连接了。</li>
+</ul>
+<h4 id="验证">验证</h4>
+<hr>
+<h5 id="验证阶段的重要性">验证阶段的重要性</h5>
+<p>保证class文件的字节流包含的信息符合当前虚拟机的要求。不会危害虚拟机自身的安全。</p>
+<h5 id="验证的过程">验证的过程</h5>
+<p>文件格式验证、元数据验证、字节码验证、符号引用验证</p>
+<h4 id="准备">准备</h4>
+<hr>
+<p>准备阶段是正式为类变量（或称“静态成员变量”）分配内存并设置初始值的阶段。这些变量（不包括实例变量）所使用的内存都在方法区中进行分配。</p>
+<p>类变量的初始值通常是数据类型的零值（0， null）</p>
+<p>但如果这个类变量被声明为常量，就会被初始化为所指定的值</p>
+<p>如 <code>public static final int value = 123;</code> 在准备阶段，jvm会将value赋值为123</p>
+<h4 id="解析">解析</h4>
+<hr>
+<p>解析阶段是虚拟机将常量池内的符号引用替换为直接引用的过程</p>
+<p>符号引用：符号引用以一组符号来描述所引用的目标，符号可以是任何形式的字面量，只要使用时能够无歧义的定位到目标即可。</p>
+<p>直接引用可以是：</p>
+<ul>
+<li>
+<p>直接指向目标的指针（比如，指向“类型”【Class对象】、类变量、类方法的直接引用可能是指向方法区的指针）</p>
+</li>
+<li>
+<p>相对偏移量（比如，指向实例变量、实例方法的直接引用都是偏移量）</p>
+</li>
+<li>
+<p>一个能间接定位到目标的句柄</p>
+</li>
+</ul>
+<p>直接引用是和虚拟机的布局相关的，同一个符号引用在不同的虚拟机实例上翻译出来的直接引用一般不会相同。如果有了直接引用，那引用的目标必定已经被加载入内存中了。</p>
+<h4 id="初始化">初始化</h4>
+<hr>
+<p>类初始化阶段是类加载过程的最后一步，是执行类构造器<clinit>()方法的过程。</p>
+<p><clinit>()方法是由编译器自动收集类中所有类变量的赋值动作和静态语句块（static{}块）中的语句产生</p>
+<p><clinit>() 方法不需要显式调用父类构造器，虚拟机会保证在子类的 <clinit>() 方法执行之前，父类的 <clinit>() 方法已经执行完毕。</p>
+<p>由于父类的 <clinit>() 方法先执行，意味着父类中定义的静态语句块要优先于子类的变量赋值操作。</p>
+<p><clinit>() 方法不是必需的，如果一个类没有静态语句块，也没有对类变量的赋值操作，那么编译器可以不为这个类生成 <clinit>() 方法。</p>
+<p>接口中不能使用静态代码块，但接口也需要通过 <clinit>() 方法为接口中定义的静态成员变量显式初始化。但接口与类不同，接口的 <clinit>() 方法不需要先执行父类的 <clinit>() 方法，只有当父接口中定义的变量使用时，父接口才会初始化。</p>
+<p>虚拟机会保证一个类的 <clinit>() 方法在多线程环境中被正确加锁、同步。如果多个线程同时去初始化一个类，那么只会有一个线程去执行这个类的 <clinit>() 方法。</p>
+<h3 id="五、Java类加载器">五、Java类加载器</h3>
+<hr>
+<ul>
+<li>见：<a href="https://github.com/doocs/jvm/blob/master/docs/10-class-loader.md">https://github.com/doocs/jvm/blob/master/docs/10-class-loader.md</a></li>
+</ul>
+<h4 id="双亲委派模型">双亲委派模型</h4>
+<h5 id="什么是双亲委派模型">什么是双亲委派模型</h5>
+<p>双亲委派模型是描述类加载器之间的层次关系。它要求除了顶层的启动类加载器外，其余的类加载器都应当有自己的父类加载器。（父子关系一般不会以继承的关系实现，而是以组合关系来复用父加载器的代码）</p>
+<p>在类加载的时候，系统会首先判断当前类是否被加载过。已经被加载的类会直接返回，否则才会尝试加载。加载的时候，首先会把该请求委派该父类加载器的 <code>loadClass()</code> 处理，因此所有的请求最终都应该传送到顶层的启动类加载器 <code>BootstrapClassLoader</code> 中。当父类加载器无法处理时，才由自己来处理。当父类加载器为null时，会使用启动类加载器 <code>BootstrapClassLoader</code> 作为父类加载器。</p>
+]]></content>
+      <categories>
+        <category>面试</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>JVM</tag>
       </tags>
   </entry>
   <entry>
@@ -3172,137 +3250,6 @@ Swagger 2.9.2 依赖于 Guava 20.0 以上的版本，但是 Shardingsphere 4.1.1
       </tags>
   </entry>
   <entry>
-    <title>操作系统补充</title>
-    <url>/2021/04/24/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%A1%A5%E5%85%85/</url>
-    <content><![CDATA[<h3 id="操作系统">操作系统</h3>
-<p>操作系统是一个管理软硬件资源，调度各类作业从而方便用户使用的软件</p>
-<p>管理 处理机、存储器、设备和文件</p>
-<span id="more"></span>
-<hr>
-<h3 id="进程间通信">进程间通信</h3>
-<p><strong>IPC 是什么</strong></p>
-<p>每个进程有自己的地址空间，进程的全局变量在另一个进程中是看不到的。所以进程间交换数据必须通过内核，通过在内核中开辟一块缓冲区，A进程把数据放进去，B进程把数据取走，这种机制叫 IPC</p>
-<h4 id="信号">信号</h4>
-<p>一般用来通知进程发生了异步事件，任何进程都不需要监听信号是否到来。信号例如键盘发来中断信号</p>
-<h4 id="消息队列">消息队列</h4>
-<p>是消息的链表，存放在内核中，可以向另一个进程发送数据块，每个数据块都有对应的类型。和管道一样，队列大小有限制，不过克服了管道只能承载无格式字节流的缺点，并且可以双向通信</p>
-<h4 id="共享内存">共享内存</h4>
-<p>两个进程中不同的虚拟地址空间映射到同一个物理地址，指向的这块区域就是共享内存</p>
-<h4 id="信号量">信号量</h4>
-<p>主要用来解决互斥同步的问题</p>
-<h4 id="管道">管道</h4>
-<h4 id="命名管道">命名管道</h4>
-<h4 id="socket">socket</h4>
-<h4 id="总结">总结</h4>
-<p>共享内存效率最高，但是不能跨主机通信</p>
-<hr>
-<h3 id="子进程">子进程</h3>
-<p>调用 fork ，根据现有的进程复制出一个新进程，是原进程的子进程，相当于克隆了自己。复制时，在虚拟地址空间中，子进程会复制父进程的代码段和数据段；在物理空间，子进程会先和父进程共享物理空间，等到父子进程涉及对物理空间修改时，再给子进程分配物理空间</p>
-<hr>
-<h3 id="进程上下文切换">进程上下文切换</h3>
-<p><strong>上下文</strong>就是指 CPU 寄存器和程序计数器，这些就是所谓的 CPU 环境</p>
-<ul>
-<li><strong>指令寄存器</strong>存储了当前要执行的指令</li>
-<li><strong>程序计数器</strong>存储下一条指令的地址</li>
-</ul>
-<p><strong>上下文分为</strong>用户级上下文、寄存器上下文和系统级上下文</p>
-<p>在进程开始运行前，要先设定好 CPU 寄存器 和 程序计数器</p>
-<p>进程在 用户态 和 内核态 进行切换时，也会发生上下文切换</p>
-<hr>
-<h3 id="进程组">进程组</h3>
-<p>进程组就是一些进程的组合，他们之间存在父子、兄弟之间的关系。进程组方便对进程进行批量管理</p>
-<hr>
-<h3 id="守护进程">守护进程</h3>
-<p>进程和一个会话关联，而会话又和一个控制中断关联。中断关闭后，对应的会话中的所有进程会被关闭。为了让进程可以不受终端的掌控，引入了<strong>守护进程</strong>，这种进程可以在后台服务，有较长的生命周期。</p>
-<p>大致步骤是：创建子进程，父进程退出，所有工作在子进程中进行，形式上脱离了终端；在子进程中创建新的会话，让进程完全独立</p>
-<hr>
-<h3 id="PCB-进程控制块">PCB 进程控制块</h3>
-<p>PCB 是系统为了描述和控制进程的运行而定义的一个数据结构，其中存储了操作系统所需的关于进程的全部信息，<strong>是进程存在的唯一标志</strong>。有不同的组织形式，索引表或者链表</p>
-<hr>
-<h3 id="进程到线程">进程到线程</h3>
-<ul>
-<li>最早的 CPU <strong>一次只能执行一个程序</strong></li>
-<li><strong>引入进程</strong>后可以支持多任务，但是也产生了新的问题
-<ul>
-<li>为每个进程分配资源开销较大</li>
-<li>进程频繁切换开销较大</li>
-<li>进程间通信复杂</li>
-</ul>
-</li>
-<li>之后就引入在进程中开辟“小进程”来实现多任务，也就是<strong>线程</strong>
-<ul>
-<li>线程在进程内部共享很多进程的资源，分配资源开销不大</li>
-<li>上下文切换只涉及寄存器内容的设置和保存</li>
-<li>线程可以共享进程的部分地址空间，通信也不麻烦</li>
-</ul>
-</li>
-</ul>
-<p>操作系统中每个线程一般都会有 线程ID，一组寄存器值，栈，线程私有数据等</p>
-<hr>
-<h3 id="用户态和内核态的线程">用户态和内核态的线程</h3>
-<p>现代的操作系统主要是，用户态实现线程在非阻塞时的切换，内核态实现内存阻塞时的切换</p>
-]]></content>
-      <categories>
-        <category>面试</category>
-      </categories>
-      <tags>
-        <tag>操作系统</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>读 Ray Dalio 的《To Help Put Recent Economic &amp; Market Moves in Perspective》</title>
-    <url>/2018/12/28/%E8%AF%BBRay%20Dalio%E7%9A%84%E3%80%8ATo%20Help%20Put%20Recent%20Economic%20&amp;%20Market%20Moves%20in%20Perspective%E3%80%8B/</url>
-    <content><![CDATA[<p>写这篇文章的目的是总结一下 Ray Dalio 文章的内容，并穿插一些自己的思考，以帮助自己更好的消化内容。</p>
-<span id="more"></span>
-<blockquote>
-<p>Ray Dalio的这篇文章是发在美股大跌的时候，有许多人问到他现在的经济是怎么回事。他的做法是介绍他使用的分析经济的框架，目的是在知道了这个框架之后，人们有能力凭自己的思考明白经济在发生什么变化。所谓<strong>授人以渔</strong>。</p>
-</blockquote>
-<p>他总结了影响市场和经济状况的三个因素，分别是：</p>
-<ol>
-<li>生产力增长</li>
-<li>短债务周期（5～10年）</li>
-<li>长债务周期（50～75年）</li>
-</ol>
-<h3 id="生产力增长">生产力增长</h3>
-<p>影响一个国家生产力增长的是竞争力和文化因素。竞争力基于与其它国家受良好教育的人的成本下的人的价值。</p>
-<p><em>（the value of people as measured by the cost of comparably educated people in other countries）</em></p>
-<p>我的理解是一个国家可以用更低的成本培养出优质人才，即有更高的人才产出效率时，这个国家的竞争力就优于其他国家。文化因素更为重要，是划分国家与国家区别的主要因素。它影响人对工作、存款、贪污、可靠性等决策。而这些决策与后续年份的增长呈高关联性。发达国家的生产力增长情况是增速变缓，该状况主要集中在人口的减少和自动化程度较高领域的工人减少。</p>
-<h3 id="借贷周期">借贷周期</h3>
-<p>借贷周期可以用来理解进几十年来的经济和市场变化。道理其实很简单，中央银行贷出钱流通到市场，提高了购买力，进而刺激了经济活动产出效益，促进经济增长；但是借出的钱是要还的，市场上的钱再被收回后，用在商品、服务和投资资产上的钱就减少了，由此经济活动减缓，经济出现负增长。</p>
-<p>中央银行所做的就是对经济的调节作用：当经济松弛时，向市场贷出钱促进经济活动；当经济持续增长过后，适当踩刹车，以提高利息的方式适当回收流动资金。在经济增长时收紧货币政策是为了抑制通货膨胀，经济增长快但是产能有限最后带来的物价上涨。</p>
-<p>Ray Dalio指出现在的美国就是在这一循环的末端，就是美联储通过加息的方式收回流动在市场上的钱，最终导致了股价下跌。具体过程为，加息变相降低了人们从其他投资渠道获得的收益，因为资金的时间价值因此变高，股市就是一例渠道。</p>
-<h3 id="三大平衡">三大平衡</h3>
-<p>市场是不断变化的，一系列经济行为的作用就是维持市场的几处保持平衡。在文章中一共提到的三类大平衡和政府促进这三大平衡的两类手段。</p>
-<blockquote>
-<h4 id="第一类平衡">第一类平衡</h4>
-</blockquote>
-<p>债务增长与偿债所需的收入和货币增长一致。借到的钱款被用来产生更多的现金流，带来收益，那么这种行为是可持续的。如果获得的现金流还不足以偿还债务利率，那么这种模式就是有问题的，会发生重大改变。</p>
-<blockquote>
-<h4 id="第二类平衡">第二类平衡</h4>
-</blockquote>
-<p>产能的利用率不能过高或过低。产能闲置导致工人失业，不利于经济发展；产能闲置过少会导致不良的通货膨胀，刺激央行实行货币紧缩政策。</p>
-<blockquote>
-<h4 id="第三类平衡">第三类平衡</h4>
-</blockquote>
-<p>预期现金回报率 &lt; 债券回报率 &lt; 股票回报率。这三类回报利差促进市场和经济的健康运作，因为他们创造了借款、贷款和生产，从而促进资金的健康流动。</p>
-<h3 id="两类政策">两类政策</h3>
-<p>为了维持这三类平衡，政府拥有两类政策。</p>
-<blockquote>
-<h4 id="货币政策">货币政策</h4>
-</blockquote>
-<p>货币政策是指央行通过改变货币的数量和价值来影响经济活动。当债务增长缓慢且产能过低时，央行增加金融系统中的货币数量，促进短期利率和国债利率相比与股票收益的下降。所以促使人们购买更多股票，推动股价上升。股价上升就意味着许多人手上的资产价值升高，从而有更多的钱进行借贷和消费。当债务过快且产能利用紧张时（意味着通货膨胀率上升），央行的措施和产生的影响就与之相反。央行所使用的三类货币政策为利率政策、量化宽松和针对消费者的货币刺激政策。当货币的短期利率降到零时，央行就采取量化宽松政策，即加印货币。</p>
-<blockquote>
-<h4 id="财政政策">财政政策</h4>
-</blockquote>
-<p>财政政策是指政府来管理信贷和货币的分布状况。政府可以通过消费和征税两种途径来影响经济，如果消费多，征税少，这就刺激经济发展；反过来就抑制经济发展。</p>
-<p>总而言之，政策制定者通过这两种杠杆来打破这三类平衡以促进经济发展，又或者帮助调整这三类平衡来调节经济。Ray Dalio想传达的就是以上这些思想。通过这些思想，我以后可以观察市场的情况，并分析宏观上的原因，弄清楚这时候经济发生了什么事。</p>
-<p><strong>原文链接：</strong><blockquote><footer><strong>Ray Dalio</strong><cite><a href="https://www.linkedin.com/pulse/help-put-recent-economic-market-moves-perspective-ray-dalio/">To Help Put Recent Economic & Market Moves in Perspective</a></cite></footer></blockquote></p>
-]]></content>
-      <categories>
-        <category>随笔</category>
-      </categories>
-  </entry>
-  <entry>
     <title>hexo command not found 的解决方法</title>
     <url>/2019/08/10/%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/</url>
     <content><![CDATA[<p>2019-9-26更新</p>
@@ -3814,6 +3761,59 @@ ps:无比特差错与无传输差错区别：无传输差错还包括帧丢失�
       <tags>
         <tag>计算机网络</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>读 Ray Dalio 的《To Help Put Recent Economic &amp; Market Moves in Perspective》</title>
+    <url>/2018/12/28/%E8%AF%BBRay%20Dalio%E7%9A%84%E3%80%8ATo%20Help%20Put%20Recent%20Economic%20&amp;%20Market%20Moves%20in%20Perspective%E3%80%8B/</url>
+    <content><![CDATA[<p>写这篇文章的目的是总结一下 Ray Dalio 文章的内容，并穿插一些自己的思考，以帮助自己更好的消化内容。</p>
+<span id="more"></span>
+<blockquote>
+<p>Ray Dalio的这篇文章是发在美股大跌的时候，有许多人问到他现在的经济是怎么回事。他的做法是介绍他使用的分析经济的框架，目的是在知道了这个框架之后，人们有能力凭自己的思考明白经济在发生什么变化。所谓<strong>授人以渔</strong>。</p>
+</blockquote>
+<p>他总结了影响市场和经济状况的三个因素，分别是：</p>
+<ol>
+<li>生产力增长</li>
+<li>短债务周期（5～10年）</li>
+<li>长债务周期（50～75年）</li>
+</ol>
+<h3 id="生产力增长">生产力增长</h3>
+<p>影响一个国家生产力增长的是竞争力和文化因素。竞争力基于与其它国家受良好教育的人的成本下的人的价值。</p>
+<p><em>（the value of people as measured by the cost of comparably educated people in other countries）</em></p>
+<p>我的理解是一个国家可以用更低的成本培养出优质人才，即有更高的人才产出效率时，这个国家的竞争力就优于其他国家。文化因素更为重要，是划分国家与国家区别的主要因素。它影响人对工作、存款、贪污、可靠性等决策。而这些决策与后续年份的增长呈高关联性。发达国家的生产力增长情况是增速变缓，该状况主要集中在人口的减少和自动化程度较高领域的工人减少。</p>
+<h3 id="借贷周期">借贷周期</h3>
+<p>借贷周期可以用来理解进几十年来的经济和市场变化。道理其实很简单，中央银行贷出钱流通到市场，提高了购买力，进而刺激了经济活动产出效益，促进经济增长；但是借出的钱是要还的，市场上的钱再被收回后，用在商品、服务和投资资产上的钱就减少了，由此经济活动减缓，经济出现负增长。</p>
+<p>中央银行所做的就是对经济的调节作用：当经济松弛时，向市场贷出钱促进经济活动；当经济持续增长过后，适当踩刹车，以提高利息的方式适当回收流动资金。在经济增长时收紧货币政策是为了抑制通货膨胀，经济增长快但是产能有限最后带来的物价上涨。</p>
+<p>Ray Dalio指出现在的美国就是在这一循环的末端，就是美联储通过加息的方式收回流动在市场上的钱，最终导致了股价下跌。具体过程为，加息变相降低了人们从其他投资渠道获得的收益，因为资金的时间价值因此变高，股市就是一例渠道。</p>
+<h3 id="三大平衡">三大平衡</h3>
+<p>市场是不断变化的，一系列经济行为的作用就是维持市场的几处保持平衡。在文章中一共提到的三类大平衡和政府促进这三大平衡的两类手段。</p>
+<blockquote>
+<h4 id="第一类平衡">第一类平衡</h4>
+</blockquote>
+<p>债务增长与偿债所需的收入和货币增长一致。借到的钱款被用来产生更多的现金流，带来收益，那么这种行为是可持续的。如果获得的现金流还不足以偿还债务利率，那么这种模式就是有问题的，会发生重大改变。</p>
+<blockquote>
+<h4 id="第二类平衡">第二类平衡</h4>
+</blockquote>
+<p>产能的利用率不能过高或过低。产能闲置导致工人失业，不利于经济发展；产能闲置过少会导致不良的通货膨胀，刺激央行实行货币紧缩政策。</p>
+<blockquote>
+<h4 id="第三类平衡">第三类平衡</h4>
+</blockquote>
+<p>预期现金回报率 &lt; 债券回报率 &lt; 股票回报率。这三类回报利差促进市场和经济的健康运作，因为他们创造了借款、贷款和生产，从而促进资金的健康流动。</p>
+<h3 id="两类政策">两类政策</h3>
+<p>为了维持这三类平衡，政府拥有两类政策。</p>
+<blockquote>
+<h4 id="货币政策">货币政策</h4>
+</blockquote>
+<p>货币政策是指央行通过改变货币的数量和价值来影响经济活动。当债务增长缓慢且产能过低时，央行增加金融系统中的货币数量，促进短期利率和国债利率相比与股票收益的下降。所以促使人们购买更多股票，推动股价上升。股价上升就意味着许多人手上的资产价值升高，从而有更多的钱进行借贷和消费。当债务过快且产能利用紧张时（意味着通货膨胀率上升），央行的措施和产生的影响就与之相反。央行所使用的三类货币政策为利率政策、量化宽松和针对消费者的货币刺激政策。当货币的短期利率降到零时，央行就采取量化宽松政策，即加印货币。</p>
+<blockquote>
+<h4 id="财政政策">财政政策</h4>
+</blockquote>
+<p>财政政策是指政府来管理信贷和货币的分布状况。政府可以通过消费和征税两种途径来影响经济，如果消费多，征税少，这就刺激经济发展；反过来就抑制经济发展。</p>
+<p>总而言之，政策制定者通过这两种杠杆来打破这三类平衡以促进经济发展，又或者帮助调整这三类平衡来调节经济。Ray Dalio想传达的就是以上这些思想。通过这些思想，我以后可以观察市场的情况，并分析宏观上的原因，弄清楚这时候经济发生了什么事。</p>
+<p><strong>原文链接：</strong><blockquote><footer><strong>Ray Dalio</strong><cite><a href="https://www.linkedin.com/pulse/help-put-recent-economic-market-moves-perspective-ray-dalio/">To Help Put Recent Economic & Market Moves in Perspective</a></cite></footer></blockquote></p>
+]]></content>
+      <categories>
+        <category>随笔</category>
+      </categories>
   </entry>
   <entry>
     <title>读《盲人钟表匠》的两点感悟</title>
