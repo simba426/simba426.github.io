@@ -345,7 +345,7 @@
   </url>
   
   <url>
-    <loc>http://yoursite.com/tags/Linux/</loc>
+    <loc>http://yoursite.com/tags/Redis/</loc>
     <lastmod>2021-12-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -353,13 +353,6 @@
   
   <url>
     <loc>http://yoursite.com/tags/Spring/</loc>
-    <lastmod>2021-12-12</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/tags/Redis/</loc>
     <lastmod>2021-12-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -381,6 +374,13 @@
   
   <url>
     <loc>http://yoursite.com/tags/MySQL/</loc>
+    <lastmod>2021-12-12</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/tags/Linux/</loc>
     <lastmod>2021-12-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -480,14 +480,14 @@
   </url>
   
   <url>
-    <loc>http://yoursite.com/categories/%E9%97%AE%E9%A2%98/</loc>
+    <loc>http://yoursite.com/categories/%E9%9A%8F%E7%AC%94/</loc>
     <lastmod>2021-12-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>http://yoursite.com/categories/%E9%9A%8F%E7%AC%94/</loc>
+    <loc>http://yoursite.com/categories/%E9%97%AE%E9%A2%98/</loc>
     <lastmod>2021-12-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
