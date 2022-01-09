@@ -158,7 +158,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">30</span>
+          <span class="site-state-item-count">31</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -218,6 +218,121 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/01/09/%E7%BA%BF%E7%A8%8B%E6%B1%A0%E6%8A%9B%E5%87%BA%E5%BC%82%E5%B8%B8%E4%B8%8D%E6%89%93%E5%8D%B0%E6%97%A5%E5%BF%97/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="abmis">
+      <meta itemprop="description" content="Know your game.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ABMIS">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/01/09/%E7%BA%BF%E7%A8%8B%E6%B1%A0%E6%8A%9B%E5%87%BA%E5%BC%82%E5%B8%B8%E4%B8%8D%E6%89%93%E5%8D%B0%E6%97%A5%E5%BF%97/" class="post-title-link" itemprop="url">线程执行任务抛出异常不打印日志</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2022-01-09 12:54:19 / 修改时间：15:46:12" itemprop="dateCreated datePublished" datetime="2022-01-09T12:54:19+08:00">2022-01-09</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E9%97%AE%E9%A2%98/" itemprop="url" rel="index"><span itemprop="name">问题</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h3 id="简介">简介</h3>
+<blockquote>
+<p>【此部分仅记录了事件的踩坑过程，干货请直接跳到下一部分】<br>
+记一次犯蠢的 DEGUB 经历，谨记谨记不要再犯。<br>
+事情起源于这周写的一个结算统计需求，最终计划是当公司内部大数据平台上所有数据表都生成完毕后，通过接口回调的方式来执行任务。因为任务涉及到查询 Hive 表，为了尽快返回接口状态，避免网关超时，很自然地就想到引入线程池，通过异步的方式来执行任务。<br>
+在写完回调接口，本地进行简单的自测确认没问题后，便上到预发环境进行下一步测试。没想到一使用线上数据测试，就翻车了 orz。<br>
+观察日志发现，日志打印到一半之后就没有后文了，当时傻傻的以为代码是运行到某一步“卡住”了，补上一堆日志后发现，代码是在执行到 mybatis 的 saveBatch 方法后“卡住”的。之后很长一段时间，我傻乎乎地从 myabtis 和数据库的角度排查问题，saveBatch 方法会不会有无法插入数据的问题出现，插入的表是否因为上锁了导致插入失败……朝这个方向忙活了一下午，最终并没有找到问题所在。束手无策的根本原因在于，我当时的认知里，如果程序抛出异常且没有捕获，最终堆栈信息都是会在日志中体现的。本应该逐条打印的日志突然停下来，再加上没有异常日志，一下就给我整不会了。<br>
+吃完晚饭思路一转，觉得更可能是因为抛出异常，程序中断，事务回滚，导致后面的日志没有打印。于是转而起身去排查异常堆栈没有打印的问题，发现不只是执行 SQL 相关的异常，NPE 也无法打印，这和项目其他代码运行情况不一致，一下将排查目标从框架、依赖层面缩小到我写的这一小部分代码上。测试了几个异常案例后终于发觉，当我本地调用回调接口，故意抛出异常时，堆栈信息实际只是输出到控制台，并不能在日志文件中观察到。而当我摈弃线程池来执行代码时，堆栈信息又是能在日志中打印出来的。Finally，困扰了我这么久的问题终于定位到了，就出在线程池上！</p>
+</blockquote>
+<h3 id="原因">原因</h3>
+<p>实际原因出在我写的业务方法，在最外层没有包裹一个 try/catch 语句块，导致线程执行业务方法时内部抛出了未捕获的异常，但是线程本身没有写一个默认的异常处理方法，最终 JVM 的默认处理方式是将这个异常以及堆栈信息只会被打印到控制台，而不是写到日志中。</p>
+<h4 id="原理分析">原理分析</h4>
+<ul>
+<li>当一个线程因未捕获的异常而即将终止时，JVM 将使用 Thread.getUncaughtExceptionHandler() 查询该线程以获得其 UncaughtExceptionHandler</li>
+<li>调用该 handler 的 uncaughtException() 方法，将线程和异常作为参数传递。
+<ul>
+<li>如果线程没有实现 uncaughtException() 方法，则搜索该线程的 ThreadGroup 的异常处理器。</li>
+<li>ThreadGroup 中的默认异常处理器实现是将处理工作逐层委托给上层的 ThreadGroup，直到某个 ThreadGroup 的异常处理器能够处理该异常，否则一直传递到顶层的ThreadGroup。</li>
+<li>顶层 ThreadGroup 的异常处理器委托给默认的系统处理器（如果默认的处理器存在，默认情况下为空），否则把栈信息输出到 System.err，即输出到控制台</li>
+</ul>
+</li>
+</ul>
+<h3 id="execute-和-submit-遇到未捕获异常">execute() 和 submit() 遇到未捕获异常</h3>
+<ul>
+<li>如果使用 execute() 方法执行任务，在线程内部，对于未捕获的异常，并不会像在主线程中一样打印错误日志。线程 UncaughtExceptionHandler 接口中有一个 uncaughtException() 方法，如果没有实现该处理方法，JVM 最后的默认策略是使用 <code>System.err.print(&quot;Exception in thread \&quot;&quot; + t.getName() + &quot;\&quot; &quot;)</code> 输出日志到控制台，但是不会写到项目的日志文件中。如果在线程外加上 try/catch 语句也不能捕获到线程内部的异常，因为实际上线程内部的异常最后已经被 JVM 处理了，实际有效的方法是在线程所执行的业务方法外部加一层 try/catch，或者实现 uncaughtException() 方法打印日志，来保证业务方法中抛出的异常最终能被我们捕获到并在日志中被看见。</li>
+<li>如果使用 submit() 方法来执行任务，内部抛出异常不做任何处理，异常既不会打印到日志中，也不会输出到控制台，看起来就好像异常被线程吞了。实际上异常信息被存储到了线程的结果信息中，通过 Future#get 方法就能获取到内部抛出的异常，然后对异常进行捕获和处理。</li>
+</ul>
+<h3 id="总结">总结</h3>
+<ul>
+<li>出现异常的线程会被线程池移除，线程池会新建一个线程放入</li>
+<li>在线程因未捕获的异常而面临死亡时会调用 Thread.UncaughtExceptionHandler.uncaughtException() 方法，默认会将异常信息打印到控制台</li>
+<li>execute() 内部出现未捕获异常时，默认只会输出错误信息到控制台，不会出现在日志中</li>
+<li>submit() 方法内部出现未捕获异常时，默认控制台和日志都不会有相关信息，需要通过 Future#get 方法来获取异常信息</li>
+<li>使用 exectue() 方法执行任务时，推荐挑选其中一种处理方式
+<ul>
+<li>业务代码最外层加上 try/catch 语句块，输出错误日志，便于问题排查</li>
+<li>实现 UncaughtExceptionHandler 接口并为线程重写一个默认的 uncaughtException 方法，在 uncaughtException 方法中打印日志</li>
+</ul>
+</li>
+</ul>
+<h3 id="参考">参考</h3>
+<p><a target="_blank" rel="noopener" href="https://blog.51cto.com/alex4dream/4222160">【Java技术指南】「技术盲区」看看线程以及线程池的异常处理机制都有哪些？</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/12/12/Java%E5%B8%B8%E7%94%A8%E6%97%A5%E5%BF%97%E6%A1%86%E6%9E%B6/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -231,7 +346,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/12/12/Java%E5%B8%B8%E7%94%A8%E6%97%A5%E5%BF%97%E6%A1%86%E6%9E%B6/" class="post-title-link" itemprop="url">Java常用日志框架</a>
+          <a href="/2021/12/12/Java%E5%B8%B8%E7%94%A8%E6%97%A5%E5%BF%97%E6%A1%86%E6%9E%B6/" class="post-title-link" itemprop="url">Java日志框架</a>
         </h2>
 
         <div class="post-meta-container">
@@ -241,10 +356,16 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
-      
 
-      <time title="创建时间：2021-12-12 15:36:03 / 修改时间：18:33:17" itemprop="dateCreated datePublished" datetime="2021-12-12T15:36:03+08:00">2021-12-12</time>
+      <time title="创建时间：2021-12-12 15:36:03" itemprop="dateCreated datePublished" datetime="2021-12-12T15:36:03+08:00">2021-12-12</time>
     </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-12-18 15:02:32" itemprop="dateModified" datetime="2021-12-18T15:02:32+08:00">2021-12-18</time>
+      </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-folder"></i>
@@ -266,11 +387,18 @@
     
     <div class="post-body" itemprop="articleBody">
           <p>2021年12月10日，Log4j2 被爆出存在<a target="_blank" rel="noopener" href="https://nosec.org/home/detail/4917.html">严重安全漏洞</a>，攻击者可以通过 JNDI 注入的方式远程在目标机器上执行任意代码来发动攻击，一种场景就是，如果有一个接口会将入参用log4j2打印出来，攻击者就可以传入形如<code>$&#123;jndi:rmi//xxxxxx&#125;</code>的命令，在目标机器上执行远程代码。</p>
-<p>在排查最近在开发的一个 Java 项目是否存在该漏洞时，发现这个项目打印的日志并不会触发漏洞，但是项目中又确实存在 log4j2 的依赖。仔细看了一下项目的日志方法，原来这个项目使用的日志框架是 logback 而非 log4j2。这也刚好勾起了我的疑问，平时在使用日志时知道有 slf4j，log4j 这类字眼，logback 很少有见到，对于日志这一块，也是只需要能打印出来供线上问题排查即可。那么 Java 中的各种日志框架各自的区别又是什么呢？</p>
+<p>在排查最近在开发的一个 Java 项目是否存在该漏洞时，发现这个项目打印的日志并不会触发漏洞，但是项目中又确实存在 log4j2 的依赖。仔细看了一下项目的日志方法，原来这个项目使用的日志框架是 logback 而非 log4j2。这也刚好勾起了我的疑问，平时在使用日志时知道有 slf4j，log4j 这类字眼，logback 很少有见到，对于日志这一块，也是只需要能打印出来供线上问题排查即可。那么 Java 中的日志框架组成是什么样的，又有哪些日志框架呢？</p>
+<h3 id="日志框架">日志框架</h3>
+<p>Java 日志框架采用门面设计模式，主要由日志门面、日志适配器和日志库三大部分构成，其中：</p>
+<ul>
+<li>日志门面：本身不负责日志功能的实现，只是约定了一套接口规范，让使用者无需关注底层日志库以及使用细节。目前最广泛使用的日志门面是 slf4j 和 commons-logging</li>
+<li>日志库：具体实现日志的相关功能，目前主流的三个日志库分别是 log2j、log-jdk 和 logback</li>
+<li>日志适配器：主要完成日志库到日志门面的适配，例如 log4j 没有实现 slf4j 接口，所以如果要实现 log4j + slf4j 的模式，就需要额外引入适配器来解决接口不兼容的问题</li>
+</ul>
 <h3 id="Slf4j">Slf4j</h3>
 <p>很长一段时间，我都以为 slf4j 是和 log4j 一样的一种日志框架，但其实它的全称（Simple Logging Facade for Java）告诉我们，这是专门针对 Java 提供的一种简单日志门面。它本身不提供日志服务，而是统一了接口，供其他日志框架来接入。优点就是，如果后续项目升级时需要更换日志框架，省去了对代码的改动，只需要更换日志框架的 jar 包即可。</p>
 <h3 id="Log4j">Log4j</h3>
-<p>Log4j 一款比较早的日志框架，log4j2 是在此基础上的升级版，有更强大的性能。两者在获取 Logger 的路径上有差异，配置方式也有区别。如果要使用 slf4j + log4j 的方式输出日志，需要引入额外的桥接 jar 包。</p>
+<p>Log4j 一款比较早的日志框架，log4j2 是在此基础上的升级版，有更强大的性能。两者在获取 Logger 的路径上有差异，配置方式也有区别，log4j 本身没有实现 slf4j 接口，如果想要适配，需要引入额外的 jar 包。</p>
 <h3 id="Logback">Logback</h3>
 <p>Logback 是 Log4j 的升级版，由 Slf4j 的作者开发，使用 xml 进行配置。该框架默认实现了 Slf4j 标准，所使用的 Logger 和 LoggerFactory 都是 Slf4j 的实现，使用 slf4j + logback 的组合不需要引入额外的 jar 包。</p>
 <h3 id="参考">参考</h3>
@@ -1270,108 +1398,8 @@ Scope 有 5 种可用的限定范围：</p>
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/05/17/RequestParam%E3%80%81-RequestBody-%E5%92%8C-ModelAttribute-%E7%9A%84%E5%8C%BA%E5%88%AB/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="abmis">
-      <meta itemprop="description" content="Know your game.">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="ABMIS">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/05/17/RequestParam%E3%80%81-RequestBody-%E5%92%8C-ModelAttribute-%E7%9A%84%E5%8C%BA%E5%88%AB/" class="post-title-link" itemprop="url">@RequestParam、@RequestBody 和 @ModelAttribute 的区别</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2021-05-17 19:58:50" itemprop="dateCreated datePublished" datetime="2021-05-17T19:58:50+08:00">2021-05-17</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-06-24 09:29:45" itemprop="dateModified" datetime="2021-06-24T09:29:45+08:00">2021-06-24</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index"><span itemprop="name">技术</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>三种注解的区别和使用场景</p>
-<h3 id="RequestParam">@RequestParam</h3>
-<p>用来处理 Content-Type 为 application/x-www-form-urlencoded 编码的内容<br>
-GET 和 POST 请求的参数会自动赋值给 @RequestParam 注解的变量<br>
-例如，@RequestParam(value=“username”) String userName 会直接将请求中名称为 username 变量的值赋值给 userName 参数<br>
-如果不加该注解，则必须保证请求中的参数名与函数的参数名一致，即 函数中的参数要是 String username</p>
-<h3 id="RequestBody">@RequestBody</h3>
-<p>一般用来处理 HttpEntity 传来的 Content-Type 非 application/x-www-form-urlencoded 编码的数据</p>
-<p>GET 请求没有 HttpEntity，所以 @RequestBody 不适用于 GET 请求<br>
-POST 请求通过 HttpEntity 传输的参数，要在请求中声明 Content-Type 类型，Spring 会解析 HttpEntity 中的数据，并绑定到相应的 bean 上</p>
-<h3 id="ModelAttribute">@ModelAttribute</h3>
-<p>一般用于 GET 请求，将参数和 Model 对象参数绑定，变量名要和对象的属性值相对应</p>
-<hr>
-<p>前端使用 GET 或 POST 方式提交数据时，数据编码格式由请求头的 Content-Type 指定，分为以下几种情况：</p>
-<ol>
-<li>application/x-www-form-urlencoded，这种情况的数据@RequestParam、@ModelAttribute可以处理，@RequestBody也可以处理。</li>
-<li>multipart/form-data，@RequestBody不能处理这种格式的数据。（form表单里面有文件上传时，必须要指定enctype属性值为multipart/form-data，意思是以二进制流的形式传输文件。）</li>
-<li>application/json、application/xml等格式的数据，必须使用@RequestBody来处理。</li>
-</ol>
-<h3 id="参考">参考</h3>
-<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/zeroingToOne/p/8992746.html">@RequestParam、@RequestBody和@ModelAttribute区别</a></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 </div>
@@ -1383,7 +1411,7 @@ POST 请求通过 HttpEntity 传输的参数，要在请求中声明 Content-Typ
 
 <div class="copyright">
   &copy; 
-  <span itemprop="copyrightYear">2021</span>
+  <span itemprop="copyrightYear">2022</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

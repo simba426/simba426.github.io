@@ -28,7 +28,7 @@
 <meta property="og:description" content="MySQL  隔离级别 7 并发一致性问题  丢失修改：一个事务对数据的修改被另一个事务对数据的修改覆盖 脏读：一个事务读取了被另一个事务修改，但是未提交的数据。如果修改被撤销，那么此次读到的就是脏数据 不可重复读：是指一个事务在执行期间多次读取某一行数据。这期间如果有另一个事务对这个数据进行了修改（更新或删除），会导致两次读取的数据结果不同。 幻读：同一查询多次执行时，由于其他事务在这个数据范围">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-04-24T05:36:04.000Z">
-<meta property="article:modified_time" content="2021-06-09T09:28:56.000Z">
+<meta property="article:modified_time" content="2022-01-07T01:27:42.192Z">
 <meta property="article:author" content="abmis">
 <meta property="article:tag" content="Redis">
 <meta property="article:tag" content="数据库">
@@ -164,7 +164,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">30</span>
+          <span class="site-state-item-count">31</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -256,7 +256,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-06-09 17:28:56" itemprop="dateModified" datetime="2021-06-09T17:28:56+08:00">2021-06-09</time>
+        <time title="修改时间：2022-01-07 09:27:42" itemprop="dateModified" datetime="2022-01-07T09:27:42+08:00">2022-01-07</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -645,21 +645,21 @@
 <hr>
 <h3 id="持久化机制-5">持久化机制 5</h3>
 <hr>
-<p><strong>快照 RDB 持久化</strong></p>
+<p><strong><a target="_blank" rel="noopener" href="https://bbs.huaweicloud.com/blogs/281005">快照 RDB 持久化</a></strong></p>
 <p>通过创建快照来获取内存中的数据在某个时间点上的副本</p>
 <p>生成快照时，程序会对数据库中的键进行检查，已过期的键不会被保存到新建的 RDB 文件中</p>
 <p>Redis 使用操作系统的多进程**写时复制技术（Copy On Write）**来实现快照持久化，保证在子线程生成 RDB 快照的同时，主线程依然可以写入数据，具体步骤为：</p>
 <ul>
-<li>持久化时， Redis 使用 bgsave 命令调用 glibc 函数 fork 一个子进程，快照持久化完全交给子进程处理，继续处理客户端请求。子进程刚产生时和父进程共享内存中的代码段和数据段，所以子进程刚刚被创建时，内存的增长几乎没有明显变化</li>
+<li>持久化时， Redis 使用 bgsave 命令调用 glibc 函数 fork 一个子进程，快照持久化完全交给子进程处理，继续处理客户端请求。子进程刚产生时和父进程共享内存中的代码段和数据段，所以子进程刚刚被创建时，内存的增长几乎没有明显变化。极端情况下当刚 fork 完成后 redis 对整个内存都做了一次修改操作，会瞬时生成 2 份内存，内存占用变为原来的 2 倍</li>
 <li>bgsave 的子进程可以共享主进程的所有内存数据，读取主线程的数据并写入到 RDB 快照中</li>
-<li>主线程执行写指令修改数据时，会生成一个修改后的数据的副本，子进程直接读取这个副本数据写入到 RDB 快照中，所以不会出现数据不一致的情况</li>
+<li>主线程执行写指令修改数据时，会发生写复制，生成一个修改后的数据的副本，子进程只能读取修改前的副本，无法获取后续的修改</li>
 </ul>
 <p>可以把这个快照复制到其他服务器中来创建具有相同数据副本（主从结构）</p>
 <p>系统发生故障会丢失最后一次创建快照后的数据</p>
 <p>频繁生成 RDB 快照的问题：</p>
 <ul>
 <li>频繁对磁盘进行写入操作，磁盘压力过大</li>
-<li>使用 bgsave 来 fork 子进程的过程会阻塞主线程，</li>
+<li>使用 bgsave 来 fork 子进程的过程会阻塞主线程，使用 COW 也可以进一步减小 fork 时的阻塞时间</li>
 </ul>
 <p>默认配置是：</p>
 <ul>
@@ -675,7 +675,7 @@
 <ul>
 <li>重写的时候 fork 一个子进程，主进程仍然接收新的命令，子进程对原 AOF 文件扫描并把新的写命令追加到新创建的 AOF 文件中。子进程执行期间，主进程接收到的新写命令会存入到<strong>重写缓冲区</strong>，子进程完成重写之后，会先把缓冲区的命令追加到新的 AOF 文件，然后用新 AOF 文件替换旧 AOF 文件</li>
 </ul>
-<p>Redis4.0有一个混合持久化，AOF重写的时候直接把内存副本以 RDB 的方式写到 AOF 文件的开头，然后再将重写缓冲区的写命令以 AOF 方式写入到文件，然后用新 AOF 替换旧 AOF。兼顾了 RDB 的快速加载特性和 AOF 的特性来避免丢失过多数据。</p>
+<p>Redis4.0有一个混合持久化，AOF重写的时候，fork 出来的子线程会先把和主线程共享的内存数据以 RDB 的方式写到 AOF 文件的开头，期间主线程的写操作会被记录在重写缓冲区，重写缓冲区的写命令以 AOF 方式追加写入到 AOF 文件，然后用新 AOF 替换旧 AOF。兼顾了 RDB 的快速加载特性和 AOF 的特性来避免丢失过多数据。如果想要开启，在配置文件中添加 <code>aof-use-rdb-preamble yes</code></p>
 <hr>
 <h3 id="主从复制-3"><a target="_blank" rel="noopener" href="https://www.cnblogs.com/yangming1996/p/12594991.html">主从复制 3</a></h3>
 <p><strong>复制过程</strong></p>
@@ -909,8 +909,8 @@
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2021/04/24/Java%E9%9D%A2%E8%AF%95%E9%87%8D%E7%82%B9/" rel="next" title="Java面试重点">
-                  Java面试重点 <i class="fa fa-chevron-right"></i>
+                <a href="/2021/04/24/Java%E5%B8%B8%E7%94%A8%E5%AE%B9%E5%99%A8%E5%8F%8A%E5%85%B6%E6%96%B9%E6%B3%95/" rel="next" title="Java常用容器及其方法">
+                  Java常用容器及其方法 <i class="fa fa-chevron-right"></i>
                 </a>
             </div>
           </div>
@@ -932,7 +932,7 @@
 
 <div class="copyright">
   &copy; 
-  <span itemprop="copyrightYear">2021</span>
+  <span itemprop="copyrightYear">2022</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
