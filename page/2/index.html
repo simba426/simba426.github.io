@@ -158,7 +158,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">31</span>
+          <span class="site-state-item-count">35</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -169,7 +169,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-count">22</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -209,6 +209,571 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/06/22/%E5%9F%BA%E4%BA%8E-Canel-%E6%95%B0%E6%8D%AE%E5%AE%9E%E6%97%B6%E5%90%8C%E6%AD%A5%E5%88%B0-Redis/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="abmis">
+      <meta itemprop="description" content="Know your game.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ABMIS">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/06/22/%E5%9F%BA%E4%BA%8E-Canel-%E6%95%B0%E6%8D%AE%E5%AE%9E%E6%97%B6%E5%90%8C%E6%AD%A5%E5%88%B0-Redis/" class="post-title-link" itemprop="url">基于 Canel 数据实时同步到 Redis</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-06-22 11:02:59" itemprop="dateCreated datePublished" datetime="2021-06-22T11:02:59+08:00">2021-06-22</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-06-24 09:33:19" itemprop="dateModified" datetime="2021-06-24T09:33:19+08:00">2021-06-24</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index"><span itemprop="name">技术</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h3 id="简介">简介</h3>
+<p>最近一个业务中，要求 Redis 中的数据和 MySQL 中的数据保持较高的一致性，如果缓存和数据库内容不一致，就会导致客户端出现一些问题。针对这个问题，该项目打算使用的解决办法是通过读取 binlog 并进行解析，将解析后的信息放入 MQ 中，然后专门提供一个服务消费 MQ 中的信息，将更新操作同步到 Redis，实现 Redis 和 MySQL 数据的一致性。<br>
+阿里刚好提供了开源工具 canal 能够实现读取 binlog 并解析的功能，这篇文章记录了使用 Canal 实现两个数据库消息同步的简单 demo，消息队列中间件使用的是 Kafka。</p>
+<h3 id="前期配置">前期配置</h3>
+<h4 id="MySQL-开启-binlog-日志主从同步">MySQL 开启 binlog 日志主从同步</h4>
+<p>因为 Canal 是伪装成从服务来监听 MySQL 的 binlog，所以首先需要让 MySQL 允许 binlog 日志主从同步</p>
+<ol>
+<li>本机上的 MySQL 是以 Docker 容器的方式运行的，通过以下命令打开并编辑 MySQL 的配置文件</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker exec -it 71cd220d1f8eef6df43ece34b6b38fe480791c82f3ac434b903fc25b06933384 /bin/sh</span><br><span class="line">vim etc/mysql/mysql.conf.d/mysqld.cnf</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>在 <code>[mysqld]</code>标签下添加以下内容</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">log-bin         = /var/lib/mysql/mysql-bin #日志记录到指定位置</span><br><span class="line">binlog-format   = ROW #记录只要数据发生修改,就记录到日志中</span><br><span class="line">server_id       = 1 #mysql主从复制的唯一id,不允许重复</span><br></pre></td></tr></table></figure>
+<p>重启 MySQL 后可以进入 MySQL 输入以下语句查看 binlog 日志主从同步是否生效</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">show</span> variables <span class="keyword">like</span> <span class="string">&#x27;%log_bin%&#x27;</span>;</span><br></pre></td></tr></table></figure>
+<p>输出结果为</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; show variables like &#x27;%log_bin%&#x27;;</span><br><span class="line">+---------------------------------+--------------------------------+</span><br><span class="line">| Variable_name                   | Value                          |</span><br><span class="line">+---------------------------------+--------------------------------+</span><br><span class="line">| log_bin                         | ON                             |</span><br><span class="line">| log_bin_basename                | /var/lib/mysql/mysql-bin       |</span><br><span class="line">| log_bin_index                   | /var/lib/mysql/mysql-bin.index |</span><br><span class="line">| log_bin_trust_function_creators | OFF                            |</span><br><span class="line">| log_bin_use_v1_row_events       | OFF                            |</span><br><span class="line">| sql_log_bin                     | ON                             |</span><br><span class="line">+---------------------------------+--------------------------------+</span><br><span class="line">6 rows in set (0.01 sec)</span><br></pre></td></tr></table></figure>
+<p>可以看到 log_bin 为 ON 就是成功开启<br>
+3. 最后，还要为 MySQL 添加一个 canal 用户并授予相应权限，canal 才能监听日志</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">USER</span> <span class="string">&#x27;canal&#x27;</span>@<span class="string">&#x27;%&#x27;</span> IDENTIFIED <span class="keyword">BY</span> <span class="string">&#x27;canal&#x27;</span>;</span><br><span class="line"><span class="keyword">grant</span> <span class="keyword">all</span> privileges <span class="keyword">on</span> <span class="operator">*</span>.<span class="operator">*</span> <span class="keyword">to</span> <span class="string">&#x27;canal&#x27;</span>@<span class="string">&#x27;%&#x27;</span> identified <span class="keyword">by</span> <span class="string">&#x27;canal&#x27;</span>;</span><br><span class="line">flush privileges;</span><br></pre></td></tr></table></figure>
+<h4 id="Canal-配置并运行">Canal 配置并运行</h4>
+<blockquote>
+<p>Canal 仓库的 Github 地址为：<a target="_blank" rel="noopener" href="https://github.com/alibaba/canal">https://github.com/alibaba/canal</a><br>
+最初尝试直接 docker 拉取镜像运行容器，但是尝试了很多次，能监听到 canal-server 服务，但是服务无法监听到 binlog，最后还是改为宿主机本地运行 canal-server 服务。</p>
+</blockquote>
+<ol>
+<li>下载 canal-deployer 代码，此处是使用的最新的 1.1.5 版本</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://github.com/alibaba/canal/releases/download/canal-1.1.5/canal.deployer-1.1.5.tar.gz</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>创建文件夹</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir canal-server</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>解压到新建文件夹下</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar -zxvf canal.deployer-1.1.5.tar.gz -C canal-server/</span><br></pre></td></tr></table></figure>
+<ol start="4">
+<li>修改 instance.properties 配置</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim conf/example/instance.properties</span><br></pre></td></tr></table></figure>
+<p>需要修改的内容为</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#################################################</span></span><br><span class="line"><span class="comment">## mysql serverId , v1.0.26+ will autoGen</span></span><br><span class="line"><span class="comment"># canal.instance.mysql.slaveId=0</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># enable gtid use true/false</span></span><br><span class="line"><span class="string">canal.instance.gtidon=false</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># position info</span></span><br><span class="line"><span class="string">canal.instance.master.address=127.0.0.1:3306</span>    <span class="comment"># 此处为运行 MySQL 的 IP 地址</span></span><br><span class="line"><span class="string">canal.instance.master.journal.name=</span></span><br><span class="line"><span class="string">canal.instance.master.position=</span></span><br><span class="line"><span class="string">canal.instance.master.timestamp=</span></span><br><span class="line"><span class="string">canal.instance.master.gtid=</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># rds oss binlog</span></span><br><span class="line"><span class="string">canal.instance.rds.accesskey=</span></span><br><span class="line"><span class="string">canal.instance.rds.secretkey=</span></span><br><span class="line"><span class="string">canal.instance.rds.instanceId=</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># table meta tsdb info</span></span><br><span class="line"><span class="string">canal.instance.tsdb.enable=true</span></span><br><span class="line"><span class="comment">#canal.instance.tsdb.url=jdbc:mysql://127.0.0.1:3306/canal_tsdb</span></span><br><span class="line"><span class="comment">#canal.instance.tsdb.dbUsername=canal</span></span><br><span class="line"><span class="comment">#canal.instance.tsdb.dbPassword=canal</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#canal.instance.standby.address =</span></span><br><span class="line"><span class="comment">#canal.instance.standby.journal.name =</span></span><br><span class="line"><span class="comment">#canal.instance.standby.position =</span></span><br><span class="line"><span class="comment">#canal.instance.standby.timestamp =</span></span><br><span class="line"><span class="comment">#canal.instance.standby.gtid=</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># username/password</span></span><br><span class="line"><span class="string">canal.instance.dbUsername=canal</span>     <span class="comment"># 数据库 canal 的用户名，可以监听 binlog 日志</span></span><br><span class="line"><span class="string">canal.instance.dbPassword=canal</span>     <span class="comment"># 数据库 canal 的密码</span></span><br><span class="line"><span class="string">canal.instance.connectionCharset</span> <span class="string">=</span> <span class="string">UTF-8</span></span><br><span class="line"><span class="comment"># enable druid Decrypt database password</span></span><br><span class="line"><span class="string">canal.instance.enableDruid=false</span></span><br><span class="line"><span class="comment">#canal.instance.pwdPublicKey=MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBALK4BUxdDltRRE5/zXpVEVPUgunvscYFtEip3pmLlhrWpacX7y7GCMo2/JM6LeHmiiNdH1FWgGCpUfircSwlWKUCAwEAAQ==</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># table regex</span></span><br><span class="line"><span class="string">canal.instance.filter.regex=.*\\..*</span> <span class="comment"># 监听所有数据库</span></span><br><span class="line"><span class="comment"># table black regex</span></span><br><span class="line"><span class="string">canal.instance.filter.black.regex=mysql\\.slave_.*</span></span><br><span class="line"><span class="comment"># table field filter(format: schema1.tableName1:field1/field2,schema2.tableName2:field1/field2)</span></span><br><span class="line"><span class="comment">#canal.instance.filter.field=test1.t_product:id/subject/keywords,test2.t_company:id/name/contact/ch</span></span><br><span class="line"><span class="comment"># table field black filter(format: schema1.tableName1:field1/field2,schema2.tableName2:field1/field2)</span></span><br><span class="line"><span class="comment">#canal.instance.filter.black.field=test1.t_product:subject/product_image,test2.t_company:id/name/contact/ch</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># mq config</span></span><br><span class="line"><span class="string">canal.mq.topic=canaltopic</span>   <span class="comment"># 监听的 kafka topic 名称</span></span><br><span class="line"><span class="comment"># dynamic topic route by schema or table regex</span></span><br><span class="line"><span class="comment">#canal.mq.dynamicTopic=mytest1.user,mytest2\\..*,.*\\..*</span></span><br><span class="line"><span class="string">canal.mq.partition=0</span></span><br><span class="line"><span class="comment"># hash partition config</span></span><br><span class="line"><span class="comment">#canal.mq.partitionsNum=3</span></span><br><span class="line"><span class="comment">#canal.mq.partitionHash=test.table:id^name,.*\\..*</span></span><br><span class="line"><span class="comment">#canal.mq.dynamicTopicPartitionNum=test.*:4,mycanal:6</span></span><br><span class="line"><span class="comment">#################################################</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<ol start="5">
+<li>修改完成后进入 bin 目录，启动服务</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd ../../bin</span><br><span class="line">./startup.sh</span><br></pre></td></tr></table></figure>
+<h4 id="Kafka-安装并运行">Kafka 安装并运行</h4>
+<ol>
+<li>Mac 上直接使用 Homebrew 进行 ZooKeeper 和 Kafka 的安装</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">brew install kafka</span><br><span class="line">brew install zookeeper</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>以服务的方式启动 kafka</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew services start kafka</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>创建一个 topic 来接收 canal 生产的信息，名称为  <code>canaltopic</code></li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kafka-topics --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic canaltopic</span><br></pre></td></tr></table></figure>
+<p>然后要对 canal 进行 MQ 相关功能的配置<br>
+4. canal.properties</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># tcp, kafka, RocketMQ 这里选择kafka模式</span></span><br><span class="line"><span class="string">canal.serverMode</span> <span class="string">=</span> <span class="string">kafka</span></span><br><span class="line"><span class="comment"># 解析器的线程数，打开此配置，不打开则会出现阻塞或者不进行解析的情况</span></span><br><span class="line"><span class="string">canal.instance.parser.parallelThreadSize</span> <span class="string">=</span> <span class="number">16</span></span><br><span class="line"><span class="comment"># 配置MQ的服务地址，这里配置的是kafka对应的地址和端口</span></span><br><span class="line"><span class="string">canal.mq.servers</span> <span class="string">=</span> <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span><span class="string">:9092</span></span><br><span class="line"><span class="comment"># 配置instance，在conf目录下要有example同名的目录，可以配置多个</span></span><br><span class="line"><span class="string">canal.destinations</span> <span class="string">=</span> <span class="string">example</span></span><br></pre></td></tr></table></figure>
+<ol start="5">
+<li>instance.properties</li>
+</ol>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#MQ队列名称</span></span><br><span class="line"><span class="string">canal.mq.topic=canaltopic</span></span><br></pre></td></tr></table></figure>
+<ol start="6">
+<li>重启 canal-server<br>
+配置完成后到 <code>bin</code> 目录下执行 <code>./restart.sh</code> 重启 canal-server 服务</li>
+</ol>
+<h3 id="整合测试">整合测试</h3>
+<p>测试 canal 是否能够顺利读取和解析 MySQL 的 binlog 并将信息发送到对应 topic</p>
+<ol>
+<li>启动一个消费者来监听 canaltopic</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kafka-console-consumer --bootstrap-server 127.0.0.1:9092 --from-beginning --topic canaltopic</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>执行 DML 语句</li>
+</ol>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">mysql<span class="operator">&gt;</span> <span class="keyword">insert</span> <span class="keyword">into</span> xdual <span class="keyword">value</span>(<span class="keyword">null</span>,now());</span><br><span class="line">Query OK, <span class="number">1</span> <span class="type">row</span> affected (<span class="number">0.01</span> sec)</span><br><span class="line"></span><br><span class="line">mysql<span class="operator">&gt;</span> <span class="keyword">delete</span> <span class="keyword">from</span> xdual <span class="keyword">where</span> id<span class="operator">=</span><span class="number">23</span>;</span><br><span class="line">Query OK, <span class="number">1</span> <span class="type">row</span> affected (<span class="number">0.01</span> sec)</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>消费者端输出</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">(base) Simbas-MacBook-Pro:~ simba$ kafka-console-consumer --bootstrap-server 127.0.0.1:9092 --from-beginning --topic canaltopic</span><br><span class="line">&#123;&quot;data&quot;:[&#123;&quot;ID&quot;:&quot;23&quot;,&quot;X&quot;:&quot;2021-06-22 15:37:59&quot;&#125;],&quot;database&quot;:&quot;test&quot;,&quot;es&quot;:1624347479000,&quot;id&quot;:10,&quot;isDdl&quot;:false,&quot;mysqlType&quot;:&#123;&quot;ID&quot;:&quot;int(11)&quot;,&quot;X&quot;:&quot;timestamp(0)&quot;&#125;,&quot;old&quot;:null,&quot;pkNames&quot;:[&quot;ID&quot;],&quot;sql&quot;:&quot;&quot;,&quot;sqlType&quot;:&#123;&quot;ID&quot;:4,&quot;X&quot;:93&#125;,&quot;table&quot;:&quot;xdual&quot;,&quot;ts&quot;:1624347479906,&quot;type&quot;:&quot;INSERT&quot;&#125;</span><br><span class="line">&#123;&quot;data&quot;:[&#123;&quot;ID&quot;:&quot;23&quot;,&quot;X&quot;:&quot;2021-06-22 15:37:59&quot;&#125;],&quot;database&quot;:&quot;test&quot;,&quot;es&quot;:1624347492000,&quot;id&quot;:11,&quot;isDdl&quot;:false,&quot;mysqlType&quot;:&#123;&quot;ID&quot;:&quot;int(11)&quot;,&quot;X&quot;:&quot;timestamp(0)&quot;&#125;,&quot;old&quot;:null,&quot;pkNames&quot;:[&quot;ID&quot;],&quot;sql&quot;:&quot;&quot;,&quot;sqlType&quot;:&#123;&quot;ID&quot;:4,&quot;X&quot;:93&#125;,&quot;table&quot;:&quot;xdual&quot;,&quot;ts&quot;:1624347493103,&quot;type&quot;:&quot;DELETE&quot;&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Canal-Redis-和-Kafka-整合项目">Canal, Redis 和 Kafka 整合项目</h3>
+<ol>
+<li>引入所需的依赖</li>
+</ol>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 所用的 Spring Boot 版本为 2.2.1 --&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 引入 Spring-Kafka 依赖 --&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- 已经内置 kafka-clients 依赖，所以无需重复引入 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.kafka<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-kafka<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.3.3.RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- 实现对 Spring Data Redis 的自动化配置 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-data-redis<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">exclusions</span>&gt;</span></span><br><span class="line">                <span class="comment">&lt;!-- 去掉对 Lettuce 的依赖，因为 Spring Boot 优先使用 Lettuce 作为 Redis 客户端 --&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">exclusion</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>io.lettuce<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>lettuce-core<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">exclusion</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">exclusions</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- 引入 Jedis 的依赖，这样 Spring Boot 实现对 Jedis 的自动化配置 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>redis.clients<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>jedis<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- 使用 fastjson 作为 JSON 序列化的工具 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.alibaba<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>fastjson<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.2.61<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.alibaba.otter<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>canal.client<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.1.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.projectlombok<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>lombok<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.18.20<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">scope</span>&gt;</span>provided<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-test<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">scope</span>&gt;</span>test<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>junit<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>junit<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">scope</span>&gt;</span>test<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>在 application.yaml 中添加配置信息</li>
+</ol>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="comment"># 对应 RedisProperties 类</span></span><br><span class="line">  <span class="attr">redis:</span></span><br><span class="line">    <span class="attr">host:</span> <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span></span><br><span class="line">    <span class="attr">port:</span> <span class="number">6379</span></span><br><span class="line">    <span class="attr">password:</span> <span class="string">root123</span> <span class="comment"># Redis 服务器密码，默认为空。生产中，一定要设置 Redis 密码！</span></span><br><span class="line">    <span class="attr">database:</span> <span class="number">0</span> <span class="comment"># Redis 数据库号，默认为 0 。</span></span><br><span class="line">    <span class="attr">timeout:</span> <span class="number">0</span> <span class="comment"># Redis 连接超时时间，单位：毫秒。</span></span><br><span class="line">    <span class="comment"># 对应 RedisProperties.Jedis 内部类</span></span><br><span class="line">    <span class="attr">jedis:</span></span><br><span class="line">      <span class="attr">pool:</span></span><br><span class="line">        <span class="attr">max-active:</span> <span class="number">8</span> <span class="comment"># 连接池最大连接数，默认为 8 。使用负数表示没有限制。</span></span><br><span class="line">        <span class="attr">max-idle:</span> <span class="number">8</span> <span class="comment"># 默认连接数最小空闲的连接数，默认为 8 。使用负数表示没有限制。</span></span><br><span class="line">        <span class="attr">min-idle:</span> <span class="number">0</span> <span class="comment"># 默认连接池最小空闲的连接数，默认为 0 。允许设置 0 和 正数。</span></span><br><span class="line">        <span class="attr">max-wait:</span> <span class="number">-1</span> <span class="comment"># 连接池最大阻塞等待时间，单位：毫秒。默认为 -1 ，表示不限制。</span></span><br><span class="line">  <span class="comment"># Kafka 配置项，对应 KafkaProperties 配置类</span></span><br><span class="line">  <span class="attr">kafka:</span></span><br><span class="line">    <span class="attr">bootstrap-servers:</span> <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span><span class="string">:9092</span> <span class="comment"># 指定 Kafka Broker 地址，可以设置多个，以逗号分隔</span></span><br><span class="line">    <span class="comment"># Kafka Producer 配置项</span></span><br><span class="line">    <span class="attr">producer:</span></span><br><span class="line">      <span class="attr">acks:</span> <span class="number">1</span> <span class="comment"># 0-不应答。1-leader 应答。all-所有 leader 和 follower 应答。</span></span><br><span class="line">      <span class="attr">retries:</span> <span class="number">3</span> <span class="comment"># 发送失败时，重试发送的次数</span></span><br><span class="line">      <span class="attr">key-serializer:</span> <span class="string">org.apache.kafka.common.serialization.StringSerializer</span> <span class="comment"># 消息的 key 的序列化</span></span><br><span class="line">      <span class="attr">value-serializer:</span> <span class="string">org.apache.kafka.common.serialization.StringSerializer</span> <span class="comment"># 消息的 value 的序列化</span></span><br><span class="line">      <span class="attr">batch-size:</span> <span class="number">65536</span> <span class="comment"># 每次批量发送消息的最大数量</span></span><br><span class="line">      <span class="attr">buffer-memory:</span> <span class="number">524288</span> <span class="comment"># 每次批量发送消息的最大内存</span></span><br><span class="line">    <span class="comment"># Kafka Consumer 配置项</span></span><br><span class="line">    <span class="attr">consumer:</span></span><br><span class="line">      <span class="comment"># 指定一个默认的组名</span></span><br><span class="line">      <span class="attr">group-id:</span> <span class="string">consumer-group1</span></span><br><span class="line">      <span class="comment">#auto-offset-reset: earliest # 设置消费者分组最初的消费进度为 earliest 。可参考博客 https://blog.csdn.net/lishuangzhe7047/article/details/74530417 理解</span></span><br><span class="line">      <span class="attr">key-deserializer:</span> <span class="string">org.apache.kafka.common.serialization.StringDeserializer</span> <span class="comment"># 消息的 key 的反序列化</span></span><br><span class="line">      <span class="attr">value-deserializer:</span> <span class="string">org.apache.kafka.common.serialization.StringDeserializer</span> <span class="comment"># 消息的 value 的反序列化</span></span><br><span class="line">    <span class="comment"># Kafka Consumer Listener 监听器配置</span></span><br><span class="line">    <span class="attr">listener:</span></span><br><span class="line">      <span class="attr">missing-topics-fatal:</span> <span class="literal">false</span> <span class="comment"># 消费监听接口监听的主题不存在时，默认会报错。所以通过设置为 false ，解决报错</span></span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>封装一个操作 Redis 的工具类</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.simba.canalkafkaredis.redis;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.data.redis.core.StringRedisTemplate;</span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Component;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.annotation.Resource;</span><br><span class="line"><span class="keyword">import</span> java.util.concurrent.TimeUnit;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RedisClient</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Resource</span></span><br><span class="line">    <span class="keyword">private</span> StringRedisTemplate stringRedisTemplate;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 设置redis的key-value</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setString</span><span class="params">(String key, String value)</span> </span>&#123;</span><br><span class="line">        setString(key, value, <span class="keyword">null</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 设置redis的key-value，带过期时间</span></span><br><span class="line"><span class="comment">     * 时间单位：秒</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setString</span><span class="params">(String key, String value, Long timeOut)</span> </span>&#123;</span><br><span class="line">        stringRedisTemplate.opsForValue().set(key, value);</span><br><span class="line">        <span class="keyword">if</span> (timeOut != <span class="keyword">null</span>) &#123;</span><br><span class="line">            stringRedisTemplate.expire(key, timeOut, TimeUnit.SECONDS);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 获取redis中key对应的值</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getString</span><span class="params">(String key)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> stringRedisTemplate.opsForValue().get(key);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 删除redis中key对应的值</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Boolean <span class="title">deleteKey</span><span class="params">(String key)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> stringRedisTemplate.delete(key);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol start="4">
+<li>新建一个 model 对象来保存 Xdual 表的数据</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.simba.canalkafkaredis.model;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> lombok.AllArgsConstructor;</span><br><span class="line"><span class="keyword">import</span> lombok.Data;</span><br><span class="line"><span class="keyword">import</span> lombok.NoArgsConstructor;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Data</span></span><br><span class="line"><span class="meta">@AllArgsConstructor</span></span><br><span class="line"><span class="meta">@NoArgsConstructor</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Xdual</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> Integer ID;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> String X;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<ol start="5">
+<li>根据 Canal 发送给 Kafka 的 json 数据格式，创建一个 CanalBean 来接收数据</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.simba.canalkafkaredis.canal;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.simba.canalkafkaredis.model.Xdual;</span><br><span class="line"><span class="keyword">import</span> lombok.AllArgsConstructor;</span><br><span class="line"><span class="keyword">import</span> lombok.Data;</span><br><span class="line"><span class="keyword">import</span> lombok.NoArgsConstructor;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Data</span></span><br><span class="line"><span class="meta">@AllArgsConstructor</span></span><br><span class="line"><span class="meta">@NoArgsConstructor</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CanalBean</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> List&lt;Xdual&gt; data;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> String database;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> Long es;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> Integer id;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> Boolean isDdl;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> MysqlType mysqlType;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> String old;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> List&lt;String&gt; pkNames;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> String sql;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> SqlType sqlType;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> String table;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> Long ts; <span class="comment">//(新增)INSERT、(更新)UPDATE、(删除)DELETE、(删除表)ERASE等等</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> String type;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<ol start="6">
+<li>对应的 MysqlType 和 SqlType 类</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.simba.canalkafkaredis.canal;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> lombok.AllArgsConstructor;</span><br><span class="line"><span class="keyword">import</span> lombok.Data;</span><br><span class="line"><span class="keyword">import</span> lombok.NoArgsConstructor;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Data</span></span><br><span class="line"><span class="meta">@AllArgsConstructor</span></span><br><span class="line"><span class="meta">@NoArgsConstructor</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MysqlType</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> String ID;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> String X;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.simba.canalkafkaredis.canal;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> lombok.AllArgsConstructor;</span><br><span class="line"><span class="keyword">import</span> lombok.Data;</span><br><span class="line"><span class="keyword">import</span> lombok.NoArgsConstructor;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Data</span></span><br><span class="line"><span class="meta">@AllArgsConstructor</span></span><br><span class="line"><span class="meta">@NoArgsConstructor</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SqlType</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> Integer ID;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> Integer X;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol start="7">
+<li>创建消费者类来消费信息</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.simba.canalkafkaredis.consumer;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.alibaba.fastjson.JSONObject;</span><br><span class="line"><span class="keyword">import</span> com.simba.canalkafkaredis.canal.CanalBean;</span><br><span class="line"><span class="keyword">import</span> com.simba.canalkafkaredis.model.Xdual;</span><br><span class="line"><span class="keyword">import</span> com.simba.canalkafkaredis.redis.RedisClient;</span><br><span class="line"><span class="keyword">import</span> lombok.extern.slf4j.Slf4j;</span><br><span class="line"><span class="keyword">import</span> org.apache.kafka.clients.consumer.ConsumerRecord;</span><br><span class="line"><span class="keyword">import</span> org.springframework.kafka.annotation.KafkaListener;</span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Component;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.annotation.Resource;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Slf4j</span></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CanalConsumer</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Long TIME_OUT = <span class="number">600L</span>;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Resource</span></span><br><span class="line">    <span class="keyword">private</span> RedisClient redisClient;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@KafkaListener(topics = &quot;canaltopic&quot;)</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">receive</span><span class="params">(ConsumerRecord&lt;?,?&gt; consumer)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        String value = (String)consumer.value();</span><br><span class="line">        log.info(<span class="string">&quot;topic名称:&#123;&#125;,key:&#123;&#125;,分区位置:&#123;&#125;,下标:&#123;&#125;,value:&#123;&#125;&quot;</span>, consumer.topic(), consumer.key(),consumer.partition(), consumer.offset(), value);</span><br><span class="line">        <span class="comment">// 转换为 javabean</span></span><br><span class="line">        CanalBean canalBean = JSONObject.parseObject(value, CanalBean.class);</span><br><span class="line">        <span class="comment">// 是否是 DDL 语句</span></span><br><span class="line">        Boolean isDdl = canalBean.getIsDdl();</span><br><span class="line">        <span class="comment">// 获取语句类型</span></span><br><span class="line">        String type = canalBean.getType();</span><br><span class="line">        <span class="keyword">if</span> (!isDdl) &#123;</span><br><span class="line">            List&lt;Xdual&gt; items = canalBean.getData();</span><br><span class="line">            <span class="keyword">if</span> (<span class="string">&quot;INSERT&quot;</span>.equals(type)) &#123;</span><br><span class="line">                <span class="comment">//新增语句</span></span><br><span class="line">                <span class="keyword">for</span> (Xdual item : items) &#123;</span><br><span class="line">                    Integer id = item.getID();</span><br><span class="line">                    <span class="comment">//新增到redis中,过期时间是10分钟</span></span><br><span class="line">                    redisClient.setString(String.valueOf(id), JSONObject.toJSONString(item), TIME_OUT);</span><br><span class="line">                    log.info(<span class="string">&quot;插入---id号:&#123;&#125;,值:&#123;&#125;&quot;</span>, id, item);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="string">&quot;UPDATE&quot;</span>.equals(type)) &#123;</span><br><span class="line">                <span class="comment">//更新语句</span></span><br><span class="line">                <span class="keyword">for</span> (Xdual item : items) &#123;</span><br><span class="line">                    Integer id = item.getID();</span><br><span class="line">                    <span class="comment">//更新到redis中,过期时间是10分钟</span></span><br><span class="line">                    redisClient.setString(String.valueOf(id), JSONObject.toJSONString(item), TIME_OUT);</span><br><span class="line">                    log.info(<span class="string">&quot;更新---id号:&#123;&#125;,值:&#123;&#125;&quot;</span>, id, item);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="string">&quot;DELETE&quot;</span>.equals(type))&#123;</span><br><span class="line">                <span class="comment">//删除语句</span></span><br><span class="line">                <span class="keyword">for</span> (Xdual item : items) &#123;</span><br><span class="line">                    Integer id = item.getID();</span><br><span class="line">                    <span class="comment">//从redis中删除</span></span><br><span class="line">                    redisClient.deleteKey(String.valueOf(id));</span><br><span class="line">                    log.info(<span class="string">&quot;删除---id号:&#123;&#125;,值:&#123;&#125;&quot;</span>, id, item);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                log.error(<span class="string">&quot;Unsupported type!&quot;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="启动项目并测试">启动项目并测试</h3>
+<ol>
+<li>添加数据
+<ol>
+<li>SQL</li>
+</ol>
+</li>
+</ol>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysql<span class="operator">&gt;</span> <span class="keyword">insert</span> <span class="keyword">into</span> xdual <span class="keyword">value</span>(<span class="keyword">null</span>,now());</span><br><span class="line">Query OK, <span class="number">1</span> <span class="type">row</span> affected (<span class="number">0.01</span> sec)</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>日志</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">2021-06-22 15:57:01.301  INFO 91336 --- [ntainer#0-0-C-1] c.s.c.consumer.CanalConsumer             : topic名称:canaltopic,key:null,分区位置:0,下标:10,value:&#123;&quot;data&quot;:[&#123;&quot;ID&quot;:&quot;24&quot;,&quot;X&quot;:&quot;2021-06-22 15:57:01&quot;&#125;],&quot;database&quot;:&quot;test&quot;,&quot;es&quot;:1624348621000,&quot;id&quot;:12,&quot;isDdl&quot;:false,&quot;mysqlType&quot;:&#123;&quot;ID&quot;:&quot;int(11)&quot;,&quot;X&quot;:&quot;timestamp(0)&quot;&#125;,&quot;old&quot;:null,&quot;pkNames&quot;:[&quot;ID&quot;],&quot;sql&quot;:&quot;&quot;,&quot;sqlType&quot;:&#123;&quot;ID&quot;:4,&quot;X&quot;:93&#125;,&quot;table&quot;:&quot;xdual&quot;,&quot;ts&quot;:1624348621294,&quot;type&quot;:&quot;INSERT&quot;&#125;</span><br><span class="line">2021-06-22 15:57:01.307  INFO 91336 --- [ntainer#0-0-C-1] c.s.c.consumer.CanalConsumer             : 插入---id号:24,值:Xdual(ID=24, X=2021-06-22 15:57:01)</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>Redis</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt; get 24</span><br><span class="line">&quot;&#123;\&quot;iD\&quot;:24,\&quot;x\&quot;:\&quot;2021-06-22 15:57:01\&quot;&#125;&quot;</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>修改数据
+<ol>
+<li>SQL</li>
+</ol>
+</li>
+</ol>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mysql<span class="operator">&gt;</span> update xdual <span class="keyword">set</span> X<span class="operator">=</span>now() <span class="keyword">where</span> id<span class="operator">=</span><span class="number">24</span>;</span><br><span class="line">Query OK, <span class="number">1</span> <span class="type">row</span> affected (<span class="number">0.01</span> sec)</span><br><span class="line"><span class="keyword">Rows</span> matched: <span class="number">1</span>  Changed: <span class="number">1</span>  Warnings: <span class="number">0</span></span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>日志</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">2021-06-22 15:59:24.315  INFO 91336 --- [ntainer#0-0-C-1] c.s.c.consumer.CanalConsumer             : topic名称:canaltopic,key:null,分区位置:0,下标:11,value:&#123;&quot;data&quot;:[&#123;&quot;ID&quot;:&quot;24&quot;,&quot;X&quot;:&quot;2021-06-22 15:59:24&quot;&#125;],&quot;database&quot;:&quot;test&quot;,&quot;es&quot;:1624348764000,&quot;id&quot;:13,&quot;isDdl&quot;:false,&quot;mysqlType&quot;:&#123;&quot;ID&quot;:&quot;int(11)&quot;,&quot;X&quot;:&quot;timestamp(0)&quot;&#125;,&quot;old&quot;:[&#123;&quot;X&quot;:&quot;2021-06-22 15:57:01&quot;&#125;],&quot;pkNames&quot;:[&quot;ID&quot;],&quot;sql&quot;:&quot;&quot;,&quot;sqlType&quot;:&#123;&quot;ID&quot;:4,&quot;X&quot;:93&#125;,&quot;table&quot;:&quot;xdual&quot;,&quot;ts&quot;:1624348764309,&quot;type&quot;:&quot;UPDATE&quot;&#125;</span><br><span class="line">2021-06-22 15:59:24.332  INFO 91336 --- [ntainer#0-0-C-1] c.s.c.consumer.CanalConsumer             : 更新---id号:24,值:Xdual(ID=24, X=2021-06-22 15:59:24)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>Redis</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt; get 24</span><br><span class="line">&quot;&#123;\&quot;iD\&quot;:24,\&quot;x\&quot;:\&quot;2021-06-22 15:59:24\&quot;&#125;&quot;</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>删除数据
+<ol>
+<li>SQL</li>
+</ol>
+</li>
+</ol>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysql<span class="operator">&gt;</span> <span class="keyword">delete</span> <span class="keyword">from</span> xdual <span class="keyword">where</span> id<span class="operator">=</span><span class="number">24</span>;</span><br><span class="line">Query OK, <span class="number">1</span> <span class="type">row</span> affected (<span class="number">0.01</span> sec)</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>日志</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">2021-06-22 16:01:48.637  INFO 91336 --- [ntainer#0-0-C-1] c.s.c.consumer.CanalConsumer             : topic名称:canaltopic,key:null,分区位置:0,下标:12,value:&#123;&quot;data&quot;:[&#123;&quot;ID&quot;:&quot;24&quot;,&quot;X&quot;:&quot;2021-06-22 15:59:24&quot;&#125;],&quot;database&quot;:&quot;test&quot;,&quot;es&quot;:1624348908000,&quot;id&quot;:14,&quot;isDdl&quot;:false,&quot;mysqlType&quot;:&#123;&quot;ID&quot;:&quot;int(11)&quot;,&quot;X&quot;:&quot;timestamp(0)&quot;&#125;,&quot;old&quot;:null,&quot;pkNames&quot;:[&quot;ID&quot;],&quot;sql&quot;:&quot;&quot;,&quot;sqlType&quot;:&#123;&quot;ID&quot;:4,&quot;X&quot;:93&#125;,&quot;table&quot;:&quot;xdual&quot;,&quot;ts&quot;:1624348908632,&quot;type&quot;:&quot;DELETE&quot;&#125;</span><br><span class="line">2021-06-22 16:01:48.646  INFO 91336 --- [ntainer#0-0-C-1] c.s.c.consumer.CanalConsumer             : 删除---id号:24,值:Xdual(ID=24, X=2021-06-22 15:59:24)</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>Redis</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt; get 24</span><br><span class="line">(nil)</span><br></pre></td></tr></table></figure>
+<h3 id="总结">总结</h3>
+<p>以上就是一个试验成功的简单 demo</p>
+<h3 id="参考">参考</h3>
+<p><a target="_blank" rel="noopener" href="https://www.codenong.com/js4176de1c6337/">基于阿里巴巴Canal框架,TCP协议实现监听Mysql数据变化</a><br>
+<a target="_blank" rel="noopener" href="https://developer.aliyun.com/article/770659?spm=a2c6h.13262185.0.0.6c8a3b3fqkfa0y">详细讲解！Canal+Kafka实现MySQL与Redis数据同步！</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/06/10/Redis-%E5%AE%9E%E7%8E%B0%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="abmis">
+      <meta itemprop="description" content="Know your game.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ABMIS">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/06/10/Redis-%E5%AE%9E%E7%8E%B0%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/" class="post-title-link" itemprop="url">Redis 实现分布式锁</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-06-10 16:06:38" itemprop="dateCreated datePublished" datetime="2021-06-10T16:06:38+08:00">2021-06-10</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-06-24 09:30:07" itemprop="dateModified" datetime="2021-06-24T09:30:07+08:00">2021-06-24</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index"><span itemprop="name">技术</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h3 id="Redis-实现">Redis 实现</h3>
+<p>Redis 分布式锁的实现主要基于 <code>SETNX key value</code> 这个指令</p>
+<ul>
+<li>如果 key 不存在，就创建对应的键值对，创建成功，返回 1</li>
+<li>如果 key 存在，创建失败，返回 0</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;</span><span class="bash"> setnx 1 xin</span></span><br><span class="line">(integer) 1</span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> setnx 1 xin2</span></span><br><span class="line">(integer) 0</span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> setnx 2 xin</span></span><br><span class="line">(integer) 1</span><br></pre></td></tr></table></figure>
+<p>除此之外还需要解决键值对长期有效的问题，还需要为键值对设置一个过期时间，对应的 redis 指令为 <code>EXPIRE key seconds</code>，到期之后键值会自动删除</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;</span><span class="bash"> get 1</span></span><br><span class="line">&quot;xin&quot;</span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> expire 1 2</span></span><br><span class="line">(integer) 1</span><br><span class="line">// 2秒后</span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> get 1</span></span><br><span class="line">(nil)</span><br></pre></td></tr></table></figure>
+<p>在 redis 2.6.12 以后的版本，可以用组合指令来实现上述的分布式锁<br>
+<code>SET key value [EX seconds] NX</code></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;</span><span class="bash"> <span class="built_in">set</span> 1 xin ex 10 nx</span></span><br><span class="line">OK</span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> get 1</span></span><br><span class="line">&quot;xin&quot;</span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> ttl 1</span></span><br><span class="line">(integer) 4</span><br><span class="line">// 10秒后</span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> ttl 1</span></span><br><span class="line">(integer) -2</span><br></pre></td></tr></table></figure>
+<p><code>ttl key</code> 命令用于查看键值对的剩余过期时间</p>
+<ul>
+<li>对于设置了过期时间并且尚未过期的键值对，ttl 命令返回剩余过期时间；</li>
+<li>对于已过期不存在的键值对，ttl 命令返回 -2；</li>
+<li>对于没有过期时间的键值对，ttl 命令返回 -1；</li>
+</ul>
+<h3 id="Jedis-实现">Jedis 实现</h3>
+<p>在 Jedis 中可以实现一个 <code>setNxAndExp</code> 方法来实现分布式锁的功能</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> Integer <span class="title">setNxAndExp</span><span class="params">(String key, String val, <span class="keyword">int</span> expSecond)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 如果键值对创建成功，设置一个过期时间</span></span><br><span class="line">    <span class="keyword">if</span> (jedisCluster.setNx(key, val) &gt; <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (expSecond &gt; <span class="number">0</span>) &#123;</span><br><span class="line">            jedisCluster.expire(key, expSecond);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">// 如果创建失败，并且已有的键值对没有过期时间，为其设置一个过期时间，一段时间后释放锁</span></span><br><span class="line">        <span class="keyword">if</span> (jedisCluster.ttl(key).longValue() == -<span class="number">1</span>) &#123;</span><br><span class="line">            jedisCluster.expire(key, expSecond);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 创建成功返回 1，创建失败返回 0，与 setNx 返回值相同</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="参考">参考</h3>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/CoreyXuu/article/details/89019869">redis 基于SETNX和EXPIRE的用法 实现redis 分布式锁</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/06/09/maven-pom/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="abmis">
+      <meta itemprop="description" content="Know your game.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ABMIS">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/06/09/maven-pom/" class="post-title-link" itemprop="url">Maven POM</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-06-09 11:22:47" itemprop="dateCreated datePublished" datetime="2021-06-09T11:22:47+08:00">2021-06-09</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2022-02-07 19:16:27" itemprop="dateModified" datetime="2022-02-07T19:16:27+08:00">2022-02-07</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index"><span itemprop="name">技术</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>只要提到 Maven 就离不开 pom.xml，POM 全称为 Project Object Model，这个文件在项目中常常是被用来配置各种需要用到的依赖，也可以配置不同环境下项目的参数信息。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">project</span> <span class="attr">xmlns</span> = <span class="string">&quot;http://maven.apache.org/POM/4.0.0&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">xmlns:xsi</span> = <span class="string">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">xsi:schemaLocation</span> = <span class="string">&quot;http://maven.apache.org/POM/4.0.0</span></span></span><br><span class="line"><span class="string"><span class="tag">    http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;</span>&gt;</span></span><br><span class="line"> </span><br><span class="line">    <span class="comment">&lt;!-- 模型版本 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">modelVersion</span>&gt;</span>4.0.0<span class="tag">&lt;/<span class="name">modelVersion</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 公司或者组织的唯一标志，并且配置时生成的路径也是由此生成， 如com.companyname.project-group，maven会将该项目打成的jar包放本地路径：/com/companyname/project-group --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.companyname.project-group<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line"> </span><br><span class="line">    <span class="comment">&lt;!-- 项目的唯一ID，一个groupId下面可能多个项目，就是靠artifactId来区分的 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>project<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"> </span><br><span class="line">    <span class="comment">&lt;!-- 版本号 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">project</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="基本元素">基本元素</h3>
+<ul>
+<li><code>project</code> 是 pom.xml 文件描述符的根</li>
+<li><code>modelVersion</code> 指定 pom.xml 符合哪个版本的描述符，maven 2 和 3 只能为 4.0.0</li>
+<li><code>parent</code> 用来表示当前 pom 文件继承自的父类 pom.xml 文件</li>
+</ul>
+<h3 id="依赖配置">依赖配置</h3>
+<p><code>groupId</code>、<code>artifactId</code>、<code>version</code> 与基本配置中的意义相同<br>
+maven 根据 groupId、artifactId 和 version 组成的 groupId:artifactId:version 来唯一识别一个 jar 包<br>
+其中，<code>version</code> 表示一个项目的特定版本，在使用 maven 进行版本管理的时候有几个特殊的关键字：<br>
+<code>snapshot</code> 快照，<code>alpha</code> 内部测试，<code>beta</code> 公测，<code>release</code> 稳定，<code>GA</code> 正式发布<br>
+Scope 有 5 种可用的限定范围：</p>
+<ul>
+<li><code>compile</code>: maven 的默认范围，要求编译、测试、运行阶段都需要模块对应的 jar 包在 classpath 中</li>
+<li><code>provided</code>: 模块对应的 jar 包在编译、测试的 classpath 中</li>
+<li><code>runtime</code>: 模块对应的 jar 包在测试、运行时的 classpath 中</li>
+<li><code>test</code>: 模块对应的 jar 包在测试的 classpath 中</li>
+<li><code>system</code>: 模块对应的 jar 包在编译、测试的 classpath 中，与本机系统关联，可移植性差</li>
+</ul>
+<h3 id="继承">继承</h3>
+<p>引入 <code>parent</code> 标签可以让当前 POM 继承自一个父 POM，父 POM 中包含一些公共依赖并统一管理这些依赖。如果需要改变公共依赖的版本信息，只需要修改父 POM 包，继承了父包的子 POM 都能同步该更新。</p>
+<h3 id="参考">参考</h3>
+<p><a target="_blank" rel="noopener" href="https://juejin.cn/post/6844903824524574734">Maven 教程之 pom.xml 详解</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/06/08/Spring-Boot-AOP-%E5%85%A5%E9%97%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="abmis">
+      <meta itemprop="description" content="Know your game.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ABMIS">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/06/08/Spring-Boot-AOP-%E5%85%A5%E9%97%A8/" class="post-title-link" itemprop="url">Spring Boot AOP 入门</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-06-08 20:26:01" itemprop="dateCreated datePublished" datetime="2021-06-08T20:26:01+08:00">2021-06-08</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2022-02-08 08:53:13" itemprop="dateModified" datetime="2022-02-08T08:53:13+08:00">2022-02-08</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index"><span itemprop="name">技术</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>本文展示了在 Spring Boot 项目中 AOP 的简单实现</p>
+<h3 id="Pom-依赖">Pom 依赖</h3>
+<p>为了实现 AOP，需要在项目中引入 <code>aspectjweaver</code> 和 <code>aspectjrt</code> 两个依赖，其中 <code>aspectjweaver</code> 是 aspectj 的织入包， <code>aspectjrt</code> 是 aspectj 的运行时包</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- AOP 依赖 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.aspectj<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>aspectjweaver<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.aspectj<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>aspectjrt<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="AOP-层类">AOP 层类</h3>
+<p>在类上添加 <code>@Aspect</code> 注释表明这是一个 AOP 类，<code>@Component</code> 注释表明这个类可以作为一个 JavaBean 被注入到 Spring 容器中。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.ziqian.yudao.aop;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.aspectj.lang.ProceedingJoinPoint;</span><br><span class="line"><span class="keyword">import</span> org.aspectj.lang.annotation.*;</span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Component;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Aspect</span></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LoginAspect</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Pointcut(&quot;execution( * com.ziqian.yudao.controller.*.*(..)) &amp;&amp; @annotation(Login)&quot;)</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">cut</span><span class="params">()</span></span>&#123;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Before(&quot;cut()&quot;)</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">before</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;已经记录下操作日志@Before 方法执行前&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Around(&quot;cut()&quot;)</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">around</span><span class="params">(ProceedingJoinPoint proceedingJoinPoint)</span> <span class="keyword">throws</span> Throwable</span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;已经记录下操作日志@Around 方法执行前&quot;</span>);</span><br><span class="line">        Object object = proceedingJoinPoint.proceed();</span><br><span class="line">        System.out.println(<span class="string">&quot;已经记录下操作日志@Around 方法执行后&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> object;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@After(&quot;cut()&quot;)</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">after</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;已经记录下操作日志@After 方法执行后&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>切入 AOP 代码需要一个切入点 PointCut，代码中 <code>@Pointcut(&quot;execution( * com.ziqian.yudao.controller.*.*(..)) &amp;&amp; @annotation(Login)&quot;)</code> 声明的切入点是 <code>com.ziqian.yudao.controller</code> 下面的类中的所有带有 <code>@Login</code> 注释的方法。也就是 AOP 代码会被插入到满足上述条件的方法中。引入注解作为触发 AOP 的条件后可以更方便地在需要的地方切入代码，声明注解的方法如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.ziqian.yudao.aop;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.lang.annotation.ElementType;</span><br><span class="line"><span class="keyword">import</span> java.lang.annotation.Retention;</span><br><span class="line"><span class="keyword">import</span> java.lang.annotation.RetentionPolicy;</span><br><span class="line"><span class="keyword">import</span> java.lang.annotation.Target;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Retention(RetentionPolicy.RUNTIME)</span></span><br><span class="line"><span class="meta">@Target(&#123;ElementType.METHOD&#125;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> Login &#123;</span><br><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">loginRequired</span><span class="params">()</span> <span class="keyword">default</span> <span class="keyword">true</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在切入代码时我们也需要控制代码插入的位置，为此 Spring 提供了 <code>@Before</code>，<code>@After</code>，<code>@Around</code> 三个注解来帮助控制代码插入的大致位置。其中：</p>
+<ul>
+<li><code>@Before</code> 在所拦截方法执行前执行一段逻辑</li>
+<li><code>@After</code> 在所拦截方法执行后执行一段逻辑</li>
+<li><code>@Around</code> 可以同时在所拦截方法前后执行一段逻辑<br>
+同样是在拦截方法的前后，三个注解也存在优先关系。为了搞清楚三者的先后关系，实现一个 http 接口进行测试</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.ziqian.yudao.controller;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.ziqian.yudao.aop.Login;</span><br><span class="line"><span class="keyword">import</span> com.ziqian.yudao.service.UserService;</span><br><span class="line"><span class="keyword">import</span> com.ziqian.yudao.vo.UserVO;</span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.*;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.ArrayList;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="meta">@RequestMapping(&quot;/users&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserController</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    UserService userService;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 查询用户列表</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> 用户列表</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Login</span></span><br><span class="line">    <span class="meta">@GetMapping(&quot;/list&quot;)</span> <span class="comment">// URL 修改成 /list</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> List&lt;UserVO&gt; <span class="title">list</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 查询列表</span></span><br><span class="line">        UserVO user1 = <span class="keyword">new</span> UserVO(); user1.setId(<span class="number">1L</span>); user1.setUserName(<span class="string">&quot;yudaoyuanma&quot;</span>);</span><br><span class="line">        UserVO user2 = <span class="keyword">new</span> UserVO(); user2.setId(<span class="number">2L</span>); user2.setUserName(<span class="string">&quot;woshiyutou&quot;</span>);</span><br><span class="line">        UserVO user3 = <span class="keyword">new</span> UserVO(); user3.setId(<span class="number">3L</span>); user3.setUserName(<span class="string">&quot;chifanshuijiao&quot;</span>);</span><br><span class="line">        List&lt;UserVO&gt; result = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        result.add(user1);</span><br><span class="line">        result.add(user2);</span><br><span class="line">        result.add(user3);</span><br><span class="line">        <span class="comment">// 返回列表</span></span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>最后命令行的打印结果为：</p>
+<blockquote>
+<p>已经记录下操作日志@Around 方法执行前<br>
+已经记录下操作日志@Before 方法执行前<br>
+已经记录下操作日志@After 方法执行后<br>
+已经记录下操作日志@Around 方法执行后</p>
+</blockquote>
+<p>可见 <code>@Around</code> 中的逻辑在最外层</p>
+<blockquote>
+<p>需要注意的是，<code>@Around</code> 注解下的 around() 方法中，proceedingJoinPoint.proceed(); 相当于切入的 list() 方法的方法体。如果 around() 的返回值为空，list() 对应的 /list 接口的返回值也为空。所以一定要为 around() 方法设定一个返回值。其中 Object object = proceedingJoinPoint.proceed(); 中的 obejct 对象就是原接口返回的值。</p>
+</blockquote>
+<h3 id="参考">参考</h3>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/fuck487/article/details/52593204">spring AOP @Around @Before @After 区别</a><br>
+<a target="_blank" rel="noopener" href="https://www.cnblogs.com/Andya/p/12685428.html">SpringBoot—集成AOP详解（面向切面编程Aspect）</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -783,375 +1348,6 @@ POST 请求通过 HttpEntity 传输的参数，要在请求中声明 Content-Typ
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2021/04/24/Java%20I:O/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/04/24/Java%E5%B8%B8%E7%94%A8%E5%AE%B9%E5%99%A8%E5%8F%8A%E5%85%B6%E6%96%B9%E6%B3%95/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="abmis">
-      <meta itemprop="description" content="Know your game.">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="ABMIS">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/04/24/Java%E5%B8%B8%E7%94%A8%E5%AE%B9%E5%99%A8%E5%8F%8A%E5%85%B6%E6%96%B9%E6%B3%95/" class="post-title-link" itemprop="url">Java常用容器及其方法</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2021-04-24 13:39:04" itemprop="dateCreated datePublished" datetime="2021-04-24T13:39:04+08:00">2021-04-24</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-06-10 16:19:44" itemprop="dateModified" datetime="2021-06-10T16:19:44+08:00">2021-06-10</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index"><span itemprop="name">技术</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h3 id="HashSet">HashSet</h3>
-<p>HashSet<T>  hash = new HashSet&lt;&gt;();</p>
-<ul>
-<li>add() 添加元素,返回boolean类型。如果不存在该元素，则添加指定元素并返回true。否则不更改set并返回false</li>
-<li>clear() 移除set所有元素</li>
-<li>remove(Object o) 如果指定元素存在于set中，移除指定元素</li>
-<li>isEmpty() 如果set不包含任何元素，返回true</li>
-<li>contains(Object o) 如果set包含指定元素，返回true</li>
-<li>size() 返回set中元素数量</li>
-</ul>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/04/24/Java%E5%B8%B8%E7%94%A8%E5%AE%B9%E5%99%A8%E5%8F%8A%E5%85%B6%E6%96%B9%E6%B3%95/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/04/24/Java%E9%9D%A2%E8%AF%95%E9%87%8D%E7%82%B9/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="abmis">
-      <meta itemprop="description" content="Know your game.">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="ABMIS">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/04/24/Java%E9%9D%A2%E8%AF%95%E9%87%8D%E7%82%B9/" class="post-title-link" itemprop="url">Java面试重点</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2021-04-24 13:39:04" itemprop="dateCreated datePublished" datetime="2021-04-24T13:39:04+08:00">2021-04-24</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-06-09 17:29:23" itemprop="dateModified" datetime="2021-06-09T17:29:23+08:00">2021-06-09</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index"><span itemprop="name">面试</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="基础">基础</h2>
-<hr>
-<h3 id="Object类方法-4">Object类方法 4</h3>
-<p>getClass() 获取运行时对象的Class对象</p>
-<p>hashCode() 获取对象的哈希码，在哈希表中被使用</p>
-<p>toString() 输出 类名@实例的十六进制哈希码</p>
-<p>clone() 返回当前对象的一份拷贝</p>
-<p>equals() 比较对象是否等价</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/04/24/Java%E9%9D%A2%E8%AF%95%E9%87%8D%E7%82%B9/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/04/24/%E6%95%B0%E6%8D%AE%E5%BA%93%E9%9D%A2%E8%AF%95%E9%87%8D%E7%82%B9/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="abmis">
-      <meta itemprop="description" content="Know your game.">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="ABMIS">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/04/24/%E6%95%B0%E6%8D%AE%E5%BA%93%E9%9D%A2%E8%AF%95%E9%87%8D%E7%82%B9/" class="post-title-link" itemprop="url">数据库面试重点</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2021-04-24 13:36:04" itemprop="dateCreated datePublished" datetime="2021-04-24T13:36:04+08:00">2021-04-24</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2022-01-07 09:27:42" itemprop="dateModified" datetime="2022-01-07T09:27:42+08:00">2022-01-07</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index"><span itemprop="name">面试</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="MySQL">MySQL</h2>
-<hr>
-<h3 id="隔离级别-7">隔离级别 7</h3>
-<p><strong>并发一致性问题</strong></p>
-<ul>
-<li>丢失修改：一个事务对数据的修改被另一个事务对数据的修改覆盖</li>
-<li>脏读：一个事务读取了被另一个事务修改，但是未提交的数据。如果修改被撤销，那么此次读到的就是脏数据</li>
-<li>不可重复读：是指一个事务在执行期间多次读取某一行数据。这期间如果有另一个事务对这个数据进行了修改（更新或删除），会导致两次读取的数据结果不同。</li>
-<li>幻读：同一查询多次执行时，由于其他事务在这个数据范围内执行了插入操作，会导致每次返回不同结果</li>
-</ul>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/04/24/%E6%95%B0%E6%8D%AE%E5%BA%93%E9%9D%A2%E8%AF%95%E9%87%8D%E7%82%B9/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/04/24/%E9%9D%A2%E8%AF%95%E5%B8%B8%E8%80%83%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="abmis">
-      <meta itemprop="description" content="Know your game.">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="ABMIS">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/04/24/%E9%9D%A2%E8%AF%95%E5%B8%B8%E8%80%83%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" class="post-title-link" itemprop="url">面试常考设计模式</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2021-04-24 13:31:04 / 修改时间：13:36:10" itemprop="dateCreated datePublished" datetime="2021-04-24T13:31:04+08:00">2021-04-24</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index"><span itemprop="name">面试</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h3 id="单例模式-4">单例模式 4</h3>
-<p><strong>懒汉</strong>(线程不安全)</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Singleton</span> </span>&#123;</span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">static</span> Singleton uniqueInstance;</span><br><span class="line">  <span class="function"><span class="keyword">private</span> <span class="title">Singleton</span><span class="params">()</span> </span>&#123;&#125;;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Singleton <span class="title">getUniqueInstance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(uniqueInstance == <span class="keyword">null</span>) &#123;</span><br><span class="line">      uniqueInstance = <span class="keyword">new</span> Singleton();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> uniqueInstance;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/04/24/%E9%9D%A2%E8%AF%95%E5%B8%B8%E8%80%83%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>

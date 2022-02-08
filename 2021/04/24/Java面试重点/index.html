@@ -28,7 +28,7 @@
 <meta property="og:description" content="基础  Object类方法 4 getClass() 获取运行时对象的Class对象 hashCode() 获取对象的哈希码，在哈希表中被使用 toString() 输出 类名@实例的十六进制哈希码 clone() 返回当前对象的一份拷贝 equals() 比较对象是否等价">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-04-24T05:39:04.000Z">
-<meta property="article:modified_time" content="2021-06-09T09:29:23.000Z">
+<meta property="article:modified_time" content="2022-01-23T14:03:59.143Z">
 <meta property="article:author" content="abmis">
 <meta property="article:tag" content="Java">
 <meta name="twitter:card" content="summary">
@@ -147,7 +147,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E7%A1%80"><span class="nav-number">1.</span> <span class="nav-text">基础</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Object%E7%B1%BB%E6%96%B9%E6%B3%95-4"><span class="nav-number">1.1.</span> <span class="nav-text">Object类方法 4</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#BIO%E3%80%81NIO%E3%80%81AIO-3"><span class="nav-number">1.2.</span> <span class="nav-text">BIO、NIO、AIO 3</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%8D%E5%B0%84-2"><span class="nav-number">1.3.</span> <span class="nav-text">反射 2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%81equals-%E5%8C%BA%E5%88%AB-2"><span class="nav-number">1.4.</span> <span class="nav-text">&#x3D;&#x3D;、equals()区别 2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B7%B1%E6%8B%B7%E8%B4%9D%E5%92%8C%E6%B5%85%E6%8B%B7%E8%B4%9D-2"><span class="nav-number">1.5.</span> <span class="nav-text">深拷贝和浅拷贝 2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Java-%E7%9A%84%E4%B8%89%E5%A4%A7%E7%89%B9%E6%80%A7"><span class="nav-number">1.6.</span> <span class="nav-text">Java 的三大特性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#static%E3%80%81final%E5%85%B3%E9%94%AE%E5%AD%97"><span class="nav-number">1.7.</span> <span class="nav-text">static、final关键字</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%B9%E5%99%A8"><span class="nav-number">2.</span> <span class="nav-text">容器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#HashMap-11"><span class="nav-number">2.1.</span> <span class="nav-text">HashMap 11</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Hashcode%E6%96%B9%E6%B3%95-3"><span class="nav-number">2.2.</span> <span class="nav-text">Hashcode方法 3</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ArrayList%E5%92%8CLinkedList%E5%8C%BA%E5%88%AB-3"><span class="nav-number">2.3.</span> <span class="nav-text">ArrayList和LinkedList区别 3</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HashSet-2"><span class="nav-number">2.4.</span> <span class="nav-text">HashSet  2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B3%9B%E5%9E%8B-2"><span class="nav-number">2.5.</span> <span class="nav-text">泛型 2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%93%88%E5%B8%8C%E5%86%B2%E7%AA%81-2"><span class="nav-number">2.6.</span> <span class="nav-text">哈希冲突 2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Map%E5%92%8CList"><span class="nav-number">2.7.</span> <span class="nav-text">Map和List</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Vector-%E5%92%8C-ArrayList"><span class="nav-number">2.8.</span> <span class="nav-text">Vector 和 ArrayList</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B9%B6%E5%8F%91"><span class="nav-number">3.</span> <span class="nav-text">并发</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%9B%E7%A8%8B%E5%92%8C%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%8C%BA%E5%88%AB-16"><span class="nav-number">3.1.</span> <span class="nav-text">进程和线程的区别 16</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BA%BF%E7%A8%8B%E7%8A%B6%E6%80%81"><span class="nav-number">3.2.</span> <span class="nav-text">线程状态</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8"><span class="nav-number">3.3.</span> <span class="nav-text">线程安全</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#sychronized-8"><span class="nav-number">3.4.</span> <span class="nav-text">sychronized 8</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#volatile-5"><span class="nav-number">3.5.</span> <span class="nav-text">volatile 5</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Threadlocal-3"><span class="nav-number">3.6.</span> <span class="nav-text">Threadlocal 3</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CAS-3"><span class="nav-number">3.7.</span> <span class="nav-text">CAS 3</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Java%E9%94%81-3"><span class="nav-number">3.8.</span> <span class="nav-text">Java锁 3</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BA%BF%E7%A8%8B%E5%88%9B%E5%BB%BA-2"><span class="nav-number">3.9.</span> <span class="nav-text">线程创建 2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BA%BF%E7%A8%8B%E6%B1%A0%E5%8F%82%E6%95%B0-2"><span class="nav-number">3.10.</span> <span class="nav-text">线程池参数 2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#AQS"><span class="nav-number">3.11.</span> <span class="nav-text">AQS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JUC%E5%8C%85%E4%B8%8B%E7%9A%84%E7%B1%BB"><span class="nav-number">3.12.</span> <span class="nav-text">JUC包下的类</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JVM"><span class="nav-number">4.</span> <span class="nav-text">JVM</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%85%E5%AD%98%E7%BB%93%E6%9E%84-6"><span class="nav-number">4.1.</span> <span class="nav-text">内存结构 6</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6-6"><span class="nav-number">4.2.</span> <span class="nav-text">垃圾回收 6</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B1%BB%E5%8A%A0%E8%BD%BD-3"><span class="nav-number">4.3.</span> <span class="nav-text">类加载 3</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%9B%E7%A7%8D%E5%BC%95%E7%94%A8%E7%B1%BB%E5%9E%8B"><span class="nav-number">4.4.</span> <span class="nav-text">四种引用类型</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E7%A1%80"><span class="nav-number">1.</span> <span class="nav-text">基础</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Object%E7%B1%BB%E6%96%B9%E6%B3%95-4"><span class="nav-number">1.1.</span> <span class="nav-text">Object类方法 4</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#BIO%E3%80%81NIO%E3%80%81AIO-3"><span class="nav-number">1.2.</span> <span class="nav-text">BIO、NIO、AIO 3</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%8D%E5%B0%84-2"><span class="nav-number">1.3.</span> <span class="nav-text">反射 2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%81equals-%E5%8C%BA%E5%88%AB-2"><span class="nav-number">1.4.</span> <span class="nav-text">&#x3D;&#x3D;、equals()区别 2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B7%B1%E6%8B%B7%E8%B4%9D%E5%92%8C%E6%B5%85%E6%8B%B7%E8%B4%9D-2"><span class="nav-number">1.5.</span> <span class="nav-text">深拷贝和浅拷贝 2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Java-%E7%9A%84%E4%B8%89%E5%A4%A7%E7%89%B9%E6%80%A7"><span class="nav-number">1.6.</span> <span class="nav-text">Java 的三大特性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#static%E3%80%81final%E5%85%B3%E9%94%AE%E5%AD%97"><span class="nav-number">1.7.</span> <span class="nav-text">static、final关键字</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%B9%E5%99%A8"><span class="nav-number">2.</span> <span class="nav-text">容器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#HashMap-11"><span class="nav-number">2.1.</span> <span class="nav-text">HashMap 11</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Hashcode%E6%96%B9%E6%B3%95-3"><span class="nav-number">2.2.</span> <span class="nav-text">Hashcode方法 3</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ArrayList%E5%92%8CLinkedList%E5%8C%BA%E5%88%AB-3"><span class="nav-number">2.3.</span> <span class="nav-text">ArrayList和LinkedList区别 3</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HashSet-2"><span class="nav-number">2.4.</span> <span class="nav-text">HashSet  2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B3%9B%E5%9E%8B-2"><span class="nav-number">2.5.</span> <span class="nav-text">泛型 2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%93%88%E5%B8%8C%E5%86%B2%E7%AA%81-2"><span class="nav-number">2.6.</span> <span class="nav-text">哈希冲突 2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Map%E5%92%8CList"><span class="nav-number">2.7.</span> <span class="nav-text">Map和List</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Vector-%E5%92%8C-ArrayList"><span class="nav-number">2.8.</span> <span class="nav-text">Vector 和 ArrayList</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B9%B6%E5%8F%91"><span class="nav-number">3.</span> <span class="nav-text">并发</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%9B%E7%A8%8B%E5%92%8C%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%8C%BA%E5%88%AB-16"><span class="nav-number">3.1.</span> <span class="nav-text">进程和线程的区别 16</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BA%BF%E7%A8%8B%E7%8A%B6%E6%80%81"><span class="nav-number">3.2.</span> <span class="nav-text">线程状态</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8"><span class="nav-number">3.3.</span> <span class="nav-text">线程安全</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#sychronized-8"><span class="nav-number">3.4.</span> <span class="nav-text">sychronized 8</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#volatile-5"><span class="nav-number">3.5.</span> <span class="nav-text">volatile 5</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Threadlocal-3"><span class="nav-number">3.6.</span> <span class="nav-text">Threadlocal 3</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CAS-3"><span class="nav-number">3.7.</span> <span class="nav-text">CAS 3</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Java%E9%94%81-3"><span class="nav-number">3.8.</span> <span class="nav-text">Java锁 3</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%94%81%E5%8D%87%E7%BA%A7"><span class="nav-number">3.8.1.</span> <span class="nav-text">锁升级</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BA%BF%E7%A8%8B%E5%88%9B%E5%BB%BA-2"><span class="nav-number">3.9.</span> <span class="nav-text">线程创建 2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BA%BF%E7%A8%8B%E6%B1%A0%E5%8F%82%E6%95%B0-2"><span class="nav-number">3.10.</span> <span class="nav-text">线程池参数 2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#AQS"><span class="nav-number">3.11.</span> <span class="nav-text">AQS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JUC%E5%8C%85%E4%B8%8B%E7%9A%84%E7%B1%BB"><span class="nav-number">3.12.</span> <span class="nav-text">JUC包下的类</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JVM"><span class="nav-number">4.</span> <span class="nav-text">JVM</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%85%E5%AD%98%E7%BB%93%E6%9E%84-6"><span class="nav-number">4.1.</span> <span class="nav-text">内存结构 6</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6-6"><span class="nav-number">4.2.</span> <span class="nav-text">垃圾回收 6</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B1%BB%E5%8A%A0%E8%BD%BD-3"><span class="nav-number">4.3.</span> <span class="nav-text">类加载 3</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%9B%E7%A7%8D%E5%BC%95%E7%94%A8%E7%B1%BB%E5%9E%8B"><span class="nav-number">4.4.</span> <span class="nav-text">四种引用类型</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -162,7 +162,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">31</span>
+          <span class="site-state-item-count">35</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -173,7 +173,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-count">22</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -254,7 +254,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-06-09 17:29:23" itemprop="dateModified" datetime="2021-06-09T17:29:23+08:00">2021-06-09</time>
+        <time title="修改时间：2022-01-23 22:03:59" itemprop="dateModified" datetime="2022-01-23T22:03:59+08:00">2022-01-23</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -422,7 +422,7 @@
 <hr>
 <p><strong><a target="_blank" rel="noopener" href="https://www.cnblogs.com/aspirant/p/8623864.html">CocurrentHashMap</a></strong></p>
 <p><strong>底层数据结构</strong>还是数组加链表/红黑树的形式。</p>
-<p>在<strong>JDK1.8之前</strong>是由<strong>Segment数组</strong>来实现的，Segment数组将一个大table分割成多个小table来进行加锁，每个Segment元素存储的是<strong>HashEntry数组和链表（和HashMap结构一样）</strong>，会有分段锁锁住一个Segment，多线程访问不同数据段的数据，就不会存在锁竞争，提高并发率。Segment默认大小为16，HashEntry最小容量为2。在这个版本需要经过两次 hash 才能到达指定 hashEntry，第一次先到达 Segment，第二次再到达 Segment 中的 hashEntry，然后再遍历 entry 链表</p>
+<p>在<strong>JDK1.8之前</strong>是由<strong>Segment数组 + ReentrantLock</strong>来实现的，Segment数组将一个大table分割成多个小table来进行加锁，每个Segment元素存储的是<strong>HashEntry数组和链表（和HashMap结构一样）</strong>，会有分段锁锁住一个Segment，多线程访问不同数据段的数据，就不会存在锁竞争，提高并发率。Segment 最多有 16个，HashEntry最小容量为2。在这个版本需要经过两次 hash 才能到达指定 hashEntry，第一次先到达 Segment，第二次再到达 Segment 中的 hashEntry，然后再遍历 entry 链表</p>
 <p><strong>JDK1.8之后</strong>摒弃了Segment概念，直接使用 <strong>Node数组 + 链表 + 红黑树</strong>的数据结构来实现，<strong>并发控制使用 sychronized 和 CAS</strong>，sychronized只锁定当前链表或者红黑树的首节点，只要不发生哈希冲突，就不存在并发问题。不过 Node 只适用于链表情况，转换为红黑树后要转为TreeNode</p>
 <p>HashTable也是线程安全，但是只用一把锁，会出现锁竞争，效率低下</p>
 <hr>
@@ -569,11 +569,13 @@
 <p><strong>sychronized 和 ReentrantLock 的区别</strong></p>
 <ul>
 <li>（ReentrantLock就是可重入锁的意思）<strong>两者都是可重入锁</strong>，可重入锁就是指在获取到锁之后，在内部还可以多次获取到锁，这样在递归调用带锁的方法时就不会发生死锁</li>
-<li><strong>sychronized 是一个修饰符，JVM实现的； 而 ReentrantLock 是JDK实现的</strong></li>
-<li><strong>ReentrantLock等待可中断</strong>，通过 lock.lockInterruptibly() 可以让线程放弃等待转而去执行其他事；synchronized 不可以</li>
+<li><strong>sychronized 是一个修饰符，JVM实现的； 而 ReentrantLock 是JDK实现的，是一个显式加锁</strong></li>
+<li><strong>ReentrantLock等待可中断</strong>，通过 lock.lockInterruptibly() 可以让线程放弃等待转而去执行其他事，或者设置一个超时时间，可以通过这个特性来避免死锁；synchronized 不可以</li>
 <li>ReentrantLock <strong>可以实现公平锁</strong>（默认是非公平锁），就是先等待的线程先获得锁；synchronized 是非公平锁</li>
-<li>ReentrantLock可以绑定多个 Condition 条件</li>
 </ul>
+<blockquote>
+<p>公平锁是指多个线程按照申请顺序来获得锁；非公平锁是指线程先尝试插队获取锁，获取失败再进入队列排队</p>
+</blockquote>
 <hr>
 <p><strong>synchronized 和 volatile 的区别</strong></p>
 <ul>
@@ -584,8 +586,23 @@
 <hr>
 <h3 id="volatile-5">volatile 5</h3>
 <p>语义，虚拟机如何实现</p>
-<p>volatile 关键字是一个轻量级的锁，主要保证数据可见性，但是不保证原子性。声明一个变量是不稳定的，要求每次读取都去主内存读取。</p>
+<p>volatile 关键字是一个轻量级的锁，主要保证数据可见性，但是不保证原子性。声明一个变量是不稳定的，要求放弃从本地寄存器读取值，而是每次读取都去主内存读取。</p>
 <p>加上 volatile 关键字之后会多一个 lock 指令，它相当于一个内存屏障，可以阻止指令重排，还会立刻将对变量的修改操作写入主存。</p>
+<p><a target="_blank" rel="noopener" href="https://juejin.cn/post/6992115728702767112#/">内存屏障</a><br>
+写操作<br>
+在每一个 volatile <strong>写操作前面</strong>插入一个 storestore 屏障<br>
+在每一个 volatile <strong>写操作后面</strong>插入一个 storeload 屏障</p>
+<blockquote>
+<p>storestore 屏障	禁止上面的普通写与下面的 volatile 写重排序<br>
+storeload 屏障	禁止上面的 volatile 写与下面可能有的 volatile 读/写重排序</p>
+</blockquote>
+<p>读操作<br>
+在每一个 volatile <strong>读操作后面</strong>插入一个 loadload 屏障<br>
+在每一个 volatile <strong>读操作后面</strong>插入一个 loadstore 屏障</p>
+<blockquote>
+<p>loadload 屏障	禁止上面的 volatile 读与下面的普通读重排序<br>
+loadstore 屏障	禁止上面的 volatile 读与下面的普通写重排序</p>
+</blockquote>
 <hr>
 <h3 id="Threadlocal-3"><a target="_blank" rel="noopener" href="https://github.com/CyC2018/CS-Notes/blob/master/notes/Java%20%E5%B9%B6%E5%8F%91.md#2-%E7%BA%BF%E7%A8%8B%E6%9C%AC%E5%9C%B0%E5%AD%98%E5%82%A8thread-local-storage">Threadlocal 3</a></h3>
 <p>通常我们创建的每个变量是可以被任何线程访问并修改的。<strong>ThreadLocal 是一个创建线程局部变量的类</strong>。</p>
@@ -610,29 +627,43 @@
 <p>底层使用 JNI 调用 C 代码实现的，这个操作其实是 JNI 调用一个CPU指令完成的，所以具备<strong>原子性</strong></p>
 <p>但是有 ABA 问题存在，就是变量初次读取的是 A 值，后来被改为 B，后来又被改为 A，CAS就会认为这个变量从来没被改变过</p>
 <hr>
-<h3 id="Java锁-3"><a target="_blank" rel="noopener" href="https://www.cnblogs.com/myseries/p/12213997.html">Java锁 3</a></h3>
-<p>主要是针对 synchronized 的锁优化</p>
+<h3 id="Java锁-3"><a target="_blank" rel="noopener" href="https://tech.meituan.com/2018/11/15/java-lock.html#/">Java锁 3</a></h3>
+<h4 id="锁升级">锁升级</h4>
+<p>是针对 synchronized 的锁优化</p>
 <p>锁升级过程：无锁 -&gt; 偏向锁 -&gt; 轻量级锁 -&gt; 重量级锁</p>
 <p><strong>自旋锁</strong></p>
 <p>自旋锁的思想就是让线程在请求一个共享数据的锁时循环一段时间，如果在这段时间获取到了锁，就可以避免被阻塞。虽然能避免线程进入阻塞而减少开销，但是会占用CPU时间，所以适合那些锁定状态很短的共享数据。</p>
 <p>JDK1.6引入了自适应的自旋锁，自旋次数不再固定，而是由上一次在该锁上的自旋次数和使用者的状态决定</p>
+<p><strong>无锁</strong></p>
+<p>线程修改对象时不获取对象锁，而是通过 CAS 操作来修改对象</p>
 <p><strong>偏向锁</strong></p>
-<p>就是让第一个获取锁对象的线程，在之后获取该锁时不要进行同步操作，甚至 CAS 也不需要。如果有第二个线程尝试去获取这个锁，偏向状态就结束</p>
+<p>当第一个线程获取对象锁成功后，会通过 CAS 操作在对象头中记下锁偏向的线程 ID，该线程在之后进入同步块时如果检测到对象头中的锁偏向 ID 等于线程 ID，就可以直接进入同步块。当处于偏向锁状态的对象被第二个线程访问，偏向锁会撤销，升级成轻量级锁</p>
 <p><strong>轻量级锁</strong></p>
-<p>轻量级锁使用 CAS 操作来避免使用互斥量的开销，先用 CAS 进行同步，失败再改用互斥量同步</p>
+<p>轻量级锁使用 CAS 操作来避免使用互斥量的开销，先用 CAS 进行同步，自旋失败后会升级为重量级锁</p>
 <p><strong>锁消除</strong></p>
 <p>如果检测出共享数据不可能存在竞争，就把锁消除</p>
 <p><strong>锁粗化</strong></p>
 <p>如果有一串连续的操作对一个对象加锁解锁，就会把锁的范围扩大到整个序列之外，避免反复加锁解锁</p>
 <p>synchronized的执行过程：</p>
 <ol>
-<li>检测Mark Word里面是不是当前线程的ID，如果是，表示当前线程处于偏向锁</li>
-<li>如果不是，则使用CAS将当前线程的ID替换Mard Word，如果成功则表示当前线程获得偏向锁，置偏向标志位1</li>
-<li>如果失败，则说明发生竞争，撤销偏向锁，进而升级为轻量级锁。</li>
-<li>当前线程使用CAS将对象头的Mark Word替换为锁记录指针，如果成功，当前线程获得锁</li>
+<li>检测Mark Word里面当前线程是否是偏向锁
+<ul>
+<li>如果不是（处于无锁状态），使用CAS将当前线程的ID替换Mard Word，如果成功则表示当前线程获得偏向锁，置偏向标志位1</li>
+<li>如果是，检查锁偏向是不是当前线程的ID
+<ul>
+<li>如果是，直接进入语句块</li>
+<li>如果不是，说明有第二个线程竞争锁，偏向锁状态结束，升级为轻量级锁</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>轻量级锁时如果线程想要获取锁，使用 CAS 将对象头的 Mark Word 替换为锁记录指针
+<ul>
+<li>如果成功，当前线程获得锁</li>
 <li>如果失败，表示其他线程竞争锁，当前线程便尝试使用自旋来获取锁。</li>
-<li>如果自旋成功则依然处于轻量级状态。</li>
-<li>如果自旋失败，则升级为重量级锁。</li>
+</ul>
+</li>
+<li>如果自旋失败，轻量级锁升级为重量级锁。</li>
 </ol>
 <p>作者：自负的鱼<br>
 链接：<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/704eb56aa52a">https://www.jianshu.com/p/704eb56aa52a</a><br>
@@ -730,15 +761,28 @@
 </li>
 </ul>
 <hr>
-<h3 id="AQS">AQS</h3>
-<p>AbstractQueuedSynchronizer 是一个在 JUC 之下用来实现锁和同步器的框架，它底层用了 CAS 技术来保证操作的原子性</p>
-<p>内部实现的关键是</p>
+<h3 id="AQS"><a target="_blank" rel="noopener" href="https://tech.meituan.com/2019/12/05/aqs-theory-and-apply.html#/">AQS</a></h3>
+<p>AbstractQueuedSynchronizer 是一个在 JUC 之下的类，JUC 包中的很多同步类例如 ReentrantLock 都是基于 AQS 实现的，内部使用了模版设计方法，方便自定义类的扩展</p>
+<p>内部的两个核心成员是</p>
 <ul>
-<li>用 volatile 修饰的 state 状态来保证可见性，表示同步状态，通过 getState 和 setState 来操作同步状态</li>
-<li>用 FIFO 队列来实现进程间的竞争和等待</li>
-<li>还提供了各种基于 CAS 的原子操作方法</li>
+<li>state 意为同步状态，用于展示当前临界资源的获锁情况，0 代表没有线程占用当前资源。线程尝试获取资源时会通过 CAS 操作修改 state 值。AQS 类 中用 volatile 关键字声明来确保 state 的可见性</li>
+<li>FIFO 双向队列，存放了当前占用的线程以及等待中的线程。其中的 head 节点是虚节点，不表示任何线程，头节点后的第一个节点才是有效节点</li>
 </ul>
-<p>AQS 提供了独占锁 ReentrantLock 和 共享锁 semaphore 机制等</p>
+<p>队列中节点获取锁的场景</p>
+<ul>
+<li>判断前置节点是否为 head 节点
+<ul>
+<li>如果是，说明当前节点是第一个有效节点，尝试获取锁，如果成功获取到锁，将当前节点置为 head 节点</li>
+<li>如果获取锁失败，或者前一个节点不是 head 节点，需要查看前驱节点的 waitStatus 来判断是否要将当前线程阻塞
+<ul>
+<li>如果为 -1，说明前置节点处于唤醒状态，无法获取锁，阻塞当前线程</li>
+<li>如果大于 0，说明前置节点取消等待，循环查询前面所有取消状态的节点，将其从队列中移除</li>
+<li>如果都不是，设置前置节点 waitStatus 为 -1，不阻塞当前线程</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
 <h3 id="JUC包下的类">JUC包下的类</h3>
 <p>各种基本类型的原子类：AtomicInteger，AtomicLong，AtomicBoolean</p>
 <p>线程安全的容器：CopyOnWriteArrayList，CocurrentHashMap，BlockingQueue等</p>

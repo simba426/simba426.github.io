@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yoursite.com","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.8.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="磁盘 I&#x2F;O 读取和写入文件 I&#x2F;O 操作都需要调用操作系统的接口。因为磁盘是由操作系统来管理的，应用程序想要访问物理设备就只能通过系统调用的方式来工作 在这期间内核空间和用户空间是隔离的，所以存在数据在两处来回复制的问题 操作系统会引入缓存来加速 I&#x2F;O 操作 标准访问文件方式 磁盘-高速缓存-应用程序缓存-应用程序 直接 I&#x2F;O 方式 磁盘-应用程序缓存-应用程序 （例如数据库系统明确知道需要">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《深入分析 Java Web 技术内幕》摘抄">
+<meta property="og:url" content="http://yoursite.com/2021/08/07/%E3%80%8A%E6%B7%B1%E5%85%A5%E5%88%86%E6%9E%90-Java-Web-%E6%8A%80%E6%9C%AF%E5%86%85%E5%B9%95%E3%80%8B%E6%91%98%E6%8A%84/index.html">
+<meta property="og:site_name" content="ABMIS">
+<meta property="og:description" content="磁盘 I&#x2F;O 读取和写入文件 I&#x2F;O 操作都需要调用操作系统的接口。因为磁盘是由操作系统来管理的，应用程序想要访问物理设备就只能通过系统调用的方式来工作 在这期间内核空间和用户空间是隔离的，所以存在数据在两处来回复制的问题 操作系统会引入缓存来加速 I&#x2F;O 操作 标准访问文件方式 磁盘-高速缓存-应用程序缓存-应用程序 直接 I&#x2F;O 方式 磁盘-应用程序缓存-应用程序 （例如数据库系统明确知道需要">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://blog-1252654208.cos.ap-nanjing.myqcloud.com/img/截屏2022-02-07 下午7.51.51.png">
+<meta property="og:image" content="https://blog-1252654208.cos.ap-nanjing.myqcloud.com/img/截屏2022-02-07 下午7.52.03.png">
+<meta property="article:published_time" content="2021-08-07T01:24:45.000Z">
+<meta property="article:modified_time" content="2022-02-07T11:56:45.807Z">
+<meta property="article:author" content="abmis">
+<meta property="article:tag" content="笔记">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://blog-1252654208.cos.ap-nanjing.myqcloud.com/img/截屏2022-02-07 下午7.51.51.png">
+
+
+<link rel="canonical" href="http://yoursite.com/2021/08/07/%E3%80%8A%E6%B7%B1%E5%85%A5%E5%88%86%E6%9E%90-Java-Web-%E6%8A%80%E6%9C%AF%E5%86%85%E5%B9%95%E3%80%8B%E6%91%98%E6%8A%84/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://yoursite.com/2021/08/07/%E3%80%8A%E6%B7%B1%E5%85%A5%E5%88%86%E6%9E%90-Java-Web-%E6%8A%80%E6%9C%AF%E5%86%85%E5%B9%95%E3%80%8B%E6%91%98%E6%8A%84/","path":"2021/08/07/《深入分析-Java-Web-技术内幕》摘抄/","title":"《深入分析 Java Web 技术内幕》摘抄"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>《深入分析 Java Web 技术内幕》摘抄 | ABMIS</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">ABMIS</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-照片"><a href="/photos/" rel="section"><i class="fa fa-camera fa-fw"></i>照片</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A3%81%E7%9B%98-I-O"><span class="nav-number">1.</span> <span class="nav-text">磁盘 I&#x2F;O</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%A0%87%E5%87%86%E8%AE%BF%E9%97%AE%E6%96%87%E4%BB%B6%E6%96%B9%E5%BC%8F"><span class="nav-number">1.1.</span> <span class="nav-text">标准访问文件方式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%9B%B4%E6%8E%A5-I-O-%E6%96%B9%E5%BC%8F"><span class="nav-number">1.2.</span> <span class="nav-text">直接 I&#x2F;O 方式</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%96%E7%A0%81%E7%9B%B8%E5%85%B3"><span class="nav-number">2.</span> <span class="nav-text">编码相关</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JVM%E5%86%85%E5%AD%98%E5%88%86%E6%9E%90"><span class="nav-number">3.</span> <span class="nav-text">JVM内存分析</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F"><span class="nav-number">3.1.</span> <span class="nav-text">内存泄漏</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Session-%E4%B8%8E-Cookie"><span class="nav-number">4.</span> <span class="nav-text">Session 与 Cookie</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%86%E5%B8%83%E5%BC%8F-Session"><span class="nav-number">4.1.</span> <span class="nav-text">分布式 Session</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A4%9A%E5%9F%9F%E5%90%8D%E7%9A%84-Session-%E5%90%8C%E6%AD%A5"><span class="nav-number">4.2.</span> <span class="nav-text">多域名的 Session 同步</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ClassLoader"><span class="nav-number">5.</span> <span class="nav-text">ClassLoader</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Tomcat"><span class="nav-number">6.</span> <span class="nav-text">Tomcat</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%80%BB%E4%BD%93%E6%9E%B6%E6%9E%84"><span class="nav-number">6.1.</span> <span class="nav-text">总体架构</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Connector"><span class="nav-number">6.2.</span> <span class="nav-text">Connector</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Container"><span class="nav-number">6.3.</span> <span class="nav-text">Container</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%94%A8%E5%88%B0%E7%9A%84%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F"><span class="nav-number">6.4.</span> <span class="nav-text">用到的设计模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Tomcat-%E7%9A%84%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%99%A8"><span class="nav-number">6.5.</span> <span class="nav-text">Tomcat 的类加载器</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Servlet"><span class="nav-number">7.</span> <span class="nav-text">Servlet</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Servlet-%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84"><span class="nav-number">7.1.</span> <span class="nav-text">Servlet 体系结构</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Servlet-%E5%B7%A5%E4%BD%9C%E6%96%B9%E5%BC%8F"><span class="nav-number">7.2.</span> <span class="nav-text">Servlet 工作方式</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Spring"><span class="nav-number">8.</span> <span class="nav-text">Spring</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">9.</span> <span class="nav-text">参考</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="abmis"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">abmis</p>
+  <div class="site-description" itemprop="description">Know your game.</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">35</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">22</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/simba426" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;simba426" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://instagram.com/woody_simba" title="Instagram → https:&#x2F;&#x2F;instagram.com&#x2F;woody_simba" rel="noopener" target="_blank"><i class="fab fa-instagram fa-fw"></i>Instagram</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://t.me/abmis_reverse" title="Telegram → https:&#x2F;&#x2F;t.me&#x2F;abmis_reverse" rel="noopener" target="_blank"><i class="fab fa-telegram fa-fw"></i>Telegram</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/08/07/%E3%80%8A%E6%B7%B1%E5%85%A5%E5%88%86%E6%9E%90-Java-Web-%E6%8A%80%E6%9C%AF%E5%86%85%E5%B9%95%E3%80%8B%E6%91%98%E6%8A%84/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="abmis">
+      <meta itemprop="description" content="Know your game.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ABMIS">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          《深入分析 Java Web 技术内幕》摘抄
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-08-07 09:24:45" itemprop="dateCreated datePublished" datetime="2021-08-07T09:24:45+08:00">2021-08-07</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2022-02-07 19:56:45" itemprop="dateModified" datetime="2022-02-07T19:56:45+08:00">2022-02-07</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index"><span itemprop="name">技术</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h3 id="磁盘-I-O">磁盘 I/O</h3>
+<p>读取和写入文件 I/O 操作都需要调用操作系统的接口。因为磁盘是由操作系统来管理的，应用程序想要访问物理设备就只能通过系统调用的方式来工作<br>
+在这期间内核空间和用户空间是隔离的，所以存在数据在两处来回复制的问题<br>
+操作系统会引入缓存来加速 I/O 操作</p>
+<h4 id="标准访问文件方式">标准访问文件方式</h4>
+<p>磁盘-高速缓存-应用程序缓存-应用程序</p>
+<h4 id="直接-I-O-方式">直接 I/O 方式</h4>
+<p>磁盘-应用程序缓存-应用程序 （例如数据库系统明确知道需要缓存、失效哪些数据）</p>
+<h3 id="编码相关">编码相关</h3>
+<p>尽量将所有编码都设置为 UTF-8，是理想的中文编码方式<br>
+UTF-8 对单字节范围内的字符采用1个字节表示，对汉字采用3个字节表示</p>
+<h3 id="JVM内存分析">JVM内存分析</h3>
+<h4 id="内存泄漏">内存泄漏</h4>
+<p>发生内存泄露时，首先查看 Heap 的内存使用情况，查看 Major GC，Full GC 的情况，是否有对象一直没有被回收<br>
+除此之外，内存泄露还可能出现在其他需要用到内存的区域，包括 JVM 本身的 JIT 编译，JVM 栈，JNI 调用本地代码，NIO 用 Direct Buffer 申请内存等</p>
+<h3 id="Session-与-Cookie">Session 与 Cookie</h3>
+<p>Session 与 Cookie 都是为了保持用户与后端服务器的交互状态<br>
+缺点：随着 Cookie 数和访问量的增加，占用的网络带宽会增加，浏览器存储的 Cookie 也有限；Session 不容易在多台服务器之间共享</p>
+<h4 id="分布式-Session">分布式 Session</h4>
+<p>有一台服务订阅服务器，为应用提供 Session 和Cookie 的配置项，精确控制哪些应用可以操作哪些 Session 和 Cookie，可以有效控制 Session 的安全性和 Cookie  的数量，简化 Cookie 的管理<br>
+应用 订阅 服务订阅服务器 使用的 Session 配置项， Session 存储到分布式缓存中</p>
+<h4 id="多域名的-Session-同步">多域名的 Session 同步</h4>
+<p>需要一个跳转应用，这个应用可以被一个或者多个域名访问。这个应用从一个域名下取得 sessionID，然后将这个 sessionID 同步到另一个域名下<br>
+所以要实现多域名的 Session 同步，就要将同一个 sessionID 作为 Cookie 写到多个域名下</p>
+<h3 id="ClassLoader">ClassLoader</h3>
+<p>有一个 defineClass 方法，可以将接收到的字节流解析成 JVM 能识别的 Class 对象<br>
+所以在 Java 中可以通过 1. class 文件实例化对象 2. 通过类的字节码流创建类的 Class 对象，然后进行实例化</p>
+<p>JVM 平台的 ClassLoader 共分 3 层，BootstarpClassLoader，ExtClassLoader，AppClassLoader<br>
+其中</p>
+<ul>
+<li>BootstarpClassLoader 完全 JVM 自己控制，不能被别的类访问到。它也不是 ExtClassLoader 的父类</li>
+<li>ExtClassLoader 和 AppClassLoader 是 Launcher 的内部类，都继承了 URLClassLoader，URLClassLoader 实现了 ClassLoader 抽象类</li>
+<li>创建 Launcher 对象会先创建 ExtClassLoader 对象，然后其作为父类加载器创建 AppClassLoader 对抗。最后由 Launcher 对象获取到的加载器是 AppClassLoader 对象</li>
+</ul>
+<h3 id="Tomcat">Tomcat</h3>
+<h4 id="总体架构">总体架构</h4>
+<ul>
+<li>Server：Server 对应的就是一个 Tomcat 实例</li>
+<li>Service：一个 Service 由一个 Container 和多个 Connector 构成。Service 默认只有一个，但一个 Server 可对应多个 Service 服务。</li>
+<li>Connector：一个 Service 可以有多个 Connector 来实现支持多种 I/O 模型和应用层协议</li>
+<li>Container：一个 Container 对应多个 Connector，顶层容器其实就是 Engine</li>
+</ul>
+<blockquote>
+<p>Connecter 负责对外交流，Container 负责处理 Connector 接受的请求</p>
+</blockquote>
+<h4 id="Connector">Connector</h4>
+<blockquote>
+<p>Connector 对 Servlet 容器屏蔽了网络协议和 I/O 模型的区别，无论是什么协议，在容器中获取到的都是一个 ServletRequest 对象<br>
+连接器需要完成 3 个高聚合功能：</p>
+</blockquote>
+<ul>
+<li>网络通信</li>
+<li>应用层协议解析</li>
+<li>Tomcat Request/Response 与 ServletRequest/ServletResponse 的转化<br>
+与此对应的三个组件分别为 EndPoint、Processor 和 Adapter</li>
+<li>Endpoint 负责底层 Socket 通信，提供字节流给 Processor</li>
+<li>Processor 负责应用层协议解析，提供 Tomcat Request 对象给 Adapter</li>
+<li>Adapter 负责调用容器，提供 ServletRequest 对象给容器<br>
+其中 Endpoint 和 Processor 一起抽象成了 ProtocolHandler，实现封装通信协议和 I/O 模型的差异</li>
+</ul>
+<h4 id="Container">Container</h4>
+<p>加载并管理 Servlet，处理具体的 Request 请求<br>
+由 Engine、Host、Context 和 Wrapper 4个子容器组件构成，4个组件是父子关系：Engine 包含 Host，Host 包含 Context，Context 包含 Wrapper</p>
+<h4 id="用到的设计模式">用到的设计模式</h4>
+<ul>
+<li>组合模式管理容器（俄罗斯套娃）</li>
+<li>观察者模式发布启动事件达到解耦、开闭原则</li>
+<li>骨架抽象类和模版方法抽象变与不变，实现代码复用和灵活扩展</li>
+<li>责任链模式（Pipeline-Valve）实现一个请求处理过程中有很多处理者一次对请求进行处理</li>
+</ul>
+<h4 id="Tomcat-的类加载器">Tomcat 的类加载器</h4>
+<p>对于 Tomcat 来说，它的类加载器是 StandardClassLoader，但它只是一个代理类，没有覆盖 loadClass() 方法，所以按照双亲委派机制，它会调用父类加载器去加载，所以加载 Tomcat 本身的依然是 AppClassLoader<br>
+Tomcat的自定义类加载器 WebappClassLoader 覆盖了 loadClass() 方法，打破了双亲委托机制，有自己的加载机制</p>
+<ul>
+<li>先在本地 cache 查找是否加载过该类，即查看 Tomcat 的类加载器是否已经加载过这个类</li>
+<li>如果 Tomcat 没有加载过这个类，就调用 findLoadedClass() 从系统类加载器的 cache 中查找是否已经加载过</li>
+<li>如果都没有，尝试用 ExtClassLoader 类加载器加载。这一步目的是防止 Web 应用自己的类覆盖 JRE 的核心类，因为 ExtClassLoader 会委托给 BootstrapClassLoader 去加载</li>
+<li>如果 ExtClassLoader 加载器加载失败，说明 JRE 核心类中没有该类，就在本地 Web 应用目录下查找并加载</li>
+<li>如果本地目录下没有该类，说明不是 Web 应用自己定义的类，交给系统类加载器 AppClassLoader 加载</li>
+<li>如果加载过程全部失败，抛出 ClassNotFound 异常</li>
+</ul>
+<h3 id="Servlet">Servlet</h3>
+<p>在 Tomcat 的容器等级中，由 Context 容器直接管理 Servlet 在容器中的包装类 Wrapper</p>
+<center>
+    <img style="border-radius: 0.3125em;
+    box-shadow: 0 2px 4px 0 rgba(34,36,38,.12),0 2px 10px 0 rgba(34,36,38,.08);" 
+    src="https://blog-1252654208.cos.ap-nanjing.myqcloud.com/img/截屏2022-02-07 下午7.51.51.png">
+</center>
+为什么要将 Servlet 包装成 StandardWrapper 而不包装成 Servlet 对象？
+- 为了不将 Servlet 强耦合在Tomcat中。StandardWrapper 是 Tomcat 容器的一部分，具有容器的特征。
+<h4 id="Servlet-体系结构">Servlet 体系结构</h4>
+<p>Servlet 中主要包含四个类，其中</p>
+<ul>
+<li>ServletConfig 获取 Servlet 的一些配置属性</li>
+<li>ServletContext 负责描述 Servlet 运行的交易场景，这个交易场景是用来让两个模块进行数据交换</li>
+<li>ServletRequest 和 ServletResponse 是交互的具体对象</li>
+</ul>
+<h4 id="Servlet-工作方式">Servlet 工作方式</h4>
+<p>用户从浏览器发出一个请求，其中带有 hostname port 和 URL<br>
+hostname port 用来建立 TCP 连接，服务器根据 URL 来到达正确的 Servlet 容器<br>
+这个映射关系由 Mapper 组件来完成，这个类保存了 Tomcat 的 Container 中所有子容器的信息。在 Request 类进入 Container 之前，mapper 就已经确定了它要访问的子容器 （有一个 MapperListener 类会作为监听者被添加到 Container 的所有子容器中，容器的变化会反应到对应 MapperListener 的 mapper 属性的修改中）</p>
+<center>
+    <img style="border-radius: 0.3125em;
+    box-shadow: 0 2px 4px 0 rgba(34,36,38,.12),0 2px 10px 0 rgba(34,36,38,.08);" 
+    src="https://blog-1252654208.cos.ap-nanjing.myqcloud.com/img/截屏2022-02-07 下午7.52.03.png">
+</center>
+容器的先后顺序为：Engine -> Host -> Context -> Wrapper 找到对应的 Servlet 后执行 Servlet 的 service 方法
+**门面设计模式**
+Servlet 中的 StandardWrapperFacade、ApplicationContextFacade 都是门面对象。门面设计模式起到对数据的封装作用，别的系统通过这个门面来访问数据。
+<h3 id="Spring">Spring</h3>
+<p>三大核心组件是 Bean、Core 和 Context</p>
+<ul>
+<li>Bean 包装的是 Object 对象，这些对象的依赖关系由 IoC 容器来统一管理</li>
+<li>Context 本身是 Bean 之间关系的集合，充当 IoC 容器的角色。Bean 之间的关系主要是依赖注入的注入关系</li>
+<li>Core 是发现、建立和维护 Bean 之间关系所需要的一系列工具</li>
+</ul>
+<h3 id="参考">参考</h3>
+<p><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000023475177">Tomcat 架构原理解析到架构设计借鉴</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E7%AC%94%E8%AE%B0/" rel="tag"># 笔记</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/06/24/%E4%BD%BF%E7%94%A8ShardingSphere%E9%9C%80%E8%A6%81%E6%B3%A8%E6%84%8F%E7%9A%84%E9%97%AE%E9%A2%98/" rel="prev" title="使用ShardingSphere需要注意的问题">
+                  <i class="fa fa-chevron-left"></i> 使用ShardingSphere需要注意的问题
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/08/10/%E3%80%8A%E9%AB%98%E5%B9%B6%E5%8F%91%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1%E5%85%A5%E9%97%A8%E3%80%8B%E7%AC%94%E8%AE%B0/" rel="next" title="《高并发架构设计入门》笔记">
+                  《高并发架构设计入门》笔记 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ABMIS Version 2.0</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

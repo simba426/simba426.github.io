@@ -28,7 +28,7 @@
 <meta property="og:description" content="进程和线程的区别 16  进程的状态、协程、和虚拟内存的关系 开多个java进程和多个线程的区别 一个进程能否访问到另一个进程的内存 Java线程和系统线程的区别">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-04-24T05:24:04.000Z">
-<meta property="article:modified_time" content="2021-04-24T05:35:45.000Z">
+<meta property="article:modified_time" content="2022-01-17T01:23:14.138Z">
 <meta property="article:author" content="abmis">
 <meta property="article:tag" content="操作系统">
 <meta name="twitter:card" content="summary">
@@ -162,7 +162,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">31</span>
+          <span class="site-state-item-count">35</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -173,7 +173,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-count">22</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -246,10 +246,16 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
-      
 
-      <time title="创建时间：2021-04-24 13:24:04 / 修改时间：13:35:45" itemprop="dateCreated datePublished" datetime="2021-04-24T13:24:04+08:00">2021-04-24</time>
+      <time title="创建时间：2021-04-24 13:24:04" itemprop="dateCreated datePublished" datetime="2021-04-24T13:24:04+08:00">2021-04-24</time>
     </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2022-01-17 09:23:14" itemprop="dateModified" datetime="2022-01-17T09:23:14+08:00">2022-01-17</time>
+      </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-folder"></i>
@@ -422,6 +428,8 @@
 </ul>
 <hr>
 <h3 id="IO方法-4">IO方法 4</h3>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/yc3110/p/10440613.html">操作系统底层原理</a><br>
+操作系统之上的应用程序都运行在用户空间，操作系统运行在内核空间，涉及到对磁盘、内存这些系统资源的访问，都需要在内核态进行。所以当应用程序要进行 IO 操作时，都需要进行系统调用。IO 操作分为<strong>准备数据</strong>和<strong>拷贝</strong>两个部分，准备数据是指将数据放置到对应的缓冲区（进程缓冲区/内核缓冲区），拷贝是指将数据从一个缓冲区拷贝到另一个缓冲区</p>
 <p><strong>阻塞式 IO</strong></p>
 <p>调用 IO 操作时，应用进程被阻塞，直到数据从内核缓冲区被复制到进程缓冲区才恢复，进行拷贝时继续阻塞。所以等待和拷贝两个阶段都处于阻塞状态</p>
 <hr>
