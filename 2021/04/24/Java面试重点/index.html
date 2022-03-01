@@ -28,7 +28,7 @@
 <meta property="og:description" content="基础  Object类方法 4 getClass() 获取运行时对象的Class对象 hashCode() 获取对象的哈希码，在哈希表中被使用 toString() 输出 类名@实例的十六进制哈希码 clone() 返回当前对象的一份拷贝 equals() 比较对象是否等价">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-04-24T05:39:04.000Z">
-<meta property="article:modified_time" content="2022-01-23T14:03:59.143Z">
+<meta property="article:modified_time" content="2022-02-28T14:24:11.633Z">
 <meta property="article:author" content="abmis">
 <meta property="article:tag" content="Java">
 <meta name="twitter:card" content="summary">
@@ -254,7 +254,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2022-01-23 22:03:59" itemprop="dateModified" datetime="2022-01-23T22:03:59+08:00">2022-01-23</time>
+        <time title="修改时间：2022-02-28 22:24:11" itemprop="dateModified" datetime="2022-02-28T22:24:11+08:00">2022-02-28</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -320,9 +320,24 @@
 <p><strong>原理</strong>：反射是由Class类对象开始的。当一个类被加载以后，JVM就会自动产生一个Class对象，通过Class对象我们就能获得加载到虚拟机中的这个类的方法和属性。</p>
 <p>获取类的方法有</p>
 <ul>
-<li>Class.forName()</li>
+<li>Class.forName() 底层通过类加载器获取 Class 对象</li>
 <li>类名.class</li>
 <li>对象.getClass()</li>
+</ul>
+<p>在日常开发中反射最终目的主要两个：</p>
+<ul>
+<li>创建实例
+<ul>
+<li>clazz.newInstance() 底层调用类拥有的 Constructor 对象的无参构造方法，所以需要保证对应的类有无参构造方法</li>
+<li>调用 java.lang.reflect.Constructor 类的 newInstance 方法，可以调用有参构造函数，例如 clazz.getConstructor(String.class).newInstance(“xx”);</li>
+</ul>
+</li>
+<li>反射调用方法
+<ul>
+<li>通过 clazz.getMethod(name, ParameterType)，根据方法名和参数类型匹配唯一的 Method 对象返回</li>
+<li>通过 method.invoke(o, ) 来执行方法</li>
+</ul>
+</li>
 </ul>
 <p><strong>使用场景：框架开发的动态配置</strong></p>
 <p>在properties里写好了配置，在Java类里面解析配置内容，得到对应实体类的字节码字符串，使用反射机制获取到某个类的Class实例，然后动态配置实例的属性。</p>
@@ -389,6 +404,7 @@
 <hr>
 <p><strong>大小和扩容</strong></p>
 <p>默认的初始化大小是16，之后每次扩容会变为原来的两倍；如果设置了初始值，会把其扩容到2的幂次方大小。<strong>扩容是指对数组长度扩容</strong>，数组是主体。但是判断是否要扩容，是根据map中元素的个数与threshold进行比较，threshold是当前容量乘以加载因子</p>
+<p>扩容的时机是：在插入一个新元素时，元素数量达到阈值，且插入时发生哈希冲突，会对数组进行扩容</p>
 <p><strong>为什么大小是2的幂次</strong></p>
 <p>计算数组下标一般会考虑到取余。有一个规律是:</p>
 <p><strong>hash % length == hash &amp; (length - 1)</strong></p>
@@ -399,7 +415,7 @@
 <p>用扰动函数hash计算key的hashcode得到一个hash，方法是将原来hashcode无符号右移16位然后异或。之后对hash进行取模运算，函数中的运算方法是 hash &amp; (length - 1) length为数组长度</p>
 <hr>
 <p><strong>CocurrentHashMap下标空如何操作</strong></p>
-<p>通过CAS操作进行赋值，将key、value、hash生成的节点放入桶中</p>
+<p>自旋判断数组下标内容是否为空，如果为空，通过 CAS 操作将创建的 EntrySet 放入下标</p>
 <hr>
 <p><strong>插入方法</strong></p>
 <p>1.7是头插法，1.8是尾插法</p>
@@ -422,7 +438,7 @@
 <hr>
 <p><strong><a target="_blank" rel="noopener" href="https://www.cnblogs.com/aspirant/p/8623864.html">CocurrentHashMap</a></strong></p>
 <p><strong>底层数据结构</strong>还是数组加链表/红黑树的形式。</p>
-<p>在<strong>JDK1.8之前</strong>是由<strong>Segment数组 + ReentrantLock</strong>来实现的，Segment数组将一个大table分割成多个小table来进行加锁，每个Segment元素存储的是<strong>HashEntry数组和链表（和HashMap结构一样）</strong>，会有分段锁锁住一个Segment，多线程访问不同数据段的数据，就不会存在锁竞争，提高并发率。Segment 最多有 16个，HashEntry最小容量为2。在这个版本需要经过两次 hash 才能到达指定 hashEntry，第一次先到达 Segment，第二次再到达 Segment 中的 hashEntry，然后再遍历 entry 链表</p>
+<p>在<strong>JDK1.8之前</strong>是由<strong>Segment数组 + ReentrantLock</strong>来实现的，Segment数组将一个大table分割成多个小table来进行加锁，每个Segment元素存储的是<strong>HashEntry数组和链表（和HashMap结构一样，是一个双层结构）</strong>，会有分段锁锁住一个Segment，多线程访问不同数据段的数据，就不会存在锁竞争，提高并发率。Segment 最多有 16个，HashEntry最小容量为2。在这个版本需要经过两次 hash 才能到达指定 hashEntry，第一次先到达 Segment，第二次再到达 Segment 中的 hashEntry，然后再遍历 entry 链表。扩容时会扩容 EntrySet，Segment 数组的长度不会变</p>
 <p><strong>JDK1.8之后</strong>摒弃了Segment概念，直接使用 <strong>Node数组 + 链表 + 红黑树</strong>的数据结构来实现，<strong>并发控制使用 sychronized 和 CAS</strong>，sychronized只锁定当前链表或者红黑树的首节点，只要不发生哈希冲突，就不存在并发问题。不过 Node 只适用于链表情况，转换为红黑树后要转为TreeNode</p>
 <p>HashTable也是线程安全，但是只用一把锁，会出现锁竞争，效率低下</p>
 <hr>
@@ -537,7 +553,15 @@
 <hr>
 <p><strong>可见性</strong></p>
 <p>指一个线程更新了变量后其他线程可以立马看到修改后的最新值。 <strong>volatile 关键字可以保证共享变量的可见性</strong></p>
-<p>Java线程可能将变量的值保存在本地寄存器来读取。如果一个线程在主存中修改了变量值，而另一个线程还是读它本地寄存器中变量的值，造成<strong>数据不一致</strong>。volatile指示 JVM 每次读取变量都去主存读。</p>
+<p>Java 线程可能将变量的值保存在本地寄存器来读取。如果一个线程在主存中修改了变量值，而另一个线程还是读它本地寄存器中变量的值，造成<strong>数据不一致</strong>。volatile 指示 JVM 每次读取变量都去主存读。</p>
+<p>每当 volatile 变量修改时，会通过总线将值推送到主存，其他线程会嗅探总线，如果发现本地缓存了这个变量的值，就将缓存置为不可用，下一次读取变量值时要去主存读取。</p>
+<p>volatile 防止指令重排序，是在编译阶段</p>
+<ul>
+<li>在写前面加上 STORE STORE 禁止写写重排序</li>
+<li>在写后面加上 STORE LOAD 禁止写读重排序</li>
+<li>在读前面加上 LOAD LOAD 禁止读读重排序</li>
+<li>在读后面加上 LOAD STORE 禁止读写重排序</li>
+</ul>
 <hr>
 <p><strong>有序性</strong></p>
 <p>指代码在执行过程中的先后顺序。因为 Java 的优化可能导致执行顺序未必是编写代码时的顺序。 volatile 关键字可以禁止指令重排。</p>
@@ -738,6 +762,14 @@ loadstore 屏障	禁止上面的 volatile 读与下面的普通写重排序</p>
 <li>如果队列满了，查看线程池是否满了，如果没满，创建一个非核心线程执行任务</li>
 <li>如果线程池也满了，无法执行任务</li>
 </ul>
+<blockquote>
+<p>如何判断线程是否空闲？<br>
+Worker 线程继承 AQS，通过不可重入锁的特性来反应线程当前状态。线程池会通过 tryLock() 方法来判断线程是否空闲，如果没有获取到锁，说明线程在执行任务；反之则说明线程空闲</p>
+</blockquote>
+<blockquote>
+<p>线程池如何管理线程的声明周期?<br>
+线程池通过一张 Hash 表维持对线程的引用，通过添加或移除引用的方式来控制线程的生命周期，线程的销毁依赖于 JVM 的自动回收。</p>
+</blockquote>
 <hr>
 <p>通过 ThreadPoolExcutor 创建线程池，<strong>常见的线程池</strong>有：</p>
 <ul>
@@ -987,13 +1019,19 @@ loadstore 屏障	禁止上面的 volatile 读与下面的普通写重排序</p>
 <li>虚拟机启动时先初始化包含main方法的类</li>
 </ul>
 <hr>
-<p><strong>类加载器</strong></p>
+<p><strong><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/54693308">类加载器</a></strong></p>
 <p>Java 中内置了三个类加载器</p>
 <ul>
 <li><strong>BootstrapClassLoader(启动类加载器)</strong> 最顶层的加载类，负责加载 JAVA_HOME/lib 下的类和jar包</li>
 <li><strong>ExtensionClassLoader(扩展类加载器)</strong> 负责加载 JAVA_HOME/lib/ext 下的类和jar包</li>
 <li><strong>AppClassLoader(应用程序类加载器)</strong> 面向用户的加载器，负责加载当前路径下的所有类和jar包</li>
 </ul>
+<p>自定义类加载器 继承 ClassLoader，并重写 <code>findClass()</code> 抽象方法，其中</p>
+<ul>
+<li>先通过 <code>getClassByte()</code> 方法读取自定义路径下的 Class 字节码文件得到 byte 数组</li>
+<li>最后通过 <code>defineClass()</code> 获取到 Class 对象</li>
+</ul>
+<p>不继承 AppClassLoader 是因为它和 ExtClassLoader 的默认访问权限是只能被同一个包下的类访问</p>
 <hr>
 <p><strong>双亲委派</strong></p>
 <p><strong>要求除了顶层启动类加载器外，其余类加载器都要有自己的父类加载器</strong>（这里的父子关系不是继承关系，而是通过<strong>组合关系</strong>来复用父类加载器的代码）</p>
@@ -1065,13 +1103,13 @@ loadstore 屏障	禁止上面的 volatile 读与下面的普通写重排序</p>
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2021/04/24/%E6%95%B0%E6%8D%AE%E5%BA%93%E9%9D%A2%E8%AF%95%E9%87%8D%E7%82%B9/" rel="prev" title="数据库面试重点">
-                  <i class="fa fa-chevron-left"></i> 数据库面试重点
+                <a href="/2021/04/24/Java%E5%B8%B8%E7%94%A8%E5%AE%B9%E5%99%A8%E5%8F%8A%E5%85%B6%E6%96%B9%E6%B3%95/" rel="prev" title="Java常用容器及其方法">
+                  <i class="fa fa-chevron-left"></i> Java常用容器及其方法
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2021/04/24/Java%E5%B8%B8%E7%94%A8%E5%AE%B9%E5%99%A8%E5%8F%8A%E5%85%B6%E6%96%B9%E6%B3%95/" rel="next" title="Java常用容器及其方法">
-                  Java常用容器及其方法 <i class="fa fa-chevron-right"></i>
+                <a href="/2021/04/24/Java%20I:O/" rel="next" title="Java I/O">
+                  Java I/O <i class="fa fa-chevron-right"></i>
                 </a>
             </div>
           </div>
