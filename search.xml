@@ -1,33 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>Hexo 常用</title>
-    <url>/2021/04/24/Hexo-%E5%B8%B8%E7%94%A8%E6%8C%87%E4%BB%A4/</url>
-    <content><![CDATA[<p>收录编辑、发布博客时常用到的 Hexo 指令等</p>
-<span id="more"></span>
-<h3 id="新建文章">新建文章</h3>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hexo new &quot;title&quot; </span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>path -&gt; /source/_posts/</p>
-</blockquote>
-<h3 id="本地测试">本地测试</h3>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hexo s</span><br></pre></td></tr></table></figure>
-<h3 id="部署">部署</h3>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hexo clean &amp;&amp; hexo g &amp;&amp; hexo d</span><br></pre></td></tr></table></figure>
-<h3 id="图标">图标</h3>
-<p>原生支持图标库 Font Awesome<br>
-<a href="https://fontawesome.com/icons?d=gallery&amp;p=2">https://fontawesome.com/icons?d=gallery&amp;p=2</a></p>
-<h3 id="参考">参考</h3>
-<p><a href="https://winney07.github.io/2018/08/02/%E5%9C%A8Hexo%E5%8D%9A%E5%AE%A2%E4%B8%AD%E5%8F%91%E5%B8%83%E6%96%87%E7%AB%A0/">在Hexo博客中发布文章</a></p>
-]]></content>
-      <categories>
-        <category>效率</category>
-      </categories>
-      <tags>
-        <tag>Hexo</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Guava cache 介绍和简单使用</title>
     <url>/2021/04/26/Guava-cache-%E4%BB%8B%E7%BB%8D%E5%92%8C%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8/</url>
     <content><![CDATA[<blockquote>
@@ -89,23 +62,30 @@
       </tags>
   </entry>
   <entry>
-    <title>Java Excel 相关操作</title>
-    <url>/2021/05/10/Java-Excel/</url>
-    <content><![CDATA[<p>Excel 文件导入导出的相关操作</p>
-<h3 id="引入-poi-相关依赖">引入 poi 相关依赖</h3>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.poi<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>poi<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>3.16<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.poi<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>poi-ooxml<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>3.16<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<h3 id="解析-Excel">解析 Excel</h3>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> org.apache.poi.xssf.usermodel.*;</span><br><span class="line"></span><br><span class="line"><span class="meta">@CrossOrigin</span></span><br><span class="line"><span class="meta">@RequestMapping(value = &#123;&quot;/parseExcel&quot;&#125;, method = RequestMethod.POST, produces = &#123;&quot;application/json;charset=UTF-8&quot;&#125;)</span></span><br><span class="line"><span class="meta">@ResponseBody</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Result&lt;Boolean&gt; <span class="title">parseExcel</span><span class="params">(<span class="meta">@RequestParam(&quot;file&quot;)</span> MultipartFile file)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// @RequestParam(&quot;file&quot;)MultipartFile file 用来接受前端传过来的 Excel 文件</span></span><br><span class="line">        <span class="comment">// 创建 Workbook 对象，读取整个文档</span></span><br><span class="line">        InputStream inputStream = file.getInputStream();</span><br><span class="line">        XSSFWorkbook xssfWorkbook = <span class="keyword">new</span> XSSFWorkbook(inputStream);</span><br><span class="line">        <span class="comment">// 读取页脚 sheet</span></span><br><span class="line">        XSSFSheet xssfSheet = xssfWorkbook.getSheetAt(<span class="number">0</span>);</span><br><span class="line">        <span class="comment">// 循环取每行的数据</span></span><br><span class="line">        <span class="comment">// rowIndex 为 1 是为了跳过标题行</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> rowIndex = <span class="number">1</span>; rowIndex &lt; xssfSheet.getPhysicalNumberOfRows(); rowIndex++) &#123;</span><br><span class="line">            XSSFRow xssfRow = xssfSheet.getRow(rowIndex);</span><br><span class="line">            <span class="keyword">if</span> (xssfRow == <span class="keyword">null</span>) &#123;</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// 获取单元格数据</span></span><br><span class="line">            Long id = ExcelUtils.getLong(xssfRow.getCell(<span class="number">0</span>));</span><br><span class="line">            String str = ExcelUtils.getString(xssfRow.getCell(<span class="number">1</span>)));</span><br><span class="line">            Integer num = ExcelUtils.getInteger(xssfRow.getCell(<span class="number">2</span>));</span><br><span class="line">            Boolean isFalse = ExcelUtils.getBoolean(xssfRow.getCell(<span class="number">3</span>));</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="导出-Excel">导出 Excel</h3>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> org.apache.poi.xssf.usermodel.*;</span><br><span class="line"></span><br><span class="line"><span class="meta">@ApiOperation(value = &quot;exportExcel&quot;)</span></span><br><span class="line"><span class="meta">@RequestMapping(value = &#123;&quot;/exportExcel&quot;&#125;, method = RequestMethod.GET)</span></span><br><span class="line"><span class="meta">@ResponseBody</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Result&lt;Boolean&gt; <span class="title">exportExcel</span><span class="params">(HttpServletResponse response)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 设置要导出的文件的名字</span></span><br><span class="line">    String fileName = <span class="string">&quot;data&quot;</span>  + <span class="keyword">new</span> Date() + <span class="string">&quot;.xlsx&quot;</span>;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        XSSFWorkbook workbook = <span class="keyword">new</span> XSSFWorkbook();</span><br><span class="line">        XSSFSheet sheet = workbook.createSheet(<span class="string">&quot;信息表&quot;</span>);</span><br><span class="line">        <span class="comment">// headers表示excel表中第一行的表头 在excel表中添加表头</span></span><br><span class="line">        String[] headers = &#123; <span class="string">&quot;id&quot;</span>, <span class="string">&quot;名称&quot;</span>, <span class="string">&quot;类型&quot;</span>&#125;;</span><br><span class="line">        XSSFRow head = sheet.createRow(<span class="number">0</span>);</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; headers.length; i++)&#123;</span><br><span class="line">            XSSFCell cell = head.createCell(i);</span><br><span class="line">            XSSFRichTextString text = <span class="keyword">new</span> XSSFRichTextString(headers[i]);</span><br><span class="line">            cell.setCellValue(text);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 新增数据行，并且设置单元格数据</span></span><br><span class="line">        XSSFRow row =sheet.createRow(<span class="number">1</span>);</span><br><span class="line">        row.createCell(<span class="number">0</span>).setCellValue(id);</span><br><span class="line">        row.createCell(<span class="number">1</span>).setCellValue(name);</span><br><span class="line">        row.createCell(<span class="number">2</span>).setCellValue(type);</span><br><span class="line">        response.setContentType(<span class="string">&quot;application/octet-stream&quot;</span>);</span><br><span class="line">        response.setHeader(<span class="string">&quot;Content-disposition&quot;</span>, <span class="string">&quot;attachment;filename=&quot;</span> + fileName);</span><br><span class="line">        response.flushBuffer();</span><br><span class="line">        workbook.write(response.getOutputStream());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="单元格数据类型转换">单元格数据类型转换</h3>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> org.apache.poi.xssf.usermodel.*;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 把单元格值转为 String</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">getString</span><span class="params">(XSSFCell xssfCell)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (xssfCell == <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (xssfCell.getCellTypeEnum() == CellType.NUMERIC) &#123;</span><br><span class="line">        <span class="keyword">return</span> String.valueOf(xssfCell.getNumericCellValue());</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (xssfCell.getCellTypeEnum() == CellType.BOOLEAN) &#123;</span><br><span class="line">        <span class="keyword">return</span> String.valueOf(xssfCell.getBooleanCellValue());</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> xssfCell.getStringCellValue();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 切割是为了去除小数点</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Long <span class="title">getLong</span><span class="params">(XSSFCell xssfCell)</span> </span>&#123;</span><br><span class="line">    String s = getString(xssfCell);</span><br><span class="line">    <span class="keyword">return</span> Long.valueOf(s.substring(<span class="number">0</span>, s.length() - <span class="number">2</span>));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Integer <span class="title">getInteger</span><span class="params">(XSSFCell xssfCell)</span> </span>&#123;</span><br><span class="line">    String s = getString(xssfCell);</span><br><span class="line">    <span class="keyword">return</span> Integer.valueOf(s.substring(<span class="number">0</span>, s.length() - <span class="number">2</span>));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Boolean <span class="title">getBoolean</span><span class="params">(XSSFCell xssfCell)</span> </span>&#123;</span><br><span class="line">    String s = getString(xssfCell);</span><br><span class="line">    <span class="keyword">return</span> Boolean.valueOf(s.substring(<span class="number">0</span>, s.length() - <span class="number">2</span>));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+    <title>Hexo 常用</title>
+    <url>/2021/04/24/Hexo-%E5%B8%B8%E7%94%A8%E6%8C%87%E4%BB%A4/</url>
+    <content><![CDATA[<p>收录编辑、发布博客时常用到的 Hexo 指令等</p>
+<span id="more"></span>
+<h3 id="新建文章">新建文章</h3>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hexo new &quot;title&quot; </span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>path -&gt; /source/_posts/</p>
+</blockquote>
+<h3 id="本地测试">本地测试</h3>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hexo s</span><br></pre></td></tr></table></figure>
+<h3 id="部署">部署</h3>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hexo clean &amp;&amp; hexo g &amp;&amp; hexo d</span><br></pre></td></tr></table></figure>
+<h3 id="图标">图标</h3>
+<p>原生支持图标库 Font Awesome<br>
+<a href="https://fontawesome.com/icons?d=gallery&amp;p=2">https://fontawesome.com/icons?d=gallery&amp;p=2</a></p>
+<h3 id="参考">参考</h3>
+<p><a href="https://winney07.github.io/2018/08/02/%E5%9C%A8Hexo%E5%8D%9A%E5%AE%A2%E4%B8%AD%E5%8F%91%E5%B8%83%E6%96%87%E7%AB%A0/">在Hexo博客中发布文章</a></p>
 ]]></content>
       <categories>
-        <category>技术</category>
+        <category>效率</category>
       </categories>
       <tags>
-        <tag>Java</tag>
+        <tag>Hexo</tag>
       </tags>
   </entry>
   <entry>
@@ -168,6 +148,505 @@
       </categories>
       <tags>
         <tag>Java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Java Excel 相关操作</title>
+    <url>/2021/05/10/Java-Excel/</url>
+    <content><![CDATA[<p>Excel 文件导入导出的相关操作</p>
+<h3 id="引入-poi-相关依赖">引入 poi 相关依赖</h3>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.poi<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>poi<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>3.16<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.poi<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>poi-ooxml<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>3.16<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="解析-Excel">解析 Excel</h3>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> org.apache.poi.xssf.usermodel.*;</span><br><span class="line"></span><br><span class="line"><span class="meta">@CrossOrigin</span></span><br><span class="line"><span class="meta">@RequestMapping(value = &#123;&quot;/parseExcel&quot;&#125;, method = RequestMethod.POST, produces = &#123;&quot;application/json;charset=UTF-8&quot;&#125;)</span></span><br><span class="line"><span class="meta">@ResponseBody</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Result&lt;Boolean&gt; <span class="title">parseExcel</span><span class="params">(<span class="meta">@RequestParam(&quot;file&quot;)</span> MultipartFile file)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// @RequestParam(&quot;file&quot;)MultipartFile file 用来接受前端传过来的 Excel 文件</span></span><br><span class="line">        <span class="comment">// 创建 Workbook 对象，读取整个文档</span></span><br><span class="line">        InputStream inputStream = file.getInputStream();</span><br><span class="line">        XSSFWorkbook xssfWorkbook = <span class="keyword">new</span> XSSFWorkbook(inputStream);</span><br><span class="line">        <span class="comment">// 读取页脚 sheet</span></span><br><span class="line">        XSSFSheet xssfSheet = xssfWorkbook.getSheetAt(<span class="number">0</span>);</span><br><span class="line">        <span class="comment">// 循环取每行的数据</span></span><br><span class="line">        <span class="comment">// rowIndex 为 1 是为了跳过标题行</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> rowIndex = <span class="number">1</span>; rowIndex &lt; xssfSheet.getPhysicalNumberOfRows(); rowIndex++) &#123;</span><br><span class="line">            XSSFRow xssfRow = xssfSheet.getRow(rowIndex);</span><br><span class="line">            <span class="keyword">if</span> (xssfRow == <span class="keyword">null</span>) &#123;</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// 获取单元格数据</span></span><br><span class="line">            Long id = ExcelUtils.getLong(xssfRow.getCell(<span class="number">0</span>));</span><br><span class="line">            String str = ExcelUtils.getString(xssfRow.getCell(<span class="number">1</span>)));</span><br><span class="line">            Integer num = ExcelUtils.getInteger(xssfRow.getCell(<span class="number">2</span>));</span><br><span class="line">            Boolean isFalse = ExcelUtils.getBoolean(xssfRow.getCell(<span class="number">3</span>));</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="导出-Excel">导出 Excel</h3>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> org.apache.poi.xssf.usermodel.*;</span><br><span class="line"></span><br><span class="line"><span class="meta">@ApiOperation(value = &quot;exportExcel&quot;)</span></span><br><span class="line"><span class="meta">@RequestMapping(value = &#123;&quot;/exportExcel&quot;&#125;, method = RequestMethod.GET)</span></span><br><span class="line"><span class="meta">@ResponseBody</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Result&lt;Boolean&gt; <span class="title">exportExcel</span><span class="params">(HttpServletResponse response)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 设置要导出的文件的名字</span></span><br><span class="line">    String fileName = <span class="string">&quot;data&quot;</span>  + <span class="keyword">new</span> Date() + <span class="string">&quot;.xlsx&quot;</span>;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        XSSFWorkbook workbook = <span class="keyword">new</span> XSSFWorkbook();</span><br><span class="line">        XSSFSheet sheet = workbook.createSheet(<span class="string">&quot;信息表&quot;</span>);</span><br><span class="line">        <span class="comment">// headers表示excel表中第一行的表头 在excel表中添加表头</span></span><br><span class="line">        String[] headers = &#123; <span class="string">&quot;id&quot;</span>, <span class="string">&quot;名称&quot;</span>, <span class="string">&quot;类型&quot;</span>&#125;;</span><br><span class="line">        XSSFRow head = sheet.createRow(<span class="number">0</span>);</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; headers.length; i++)&#123;</span><br><span class="line">            XSSFCell cell = head.createCell(i);</span><br><span class="line">            XSSFRichTextString text = <span class="keyword">new</span> XSSFRichTextString(headers[i]);</span><br><span class="line">            cell.setCellValue(text);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 新增数据行，并且设置单元格数据</span></span><br><span class="line">        XSSFRow row =sheet.createRow(<span class="number">1</span>);</span><br><span class="line">        row.createCell(<span class="number">0</span>).setCellValue(id);</span><br><span class="line">        row.createCell(<span class="number">1</span>).setCellValue(name);</span><br><span class="line">        row.createCell(<span class="number">2</span>).setCellValue(type);</span><br><span class="line">        response.setContentType(<span class="string">&quot;application/octet-stream&quot;</span>);</span><br><span class="line">        response.setHeader(<span class="string">&quot;Content-disposition&quot;</span>, <span class="string">&quot;attachment;filename=&quot;</span> + fileName);</span><br><span class="line">        response.flushBuffer();</span><br><span class="line">        workbook.write(response.getOutputStream());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="单元格数据类型转换">单元格数据类型转换</h3>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> org.apache.poi.xssf.usermodel.*;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 把单元格值转为 String</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">getString</span><span class="params">(XSSFCell xssfCell)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (xssfCell == <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (xssfCell.getCellTypeEnum() == CellType.NUMERIC) &#123;</span><br><span class="line">        <span class="keyword">return</span> String.valueOf(xssfCell.getNumericCellValue());</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (xssfCell.getCellTypeEnum() == CellType.BOOLEAN) &#123;</span><br><span class="line">        <span class="keyword">return</span> String.valueOf(xssfCell.getBooleanCellValue());</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> xssfCell.getStringCellValue();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 切割是为了去除小数点</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Long <span class="title">getLong</span><span class="params">(XSSFCell xssfCell)</span> </span>&#123;</span><br><span class="line">    String s = getString(xssfCell);</span><br><span class="line">    <span class="keyword">return</span> Long.valueOf(s.substring(<span class="number">0</span>, s.length() - <span class="number">2</span>));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Integer <span class="title">getInteger</span><span class="params">(XSSFCell xssfCell)</span> </span>&#123;</span><br><span class="line">    String s = getString(xssfCell);</span><br><span class="line">    <span class="keyword">return</span> Integer.valueOf(s.substring(<span class="number">0</span>, s.length() - <span class="number">2</span>));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Boolean <span class="title">getBoolean</span><span class="params">(XSSFCell xssfCell)</span> </span>&#123;</span><br><span class="line">    String s = getString(xssfCell);</span><br><span class="line">    <span class="keyword">return</span> Boolean.valueOf(s.substring(<span class="number">0</span>, s.length() - <span class="number">2</span>));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>技术</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Java常用容器及其方法</title>
+    <url>/2021/04/24/Java%E5%B8%B8%E7%94%A8%E5%AE%B9%E5%99%A8%E5%8F%8A%E5%85%B6%E6%96%B9%E6%B3%95/</url>
+    <content><![CDATA[<h3 id="HashSet">HashSet</h3>
+<p>HashSet<T>  hash = new HashSet&lt;&gt;();</p>
+<ul>
+<li>add() 添加元素,返回boolean类型。如果不存在该元素，则添加指定元素并返回true。否则不更改set并返回false</li>
+<li>clear() 移除set所有元素</li>
+<li>remove(Object o) 如果指定元素存在于set中，移除指定元素</li>
+<li>isEmpty() 如果set不包含任何元素，返回true</li>
+<li>contains(Object o) 如果set包含指定元素，返回true</li>
+<li>size() 返回set中元素数量</li>
+</ul>
+<span id="more"></span>
+<h3 id="HashMap">HashMap</h3>
+<p>HashMap&lt;T, T&gt; hashMap = new HashMap&lt;&gt;();</p>
+<ul>
+<li>put(key, value) 添加键值对，如果key已经存在，就返回旧value，并更新成新value。如果不存在，就返回null</li>
+<li>putIfAbsent(key, value); 不会覆盖原有的value</li>
+<li>remove(key) 删除元素。删除成功返回对应的value，否则返回null</li>
+<li>get(key) 获取key对应的value</li>
+<li>containsKey(key) 判断key是否存在</li>
+<li>containsValue(value) 判断value是否存在</li>
+<li>replace(key, value) 对于已经存在的key，替换其value</li>
+</ul>
+<h4 id="HashMap-遍历方法">HashMap 遍历方法</h4>
+<p>一、for-each循环中使用entries遍历</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Map&lt;Integer, Integer&gt; hash = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line"><span class="keyword">for</span>(Map.Entry&lt;Integer, Integer&gt; entry : hash.entrySet()) &#123;</span><br><span class="line">    entry.getKey() + entry.getValue()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>二、在for-each中遍历key或者value集合</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Map&lt;Integer, Integer&gt; hash = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line"><span class="keyword">for</span>(Integer key : hash.keySet()) &#123;</span><br><span class="line">  key;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">for</span>(Integer value : hash.values()) &#123;</span><br><span class="line">  value;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>三、通过键找值</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Map&lt;Integer, Integer&gt; hash = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line"><span class="keyword">for</span>(Integer key : hash.keySet()) &#123;</span><br><span class="line">  value = hash.get(key);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这种方法效率低，因为通过键来取值很耗时</p>
+<hr>
+<h3 id="LinkedList">LinkedList</h3>
+<p>LinkedList<T> list = new LinkedList&lt;&gt;();</p>
+<h5 id="基本操作">基本操作</h5>
+<p><strong>add</strong></p>
+<ul>
+<li>add() 在链表后添加元素</li>
+<li>addFirst() 在链表头部插入一个元素</li>
+<li>addLast() 在链表尾部添加一个元素</li>
+<li>add(index, element) 在指定位置插入一个元素</li>
+</ul>
+<p><strong>remove</strong></p>
+<ul>
+<li>remove() 移除链表第一个元素</li>
+<li>remove(Obejct o) 移除链表中指定元素</li>
+<li>remove(index) 移除链表中指定位置元素</li>
+<li>removeFirst() 移除链表中第一个元素，与remove类似</li>
+<li>removeLast() 移除链表中最后一个元素</li>
+</ul>
+<p><strong>get</strong></p>
+<ul>
+<li>getFirst() 获取第一个元素</li>
+<li>getLast() 获取最后一个元素</li>
+</ul>
+<h5 id="栈操作">栈操作</h5>
+<ul>
+<li>push() 与addFirst一样</li>
+<li>pop() 与removeFirst一样</li>
+<li>poll() 查询并移除第一个元素</li>
+<li>peek() 获取第一个元素，但是不移除</li>
+</ul>
+<h5 id="队列操作">队列操作</h5>
+<p>Queue&lt;&gt; queue = new LinkedList&lt;&gt;();</p>
+<ul>
+<li>offer() 在队列尾部插入元素</li>
+<li>add() 让元素入队</li>
+<li>poll() 首部元素出队列</li>
+</ul>
+<p><strong>其他</strong></p>
+<ul>
+<li>contains(e) 是否包含某元素</li>
+</ul>
+<h5 id="双端队列-可实现单调队列">双端队列 - 可实现单调队列</h5>
+<p>Deque&lt;&gt; deque = new LinkedList&lt;&gt;();</p>
+<p>peekLast() 获取队列尾端值</p>
+<p>peekFirst() 获取队列尾部值</p>
+<p>removeFirst() 移除队列头部第一个值</p>
+<p>removeLast() 移除队列尾部第一个值</p>
+<hr>
+<h3 id="ArrayList">ArrayList</h3>
+<ul>
+<li>add() 顺序添加元素</li>
+<li>get(i) 获取第i个元素</li>
+<li>Arrays.sort() 列表排序</li>
+<li>remove(index) 删除对应索引的元素</li>
+</ul>
+<hr>
+<h3 id="Stack">Stack</h3>
+<p>是Vector的子类</p>
+<p>push()</p>
+<p>pop()</p>
+<p>peek()</p>
+<hr>
+<h3 id="StringBuilder">StringBuilder</h3>
+<p>append() 向尾部添加字符串</p>
+<p>deleteCharAt(i) 定点删除字符</p>
+<h3 id="String">String</h3>
+<p>//把字符串去头尾后以“，”为分隔符分割成字符串数组</p>
+<p>String[] list = data.substring(1, data.length() - 1).split(“,”);</p>
+<hr>
+<h3 id="System">System</h3>
+<p>arraycopy(Object src, int srcPos, Object dest, int destPos, int length)</p>
+<p>src:源数组;</p>
+<p>srcPos:源数组要复制的起始位置;</p>
+<p>dest:目的数组;</p>
+<p>destPos:目的数组放置的起始位置;</p>
+<p>length:复制的长度.</p>
+]]></content>
+      <categories>
+        <category>技术</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Java日志框架</title>
+    <url>/2021/12/12/Java%E5%B8%B8%E7%94%A8%E6%97%A5%E5%BF%97%E6%A1%86%E6%9E%B6/</url>
+    <content><![CDATA[<p>2021年12月10日，Log4j2 被爆出存在<a href="https://nosec.org/home/detail/4917.html">严重安全漏洞</a>，攻击者可以通过 JNDI 注入的方式远程在目标机器上执行任意代码来发动攻击，一种场景就是，如果有一个接口会将入参用log4j2打印出来，攻击者就可以传入形如<code>$&#123;jndi:rmi//xxxxxx&#125;</code>的命令，在目标机器上执行远程代码。</p>
+<p>在排查最近在开发的一个 Java 项目是否存在该漏洞时，发现这个项目打印的日志并不会触发漏洞，但是项目中又确实存在 log4j2 的依赖。仔细看了一下项目的日志方法，原来这个项目使用的日志框架是 logback 而非 log4j2。这也刚好勾起了我的疑问，平时在使用日志时知道有 slf4j，log4j 这类字眼，logback 很少有见到，对于日志这一块，也是只需要能打印出来供线上问题排查即可。那么 Java 中的日志框架组成是什么样的，又有哪些日志框架呢？</p>
+<h3 id="日志框架">日志框架</h3>
+<p>Java 日志框架采用门面设计模式，主要由日志门面、日志适配器和日志库三大部分构成，其中：</p>
+<ul>
+<li>日志门面：本身不负责日志功能的实现，只是约定了一套接口规范，让使用者无需关注底层日志库以及使用细节。目前最广泛使用的日志门面是 slf4j 和 commons-logging</li>
+<li>日志库：具体实现日志的相关功能，目前主流的三个日志库分别是 log2j、log-jdk 和 logback</li>
+<li>日志适配器：主要完成日志库到日志门面的适配，例如 log4j 没有实现 slf4j 接口，所以如果要实现 log4j + slf4j 的模式，就需要额外引入适配器来解决接口不兼容的问题</li>
+</ul>
+<h3 id="Slf4j">Slf4j</h3>
+<p>很长一段时间，我都以为 slf4j 是和 log4j 一样的一种日志框架，但其实它的全称（Simple Logging Facade for Java）告诉我们，这是专门针对 Java 提供的一种简单日志门面。它本身不提供日志服务，而是统一了接口，供其他日志框架来接入。优点就是，如果后续项目升级时需要更换日志框架，省去了对代码的改动，只需要更换日志框架的 jar 包即可。</p>
+<h3 id="Log4j">Log4j</h3>
+<p>Log4j 一款比较早的日志框架，log4j2 是在此基础上的升级版，有更强大的性能。两者在获取 Logger 的路径上有差异，配置方式也有区别，log4j 本身没有实现 slf4j 接口，如果想要适配，需要引入额外的 jar 包。</p>
+<h3 id="Logback">Logback</h3>
+<p>Logback 是 Log4j 的升级版，由 Slf4j 的作者开发，使用 xml 进行配置。该框架默认实现了 Slf4j 标准，所使用的 Logger 和 LoggerFactory 都是 Slf4j 的实现，使用 slf4j + logback 的组合不需要引入额外的 jar 包。</p>
+<h3 id="参考">参考</h3>
+<p><a href="https://nosec.org/home/detail/4917.html">【安全通报】Apache Log4j2 远程代码执行漏洞</a><br>
+<a href="https://juejin.cn/post/7033021644142542878">log4j、log4j2、slf4j、logback什么关系？到底该使用哪些jar??</a><br>
+<a href="https://www.codenong.com/cs105272888/">Slf4j与log4j及log4j2的关系及使用方法</a></p>
+]]></content>
+      <categories>
+        <category>技术</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Junit 单元测试</title>
+    <url>/2021/04/24/Junit-%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/</url>
+    <content><![CDATA[<p>Junit 单元测试学习</p>
+<span id="more"></span>
+<h3 id="POM-依赖">POM 依赖</h3>
+<p>在使用 IDEA 新建 SpringBoot 项目时一般会自动引入此依赖</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-test<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">scope</span>&gt;</span>test<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span> </span><br></pre></td></tr></table></figure>
+<h3 id="测试类基类">测试类基类</h3>
+<p>测试类文件夹和项目的 main 文件夹在同一层级<br>
+测试类存放的位置和项目的 Application 类在同一相对目录下<br>
+自动生成的测试类名称为 XXXApplicationTests<br>
+在这个类下补齐所需要的注解，之后的测试类直接继承该类</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@RunWith(SpringRunner.class)</span></span><br><span class="line"><span class="meta">@SpringBootTest(classes = xxxApplication.class)</span></span><br><span class="line"><span class="meta">@WebAppConfiguration</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">xxxApplicationTests</span> </span>&#123;</span><br><span class="line"> </span><br><span class="line">    <span class="meta">@Before</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">init</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;开始测试-----------------&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="meta">@After</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">after</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;测试结束-----------------&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+<h3 id="测试类">测试类</h3>
+<p>测试类继承测试基类<br>
+通过 @Autowired 引入想要测试的类 DAO, Service ……</p>
+<h3 id="测试方法">测试方法</h3>
+<p>在真正的测试方法前要加上 @Test 注解<br>
+加上 @Transactional 后方法会回滚，不会在数据库中产生脏数据<br>
+如果想要跳过其中一个测试方法，在方法前加上 @Ignore(message) 即可忽略该方法</p>
+<h4 id="Service-单元测试">Service 单元测试</h4>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* value 是想要测试的变量值</span></span><br><span class="line"><span class="comment">* matcher statement 接收 value 并判断是否符合条件</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line">Assert.assertThat([value], [matcher statement]);</span><br></pre></td></tr></table></figure>
+<h4 id="Assert-断言">Assert 断言</h4>
+<h5 id="字符相关匹配符">字符相关匹配符</h5>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* equalTo匹配符断言被测的testedValue等于expectedValue，</span></span><br><span class="line"><span class="comment">* equalTo可以断言数值之间，字符串之间和对象之间是否相等，相当于Object的equals方法</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line">assertThat(testedValue, equalTo(expectedValue));</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* equalToIgnoringCase匹配符断言被测的字符串testedString</span></span><br><span class="line"><span class="comment">* 在忽略大小写的情况下等于expectedString</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line">assertThat(testedString, equalToIgnoringCase(expectedString));</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* equalToIgnoringWhiteSpace匹配符断言被测的字符串testedString</span></span><br><span class="line"><span class="comment">* 在忽略头尾的任意个空格的情况下等于expectedString，</span></span><br><span class="line"><span class="comment">* 注意：字符串中的空格不能被忽略</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line">assertThat(testedString, equalToIgnoringWhiteSpace(expectedString);</span><br><span class="line"><span class="comment">/**containsString匹配符断言被测的字符串testedString包含子字符串subString**/</span></span><br><span class="line">assertThat(testedString, containsString(subString) );</span><br><span class="line"><span class="comment">/**endsWith匹配符断言被测的字符串testedString以子字符串suffix结尾*/</span></span><br><span class="line">assertThat(testedString, endsWith(suffix));</span><br><span class="line"><span class="comment">/**startsWith匹配符断言被测的字符串testedString以子字符串prefix开始*/</span></span><br><span class="line">assertThat(testedString, startsWith(prefix));</span><br></pre></td></tr></table></figure>
+<h5 id="一般匹配符">一般匹配符</h5>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**nullValue()匹配符断言被测object的值为null*/</span></span><br><span class="line">assertThat(object,nullValue());</span><br><span class="line"><span class="comment">/**notNullValue()匹配符断言被测object的值不为null*/</span></span><br><span class="line">assertThat(object,notNullValue());</span><br><span class="line"><span class="comment">/**is匹配符断言被测的object等于后面给出匹配表达式*/</span></span><br><span class="line">assertThat(testedString, is(equalTo(expectedValue)));</span><br><span class="line"><span class="comment">/**is匹配符简写应用之一，is(equalTo(x))的简写，断言testedValue等于expectedValue*/</span></span><br><span class="line">assertThat(testedValue, is(expectedValue));</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* is匹配符简写应用之二，is(instanceOf(SomeClass.class))的简写，</span></span><br><span class="line"><span class="comment">* 断言testedObject为Cheddar的实例</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line">assertThat(testedObject, is(Cheddar.class));</span><br><span class="line"><span class="comment">/**not匹配符和is匹配符正好相反，断言被测的object不等于后面给出的object*/</span></span><br><span class="line">assertThat(testedString, not(expectedString));</span><br><span class="line"><span class="comment">/**allOf匹配符断言符合所有条件，相当于“与”（&amp;&amp;）*/</span></span><br><span class="line">assertThat(testedNumber, allOf( greaterThan(<span class="number">8</span>), lessThan(<span class="number">16</span>) ) );</span><br><span class="line"><span class="comment">/**anyOf匹配符断言符合条件之一，相当于“或”（||）*/</span></span><br><span class="line">assertThat(testedNumber, anyOf( greaterThan(<span class="number">16</span>), lessThan(<span class="number">8</span>) ) );</span><br></pre></td></tr></table></figure>
+<h5 id="数值相关匹配符">数值相关匹配符</h5>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**closeTo匹配符断言被测的浮点型数testedDouble在20.0¡À0.5范围之内*/</span></span><br><span class="line">assertThat(testedDouble, closeTo( <span class="number">20.0</span>, <span class="number">0.5</span> ));</span><br><span class="line"><span class="comment">/**greaterThan匹配符断言被测的数值testedNumber大于16.0*/</span></span><br><span class="line">assertThat(testedNumber, greaterThan(<span class="number">16.0</span>));</span><br><span class="line"><span class="comment">/** lessThan匹配符断言被测的数值testedNumber小于16.0*/</span></span><br><span class="line">assertThat(testedNumber, lessThan (<span class="number">16.0</span>));</span><br><span class="line"><span class="comment">/** greaterThanOrEqualTo匹配符断言被测的数值testedNumber大于等于16.0*/</span></span><br><span class="line">assertThat(testedNumber, greaterThanOrEqualTo (<span class="number">16.0</span>));</span><br><span class="line"><span class="comment">/** lessThanOrEqualTo匹配符断言被测的testedNumber小于等于16.0*/</span></span><br><span class="line">assertThat(testedNumber, lessThanOrEqualTo (<span class="number">16.0</span>));</span><br></pre></td></tr></table></figure>
+<h5 id="集合相关匹配符">集合相关匹配符</h5>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**hasEntry匹配符断言被测的Map对象mapObject含有一个键值为&quot;key&quot;对应元素值为&quot;value&quot;的Entry项*/</span></span><br><span class="line">assertThat(mapObject, hasEntry(<span class="string">&quot;key&quot;</span>, <span class="string">&quot;value&quot;</span> ) );</span><br><span class="line"><span class="comment">/**hasItem匹配符表明被测的迭代对象iterableObject含有元素element项则测试通过*/</span></span><br><span class="line">assertThat(iterableObject, hasItem (element));</span><br><span class="line"><span class="comment">/** hasKey匹配符断言被测的Map对象mapObject含有键值“key”*/</span></span><br><span class="line">assertThat(mapObject, hasKey (<span class="string">&quot;key&quot;</span>));</span><br><span class="line"><span class="comment">/** hasValue匹配符断言被测的Map对象mapObject含有元素值value*/</span></span><br><span class="line">assertThat(mapObject, hasValue(value));</span><br></pre></td></tr></table></figure>
+<h4 id="Controller-单元测试">Controller 单元测试</h4>
+<p>会用到 MockMvc，MockMvc 实现了对 HTTP 请求的模拟，可以不用启动工程来测试接口</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@RunWith(SpringRunner.class)</span></span><br><span class="line"><span class="meta">@SpringBootTest</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">xxxControllerTest</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Autowired</span> </span><br><span class="line">    <span class="keyword">private</span> WebApplicationContext wac;</span><br><span class="line">    <span class="keyword">private</span> MockMvc mvc;</span><br><span class="line">    <span class="keyword">private</span> MockHttpSession session; </span><br><span class="line">    </span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">    * 使用 MockMvc 时要先使用 MockMvcBuilders 构建 MockMvc 对象</span></span><br><span class="line"><span class="comment">    * 加入 session 部分代码时因为拦截器那边会判断用户是否登录，所以注入一个用户</span></span><br><span class="line"><span class="comment">    * 如果修改了拦截器取消验证，可以不需要该部分代码</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">    <span class="meta">@Before</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setupMockMvc</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="comment">// 初始化MockMvc对象</span></span><br><span class="line">        mvc = MockMvcBuilders.webAppContextSetup(wac).build(); </span><br><span class="line">        session = <span class="keyword">new</span> MockHttpSession();</span><br><span class="line">        User user =<span class="keyword">new</span> User(<span class="string">&quot;root&quot;</span>,<span class="string">&quot;root&quot;</span>);</span><br><span class="line">        session.setAttribute(<span class="string">&quot;user&quot;</span>,user); </span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * GET方法测试用例</span></span><br><span class="line"><span class="comment">     * mockMvc.perform 负责执行一个请求</span></span><br><span class="line"><span class="comment">     *     MockMvcRequestBuilders.get(&quot;/path&quot;) 构造一个请求，根据请求类型调用相应的方法</span></span><br><span class="line"><span class="comment">     *     contentType(MediaType.APPLICATION_JSON_UTF8) 代表发送端的数据格式为 application/json;charset=UTF-8</span></span><br><span class="line"><span class="comment">     *     accept(MediaType.APPLICATION_JSON_UTF8) 代表客户端希望接受的数据格式为 accept(MediaType.APPLICATION_JSON_UTF8)</span></span><br><span class="line"><span class="comment">     *     session.(session) 注入一个 session 来通过拦截器</span></span><br><span class="line"><span class="comment">     * ResultActions.andExpect 添加执行完成后的断言</span></span><br><span class="line"><span class="comment">     *    ResultActions.andExpect(MockMvcResultMatchers.status().isOk()) 查看请求返回的状态码是否为 200，如果不是，抛出异常，测试不通过</span></span><br><span class="line"><span class="comment">     *    ResultActions.andExpect(MockMvcResultMatchers.jsonPath(&quot;$.key1&quot;).value(&quot;value1&quot;)) 查看是否得到预期的返回值，如果不是，测试不通过</span></span><br><span class="line"><span class="comment">     *    ResultActions.andDo() 添加一个结果处理器, 比如 MockMvcResultHandlers.print() 输出整个响应结果信息</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@throws</span> Exception</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">getTest</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        mvc.perform(MockMvcRequestBuilders.get(<span class="string">&quot;/path&quot;</span>)</span><br><span class="line">                    .contentType(MediaType.APPLICATION_JSON_UTF8)</span><br><span class="line">                    .accept(MediaType.APPLICATION_JSON_UTF8)</span><br><span class="line">                    .session(session)</span><br><span class="line">            )</span><br><span class="line">           .andExpect(MockMvcResultMatchers.status().isOk())</span><br><span class="line">           .andExpect(MockMvcResultMatchers.jsonPath(<span class="string">&quot;$.key1&quot;</span>).value(<span class="string">&quot;value1&quot;</span>))</span><br><span class="line">           .andExpect(MockMvcResultMatchers.jsonPath(<span class="string">&quot;$.key2&quot;</span>).value(<span class="string">&quot;value2&quot;</span>))</span><br><span class="line">           .andDo(MockMvcResultHandlers.print());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="打包测试">打包测试</h3>
+<p>用一个 TestSuits 类整理所有测试类然后打包执行测试方法</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Created by simba</span></span><br><span class="line"><span class="comment"> * Date 2021/2/2</span></span><br><span class="line"><span class="comment"> * Description:打包测试</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@RunWith(Suite.class)</span></span><br><span class="line"><span class="meta">@Suite</span>.SuiteClasses(&#123;xxxTest.class,xxxTest2.class&#125;)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestSuits</span> </span>&#123;</span><br><span class="line"> </span><br><span class="line">    <span class="comment">//不用写代码，只需要注解即可</span></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="参考">参考</h3>
+<p><a href="https://blog.csdn.net/weixin_39800144/article/details/79241620">https://blog.csdn.net/weixin_39800144/article/details/79241620</a><br>
+<a href="http://tengj.top/2017/12/28/springboot12/#Service%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95">http://tengj.top/2017/12/28/springboot12/#Service单元测试</a></p>
+]]></content>
+      <categories>
+        <category>技术</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Java 虚拟机</title>
+    <url>/2021/04/24/Java%E8%99%9A%E6%8B%9F%E6%9C%BA/</url>
+    <content><![CDATA[<h2 id="Java虚拟机">Java虚拟机</h2>
+<hr>
+<h3 id="一、运行时数据区域">一、运行时数据区域</h3>
+<hr>
+<p>JVM执行Java程序时会把内存分为多个数据区域，其中：</p>
+<p>堆、方法区（包括运行时常量池）和直接内存被线程共享</p>
+<p>每个线程有自己的程序计数器、本地方法栈和虚拟机栈</p>
+<span id="more"></span>
+<hr>
+<h4 id="程序计数器">程序计数器</h4>
+<p>可以看作是当前线程正在执行的那条字节码指令的地址，如果执行的是本地方法，程序计数器的值是<code>undefined</code></p>
+<p>字节码解释器通过改变计数器的值来选取下一条需要执行的字节码指令</p>
+<p>每条线程有独立的程序计数器，所以在线程切换后能恢复到正确的执行位置</p>
+<p><strong>程序计数器主要的两个作用：</strong></p>
+<ol>
+<li>字节码解释器通过改变计数器的值依次读取指令，从而实现代码的流程控制</li>
+<li>多线程下，程序计数器记录当前线程的执行位置，切换回来后可以知道上次运行到哪</li>
+</ol>
+<p><strong>程序计数器是唯一一个不会出现OutOfMemoryError的内存区域，它的生命周期随着线程的创建而创建，随着线程的结束而死亡。</strong></p>
+<hr>
+<h4 id="Java虚拟机栈">Java虚拟机栈</h4>
+<p>Java虚拟机栈为每个即将运行的Java方法创建一个栈帧</p>
+<p>Java内存可以粗糙分为堆内存和栈内存，栈就是虚拟机栈</p>
+<p>Java虚拟机栈是由一个个栈帧组成，每个栈帧中都有局部变量表、操作数栈、动态链接、方法出口信息。</p>
+<p><strong>局部变量表随着栈帧的创建而创建，大小在编译时就确定，运行时大小不会改变</strong></p>
+<p><strong>存放了编译器可知的8种基本数据类型、对象的引用</strong>（不同于对象本身，可能是对象某个位置的引用）</p>
+<p>方法需要创建局部变量时，就将值放入局部变量表</p>
+<p>Java 虚拟机栈的栈顶的栈帧是当前正在执行的活动栈，也就是当前正在执行的方法，PC 寄存器也会指向这个地址。只有这个活动的栈帧的本地变量可以被操作数栈使用，当在这个栈帧中调用另一个方法，与之对应的栈帧又会被创建，新创建的栈帧压入栈顶，变为当前的活动栈帧。</p>
+<p>方法结束后，当前栈帧被移出，栈帧的返回值变成新的活动栈帧中操作数栈的一个操作数。如果没有返回值，那么新的活动栈帧中操作数栈的操作数没有变化。</p>
+<p><strong>Java 虚拟机栈会出现两种异常：StackOverFlowError 和 OutOfMemoryError。</strong></p>
+<ul>
+<li><strong>StackOverFlowError：</strong> 若Java虚拟机栈的内存大小不允许动态扩展，那么当线程请求栈的深度超过当前Java虚拟机栈的最大深度的时候，就抛出StackOverFlowError异常。</li>
+<li><strong>OutOfMemoryError：</strong> 若 Java 虚拟机栈的内存大小允许动态扩展，且当线程请求栈时内存用完了，无法再动态扩展了，此时抛出OutOfMemoryError异常。</li>
+</ul>
+<p>随着线程的创建而创建，随着线程的死亡而死亡</p>
+<hr>
+<h4 id="本地方法栈">本地方法栈</h4>
+<p>虚拟机栈为虚拟机执行Java方法（也就是字节码）服务，而本地方法栈则为虚拟机使用到的<strong>Native方法服务</strong>，本地方法栈是描述本地方法运行过程的内存模型。</p>
+<p>本地方法被执行的时候，在本地方法栈也会创建一个栈帧，用于存放该本地方法的局部变量表、操作数栈、动态链接、出口信息。</p>
+<p>方法执行完毕后相应的栈帧也会出栈并释放内存空间，也会出现 StackOverFlowError 和 OutOfMemoryError 两种异常。</p>
+<hr>
+<h4 id="堆">堆</h4>
+<p>虚拟机管理内存中最大的一块。**此内存区域的唯一目的就是存放对象实例，几乎所有的对象实例以及数组都在这里分配内存。**在虚拟机启动时创建。</p>
+<p>Java堆是垃圾收集器管理的主要区域，所以也被称作<strong>GC堆（Garbage Collection Heap）</strong></p>
+<p>Java堆会被进一步划分（新生代、老年代、永久代，其中前两种使用的是Java程序可以使用的堆内存），这样可以更好地回收内存和分配内存。永久代是对JVM方法区的实现</p>
+<p>因为是被所有线程共享的，所以访问要注意同步的问题</p>
+<p>对于主流虚拟机，堆是可扩展的。如果线程请求分配内存，但是堆满了，内存也无法扩展，就会抛出OutOfMemoryError异常</p>
+<p>JDK1.8中移除了永久代，用元空间（Metaspace）取代。元空间使用物理内存，永久代使用JVM堆内存</p>
+<p>方法区是一个 JVM 规范，永久代与元空间都是其一种实现方式。在 JDK 1.8 之后，原来永久代的数据被分到了堆和元空间中。<strong>元空间存储类的元信息，静态变量和常量池等放入堆中</strong>。</p>
+<hr>
+<h4 id="方法区">方法区</h4>
+<p>是堆的一个逻辑部分，和Java堆不一样。存储被虚拟机加载的类信息、常量、静态变量、即时编译器编译的代码等。</p>
+<p>方法区被称为“永久代”，因为其中的信息一般都需要长久存在。对方法区的主要回收目标是：对常量池回收；对类的卸载</p>
+<p><strong>相对而言，垃圾收集行为在这个区域是比较少出现的，但并非数据进入方法区后就“永久存在”了。</strong></p>
+<p><strong>运行时常量池</strong>是方法区的一部分，存放编译期间生成的常量（<strong>字面量</strong>和<strong>符号引用</strong>）</p>
+<p>字面量包括：文本字符串，final常量，基本数据类型</p>
+<p>符号引用：类的完全限定名，字段名和描述符，方法名和描述符</p>
+<p>受到方法区内存的限制，无法申请到内存时会抛出OutOfMemoryError异常</p>
+<p>JDK1.7之后的版本将运行时常量池从方法区移到了Java堆中</p>
+<hr>
+<h4 id="直接内存">直接内存</h4>
+<p>不是虚拟机运行时数据区的一部分，也不是虚拟机规范中定义的内存区，但会被频繁使用，也会出现内存超出</p>
+<p>直接内存申请空间耗费更高的性能</p>
+<p>直接内存读取 IO 的性能要优于普通的堆内存。</p>
+<hr>
+<h4 id="Java对象的创建过程">Java对象的创建过程</h4>
+<p>类加载检查 – 分配内存 – 初始化零值 – 设置对象头 – 执行init方法</p>
+<p>类加载检查：遇到new指令，先去检查能否在常量池中定位到类的符号引用，并检查其代表的类是否被加载、解析和初始化过，如果没有，要先执行相应的类加载过程</p>
+<p>分配内存：通过类加载检查后为新生对象分配内存，所需内存大小在类加载完成后就确定，从Java堆中分出一块确定大小的区域，分配方式有<strong>指针碰撞</strong>和<strong>空闲列表</strong>两种</p>
+<p>两种方式取决于堆是否规整，取决于垃圾收集器的算法是“标记-清除”还是“标记-整理”</p>
+<p>指针碰撞：用过的内存放一边，没用过的放一边，只要沿着没用过的地方移动指针就行</p>
+<p>空闲列表：虚拟机会维护一个列表，记录哪些内存块可用。分配内存时找一块足够大的内存块分配给对象，更新列表</p>
+<p>初始化零值：将对象分配到的内存都初始化为零值，保证对象的实例可以不赋初始值就使用</p>
+<p>设置对象头：虚拟机对对象进行必要的设置，将对象的相关信息如：是哪个类的实例、对象的哈希码等放到对象头中</p>
+<p>执行init方法：虚拟机已经产生一个新的对象，但是Java程序中才刚刚开始，init执行后一个新的对象才算产生</p>
+<hr>
+<h4 id="对象的内存布局">对象的内存布局</h4>
+<p>分为3块：对象头、实例数据和对其填充</p>
+<p>对象头包括：自身的运行时数据（哈希码，GC分代年龄）、类型指针（指向类元数据的指针，确定对象是哪个类的实例）</p>
+<p>实例数据：对象的成员变量</p>
+<p>对其填充：起占位作用</p>
+<p>访问对象的方式：</p>
+<p>创建对象时在两个地方分配了内存。引用存在Java虚拟机栈的局部变量表中，但是实际对象存储在堆中</p>
+<p>句柄访问：引用类型的变量存储了对象的句柄地址，通过访问句柄池找到对象，包括对象实例数据（java堆）和对象所属类的数据（方法区）</p>
+<p>直接指针访问：对象的变量直接存放Java堆中对象的地址，但是Java堆中的对象实例还需要额外存储方法区中对象所属类信息的地址。</p>
+<p>hotspot采用直接指针访问，只要一次寻址速度比前者快一倍，但是需要额外策略来存储地址。</p>
+<hr>
+<p>常量池</p>
+<p>直接使用双引号声明出来的 String 对象会直接存储在常量池中， new出来的在堆内存中。</p>
+<ul>
+<li><strong>Byte,Short,Integer,Long,Character,Boolean；这5种包装类默认创建了数值[-128，127]的相应类型的缓存数据，但是超出此范围仍然会去创建新的对象。</strong></li>
+<li><strong>两种浮点数类型的包装类 Float,Double 并没有实现常量池技术。</strong></li>
+</ul>
+<hr>
+<h3 id="二、垃圾收集策略">二、垃圾收集策略</h3>
+<hr>
+<p>关注Java堆和方法区的内存，因为只有运行时才知道创建了哪些对象，这部分内存的分配和回收都是动态的</p>
+<h4 id="判断对象是否存活">判断对象是否存活</h4>
+<hr>
+<p>如果一个对象不被任何对象引用，就是无效对象，会被回收</p>
+<h5 id="引用计数器法">引用计数器法</h5>
+<p>对象头维护一个counter计数器，被引用一次+1，引用失效-1，如果计数器为0该对象就无效</p>
+<p>实现简单，判定效率搞。但主流Java虚拟机没有采用这个方法，因为很难解决对象间循环引用的问题 – 如果两个对象互相引用，计数器都不为0，就无法被回收。</p>
+<h5 id="可达性分析法">可达性分析法</h5>
+<p>所有和GC Roots直接或间接关联的对象都是有效对象，否则是无效对象</p>
+<p>GC Roots 指：</p>
+<ul>
+<li>Java虚拟机栈（栈帧中的局部变量表）中引用的对象</li>
+<li>本地方法栈中引用的对象</li>
+<li>方法区中常量引用的对象</li>
+<li>方法区中静态属性引用的对象</li>
+</ul>
+<p>不包括堆中对象引用的对象，所以不会有循环引用</p>
+<h4 id="引用的种类">引用的种类</h4>
+<hr>
+<h5 id="强引用-Strong">强引用 Strong</h5>
+<p>类似Object obj = new Object()就是强引用，只要强引用存在。GC永远不会回收被引用的对象。但是，如果我们<strong>错误地保持了强引用</strong>，比如：赋值给了 static 变量，那么对象在很长一段时间内不会被回收，会产生内存泄漏。</p>
+<h5 id="软引用-Soft">软引用 Soft</h5>
+<p>软引用是一种相对强引用弱化一些的引用，可以让对象豁免一些垃圾收集，只有当 JVM 认为内存不足时，才会去试图回收软引用指向的对象。JVM 会确保在抛出 OutOfMemoryError 之前，清理软引用指向的对象。软引用通常用来<strong>实现内存敏感的缓存</strong>，如果还有空闲内存，就可以暂时保留缓存，当内存不足时清理掉，这样就保证了使用缓存的同时，不会耗尽内存。</p>
+<h5 id="弱引用-Weak">弱引用 Weak</h5>
+<p>弱引用的<strong>强度比软引用更弱</strong>一些。当 JVM 进行垃圾回收时，<strong>无论内存是否充足，都会回收</strong>只被弱引用关联的对象。</p>
+<h5 id="虚引用-Phantom">虚引用 Phantom</h5>
+<p>虚引用也称幽灵引用或者幻影引用，它是<strong>最弱</strong>的一种引用关系。一个对象是否有虚引用的存在，完全不会对其生存时间构成影响。它仅仅是提供了一种确保对象被 finalize 以后，做某些事情的机制，比如，通常用来做所谓的 Post-Mortem 清理机制。</p>
+<h4 id="回收堆中无效对象">回收堆中无效对象</h4>
+<hr>
+<h5 id="判断finalize-是否有必要执行">判断finalize()是否有必要执行</h5>
+<p>对于不可达的对象，会判断finalize()方法是否有必要执行，如果已经被执行过（任何一个对象的 finalize() 方法只会被系统自动调用一次）或者该方法没有被对象重写，对象就会真的被回收。</p>
+<p>如果被判定为有必要执行finalize()方法，就会放入一个F-Queue队列以较低优先级执行方法，但不确保会执行结束。</p>
+<h5 id="对象重生或死亡">对象重生或死亡</h5>
+<p>之所以提finalize()，是因为如果在方法中将this赋给某一引用，对象就重生了。否则对象就会被GC清除。</p>
+<h4 id="回收方法区内存">回收方法区内存</h4>
+<hr>
+<p>方法区中主要清除2类垃圾：废弃常量、无用的类</p>
+<h5 id="判定废弃常量">判定废弃常量</h5>
+<p>对于常量，只要常量池中的常量没有被任何的变量或对象引用，就会被清除</p>
+<h5 id="判定无用的类">判定无用的类</h5>
+<p>条件较为苛刻：</p>
+<ul>
+<li>该类的所有对象都被清除</li>
+<li>加载该类的classLoader已经被回收</li>
+<li>该类的java.lang.Class对象没有在任何地方被引用，无法在任何地方通过反射访问到该类的方法</li>
+</ul>
+<p><strong>一个类被虚拟机加载进方法区，在堆中就会有一个代表该类的对象：java.lang.Class。这个对象在类被加载到方法区时被创建，在方法区该类被删除时清除。</strong></p>
+<h4 id="垃圾收集算法">垃圾收集算法</h4>
+<hr>
+<p>常见的垃圾收集算法</p>
+<p>见： <a href="https://github.com/doocs/jvm/blob/master/docs/03-gc-algorithms.md">https://github.com/doocs/jvm/blob/master/docs/03-gc-algorithms.md</a></p>
+<h3 id="三、内存分配与回收策略">三、内存分配与回收策略</h3>
+<hr>
+<p>对象的内存分配就是在堆上分配</p>
+<h4 id="对象优先在Eden分配">对象优先在Eden分配</h4>
+<hr>
+<p>多数情况下对象在新生代Eden区进行分配，Eden区内存不够时，虚拟机将发起一次Minor GC。</p>
+<ul>
+<li>Minor GC：回收新生代（包括 Eden 和 Survivor 区域），因为 Java 对象大多都具备朝生夕灭的特性，所以 Minor GC 非常频繁，一般回收速度也比较快。</li>
+<li>Major GC / Full GC: 回收老年代，出现了 Major GC，经常会伴随至少一次的 Minor GC，但这并非绝对。Major GC 的速度一般会比 Minor GC 慢 10 倍 以上。</li>
+</ul>
+<h4 id="大对象直接进入老年代">大对象直接进入老年代</h4>
+<hr>
+<p>大对象指需要大量连续内存空间的Java对象，例如很长的字符串或数据</p>
+<p>一个大对象能够存入 Eden 区的概率比较小，发生分配担保的概率比较大，而分配担保需要涉及大量的复制，就会造成效率低下。</p>
+<p>虚拟机提供了一个 -XX:PretenureSizeThreshold 参数，令大于这个设置值的对象直接在老年代分配，这样做的目的是避免在 Eden 区及两个 Survivor 区之间发生大量的内存复制。</p>
+<h4 id="长期存活的对象将进入老年代">长期存活的对象将进入老年代</h4>
+<hr>
+<p>JVM给每个对象定义一个年龄计数器，每次发生Minor GC存活时，存活下的对象年龄+1，超过一定值就转移到老年代</p>
+<p>使用 -XXMaxTenuringThreshold 设置新生代的最大年龄，只要超过该参数的新生代对象都会被转移到老年代中去。</p>
+<h4 id="动态对象年龄判定">动态对象年龄判定</h4>
+<hr>
+<p>如果新生代Survivor中相同年龄所有对象的总和大于Survivor空间的一半，将年龄&gt;=该年龄的对象直接放入老年代。</p>
+<h4 id="空间分配担保">空间分配担保</h4>
+<hr>
+<p>JDK 6 Update24 之后</p>
+<p>只要老年代的连续空间大于历次晋升的平均大小，就进行Minor GC，否则进行Full GC。</p>
+<p>通过清除老年代中飞起数据来扩大老年代空闲空间，为新生代作担保，这个过程就是分配担保。</p>
+<hr>
+<h4 id="会触发JVM进行Full-GC的情况">会触发JVM进行Full GC的情况</h4>
+<p>System.gc()的调用</p>
+<p>老年代空间不足</p>
+<p>发生空间分配担保</p>
+<hr>
+<h3 id="四、JVM-类加载">四、JVM 类加载</h3>
+<h4 id="JVM的“无关性”">JVM的“无关性”</h4>
+<hr>
+<p>谈论 JVM 的无关性，主要有以下两个：</p>
+<ul>
+<li>平台无关性：任何操作系统都能运行 Java 代码</li>
+<li>语言无关性： JVM 能运行除 Java 以外的其他代码</li>
+</ul>
+<p>Java 源代码首先需要使用 Javac 编译器编译成 .class 文件，然后由 JVM 执行 .class 文件，从而程序开始运行。</p>
+<p><strong>JVM 只认识 .class 文件，它不关心是何种语言生成了 .class 文件，只要 .class 文件符合 JVM 的规范就能运行。</strong> 目前已经有 JRuby、Jython、Scala 等语言能够在 JVM 上运行。它们有各自的语法规则，不过它们的编译器 都能将各自的源码编译成符合 JVM 规范的 .class 文件，从而能够借助 JVM 运行它们。</p>
+<h4 id="类加载的时机">类加载的时机</h4>
+<hr>
+<p>详细查看：<a href="https://github.com/doocs/jvm/blob/master/docs/08-load-class-time.md">https://github.com/doocs/jvm/blob/master/docs/08-load-class-time.md</a></p>
+<h4 id="接口的加载过程">接口的加载过程</h4>
+<p>接口加载过程与类加载过程稍有不同。</p>
+<p>当一个类在初始化时，要求其父类全部都已经初始化过了，但是一个接口在初始化时，并不要求其父接口全部都完成了初始化，当真正用到父接口的时候才会初始化。</p>
+<h4 id="类加载的过程">类加载的过程</h4>
+<hr>
+<p>类加载过程包括5个阶段：加载、验证、准备、解析、初始化</p>
+<h5 id="加载">加载</h5>
+<p>“加载”是“类加载”过程的一个阶段，不能混淆这两个名词。在加载阶段，虚拟机需要完成 3 件事：</p>
+<ul>
+<li>通过类的全限定名获取该类的二进制字节流。</li>
+<li>将二进制字节流所代表的静态结构转化为方法区的运行时数据结构</li>
+<li>在内存中创建一个java.lang.Class对象，作为方法区这个类的各种数据的访问入口</li>
+</ul>
+<p><strong>二进制字节流</strong>（Class文件）从哪获取：</p>
+<ul>
+<li>压缩包，如jar、war包</li>
+<li>网络中，applet</li>
+<li>由jsp文件生成对应的class</li>
+</ul>
+<h5 id="“数组类”和“非数组类”加载比较">“数组类”和“非数组类”加载比较</h5>
+<p>在Java中数组是一个Java类</p>
+<ul>
+<li>数组类本身不通过类加载器创建，是由Java虚拟机直接创建的，再由类加载器创建数组中的元素类</li>
+<li>非数组类加载阶段可以使用系统提供的引导类加载器，也可以由用户自定义的加载器完成</li>
+</ul>
+<h5 id="注意事项">注意事项</h5>
+<ul>
+<li>虚拟机没有规定class对象（java.lang.Class）的存储位置，对于Hotspot来说，class对象虽然是对象，但是存在方法区中。</li>
+<li>加载和连接阶段交叉进行，加载没有完成就可能开始连接了。</li>
+</ul>
+<h4 id="验证">验证</h4>
+<hr>
+<h5 id="验证阶段的重要性">验证阶段的重要性</h5>
+<p>保证class文件的字节流包含的信息符合当前虚拟机的要求。不会危害虚拟机自身的安全。</p>
+<h5 id="验证的过程">验证的过程</h5>
+<p>文件格式验证、元数据验证、字节码验证、符号引用验证</p>
+<h4 id="准备">准备</h4>
+<hr>
+<p>准备阶段是正式为类变量（或称“静态成员变量”）分配内存并设置初始值的阶段。这些变量（不包括实例变量）所使用的内存都在方法区中进行分配。</p>
+<p>类变量的初始值通常是数据类型的零值（0， null）</p>
+<p>但如果这个类变量被声明为常量，就会被初始化为所指定的值</p>
+<p>如 <code>public static final int value = 123;</code> 在准备阶段，jvm会将value赋值为123</p>
+<h4 id="解析">解析</h4>
+<hr>
+<p>解析阶段是虚拟机将常量池内的符号引用替换为直接引用的过程</p>
+<p>符号引用：符号引用以一组符号来描述所引用的目标，符号可以是任何形式的字面量，只要使用时能够无歧义的定位到目标即可。</p>
+<p>直接引用可以是：</p>
+<ul>
+<li>
+<p>直接指向目标的指针（比如，指向“类型”【Class对象】、类变量、类方法的直接引用可能是指向方法区的指针）</p>
+</li>
+<li>
+<p>相对偏移量（比如，指向实例变量、实例方法的直接引用都是偏移量）</p>
+</li>
+<li>
+<p>一个能间接定位到目标的句柄</p>
+</li>
+</ul>
+<p>直接引用是和虚拟机的布局相关的，同一个符号引用在不同的虚拟机实例上翻译出来的直接引用一般不会相同。如果有了直接引用，那引用的目标必定已经被加载入内存中了。</p>
+<h4 id="初始化">初始化</h4>
+<hr>
+<p>类初始化阶段是类加载过程的最后一步，是执行类构造器<clinit>()方法的过程。</p>
+<p><clinit>()方法是由编译器自动收集类中所有类变量的赋值动作和静态语句块（static{}块）中的语句产生</p>
+<p><clinit>() 方法不需要显式调用父类构造器，虚拟机会保证在子类的 <clinit>() 方法执行之前，父类的 <clinit>() 方法已经执行完毕。</p>
+<p>由于父类的 <clinit>() 方法先执行，意味着父类中定义的静态语句块要优先于子类的变量赋值操作。</p>
+<p><clinit>() 方法不是必需的，如果一个类没有静态语句块，也没有对类变量的赋值操作，那么编译器可以不为这个类生成 <clinit>() 方法。</p>
+<p>接口中不能使用静态代码块，但接口也需要通过 <clinit>() 方法为接口中定义的静态成员变量显式初始化。但接口与类不同，接口的 <clinit>() 方法不需要先执行父类的 <clinit>() 方法，只有当父接口中定义的变量使用时，父接口才会初始化。</p>
+<p>虚拟机会保证一个类的 <clinit>() 方法在多线程环境中被正确加锁、同步。如果多个线程同时去初始化一个类，那么只会有一个线程去执行这个类的 <clinit>() 方法。</p>
+<h3 id="五、Java类加载器">五、Java类加载器</h3>
+<hr>
+<ul>
+<li>见：<a href="https://github.com/doocs/jvm/blob/master/docs/10-class-loader.md">https://github.com/doocs/jvm/blob/master/docs/10-class-loader.md</a></li>
+</ul>
+<h4 id="双亲委派模型">双亲委派模型</h4>
+<h5 id="什么是双亲委派模型">什么是双亲委派模型</h5>
+<p>双亲委派模型是描述类加载器之间的层次关系。它要求除了顶层的启动类加载器外，其余的类加载器都应当有自己的父类加载器。（父子关系一般不会以继承的关系实现，而是以组合关系来复用父加载器的代码）</p>
+<p>在类加载的时候，系统会首先判断当前类是否被加载过。已经被加载的类会直接返回，否则才会尝试加载。加载的时候，首先会把该请求委派该父类加载器的 <code>loadClass()</code> 处理，因此所有的请求最终都应该传送到顶层的启动类加载器 <code>BootstrapClassLoader</code> 中。当父类加载器无法处理时，才由自己来处理。当父类加载器为null时，会使用启动类加载器 <code>BootstrapClassLoader</code> 作为父类加载器。</p>
+]]></content>
+      <categories>
+        <category>面试</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>JVM</tag>
       </tags>
   </entry>
   <entry>
@@ -993,607 +1472,6 @@ Worker 线程继承 AQS，通过不可重入锁的特性来反应线程当前状
       </tags>
   </entry>
   <entry>
-    <title>Junit 单元测试</title>
-    <url>/2021/04/24/Junit-%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/</url>
-    <content><![CDATA[<p>Junit 单元测试学习</p>
-<span id="more"></span>
-<h3 id="POM-依赖">POM 依赖</h3>
-<p>在使用 IDEA 新建 SpringBoot 项目时一般会自动引入此依赖</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-test<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">scope</span>&gt;</span>test<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span> </span><br></pre></td></tr></table></figure>
-<h3 id="测试类基类">测试类基类</h3>
-<p>测试类文件夹和项目的 main 文件夹在同一层级<br>
-测试类存放的位置和项目的 Application 类在同一相对目录下<br>
-自动生成的测试类名称为 XXXApplicationTests<br>
-在这个类下补齐所需要的注解，之后的测试类直接继承该类</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@RunWith(SpringRunner.class)</span></span><br><span class="line"><span class="meta">@SpringBootTest(classes = xxxApplication.class)</span></span><br><span class="line"><span class="meta">@WebAppConfiguration</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">xxxApplicationTests</span> </span>&#123;</span><br><span class="line"> </span><br><span class="line">    <span class="meta">@Before</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">init</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;开始测试-----------------&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="meta">@After</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">after</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;测试结束-----------------&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
-<h3 id="测试类">测试类</h3>
-<p>测试类继承测试基类<br>
-通过 @Autowired 引入想要测试的类 DAO, Service ……</p>
-<h3 id="测试方法">测试方法</h3>
-<p>在真正的测试方法前要加上 @Test 注解<br>
-加上 @Transactional 后方法会回滚，不会在数据库中产生脏数据<br>
-如果想要跳过其中一个测试方法，在方法前加上 @Ignore(message) 即可忽略该方法</p>
-<h4 id="Service-单元测试">Service 单元测试</h4>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* value 是想要测试的变量值</span></span><br><span class="line"><span class="comment">* matcher statement 接收 value 并判断是否符合条件</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line">Assert.assertThat([value], [matcher statement]);</span><br></pre></td></tr></table></figure>
-<h4 id="Assert-断言">Assert 断言</h4>
-<h5 id="字符相关匹配符">字符相关匹配符</h5>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* equalTo匹配符断言被测的testedValue等于expectedValue，</span></span><br><span class="line"><span class="comment">* equalTo可以断言数值之间，字符串之间和对象之间是否相等，相当于Object的equals方法</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line">assertThat(testedValue, equalTo(expectedValue));</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* equalToIgnoringCase匹配符断言被测的字符串testedString</span></span><br><span class="line"><span class="comment">* 在忽略大小写的情况下等于expectedString</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line">assertThat(testedString, equalToIgnoringCase(expectedString));</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* equalToIgnoringWhiteSpace匹配符断言被测的字符串testedString</span></span><br><span class="line"><span class="comment">* 在忽略头尾的任意个空格的情况下等于expectedString，</span></span><br><span class="line"><span class="comment">* 注意：字符串中的空格不能被忽略</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line">assertThat(testedString, equalToIgnoringWhiteSpace(expectedString);</span><br><span class="line"><span class="comment">/**containsString匹配符断言被测的字符串testedString包含子字符串subString**/</span></span><br><span class="line">assertThat(testedString, containsString(subString) );</span><br><span class="line"><span class="comment">/**endsWith匹配符断言被测的字符串testedString以子字符串suffix结尾*/</span></span><br><span class="line">assertThat(testedString, endsWith(suffix));</span><br><span class="line"><span class="comment">/**startsWith匹配符断言被测的字符串testedString以子字符串prefix开始*/</span></span><br><span class="line">assertThat(testedString, startsWith(prefix));</span><br></pre></td></tr></table></figure>
-<h5 id="一般匹配符">一般匹配符</h5>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**nullValue()匹配符断言被测object的值为null*/</span></span><br><span class="line">assertThat(object,nullValue());</span><br><span class="line"><span class="comment">/**notNullValue()匹配符断言被测object的值不为null*/</span></span><br><span class="line">assertThat(object,notNullValue());</span><br><span class="line"><span class="comment">/**is匹配符断言被测的object等于后面给出匹配表达式*/</span></span><br><span class="line">assertThat(testedString, is(equalTo(expectedValue)));</span><br><span class="line"><span class="comment">/**is匹配符简写应用之一，is(equalTo(x))的简写，断言testedValue等于expectedValue*/</span></span><br><span class="line">assertThat(testedValue, is(expectedValue));</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* is匹配符简写应用之二，is(instanceOf(SomeClass.class))的简写，</span></span><br><span class="line"><span class="comment">* 断言testedObject为Cheddar的实例</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line">assertThat(testedObject, is(Cheddar.class));</span><br><span class="line"><span class="comment">/**not匹配符和is匹配符正好相反，断言被测的object不等于后面给出的object*/</span></span><br><span class="line">assertThat(testedString, not(expectedString));</span><br><span class="line"><span class="comment">/**allOf匹配符断言符合所有条件，相当于“与”（&amp;&amp;）*/</span></span><br><span class="line">assertThat(testedNumber, allOf( greaterThan(<span class="number">8</span>), lessThan(<span class="number">16</span>) ) );</span><br><span class="line"><span class="comment">/**anyOf匹配符断言符合条件之一，相当于“或”（||）*/</span></span><br><span class="line">assertThat(testedNumber, anyOf( greaterThan(<span class="number">16</span>), lessThan(<span class="number">8</span>) ) );</span><br></pre></td></tr></table></figure>
-<h5 id="数值相关匹配符">数值相关匹配符</h5>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**closeTo匹配符断言被测的浮点型数testedDouble在20.0¡À0.5范围之内*/</span></span><br><span class="line">assertThat(testedDouble, closeTo( <span class="number">20.0</span>, <span class="number">0.5</span> ));</span><br><span class="line"><span class="comment">/**greaterThan匹配符断言被测的数值testedNumber大于16.0*/</span></span><br><span class="line">assertThat(testedNumber, greaterThan(<span class="number">16.0</span>));</span><br><span class="line"><span class="comment">/** lessThan匹配符断言被测的数值testedNumber小于16.0*/</span></span><br><span class="line">assertThat(testedNumber, lessThan (<span class="number">16.0</span>));</span><br><span class="line"><span class="comment">/** greaterThanOrEqualTo匹配符断言被测的数值testedNumber大于等于16.0*/</span></span><br><span class="line">assertThat(testedNumber, greaterThanOrEqualTo (<span class="number">16.0</span>));</span><br><span class="line"><span class="comment">/** lessThanOrEqualTo匹配符断言被测的testedNumber小于等于16.0*/</span></span><br><span class="line">assertThat(testedNumber, lessThanOrEqualTo (<span class="number">16.0</span>));</span><br></pre></td></tr></table></figure>
-<h5 id="集合相关匹配符">集合相关匹配符</h5>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**hasEntry匹配符断言被测的Map对象mapObject含有一个键值为&quot;key&quot;对应元素值为&quot;value&quot;的Entry项*/</span></span><br><span class="line">assertThat(mapObject, hasEntry(<span class="string">&quot;key&quot;</span>, <span class="string">&quot;value&quot;</span> ) );</span><br><span class="line"><span class="comment">/**hasItem匹配符表明被测的迭代对象iterableObject含有元素element项则测试通过*/</span></span><br><span class="line">assertThat(iterableObject, hasItem (element));</span><br><span class="line"><span class="comment">/** hasKey匹配符断言被测的Map对象mapObject含有键值“key”*/</span></span><br><span class="line">assertThat(mapObject, hasKey (<span class="string">&quot;key&quot;</span>));</span><br><span class="line"><span class="comment">/** hasValue匹配符断言被测的Map对象mapObject含有元素值value*/</span></span><br><span class="line">assertThat(mapObject, hasValue(value));</span><br></pre></td></tr></table></figure>
-<h4 id="Controller-单元测试">Controller 单元测试</h4>
-<p>会用到 MockMvc，MockMvc 实现了对 HTTP 请求的模拟，可以不用启动工程来测试接口</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@RunWith(SpringRunner.class)</span></span><br><span class="line"><span class="meta">@SpringBootTest</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">xxxControllerTest</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Autowired</span> </span><br><span class="line">    <span class="keyword">private</span> WebApplicationContext wac;</span><br><span class="line">    <span class="keyword">private</span> MockMvc mvc;</span><br><span class="line">    <span class="keyword">private</span> MockHttpSession session; </span><br><span class="line">    </span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">    * 使用 MockMvc 时要先使用 MockMvcBuilders 构建 MockMvc 对象</span></span><br><span class="line"><span class="comment">    * 加入 session 部分代码时因为拦截器那边会判断用户是否登录，所以注入一个用户</span></span><br><span class="line"><span class="comment">    * 如果修改了拦截器取消验证，可以不需要该部分代码</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">    <span class="meta">@Before</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setupMockMvc</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="comment">// 初始化MockMvc对象</span></span><br><span class="line">        mvc = MockMvcBuilders.webAppContextSetup(wac).build(); </span><br><span class="line">        session = <span class="keyword">new</span> MockHttpSession();</span><br><span class="line">        User user =<span class="keyword">new</span> User(<span class="string">&quot;root&quot;</span>,<span class="string">&quot;root&quot;</span>);</span><br><span class="line">        session.setAttribute(<span class="string">&quot;user&quot;</span>,user); </span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * GET方法测试用例</span></span><br><span class="line"><span class="comment">     * mockMvc.perform 负责执行一个请求</span></span><br><span class="line"><span class="comment">     *     MockMvcRequestBuilders.get(&quot;/path&quot;) 构造一个请求，根据请求类型调用相应的方法</span></span><br><span class="line"><span class="comment">     *     contentType(MediaType.APPLICATION_JSON_UTF8) 代表发送端的数据格式为 application/json;charset=UTF-8</span></span><br><span class="line"><span class="comment">     *     accept(MediaType.APPLICATION_JSON_UTF8) 代表客户端希望接受的数据格式为 accept(MediaType.APPLICATION_JSON_UTF8)</span></span><br><span class="line"><span class="comment">     *     session.(session) 注入一个 session 来通过拦截器</span></span><br><span class="line"><span class="comment">     * ResultActions.andExpect 添加执行完成后的断言</span></span><br><span class="line"><span class="comment">     *    ResultActions.andExpect(MockMvcResultMatchers.status().isOk()) 查看请求返回的状态码是否为 200，如果不是，抛出异常，测试不通过</span></span><br><span class="line"><span class="comment">     *    ResultActions.andExpect(MockMvcResultMatchers.jsonPath(&quot;$.key1&quot;).value(&quot;value1&quot;)) 查看是否得到预期的返回值，如果不是，测试不通过</span></span><br><span class="line"><span class="comment">     *    ResultActions.andDo() 添加一个结果处理器, 比如 MockMvcResultHandlers.print() 输出整个响应结果信息</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@throws</span> Exception</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">getTest</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        mvc.perform(MockMvcRequestBuilders.get(<span class="string">&quot;/path&quot;</span>)</span><br><span class="line">                    .contentType(MediaType.APPLICATION_JSON_UTF8)</span><br><span class="line">                    .accept(MediaType.APPLICATION_JSON_UTF8)</span><br><span class="line">                    .session(session)</span><br><span class="line">            )</span><br><span class="line">           .andExpect(MockMvcResultMatchers.status().isOk())</span><br><span class="line">           .andExpect(MockMvcResultMatchers.jsonPath(<span class="string">&quot;$.key1&quot;</span>).value(<span class="string">&quot;value1&quot;</span>))</span><br><span class="line">           .andExpect(MockMvcResultMatchers.jsonPath(<span class="string">&quot;$.key2&quot;</span>).value(<span class="string">&quot;value2&quot;</span>))</span><br><span class="line">           .andDo(MockMvcResultHandlers.print());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="打包测试">打包测试</h3>
-<p>用一个 TestSuits 类整理所有测试类然后打包执行测试方法</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Created by simba</span></span><br><span class="line"><span class="comment"> * Date 2021/2/2</span></span><br><span class="line"><span class="comment"> * Description:打包测试</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@RunWith(Suite.class)</span></span><br><span class="line"><span class="meta">@Suite</span>.SuiteClasses(&#123;xxxTest.class,xxxTest2.class&#125;)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestSuits</span> </span>&#123;</span><br><span class="line"> </span><br><span class="line">    <span class="comment">//不用写代码，只需要注解即可</span></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="参考">参考</h3>
-<p><a href="https://blog.csdn.net/weixin_39800144/article/details/79241620">https://blog.csdn.net/weixin_39800144/article/details/79241620</a><br>
-<a href="http://tengj.top/2017/12/28/springboot12/#Service%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95">http://tengj.top/2017/12/28/springboot12/#Service单元测试</a></p>
-]]></content>
-      <categories>
-        <category>技术</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Java日志框架</title>
-    <url>/2021/12/12/Java%E5%B8%B8%E7%94%A8%E6%97%A5%E5%BF%97%E6%A1%86%E6%9E%B6/</url>
-    <content><![CDATA[<p>2021年12月10日，Log4j2 被爆出存在<a href="https://nosec.org/home/detail/4917.html">严重安全漏洞</a>，攻击者可以通过 JNDI 注入的方式远程在目标机器上执行任意代码来发动攻击，一种场景就是，如果有一个接口会将入参用log4j2打印出来，攻击者就可以传入形如<code>$&#123;jndi:rmi//xxxxxx&#125;</code>的命令，在目标机器上执行远程代码。</p>
-<p>在排查最近在开发的一个 Java 项目是否存在该漏洞时，发现这个项目打印的日志并不会触发漏洞，但是项目中又确实存在 log4j2 的依赖。仔细看了一下项目的日志方法，原来这个项目使用的日志框架是 logback 而非 log4j2。这也刚好勾起了我的疑问，平时在使用日志时知道有 slf4j，log4j 这类字眼，logback 很少有见到，对于日志这一块，也是只需要能打印出来供线上问题排查即可。那么 Java 中的日志框架组成是什么样的，又有哪些日志框架呢？</p>
-<h3 id="日志框架">日志框架</h3>
-<p>Java 日志框架采用门面设计模式，主要由日志门面、日志适配器和日志库三大部分构成，其中：</p>
-<ul>
-<li>日志门面：本身不负责日志功能的实现，只是约定了一套接口规范，让使用者无需关注底层日志库以及使用细节。目前最广泛使用的日志门面是 slf4j 和 commons-logging</li>
-<li>日志库：具体实现日志的相关功能，目前主流的三个日志库分别是 log2j、log-jdk 和 logback</li>
-<li>日志适配器：主要完成日志库到日志门面的适配，例如 log4j 没有实现 slf4j 接口，所以如果要实现 log4j + slf4j 的模式，就需要额外引入适配器来解决接口不兼容的问题</li>
-</ul>
-<h3 id="Slf4j">Slf4j</h3>
-<p>很长一段时间，我都以为 slf4j 是和 log4j 一样的一种日志框架，但其实它的全称（Simple Logging Facade for Java）告诉我们，这是专门针对 Java 提供的一种简单日志门面。它本身不提供日志服务，而是统一了接口，供其他日志框架来接入。优点就是，如果后续项目升级时需要更换日志框架，省去了对代码的改动，只需要更换日志框架的 jar 包即可。</p>
-<h3 id="Log4j">Log4j</h3>
-<p>Log4j 一款比较早的日志框架，log4j2 是在此基础上的升级版，有更强大的性能。两者在获取 Logger 的路径上有差异，配置方式也有区别，log4j 本身没有实现 slf4j 接口，如果想要适配，需要引入额外的 jar 包。</p>
-<h3 id="Logback">Logback</h3>
-<p>Logback 是 Log4j 的升级版，由 Slf4j 的作者开发，使用 xml 进行配置。该框架默认实现了 Slf4j 标准，所使用的 Logger 和 LoggerFactory 都是 Slf4j 的实现，使用 slf4j + logback 的组合不需要引入额外的 jar 包。</p>
-<h3 id="参考">参考</h3>
-<p><a href="https://nosec.org/home/detail/4917.html">【安全通报】Apache Log4j2 远程代码执行漏洞</a><br>
-<a href="https://juejin.cn/post/7033021644142542878">log4j、log4j2、slf4j、logback什么关系？到底该使用哪些jar??</a><br>
-<a href="https://www.codenong.com/cs105272888/">Slf4j与log4j及log4j2的关系及使用方法</a></p>
-]]></content>
-      <categories>
-        <category>技术</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Java常用容器及其方法</title>
-    <url>/2021/04/24/Java%E5%B8%B8%E7%94%A8%E5%AE%B9%E5%99%A8%E5%8F%8A%E5%85%B6%E6%96%B9%E6%B3%95/</url>
-    <content><![CDATA[<h3 id="HashSet">HashSet</h3>
-<p>HashSet<T>  hash = new HashSet&lt;&gt;();</p>
-<ul>
-<li>add() 添加元素,返回boolean类型。如果不存在该元素，则添加指定元素并返回true。否则不更改set并返回false</li>
-<li>clear() 移除set所有元素</li>
-<li>remove(Object o) 如果指定元素存在于set中，移除指定元素</li>
-<li>isEmpty() 如果set不包含任何元素，返回true</li>
-<li>contains(Object o) 如果set包含指定元素，返回true</li>
-<li>size() 返回set中元素数量</li>
-</ul>
-<span id="more"></span>
-<h3 id="HashMap">HashMap</h3>
-<p>HashMap&lt;T, T&gt; hashMap = new HashMap&lt;&gt;();</p>
-<ul>
-<li>put(key, value) 添加键值对，如果key已经存在，就返回旧value，并更新成新value。如果不存在，就返回null</li>
-<li>putIfAbsent(key, value); 不会覆盖原有的value</li>
-<li>remove(key) 删除元素。删除成功返回对应的value，否则返回null</li>
-<li>get(key) 获取key对应的value</li>
-<li>containsKey(key) 判断key是否存在</li>
-<li>containsValue(value) 判断value是否存在</li>
-<li>replace(key, value) 对于已经存在的key，替换其value</li>
-</ul>
-<h4 id="HashMap-遍历方法">HashMap 遍历方法</h4>
-<p>一、for-each循环中使用entries遍历</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Map&lt;Integer, Integer&gt; hash = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line"><span class="keyword">for</span>(Map.Entry&lt;Integer, Integer&gt; entry : hash.entrySet()) &#123;</span><br><span class="line">    entry.getKey() + entry.getValue()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>二、在for-each中遍历key或者value集合</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Map&lt;Integer, Integer&gt; hash = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line"><span class="keyword">for</span>(Integer key : hash.keySet()) &#123;</span><br><span class="line">  key;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">for</span>(Integer value : hash.values()) &#123;</span><br><span class="line">  value;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>三、通过键找值</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Map&lt;Integer, Integer&gt; hash = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line"><span class="keyword">for</span>(Integer key : hash.keySet()) &#123;</span><br><span class="line">  value = hash.get(key);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>这种方法效率低，因为通过键来取值很耗时</p>
-<hr>
-<h3 id="LinkedList">LinkedList</h3>
-<p>LinkedList<T> list = new LinkedList&lt;&gt;();</p>
-<h5 id="基本操作">基本操作</h5>
-<p><strong>add</strong></p>
-<ul>
-<li>add() 在链表后添加元素</li>
-<li>addFirst() 在链表头部插入一个元素</li>
-<li>addLast() 在链表尾部添加一个元素</li>
-<li>add(index, element) 在指定位置插入一个元素</li>
-</ul>
-<p><strong>remove</strong></p>
-<ul>
-<li>remove() 移除链表第一个元素</li>
-<li>remove(Obejct o) 移除链表中指定元素</li>
-<li>remove(index) 移除链表中指定位置元素</li>
-<li>removeFirst() 移除链表中第一个元素，与remove类似</li>
-<li>removeLast() 移除链表中最后一个元素</li>
-</ul>
-<p><strong>get</strong></p>
-<ul>
-<li>getFirst() 获取第一个元素</li>
-<li>getLast() 获取最后一个元素</li>
-</ul>
-<h5 id="栈操作">栈操作</h5>
-<ul>
-<li>push() 与addFirst一样</li>
-<li>pop() 与removeFirst一样</li>
-<li>poll() 查询并移除第一个元素</li>
-<li>peek() 获取第一个元素，但是不移除</li>
-</ul>
-<h5 id="队列操作">队列操作</h5>
-<p>Queue&lt;&gt; queue = new LinkedList&lt;&gt;();</p>
-<ul>
-<li>offer() 在队列尾部插入元素</li>
-<li>add() 让元素入队</li>
-<li>poll() 首部元素出队列</li>
-</ul>
-<p><strong>其他</strong></p>
-<ul>
-<li>contains(e) 是否包含某元素</li>
-</ul>
-<h5 id="双端队列-可实现单调队列">双端队列 - 可实现单调队列</h5>
-<p>Deque&lt;&gt; deque = new LinkedList&lt;&gt;();</p>
-<p>peekLast() 获取队列尾端值</p>
-<p>peekFirst() 获取队列尾部值</p>
-<p>removeFirst() 移除队列头部第一个值</p>
-<p>removeLast() 移除队列尾部第一个值</p>
-<hr>
-<h3 id="ArrayList">ArrayList</h3>
-<ul>
-<li>add() 顺序添加元素</li>
-<li>get(i) 获取第i个元素</li>
-<li>Arrays.sort() 列表排序</li>
-<li>remove(index) 删除对应索引的元素</li>
-</ul>
-<hr>
-<h3 id="Stack">Stack</h3>
-<p>是Vector的子类</p>
-<p>push()</p>
-<p>pop()</p>
-<p>peek()</p>
-<hr>
-<h3 id="StringBuilder">StringBuilder</h3>
-<p>append() 向尾部添加字符串</p>
-<p>deleteCharAt(i) 定点删除字符</p>
-<h3 id="String">String</h3>
-<p>//把字符串去头尾后以“，”为分隔符分割成字符串数组</p>
-<p>String[] list = data.substring(1, data.length() - 1).split(“,”);</p>
-<hr>
-<h3 id="System">System</h3>
-<p>arraycopy(Object src, int srcPos, Object dest, int destPos, int length)</p>
-<p>src:源数组;</p>
-<p>srcPos:源数组要复制的起始位置;</p>
-<p>dest:目的数组;</p>
-<p>destPos:目的数组放置的起始位置;</p>
-<p>length:复制的长度.</p>
-]]></content>
-      <categories>
-        <category>技术</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Java 虚拟机</title>
-    <url>/2021/04/24/Java%E8%99%9A%E6%8B%9F%E6%9C%BA/</url>
-    <content><![CDATA[<h2 id="Java虚拟机">Java虚拟机</h2>
-<hr>
-<h3 id="一、运行时数据区域">一、运行时数据区域</h3>
-<hr>
-<p>JVM执行Java程序时会把内存分为多个数据区域，其中：</p>
-<p>堆、方法区（包括运行时常量池）和直接内存被线程共享</p>
-<p>每个线程有自己的程序计数器、本地方法栈和虚拟机栈</p>
-<span id="more"></span>
-<hr>
-<h4 id="程序计数器">程序计数器</h4>
-<p>可以看作是当前线程正在执行的那条字节码指令的地址，如果执行的是本地方法，程序计数器的值是<code>undefined</code></p>
-<p>字节码解释器通过改变计数器的值来选取下一条需要执行的字节码指令</p>
-<p>每条线程有独立的程序计数器，所以在线程切换后能恢复到正确的执行位置</p>
-<p><strong>程序计数器主要的两个作用：</strong></p>
-<ol>
-<li>字节码解释器通过改变计数器的值依次读取指令，从而实现代码的流程控制</li>
-<li>多线程下，程序计数器记录当前线程的执行位置，切换回来后可以知道上次运行到哪</li>
-</ol>
-<p><strong>程序计数器是唯一一个不会出现OutOfMemoryError的内存区域，它的生命周期随着线程的创建而创建，随着线程的结束而死亡。</strong></p>
-<hr>
-<h4 id="Java虚拟机栈">Java虚拟机栈</h4>
-<p>Java虚拟机栈为每个即将运行的Java方法创建一个栈帧</p>
-<p>Java内存可以粗糙分为堆内存和栈内存，栈就是虚拟机栈</p>
-<p>Java虚拟机栈是由一个个栈帧组成，每个栈帧中都有局部变量表、操作数栈、动态链接、方法出口信息。</p>
-<p><strong>局部变量表随着栈帧的创建而创建，大小在编译时就确定，运行时大小不会改变</strong></p>
-<p><strong>存放了编译器可知的8种基本数据类型、对象的引用</strong>（不同于对象本身，可能是对象某个位置的引用）</p>
-<p>方法需要创建局部变量时，就将值放入局部变量表</p>
-<p>Java 虚拟机栈的栈顶的栈帧是当前正在执行的活动栈，也就是当前正在执行的方法，PC 寄存器也会指向这个地址。只有这个活动的栈帧的本地变量可以被操作数栈使用，当在这个栈帧中调用另一个方法，与之对应的栈帧又会被创建，新创建的栈帧压入栈顶，变为当前的活动栈帧。</p>
-<p>方法结束后，当前栈帧被移出，栈帧的返回值变成新的活动栈帧中操作数栈的一个操作数。如果没有返回值，那么新的活动栈帧中操作数栈的操作数没有变化。</p>
-<p><strong>Java 虚拟机栈会出现两种异常：StackOverFlowError 和 OutOfMemoryError。</strong></p>
-<ul>
-<li><strong>StackOverFlowError：</strong> 若Java虚拟机栈的内存大小不允许动态扩展，那么当线程请求栈的深度超过当前Java虚拟机栈的最大深度的时候，就抛出StackOverFlowError异常。</li>
-<li><strong>OutOfMemoryError：</strong> 若 Java 虚拟机栈的内存大小允许动态扩展，且当线程请求栈时内存用完了，无法再动态扩展了，此时抛出OutOfMemoryError异常。</li>
-</ul>
-<p>随着线程的创建而创建，随着线程的死亡而死亡</p>
-<hr>
-<h4 id="本地方法栈">本地方法栈</h4>
-<p>虚拟机栈为虚拟机执行Java方法（也就是字节码）服务，而本地方法栈则为虚拟机使用到的<strong>Native方法服务</strong>，本地方法栈是描述本地方法运行过程的内存模型。</p>
-<p>本地方法被执行的时候，在本地方法栈也会创建一个栈帧，用于存放该本地方法的局部变量表、操作数栈、动态链接、出口信息。</p>
-<p>方法执行完毕后相应的栈帧也会出栈并释放内存空间，也会出现 StackOverFlowError 和 OutOfMemoryError 两种异常。</p>
-<hr>
-<h4 id="堆">堆</h4>
-<p>虚拟机管理内存中最大的一块。**此内存区域的唯一目的就是存放对象实例，几乎所有的对象实例以及数组都在这里分配内存。**在虚拟机启动时创建。</p>
-<p>Java堆是垃圾收集器管理的主要区域，所以也被称作<strong>GC堆（Garbage Collection Heap）</strong></p>
-<p>Java堆会被进一步划分（新生代、老年代、永久代，其中前两种使用的是Java程序可以使用的堆内存），这样可以更好地回收内存和分配内存。永久代是对JVM方法区的实现</p>
-<p>因为是被所有线程共享的，所以访问要注意同步的问题</p>
-<p>对于主流虚拟机，堆是可扩展的。如果线程请求分配内存，但是堆满了，内存也无法扩展，就会抛出OutOfMemoryError异常</p>
-<p>JDK1.8中移除了永久代，用元空间（Metaspace）取代。元空间使用物理内存，永久代使用JVM堆内存</p>
-<p>方法区是一个 JVM 规范，永久代与元空间都是其一种实现方式。在 JDK 1.8 之后，原来永久代的数据被分到了堆和元空间中。<strong>元空间存储类的元信息，静态变量和常量池等放入堆中</strong>。</p>
-<hr>
-<h4 id="方法区">方法区</h4>
-<p>是堆的一个逻辑部分，和Java堆不一样。存储被虚拟机加载的类信息、常量、静态变量、即时编译器编译的代码等。</p>
-<p>方法区被称为“永久代”，因为其中的信息一般都需要长久存在。对方法区的主要回收目标是：对常量池回收；对类的卸载</p>
-<p><strong>相对而言，垃圾收集行为在这个区域是比较少出现的，但并非数据进入方法区后就“永久存在”了。</strong></p>
-<p><strong>运行时常量池</strong>是方法区的一部分，存放编译期间生成的常量（<strong>字面量</strong>和<strong>符号引用</strong>）</p>
-<p>字面量包括：文本字符串，final常量，基本数据类型</p>
-<p>符号引用：类的完全限定名，字段名和描述符，方法名和描述符</p>
-<p>受到方法区内存的限制，无法申请到内存时会抛出OutOfMemoryError异常</p>
-<p>JDK1.7之后的版本将运行时常量池从方法区移到了Java堆中</p>
-<hr>
-<h4 id="直接内存">直接内存</h4>
-<p>不是虚拟机运行时数据区的一部分，也不是虚拟机规范中定义的内存区，但会被频繁使用，也会出现内存超出</p>
-<p>直接内存申请空间耗费更高的性能</p>
-<p>直接内存读取 IO 的性能要优于普通的堆内存。</p>
-<hr>
-<h4 id="Java对象的创建过程">Java对象的创建过程</h4>
-<p>类加载检查 – 分配内存 – 初始化零值 – 设置对象头 – 执行init方法</p>
-<p>类加载检查：遇到new指令，先去检查能否在常量池中定位到类的符号引用，并检查其代表的类是否被加载、解析和初始化过，如果没有，要先执行相应的类加载过程</p>
-<p>分配内存：通过类加载检查后为新生对象分配内存，所需内存大小在类加载完成后就确定，从Java堆中分出一块确定大小的区域，分配方式有<strong>指针碰撞</strong>和<strong>空闲列表</strong>两种</p>
-<p>两种方式取决于堆是否规整，取决于垃圾收集器的算法是“标记-清除”还是“标记-整理”</p>
-<p>指针碰撞：用过的内存放一边，没用过的放一边，只要沿着没用过的地方移动指针就行</p>
-<p>空闲列表：虚拟机会维护一个列表，记录哪些内存块可用。分配内存时找一块足够大的内存块分配给对象，更新列表</p>
-<p>初始化零值：将对象分配到的内存都初始化为零值，保证对象的实例可以不赋初始值就使用</p>
-<p>设置对象头：虚拟机对对象进行必要的设置，将对象的相关信息如：是哪个类的实例、对象的哈希码等放到对象头中</p>
-<p>执行init方法：虚拟机已经产生一个新的对象，但是Java程序中才刚刚开始，init执行后一个新的对象才算产生</p>
-<hr>
-<h4 id="对象的内存布局">对象的内存布局</h4>
-<p>分为3块：对象头、实例数据和对其填充</p>
-<p>对象头包括：自身的运行时数据（哈希码，GC分代年龄）、类型指针（指向类元数据的指针，确定对象是哪个类的实例）</p>
-<p>实例数据：对象的成员变量</p>
-<p>对其填充：起占位作用</p>
-<p>访问对象的方式：</p>
-<p>创建对象时在两个地方分配了内存。引用存在Java虚拟机栈的局部变量表中，但是实际对象存储在堆中</p>
-<p>句柄访问：引用类型的变量存储了对象的句柄地址，通过访问句柄池找到对象，包括对象实例数据（java堆）和对象所属类的数据（方法区）</p>
-<p>直接指针访问：对象的变量直接存放Java堆中对象的地址，但是Java堆中的对象实例还需要额外存储方法区中对象所属类信息的地址。</p>
-<p>hotspot采用直接指针访问，只要一次寻址速度比前者快一倍，但是需要额外策略来存储地址。</p>
-<hr>
-<p>常量池</p>
-<p>直接使用双引号声明出来的 String 对象会直接存储在常量池中， new出来的在堆内存中。</p>
-<ul>
-<li><strong>Byte,Short,Integer,Long,Character,Boolean；这5种包装类默认创建了数值[-128，127]的相应类型的缓存数据，但是超出此范围仍然会去创建新的对象。</strong></li>
-<li><strong>两种浮点数类型的包装类 Float,Double 并没有实现常量池技术。</strong></li>
-</ul>
-<hr>
-<h3 id="二、垃圾收集策略">二、垃圾收集策略</h3>
-<hr>
-<p>关注Java堆和方法区的内存，因为只有运行时才知道创建了哪些对象，这部分内存的分配和回收都是动态的</p>
-<h4 id="判断对象是否存活">判断对象是否存活</h4>
-<hr>
-<p>如果一个对象不被任何对象引用，就是无效对象，会被回收</p>
-<h5 id="引用计数器法">引用计数器法</h5>
-<p>对象头维护一个counter计数器，被引用一次+1，引用失效-1，如果计数器为0该对象就无效</p>
-<p>实现简单，判定效率搞。但主流Java虚拟机没有采用这个方法，因为很难解决对象间循环引用的问题 – 如果两个对象互相引用，计数器都不为0，就无法被回收。</p>
-<h5 id="可达性分析法">可达性分析法</h5>
-<p>所有和GC Roots直接或间接关联的对象都是有效对象，否则是无效对象</p>
-<p>GC Roots 指：</p>
-<ul>
-<li>Java虚拟机栈（栈帧中的局部变量表）中引用的对象</li>
-<li>本地方法栈中引用的对象</li>
-<li>方法区中常量引用的对象</li>
-<li>方法区中静态属性引用的对象</li>
-</ul>
-<p>不包括堆中对象引用的对象，所以不会有循环引用</p>
-<h4 id="引用的种类">引用的种类</h4>
-<hr>
-<h5 id="强引用-Strong">强引用 Strong</h5>
-<p>类似Object obj = new Object()就是强引用，只要强引用存在。GC永远不会回收被引用的对象。但是，如果我们<strong>错误地保持了强引用</strong>，比如：赋值给了 static 变量，那么对象在很长一段时间内不会被回收，会产生内存泄漏。</p>
-<h5 id="软引用-Soft">软引用 Soft</h5>
-<p>软引用是一种相对强引用弱化一些的引用，可以让对象豁免一些垃圾收集，只有当 JVM 认为内存不足时，才会去试图回收软引用指向的对象。JVM 会确保在抛出 OutOfMemoryError 之前，清理软引用指向的对象。软引用通常用来<strong>实现内存敏感的缓存</strong>，如果还有空闲内存，就可以暂时保留缓存，当内存不足时清理掉，这样就保证了使用缓存的同时，不会耗尽内存。</p>
-<h5 id="弱引用-Weak">弱引用 Weak</h5>
-<p>弱引用的<strong>强度比软引用更弱</strong>一些。当 JVM 进行垃圾回收时，<strong>无论内存是否充足，都会回收</strong>只被弱引用关联的对象。</p>
-<h5 id="虚引用-Phantom">虚引用 Phantom</h5>
-<p>虚引用也称幽灵引用或者幻影引用，它是<strong>最弱</strong>的一种引用关系。一个对象是否有虚引用的存在，完全不会对其生存时间构成影响。它仅仅是提供了一种确保对象被 finalize 以后，做某些事情的机制，比如，通常用来做所谓的 Post-Mortem 清理机制。</p>
-<h4 id="回收堆中无效对象">回收堆中无效对象</h4>
-<hr>
-<h5 id="判断finalize-是否有必要执行">判断finalize()是否有必要执行</h5>
-<p>对于不可达的对象，会判断finalize()方法是否有必要执行，如果已经被执行过（任何一个对象的 finalize() 方法只会被系统自动调用一次）或者该方法没有被对象重写，对象就会真的被回收。</p>
-<p>如果被判定为有必要执行finalize()方法，就会放入一个F-Queue队列以较低优先级执行方法，但不确保会执行结束。</p>
-<h5 id="对象重生或死亡">对象重生或死亡</h5>
-<p>之所以提finalize()，是因为如果在方法中将this赋给某一引用，对象就重生了。否则对象就会被GC清除。</p>
-<h4 id="回收方法区内存">回收方法区内存</h4>
-<hr>
-<p>方法区中主要清除2类垃圾：废弃常量、无用的类</p>
-<h5 id="判定废弃常量">判定废弃常量</h5>
-<p>对于常量，只要常量池中的常量没有被任何的变量或对象引用，就会被清除</p>
-<h5 id="判定无用的类">判定无用的类</h5>
-<p>条件较为苛刻：</p>
-<ul>
-<li>该类的所有对象都被清除</li>
-<li>加载该类的classLoader已经被回收</li>
-<li>该类的java.lang.Class对象没有在任何地方被引用，无法在任何地方通过反射访问到该类的方法</li>
-</ul>
-<p><strong>一个类被虚拟机加载进方法区，在堆中就会有一个代表该类的对象：java.lang.Class。这个对象在类被加载到方法区时被创建，在方法区该类被删除时清除。</strong></p>
-<h4 id="垃圾收集算法">垃圾收集算法</h4>
-<hr>
-<p>常见的垃圾收集算法</p>
-<p>见： <a href="https://github.com/doocs/jvm/blob/master/docs/03-gc-algorithms.md">https://github.com/doocs/jvm/blob/master/docs/03-gc-algorithms.md</a></p>
-<h3 id="三、内存分配与回收策略">三、内存分配与回收策略</h3>
-<hr>
-<p>对象的内存分配就是在堆上分配</p>
-<h4 id="对象优先在Eden分配">对象优先在Eden分配</h4>
-<hr>
-<p>多数情况下对象在新生代Eden区进行分配，Eden区内存不够时，虚拟机将发起一次Minor GC。</p>
-<ul>
-<li>Minor GC：回收新生代（包括 Eden 和 Survivor 区域），因为 Java 对象大多都具备朝生夕灭的特性，所以 Minor GC 非常频繁，一般回收速度也比较快。</li>
-<li>Major GC / Full GC: 回收老年代，出现了 Major GC，经常会伴随至少一次的 Minor GC，但这并非绝对。Major GC 的速度一般会比 Minor GC 慢 10 倍 以上。</li>
-</ul>
-<h4 id="大对象直接进入老年代">大对象直接进入老年代</h4>
-<hr>
-<p>大对象指需要大量连续内存空间的Java对象，例如很长的字符串或数据</p>
-<p>一个大对象能够存入 Eden 区的概率比较小，发生分配担保的概率比较大，而分配担保需要涉及大量的复制，就会造成效率低下。</p>
-<p>虚拟机提供了一个 -XX:PretenureSizeThreshold 参数，令大于这个设置值的对象直接在老年代分配，这样做的目的是避免在 Eden 区及两个 Survivor 区之间发生大量的内存复制。</p>
-<h4 id="长期存活的对象将进入老年代">长期存活的对象将进入老年代</h4>
-<hr>
-<p>JVM给每个对象定义一个年龄计数器，每次发生Minor GC存活时，存活下的对象年龄+1，超过一定值就转移到老年代</p>
-<p>使用 -XXMaxTenuringThreshold 设置新生代的最大年龄，只要超过该参数的新生代对象都会被转移到老年代中去。</p>
-<h4 id="动态对象年龄判定">动态对象年龄判定</h4>
-<hr>
-<p>如果新生代Survivor中相同年龄所有对象的总和大于Survivor空间的一半，将年龄&gt;=该年龄的对象直接放入老年代。</p>
-<h4 id="空间分配担保">空间分配担保</h4>
-<hr>
-<p>JDK 6 Update24 之后</p>
-<p>只要老年代的连续空间大于历次晋升的平均大小，就进行Minor GC，否则进行Full GC。</p>
-<p>通过清除老年代中飞起数据来扩大老年代空闲空间，为新生代作担保，这个过程就是分配担保。</p>
-<hr>
-<h4 id="会触发JVM进行Full-GC的情况">会触发JVM进行Full GC的情况</h4>
-<p>System.gc()的调用</p>
-<p>老年代空间不足</p>
-<p>发生空间分配担保</p>
-<hr>
-<h3 id="四、JVM-类加载">四、JVM 类加载</h3>
-<h4 id="JVM的“无关性”">JVM的“无关性”</h4>
-<hr>
-<p>谈论 JVM 的无关性，主要有以下两个：</p>
-<ul>
-<li>平台无关性：任何操作系统都能运行 Java 代码</li>
-<li>语言无关性： JVM 能运行除 Java 以外的其他代码</li>
-</ul>
-<p>Java 源代码首先需要使用 Javac 编译器编译成 .class 文件，然后由 JVM 执行 .class 文件，从而程序开始运行。</p>
-<p><strong>JVM 只认识 .class 文件，它不关心是何种语言生成了 .class 文件，只要 .class 文件符合 JVM 的规范就能运行。</strong> 目前已经有 JRuby、Jython、Scala 等语言能够在 JVM 上运行。它们有各自的语法规则，不过它们的编译器 都能将各自的源码编译成符合 JVM 规范的 .class 文件，从而能够借助 JVM 运行它们。</p>
-<h4 id="类加载的时机">类加载的时机</h4>
-<hr>
-<p>详细查看：<a href="https://github.com/doocs/jvm/blob/master/docs/08-load-class-time.md">https://github.com/doocs/jvm/blob/master/docs/08-load-class-time.md</a></p>
-<h4 id="接口的加载过程">接口的加载过程</h4>
-<p>接口加载过程与类加载过程稍有不同。</p>
-<p>当一个类在初始化时，要求其父类全部都已经初始化过了，但是一个接口在初始化时，并不要求其父接口全部都完成了初始化，当真正用到父接口的时候才会初始化。</p>
-<h4 id="类加载的过程">类加载的过程</h4>
-<hr>
-<p>类加载过程包括5个阶段：加载、验证、准备、解析、初始化</p>
-<h5 id="加载">加载</h5>
-<p>“加载”是“类加载”过程的一个阶段，不能混淆这两个名词。在加载阶段，虚拟机需要完成 3 件事：</p>
-<ul>
-<li>通过类的全限定名获取该类的二进制字节流。</li>
-<li>将二进制字节流所代表的静态结构转化为方法区的运行时数据结构</li>
-<li>在内存中创建一个java.lang.Class对象，作为方法区这个类的各种数据的访问入口</li>
-</ul>
-<p><strong>二进制字节流</strong>（Class文件）从哪获取：</p>
-<ul>
-<li>压缩包，如jar、war包</li>
-<li>网络中，applet</li>
-<li>由jsp文件生成对应的class</li>
-</ul>
-<h5 id="“数组类”和“非数组类”加载比较">“数组类”和“非数组类”加载比较</h5>
-<p>在Java中数组是一个Java类</p>
-<ul>
-<li>数组类本身不通过类加载器创建，是由Java虚拟机直接创建的，再由类加载器创建数组中的元素类</li>
-<li>非数组类加载阶段可以使用系统提供的引导类加载器，也可以由用户自定义的加载器完成</li>
-</ul>
-<h5 id="注意事项">注意事项</h5>
-<ul>
-<li>虚拟机没有规定class对象（java.lang.Class）的存储位置，对于Hotspot来说，class对象虽然是对象，但是存在方法区中。</li>
-<li>加载和连接阶段交叉进行，加载没有完成就可能开始连接了。</li>
-</ul>
-<h4 id="验证">验证</h4>
-<hr>
-<h5 id="验证阶段的重要性">验证阶段的重要性</h5>
-<p>保证class文件的字节流包含的信息符合当前虚拟机的要求。不会危害虚拟机自身的安全。</p>
-<h5 id="验证的过程">验证的过程</h5>
-<p>文件格式验证、元数据验证、字节码验证、符号引用验证</p>
-<h4 id="准备">准备</h4>
-<hr>
-<p>准备阶段是正式为类变量（或称“静态成员变量”）分配内存并设置初始值的阶段。这些变量（不包括实例变量）所使用的内存都在方法区中进行分配。</p>
-<p>类变量的初始值通常是数据类型的零值（0， null）</p>
-<p>但如果这个类变量被声明为常量，就会被初始化为所指定的值</p>
-<p>如 <code>public static final int value = 123;</code> 在准备阶段，jvm会将value赋值为123</p>
-<h4 id="解析">解析</h4>
-<hr>
-<p>解析阶段是虚拟机将常量池内的符号引用替换为直接引用的过程</p>
-<p>符号引用：符号引用以一组符号来描述所引用的目标，符号可以是任何形式的字面量，只要使用时能够无歧义的定位到目标即可。</p>
-<p>直接引用可以是：</p>
-<ul>
-<li>
-<p>直接指向目标的指针（比如，指向“类型”【Class对象】、类变量、类方法的直接引用可能是指向方法区的指针）</p>
-</li>
-<li>
-<p>相对偏移量（比如，指向实例变量、实例方法的直接引用都是偏移量）</p>
-</li>
-<li>
-<p>一个能间接定位到目标的句柄</p>
-</li>
-</ul>
-<p>直接引用是和虚拟机的布局相关的，同一个符号引用在不同的虚拟机实例上翻译出来的直接引用一般不会相同。如果有了直接引用，那引用的目标必定已经被加载入内存中了。</p>
-<h4 id="初始化">初始化</h4>
-<hr>
-<p>类初始化阶段是类加载过程的最后一步，是执行类构造器<clinit>()方法的过程。</p>
-<p><clinit>()方法是由编译器自动收集类中所有类变量的赋值动作和静态语句块（static{}块）中的语句产生</p>
-<p><clinit>() 方法不需要显式调用父类构造器，虚拟机会保证在子类的 <clinit>() 方法执行之前，父类的 <clinit>() 方法已经执行完毕。</p>
-<p>由于父类的 <clinit>() 方法先执行，意味着父类中定义的静态语句块要优先于子类的变量赋值操作。</p>
-<p><clinit>() 方法不是必需的，如果一个类没有静态语句块，也没有对类变量的赋值操作，那么编译器可以不为这个类生成 <clinit>() 方法。</p>
-<p>接口中不能使用静态代码块，但接口也需要通过 <clinit>() 方法为接口中定义的静态成员变量显式初始化。但接口与类不同，接口的 <clinit>() 方法不需要先执行父类的 <clinit>() 方法，只有当父接口中定义的变量使用时，父接口才会初始化。</p>
-<p>虚拟机会保证一个类的 <clinit>() 方法在多线程环境中被正确加锁、同步。如果多个线程同时去初始化一个类，那么只会有一个线程去执行这个类的 <clinit>() 方法。</p>
-<h3 id="五、Java类加载器">五、Java类加载器</h3>
-<hr>
-<ul>
-<li>见：<a href="https://github.com/doocs/jvm/blob/master/docs/10-class-loader.md">https://github.com/doocs/jvm/blob/master/docs/10-class-loader.md</a></li>
-</ul>
-<h4 id="双亲委派模型">双亲委派模型</h4>
-<h5 id="什么是双亲委派模型">什么是双亲委派模型</h5>
-<p>双亲委派模型是描述类加载器之间的层次关系。它要求除了顶层的启动类加载器外，其余的类加载器都应当有自己的父类加载器。（父子关系一般不会以继承的关系实现，而是以组合关系来复用父加载器的代码）</p>
-<p>在类加载的时候，系统会首先判断当前类是否被加载过。已经被加载的类会直接返回，否则才会尝试加载。加载的时候，首先会把该请求委派该父类加载器的 <code>loadClass()</code> 处理，因此所有的请求最终都应该传送到顶层的启动类加载器 <code>BootstrapClassLoader</code> 中。当父类加载器无法处理时，才由自己来处理。当父类加载器为null时，会使用启动类加载器 <code>BootstrapClassLoader</code> 作为父类加载器。</p>
-]]></content>
-      <categories>
-        <category>面试</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-        <tag>JVM</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Linux 常用命令</title>
-    <url>/2021/04/22/Linux-%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</url>
-    <content><![CDATA[<p>收录工作中常用的 Linux 命令</p>
-<blockquote>
-<p>文件操作、服务器问题排查等</p>
-</blockquote>
-<span id="more"></span>
-<h3 id="Linux-常用命令">Linux 常用命令</h3>
-<h4 id="查看服务器信息">查看服务器信息</h4>
-<h5 id="top">top</h5>
-<p>查看 CPU 占用率</p>
-<h5 id="free">free</h5>
-<p>查看内存使用情况<br>
-各项指标的意义如下：</p>
-<ul>
-<li>total：总表示物理内存的大小;</li>
-<li>used：已使用的内存大小;</li>
-<li>free：可用内存大小;</li>
-<li>shared：多个进程共享的内存总额;</li>
-<li>buff/cached：磁盘缓存的大小;</li>
-<li>available：应用程序能使用的物理内存大小。</li>
-</ul>
-<h5 id="ps">ps</h5>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ps -ef | grep svn     # 查看指定进程</span><br></pre></td></tr></table></figure>
-<h5 id="查看磁盘使用情况">查看磁盘使用情况</h5>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">df -h</span><br></pre></td></tr></table></figure>
-<h4 id="文件操作">文件操作</h4>
-<h5 id="tail-查看日志">tail 查看日志</h5>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">tail -fn 1000 xxx.log    # 循环实时查看最后 1000 条记录</span><br></pre></td></tr></table></figure>
-<h5 id="ls">ls</h5>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ls -lh    # 列出显示文件详细信息</span><br><span class="line">ls -lrS     # 按大小反序显示文件详细信息</span><br><span class="line">ls -l t*    # 列出当前目录中所有以&quot;t&quot;开头的目录的详细内容 </span><br></pre></td></tr></table></figure>
-<h5 id="I-O-信息">I/O 信息</h5>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">iostat -d -k 1 10       #查看TPS和吞吐量信息</span><br><span class="line">iostat -d -x -k 1 10    #查看设备使用率（%util）、响应时间（await）</span><br><span class="line">iostat -c 1 10          #查看cpu状态</span><br><span class="line"></span><br><span class="line">指标</span><br><span class="line"><span class="meta">%</span><span class="bash">iowait：每一个IO请求的处理的平均时间（单位是毫秒），这里可以理解为IO的响应时间，一般地系统IO响应时间应该低于5ms，如果大于10ms就比较大了。</span> </span><br><span class="line">kB_read/s：每秒读K字节数 </span><br><span class="line">kB_wrtn/s ：每秒写K字节数 </span><br><span class="line">r/s： 每秒完成的读 I/O 设备次数。即 delta（rio）/s </span><br><span class="line">w/s： 每秒完成的写 I/O 设备次数。即 delta（wio）/s </span><br><span class="line">rsec/s： 每秒读扇区数。即 delta（rsect）/s </span><br><span class="line">wsec/s： 每秒写扇区数。即 delta（wsect）/s </span><br><span class="line">tps：该设备每秒的传输次数 ，“一次传输”意思是“一次I/O请求”。多个逻辑请求可能会被合并为“一次I/O请求”。</span><br></pre></td></tr></table></figure>
-<h5 id="du-查看文件-文件夹大小">du 查看文件/文件夹大小</h5>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">du -sh * | sort -hr # 列出文件夹下所有文件大小并降序排序</span><br><span class="line">du -b /home         # 以字节为单位显示/home 文件夹下各个子文件夹的大小</span><br><span class="line">du -h ./            # 以mb为单位显示当前 文件夹下各个子文件夹的大小</span><br><span class="line">du -ks /home        # 以千字节KB 为单位显示/home 文件夹的总大小 </span><br></pre></td></tr></table></figure>
-<h5 id="找出最大的-5-个目录">找出最大的 5 个目录</h5>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">du -hm / --max-depth=1 | sort -nr | head -5 </span><br></pre></td></tr></table></figure>
-<h4 id="查询操作">查询操作</h4>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">which     # 查看可执行文件的位置。</span><br><span class="line">whereis   # 查看文件的位置。</span><br><span class="line">locate    # 配合数据库查看文件位置。</span><br><span class="line">find      # 实际搜寻硬盘查询文件名称。</span><br></pre></td></tr></table></figure>
-<h5 id="which">which</h5>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">which     # 搜索某个 系统命令/可执行文件 的路径</span><br></pre></td></tr></table></figure>
-<h5 id="whereis">whereis</h5>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 只能用于程序名的搜索</span></span><br><span class="line">-b   # 定位可执行文件。</span><br><span class="line">-m   # 定位帮助文件。</span><br><span class="line">-s   # 定位源代码文件。</span><br><span class="line">-u   # 搜索默认路径下除可执行文件、源代码文件、帮助文件以外的其它文件。</span><br></pre></td></tr></table></figure>
-<h5 id="find">find</h5>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">find -atime -2         # 查找 48 小时内修改过的文件</span><br><span class="line">find ./ -name &#x27;*.log&#x27;  # 在当前目录查找 以 .log 结尾的文件。 . 代表当前目录</span><br><span class="line">find -size +1000c      # 查找大于 1K 的文件</span><br></pre></td></tr></table></figure>
-<h4 id="用户操作">用户操作</h4>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo -s                # 切换到 root 用户</span><br><span class="line">sudo su username       # 切换用户</span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>效率</category>
-      </categories>
-      <tags>
-        <tag>Linux</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Redis 实现分布式锁</title>
-    <url>/2021/06/10/Redis-%E5%AE%9E%E7%8E%B0%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/</url>
-    <content><![CDATA[<h3 id="Redis-实现">Redis 实现</h3>
-<p>Redis 分布式锁的实现主要基于 <code>SETNX key value</code> 这个指令</p>
-<ul>
-<li>如果 key 不存在，就创建对应的键值对，创建成功，返回 1</li>
-<li>如果 key 存在，创建失败，返回 0</li>
-</ul>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">&gt;</span><span class="bash"> setnx 1 xin</span></span><br><span class="line">(integer) 1</span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> setnx 1 xin2</span></span><br><span class="line">(integer) 0</span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> setnx 2 xin</span></span><br><span class="line">(integer) 1</span><br></pre></td></tr></table></figure>
-<p>除此之外还需要解决键值对长期有效的问题，还需要为键值对设置一个过期时间，对应的 redis 指令为 <code>EXPIRE key seconds</code>，到期之后键值会自动删除</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">&gt;</span><span class="bash"> get 1</span></span><br><span class="line">&quot;xin&quot;</span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> expire 1 2</span></span><br><span class="line">(integer) 1</span><br><span class="line">// 2秒后</span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> get 1</span></span><br><span class="line">(nil)</span><br></pre></td></tr></table></figure>
-<p>在 redis 2.6.12 以后的版本，可以用组合指令来实现上述的分布式锁<br>
-<code>SET key value [EX seconds] NX</code></p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">&gt;</span><span class="bash"> <span class="built_in">set</span> 1 xin ex 10 nx</span></span><br><span class="line">OK</span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> get 1</span></span><br><span class="line">&quot;xin&quot;</span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> ttl 1</span></span><br><span class="line">(integer) 4</span><br><span class="line">// 10秒后</span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> ttl 1</span></span><br><span class="line">(integer) -2</span><br></pre></td></tr></table></figure>
-<p><code>ttl key</code> 命令用于查看键值对的剩余过期时间</p>
-<ul>
-<li>对于设置了过期时间并且尚未过期的键值对，ttl 命令返回剩余过期时间；</li>
-<li>对于已过期不存在的键值对，ttl 命令返回 -2；</li>
-<li>对于没有过期时间的键值对，ttl 命令返回 -1；</li>
-</ul>
-<h3 id="Jedis-实现">Jedis 实现</h3>
-<p>在 Jedis 中可以实现一个 <code>setNxAndExp</code> 方法来实现分布式锁的功能</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> Integer <span class="title">setNxAndExp</span><span class="params">(String key, String val, <span class="keyword">int</span> expSecond)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 如果键值对创建成功，设置一个过期时间</span></span><br><span class="line">    <span class="keyword">if</span> (jedisCluster.setNx(key, val) &gt; <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (expSecond &gt; <span class="number">0</span>) &#123;</span><br><span class="line">            jedisCluster.expire(key, expSecond);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">// 如果创建失败，并且已有的键值对没有过期时间，为其设置一个过期时间，一段时间后释放锁</span></span><br><span class="line">        <span class="keyword">if</span> (jedisCluster.ttl(key).longValue() == -<span class="number">1</span>) &#123;</span><br><span class="line">            jedisCluster.expire(key, expSecond);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 创建成功返回 1，创建失败返回 0，与 setNx 返回值相同</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="参考">参考</h3>
-<p><a href="https://blog.csdn.net/CoreyXuu/article/details/89019869">redis 基于SETNX和EXPIRE的用法 实现redis 分布式锁</a></p>
-]]></content>
-      <categories>
-        <category>技术</category>
-      </categories>
-      <tags>
-        <tag>Redis</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>@RequestParam、@RequestBody 和 @ModelAttribute 的区别</title>
-    <url>/2021/05/17/RequestParam%E3%80%81-RequestBody-%E5%92%8C-ModelAttribute-%E7%9A%84%E5%8C%BA%E5%88%AB/</url>
-    <content><![CDATA[<p>三种注解的区别和使用场景</p>
-<h3 id="RequestParam">@RequestParam</h3>
-<p>用来处理 Content-Type 为 application/x-www-form-urlencoded 编码的内容<br>
-GET 和 POST 请求的参数会自动赋值给 @RequestParam 注解的变量<br>
-例如，@RequestParam(value=“username”) String userName 会直接将请求中名称为 username 变量的值赋值给 userName 参数<br>
-如果不加该注解，则必须保证请求中的参数名与函数的参数名一致，即 函数中的参数要是 String username</p>
-<h3 id="RequestBody">@RequestBody</h3>
-<p>一般用来处理 HttpEntity 传来的 Content-Type 非 application/x-www-form-urlencoded 编码的数据</p>
-<p>GET 请求没有 HttpEntity，所以 @RequestBody 不适用于 GET 请求<br>
-POST 请求通过 HttpEntity 传输的参数，要在请求中声明 Content-Type 类型，Spring 会解析 HttpEntity 中的数据，并绑定到相应的 bean 上</p>
-<h3 id="ModelAttribute">@ModelAttribute</h3>
-<p>一般用于 GET 请求，将参数和 Model 对象参数绑定，变量名要和对象的属性值相对应</p>
-<hr>
-<p>前端使用 GET 或 POST 方式提交数据时，数据编码格式由请求头的 Content-Type 指定，分为以下几种情况：</p>
-<ol>
-<li>application/x-www-form-urlencoded，这种情况的数据@RequestParam、@ModelAttribute可以处理，@RequestBody也可以处理。</li>
-<li>multipart/form-data，@RequestBody不能处理这种格式的数据。（form表单里面有文件上传时，必须要指定enctype属性值为multipart/form-data，意思是以二进制流的形式传输文件。）</li>
-<li>application/json、application/xml等格式的数据，必须使用@RequestBody来处理。</li>
-</ol>
-<h3 id="参考">参考</h3>
-<p><a href="https://www.cnblogs.com/zeroingToOne/p/8992746.html">@RequestParam、@RequestBody和@ModelAttribute区别</a></p>
-]]></content>
-      <categories>
-        <category>技术</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-        <tag>Spring</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Kafka 学习</title>
     <url>/2022/01/07/Kafka-%E5%AD%A6%E4%B9%A0/</url>
     <content><![CDATA[<h3 id="Kafka">Kafka</h3>
@@ -1671,6 +1549,127 @@ Kafka 文件采取顺序写的方式，减少了磁盘寻道和旋转的次数�
       </tags>
   </entry>
   <entry>
+    <title>MySQL 主从同步</title>
+    <url>/2021/06/22/MySQL%20%E4%B8%BB%E4%BB%8E%E5%90%8C%E6%AD%A5/</url>
+    <content><![CDATA[<h4 id="配置文件">配置文件</h4>
+<p>电台项目中消费 binlog 的服务需要对 MySQL 的配置文件进行修改，修改参数如下</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line">[<span class="string">mysqld</span>]</span><br><span class="line"><span class="string">log-bin=mysql-bin</span>    <span class="comment"># 日志记录到指定位置</span></span><br><span class="line"><span class="string">binlog-format=ROW</span>    <span class="comment"># 只要记录发生修改，就写到 binlog 中</span></span><br><span class="line"><span class="string">binlog_row_image=full</span></span><br><span class="line"><span class="string">log_slave_updates=1</span> </span><br><span class="line"><span class="string">server-id=1</span></span><br></pre></td></tr></table></figure>
+<p>log_slave_updates=1 是因为 redis 同步服务实际消费的是从节点的 binlog，而从节点是通过消费主节点的 binlog 来实现主从同步。log_slave_updates=1 所代表的就是从服务器将在主服务器收到的更新记录记录到从服务器自己的 binlog 中，由此 redis 同步服务才能消费到对应 MySQL 服务器的 binlog<br>
+如果没有该配置，会造成的情况是，主节点的数据变更后，从节点能够正常同步主节点的信息，但是 redis 同步服务却无法获取到更新信息，因为从节点没有记录 binlog<br>
+binlog_row_image=full 记录的信息最为全面<br>
+数据库中有前镜像和后镜像的概念：</p>
+<ul>
+<li>前镜像(before image): 记录修改前的内容</li>
+<li>后镜像(after image): 记录修改后的内容<br>
+对 insert 来说，只有后镜像没有前镜像；<br>
+对 update 来说，有前镜像和后镜像；<br>
+对 delete 来说，只有前镜像没有后镜像<br>
+binlog_row_image=full 可以覆盖到所有修改信息</li>
+</ul>
+<h4 id="Binlog-日志模式">Binlog 日志模式</h4>
+<p><strong>ROW Level</strong><br>
+详细记录每一行数据被修改的细节。优点是数据准确，缺点是产生的 binlog 数据量巨大，尤其是发生批量修改时<br>
+<strong>Statement Level</strong><br>
+记录的是修改记录的那条 SQL 语句。优点是数据量小，缺点是对函数和存储过程这类特殊功能的复制不友好<br>
+<strong>Mixed</strong><br>
+会根据每一条 SQL 记录来选择适合的日志格式</p>
+]]></content>
+      <categories>
+        <category>技术</category>
+      </categories>
+      <tags>
+        <tag>MySQL</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>@RequestParam、@RequestBody 和 @ModelAttribute 的区别</title>
+    <url>/2021/05/17/RequestParam%E3%80%81-RequestBody-%E5%92%8C-ModelAttribute-%E7%9A%84%E5%8C%BA%E5%88%AB/</url>
+    <content><![CDATA[<p>三种注解的区别和使用场景</p>
+<h3 id="RequestParam">@RequestParam</h3>
+<p>用来处理 Content-Type 为 application/x-www-form-urlencoded 编码的内容<br>
+GET 和 POST 请求的参数会自动赋值给 @RequestParam 注解的变量<br>
+例如，@RequestParam(value=“username”) String userName 会直接将请求中名称为 username 变量的值赋值给 userName 参数<br>
+如果不加该注解，则必须保证请求中的参数名与函数的参数名一致，即 函数中的参数要是 String username</p>
+<h3 id="RequestBody">@RequestBody</h3>
+<p>一般用来处理 HttpEntity 传来的 Content-Type 非 application/x-www-form-urlencoded 编码的数据</p>
+<p>GET 请求没有 HttpEntity，所以 @RequestBody 不适用于 GET 请求<br>
+POST 请求通过 HttpEntity 传输的参数，要在请求中声明 Content-Type 类型，Spring 会解析 HttpEntity 中的数据，并绑定到相应的 bean 上</p>
+<h3 id="ModelAttribute">@ModelAttribute</h3>
+<p>一般用于 GET 请求，将参数和 Model 对象参数绑定，变量名要和对象的属性值相对应</p>
+<hr>
+<p>前端使用 GET 或 POST 方式提交数据时，数据编码格式由请求头的 Content-Type 指定，分为以下几种情况：</p>
+<ol>
+<li>application/x-www-form-urlencoded，这种情况的数据@RequestParam、@ModelAttribute可以处理，@RequestBody也可以处理。</li>
+<li>multipart/form-data，@RequestBody不能处理这种格式的数据。（form表单里面有文件上传时，必须要指定enctype属性值为multipart/form-data，意思是以二进制流的形式传输文件。）</li>
+<li>application/json、application/xml等格式的数据，必须使用@RequestBody来处理。</li>
+</ol>
+<h3 id="参考">参考</h3>
+<p><a href="https://www.cnblogs.com/zeroingToOne/p/8992746.html">@RequestParam、@RequestBody和@ModelAttribute区别</a></p>
+]]></content>
+      <categories>
+        <category>技术</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>Spring</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Linux 常用命令</title>
+    <url>/2021/04/22/Linux-%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</url>
+    <content><![CDATA[<p>收录工作中常用的 Linux 命令</p>
+<blockquote>
+<p>文件操作、服务器问题排查等</p>
+</blockquote>
+<span id="more"></span>
+<h3 id="Linux-常用命令">Linux 常用命令</h3>
+<h4 id="查看服务器信息">查看服务器信息</h4>
+<h5 id="top">top</h5>
+<p>查看 CPU 占用率</p>
+<h5 id="free">free</h5>
+<p>查看内存使用情况<br>
+各项指标的意义如下：</p>
+<ul>
+<li>total：总表示物理内存的大小;</li>
+<li>used：已使用的内存大小;</li>
+<li>free：可用内存大小;</li>
+<li>shared：多个进程共享的内存总额;</li>
+<li>buff/cached：磁盘缓存的大小;</li>
+<li>available：应用程序能使用的物理内存大小。</li>
+</ul>
+<h5 id="ps">ps</h5>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ps -ef | grep svn     # 查看指定进程</span><br></pre></td></tr></table></figure>
+<h5 id="查看磁盘使用情况">查看磁盘使用情况</h5>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">df -h</span><br></pre></td></tr></table></figure>
+<h4 id="文件操作">文件操作</h4>
+<h5 id="tail-查看日志">tail 查看日志</h5>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">tail -fn 1000 xxx.log    # 循环实时查看最后 1000 条记录</span><br></pre></td></tr></table></figure>
+<h5 id="ls">ls</h5>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ls -lh    # 列出显示文件详细信息</span><br><span class="line">ls -lrS     # 按大小反序显示文件详细信息</span><br><span class="line">ls -l t*    # 列出当前目录中所有以&quot;t&quot;开头的目录的详细内容 </span><br></pre></td></tr></table></figure>
+<h5 id="I-O-信息">I/O 信息</h5>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">iostat -d -k 1 10       #查看TPS和吞吐量信息</span><br><span class="line">iostat -d -x -k 1 10    #查看设备使用率（%util）、响应时间（await）</span><br><span class="line">iostat -c 1 10          #查看cpu状态</span><br><span class="line"></span><br><span class="line">指标</span><br><span class="line"><span class="meta">%</span><span class="bash">iowait：每一个IO请求的处理的平均时间（单位是毫秒），这里可以理解为IO的响应时间，一般地系统IO响应时间应该低于5ms，如果大于10ms就比较大了。</span> </span><br><span class="line">kB_read/s：每秒读K字节数 </span><br><span class="line">kB_wrtn/s ：每秒写K字节数 </span><br><span class="line">r/s： 每秒完成的读 I/O 设备次数。即 delta（rio）/s </span><br><span class="line">w/s： 每秒完成的写 I/O 设备次数。即 delta（wio）/s </span><br><span class="line">rsec/s： 每秒读扇区数。即 delta（rsect）/s </span><br><span class="line">wsec/s： 每秒写扇区数。即 delta（wsect）/s </span><br><span class="line">tps：该设备每秒的传输次数 ，“一次传输”意思是“一次I/O请求”。多个逻辑请求可能会被合并为“一次I/O请求”。</span><br></pre></td></tr></table></figure>
+<h5 id="du-查看文件-文件夹大小">du 查看文件/文件夹大小</h5>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">du -sh * | sort -hr # 列出文件夹下所有文件大小并降序排序</span><br><span class="line">du -b /home         # 以字节为单位显示/home 文件夹下各个子文件夹的大小</span><br><span class="line">du -h ./            # 以mb为单位显示当前 文件夹下各个子文件夹的大小</span><br><span class="line">du -ks /home        # 以千字节KB 为单位显示/home 文件夹的总大小 </span><br></pre></td></tr></table></figure>
+<h5 id="找出最大的-5-个目录">找出最大的 5 个目录</h5>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">du -hm / --max-depth=1 | sort -nr | head -5 </span><br></pre></td></tr></table></figure>
+<h4 id="查询操作">查询操作</h4>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">which     # 查看可执行文件的位置。</span><br><span class="line">whereis   # 查看文件的位置。</span><br><span class="line">locate    # 配合数据库查看文件位置。</span><br><span class="line">find      # 实际搜寻硬盘查询文件名称。</span><br></pre></td></tr></table></figure>
+<h5 id="which">which</h5>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">which     # 搜索某个 系统命令/可执行文件 的路径</span><br></pre></td></tr></table></figure>
+<h5 id="whereis">whereis</h5>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 只能用于程序名的搜索</span></span><br><span class="line">-b   # 定位可执行文件。</span><br><span class="line">-m   # 定位帮助文件。</span><br><span class="line">-s   # 定位源代码文件。</span><br><span class="line">-u   # 搜索默认路径下除可执行文件、源代码文件、帮助文件以外的其它文件。</span><br></pre></td></tr></table></figure>
+<h5 id="find">find</h5>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">find -atime -2         # 查找 48 小时内修改过的文件</span><br><span class="line">find ./ -name &#x27;*.log&#x27;  # 在当前目录查找 以 .log 结尾的文件。 . 代表当前目录</span><br><span class="line">find -size +1000c      # 查找大于 1K 的文件</span><br></pre></td></tr></table></figure>
+<h4 id="用户操作">用户操作</h4>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo -s                # 切换到 root 用户</span><br><span class="line">sudo su username       # 切换用户</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>效率</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Spring Boot AOP 入门</title>
     <url>/2021/06/08/Spring-Boot-AOP-%E5%85%A5%E9%97%A8/</url>
     <content><![CDATA[<p>本文展示了在 Spring Boot 项目中 AOP 的简单实现</p>
@@ -1711,6 +1710,40 @@ Kafka 文件采取顺序写的方式，减少了磁盘寻道和旋转的次数�
       <tags>
         <tag>Java</tag>
         <tag>Spring</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Redis 实现分布式锁</title>
+    <url>/2021/06/10/Redis-%E5%AE%9E%E7%8E%B0%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/</url>
+    <content><![CDATA[<h3 id="Redis-实现">Redis 实现</h3>
+<p>Redis 分布式锁的实现主要基于 <code>SETNX key value</code> 这个指令</p>
+<ul>
+<li>如果 key 不存在，就创建对应的键值对，创建成功，返回 1</li>
+<li>如果 key 存在，创建失败，返回 0</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">&gt;</span><span class="bash"> setnx 1 xin</span></span><br><span class="line">(integer) 1</span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> setnx 1 xin2</span></span><br><span class="line">(integer) 0</span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> setnx 2 xin</span></span><br><span class="line">(integer) 1</span><br></pre></td></tr></table></figure>
+<p>除此之外还需要解决键值对长期有效的问题，还需要为键值对设置一个过期时间，对应的 redis 指令为 <code>EXPIRE key seconds</code>，到期之后键值会自动删除</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">&gt;</span><span class="bash"> get 1</span></span><br><span class="line">&quot;xin&quot;</span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> expire 1 2</span></span><br><span class="line">(integer) 1</span><br><span class="line">// 2秒后</span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> get 1</span></span><br><span class="line">(nil)</span><br></pre></td></tr></table></figure>
+<p>在 redis 2.6.12 以后的版本，可以用组合指令来实现上述的分布式锁<br>
+<code>SET key value [EX seconds] NX</code></p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">&gt;</span><span class="bash"> <span class="built_in">set</span> 1 xin ex 10 nx</span></span><br><span class="line">OK</span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> get 1</span></span><br><span class="line">&quot;xin&quot;</span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> ttl 1</span></span><br><span class="line">(integer) 4</span><br><span class="line">// 10秒后</span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> ttl 1</span></span><br><span class="line">(integer) -2</span><br></pre></td></tr></table></figure>
+<p><code>ttl key</code> 命令用于查看键值对的剩余过期时间</p>
+<ul>
+<li>对于设置了过期时间并且尚未过期的键值对，ttl 命令返回剩余过期时间；</li>
+<li>对于已过期不存在的键值对，ttl 命令返回 -2；</li>
+<li>对于没有过期时间的键值对，ttl 命令返回 -1；</li>
+</ul>
+<h3 id="Jedis-实现">Jedis 实现</h3>
+<p>在 Jedis 中可以实现一个 <code>setNxAndExp</code> 方法来实现分布式锁的功能</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> Integer <span class="title">setNxAndExp</span><span class="params">(String key, String val, <span class="keyword">int</span> expSecond)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 如果键值对创建成功，设置一个过期时间</span></span><br><span class="line">    <span class="keyword">if</span> (jedisCluster.setNx(key, val) &gt; <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (expSecond &gt; <span class="number">0</span>) &#123;</span><br><span class="line">            jedisCluster.expire(key, expSecond);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">// 如果创建失败，并且已有的键值对没有过期时间，为其设置一个过期时间，一段时间后释放锁</span></span><br><span class="line">        <span class="keyword">if</span> (jedisCluster.ttl(key).longValue() == -<span class="number">1</span>) &#123;</span><br><span class="line">            jedisCluster.expire(key, expSecond);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 创建成功返回 1，创建失败返回 0，与 setNx 返回值相同</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="参考">参考</h3>
+<p><a href="https://blog.csdn.net/CoreyXuu/article/details/89019869">redis 基于SETNX和EXPIRE的用法 实现redis 分布式锁</a></p>
+]]></content>
+      <categories>
+        <category>技术</category>
+      </categories>
+      <tags>
+        <tag>Redis</tag>
       </tags>
   </entry>
   <entry>
@@ -1826,8 +1859,8 @@ Kafka 文件采取顺序写的方式，减少了磁盘寻道和旋转的次数�
         <category>技术</category>
       </categories>
       <tags>
-        <tag>数据库</tag>
         <tag>MySQL</tag>
+        <tag>数据库</tag>
       </tags>
   </entry>
   <entry>
@@ -1974,67 +2007,6 @@ Scope 有 5 种可用的限定范围：</p>
       </categories>
   </entry>
   <entry>
-    <title>《高并发架构设计入门》笔记</title>
-    <url>/2021/08/10/%E3%80%8A%E9%AB%98%E5%B9%B6%E5%8F%91%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1%E5%85%A5%E9%97%A8%E3%80%8B%E7%AC%94%E8%AE%B0/</url>
-    <content><![CDATA[<h3 id="高性能的5大设计思想">高性能的5大设计思想</h3>
-<h5 id="扩展">扩展</h5>
-<p><strong>垂直扩展-针对单台机器</strong></p>
-<ul>
-<li>扩容机器，增加配置</li>
-<li>分表，减少数据量</li>
-<li>无锁，减少锁竞争</li>
-</ul>
-<p><strong>水平扩展-多机器均衡</strong></p>
-<ul>
-<li>nginx 负载均衡</li>
-<li>无状态</li>
-<li>分布式</li>
-</ul>
-<h5 id="缓存">缓存</h5>
-<p>数据前置，开辟新的数据交换区，解决原始数据获取代价太大的问题</p>
-<p>常用缓存策略：CDN 静态数据、热点数据缓存、服务缓存 Redis、内存缓存、数据库缓存、分布式缓存</p>
-<p>缓存不一致：捕捉更新结果，如果失败就重试；</p>
-<h5 id="分离">分离</h5>
-<p>动静分离、读写分离、主从主备、冷热分离</p>
-<h5 id="异步">异步</h5>
-<p>消息队列，削峰填谷，解耦</p>
-<h5 id="复用">复用</h5>
-<p>线程池、连接池复用，减少资源创建销毁的时间</p>
-<h3 id="高可用的5大设计思想">高可用的5大设计思想</h3>
-<h5 id="隔离">隔离</h5>
-<ul>
-<li>核心/非核心服务隔离部署</li>
-<li>机房隔离</li>
-<li>读写隔离</li>
-</ul>
-<h5 id="限流">限流</h5>
-<p>识别恶意流量</p>
-<ul>
-<li>接入层限流：nginx</li>
-<li>应用层限流：队列满后丢弃后续数据</li>
-<li>分布式限流</li>
-</ul>
-<h5 id="降级">降级</h5>
-<ul>
-<li>有损服务：系统繁忙页面</li>
-<li>熔断</li>
-<li>保底：出现异常时的保底策略</li>
-</ul>
-<h5 id="超时和失败重试">超时和失败重试</h5>
-<h5 id="可回滚">可回滚</h5>
-<p>事务、版本、数据的可回滚，保证及时解决数据问题</p>
-<h5 id="保障手段">*保障手段</h5>
-<p>压测、应急预案演练（多机房容灾等）、线上监控报警</p>
-]]></content>
-      <categories>
-        <category>技术</category>
-      </categories>
-      <tags>
-        <tag>架构</tag>
-        <tag>笔记</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>《深入分析 Java Web 技术内幕》摘抄</title>
     <url>/2021/08/07/%E3%80%8A%E6%B7%B1%E5%85%A5%E5%88%86%E6%9E%90-Java-Web-%E6%8A%80%E6%9C%AF%E5%86%85%E5%B9%95%E3%80%8B%E6%91%98%E6%8A%84/</url>
     <content><![CDATA[<h3 id="磁盘-I-O">磁盘 I/O</h3>
@@ -2161,6 +2133,140 @@ Servlet 中的 StandardWrapperFacade、ApplicationContextFacade 都是门面对�
       </categories>
       <tags>
         <tag>笔记</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>《高并发架构设计入门》笔记</title>
+    <url>/2021/08/10/%E3%80%8A%E9%AB%98%E5%B9%B6%E5%8F%91%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1%E5%85%A5%E9%97%A8%E3%80%8B%E7%AC%94%E8%AE%B0/</url>
+    <content><![CDATA[<h3 id="高性能的5大设计思想">高性能的5大设计思想</h3>
+<h5 id="扩展">扩展</h5>
+<p><strong>垂直扩展-针对单台机器</strong></p>
+<ul>
+<li>扩容机器，增加配置</li>
+<li>分表，减少数据量</li>
+<li>无锁，减少锁竞争</li>
+</ul>
+<p><strong>水平扩展-多机器均衡</strong></p>
+<ul>
+<li>nginx 负载均衡</li>
+<li>无状态</li>
+<li>分布式</li>
+</ul>
+<h5 id="缓存">缓存</h5>
+<p>数据前置，开辟新的数据交换区，解决原始数据获取代价太大的问题</p>
+<p>常用缓存策略：CDN 静态数据、热点数据缓存、服务缓存 Redis、内存缓存、数据库缓存、分布式缓存</p>
+<p>缓存不一致：捕捉更新结果，如果失败就重试；</p>
+<h5 id="分离">分离</h5>
+<p>动静分离、读写分离、主从主备、冷热分离</p>
+<h5 id="异步">异步</h5>
+<p>消息队列，削峰填谷，解耦</p>
+<h5 id="复用">复用</h5>
+<p>线程池、连接池复用，减少资源创建销毁的时间</p>
+<h3 id="高可用的5大设计思想">高可用的5大设计思想</h3>
+<h5 id="隔离">隔离</h5>
+<ul>
+<li>核心/非核心服务隔离部署</li>
+<li>机房隔离</li>
+<li>读写隔离</li>
+</ul>
+<h5 id="限流">限流</h5>
+<p>识别恶意流量</p>
+<ul>
+<li>接入层限流：nginx</li>
+<li>应用层限流：队列满后丢弃后续数据</li>
+<li>分布式限流</li>
+</ul>
+<h5 id="降级">降级</h5>
+<ul>
+<li>有损服务：系统繁忙页面</li>
+<li>熔断</li>
+<li>保底：出现异常时的保底策略</li>
+</ul>
+<h5 id="超时和失败重试">超时和失败重试</h5>
+<h5 id="可回滚">可回滚</h5>
+<p>事务、版本、数据的可回滚，保证及时解决数据问题</p>
+<h5 id="保障手段">*保障手段</h5>
+<p>压测、应急预案演练（多机房容灾等）、线上监控报警</p>
+]]></content>
+      <categories>
+        <category>技术</category>
+      </categories>
+      <tags>
+        <tag>笔记</tag>
+        <tag>架构</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>使用 EasyYapi 将接口信息一键导入Yapi</title>
+    <url>/2022/05/30/%E4%BD%BF%E7%94%A8-EasyYapi-%E5%B0%86%E6%8E%A5%E5%8F%A3%E4%BF%A1%E6%81%AF%E4%B8%80%E9%94%AE%E5%AF%BC%E5%85%A5Yapi/</url>
+    <content><![CDATA[<p>入职了新公司后，我接触到了 Yapi 这样一款强大的接口管理平台，但是相比于 Swagger，接口的创建和信息的更新在 Yapi 上显得要麻烦许多，还好在 IDEA 上有 EasyYapi 这样一款基于 Java Doc 注释生成接口信息的插件，让 Yapi 管理项目接口文档这一过程高效了很多。</p>
+<h3 id="安装插件">安装插件</h3>
+<p>我们在 IDEA 上安装 EasyYapi 插件，可以直接搜索名字进行下载，也可以通过链接下载 <a href="https://plugins.jetbrains.com/plugin/12458-easyyapi">EasyYapi - IntelliJ IDEs Plugin | Marketplace</a></p>
+<h3 id="导出-API">导出 API</h3>
+<p>在安装完插件之后，就可以按步骤进行接口信息导出了。<br>
+首先，在项目目录中选定接口所在的文件夹，然后使用快捷键<code>alt shift E(windows)/ctrl E(mac)</code> , 然后选择要导出的接口，点击绿色的 ☑️ 进行导出</p>
+<center>
+    <img style="border-radius: 0.3125em;
+    box-shadow: 0 2px 4px 0 rgba(34,36,38,.12),0 2px 10px 0 rgba(34,36,38,.08);" 
+    src="https://blog-1252654208.cos.ap-nanjing.myqcloud.com/img/1.png">
+</center>
+如果是初次使用，在导出期间需要按照提示输入 Yapi 服务的地址，以及 Yapi 项目的 token。其中项目的 token 在如下路径可以找到
+<center>
+    <img style="border-radius: 0.3125em;
+    box-shadow: 0 2px 4px 0 rgba(34,36,38,.12),0 2px 10px 0 rgba(34,36,38,.08);" 
+    src="https://blog-1252654208.cos.ap-nanjing.myqcloud.com/img/2.jpg">
+</center>
+看到终端出现如下输出，说明导出成功
+<center>
+    <img style="border-radius: 0.3125em;
+    box-shadow: 0 2px 4px 0 rgba(34,36,38,.12),0 2px 10px 0 rgba(34,36,38,.08);" 
+    src="https://blog-1252654208.cos.ap-nanjing.myqcloud.com/img/3.jpg">
+</center>
+点击链接，可以看到接口信息已经同步到 Yapi 的项目中
+<center>
+    <img style="border-radius: 0.3125em;
+    box-shadow: 0 2px 4px 0 rgba(34,36,38,.12),0 2px 10px 0 rgba(34,36,38,.08);" 
+    src="https://blog-1252654208.cos.ap-nanjing.myqcloud.com/img/4.png">
+</center>
+<h3 id="进阶">进阶</h3>
+<p>EasyYapi 是通过解析 Java Doc 注释来生成接口信息，如果按照 Java Doc 格式编写注释就可以在 Yapi 中补充更多的接口信息</p>
+<h4 id="类注释">类注释</h4>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 设备控制器</span></span><br><span class="line"><span class="comment"> * 对设备进行控制和管理</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> XZN1WX</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2022/05/30</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="meta">@RequestMapping(&quot;/api/device&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DeviceController</span> </span>&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注释的第一行为分类名称，第二行为分类注释</p>
+<center>
+    <img style="border-radius: 0.3125em;
+    box-shadow: 0 2px 4px 0 rgba(34,36,38,.12),0 2px 10px 0 rgba(34,36,38,.08);" 
+    src="https://blog-1252654208.cos.ap-nanjing.myqcloud.com/img/5.png">
+</center>
+<h4 id="方法注释">方法注释</h4>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 添加</span></span><br><span class="line"><span class="comment"> * 添加一台新的设备</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> input 输入</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> &#123;<span class="doctag">@link</span> String&#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@PostMapping()</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Output <span class="title">add</span><span class="params">(<span class="meta">@ModelAttribute</span> Input input)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> Output();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注释第一行是接口名，第二行是接口注释</p>
+<center>
+    <img style="border-radius: 0.3125em;
+    box-shadow: 0 2px 4px 0 rgba(34,36,38,.12),0 2px 10px 0 rgba(34,36,38,.08);" 
+    src="https://blog-1252654208.cos.ap-nanjing.myqcloud.com/img/6.png">
+</center>
+<h4 id="属性注释">属性注释</h4>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Output</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 参数1</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> String var1;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 参数2</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> Integer var2;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 参数3</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> Date var3;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>属性注释中的内容对应了返回数据的备注信息</p>
+<center>
+    <img style="border-radius: 0.3125em;
+    box-shadow: 0 2px 4px 0 rgba(34,36,38,.12),0 2px 10px 0 rgba(34,36,38,.08);" 
+    src="https://blog-1252654208.cos.ap-nanjing.myqcloud.com/img/7.png">
+</center>
+<h3 id="Java-Doc">Java Doc</h3>
+<p>为了更加便捷地生成 Java Doc，可以安装 Easy JavaDoc 插件：<a href="https://blog.csdn.net/cnds123321/article/details/119767380">IDEA插件系列(29):Easy Javadoc插件–快速生成javadoc文档注释_二木成林的博客-CSDN博客_idea javadoc插件</a></p>
+<h3 id="参考">参考</h3>
+<ol>
+<li><a href="https://mp.weixin.qq.com/s?__biz=MzA4ODIyMzEwMg==&amp;mid=2447536892&amp;idx=1&amp;sn=b49f4f39ae39c83744f27df29e41a107&amp;chksm=843baeedb34c27fb712b1b21bdd37891ca82249838b87f7aaf042ad9835dcb98ddd21f44c731&amp;scene=21#wechat_redirect">SpringBoot使用EasyYapi对代码0侵入实现API接口一键发布到YApi - 第422篇</a></li>
+<li><a href="https://wuqian.blog.csdn.net/article/details/124265594?spm=1001.2101.3001.6661.1&amp;utm_medium=distribute.pc_relevant_t0.none-task-blog-2%7Edefault%7ECTRLIST%7ERate-1-124265594-blog-121486802.pc_relevant_paycolumn_v3&amp;depth_1-utm_source=distribute.pc_relevant_t0.none-task-blog-2%7Edefault%7ECTRLIST%7ERate-1-124265594-blog-121486802.pc_relevant_paycolumn_v3&amp;utm_relevant_index=1">SpringBoot使用EasyYapi对代码0侵入实现API接口一键发布到YApi的进阶使用 - 第423篇_悟纤的博客-CSDN博客_easyyapi</a></li>
+</ol>
+]]></content>
+      <categories>
+        <category>效率</category>
+      </categories>
+      <tags>
+        <tag>Yapi</tag>
       </tags>
   </entry>
   <entry>
@@ -2407,10 +2513,352 @@ Swagger 2.9.2 依赖于 Guava 20.0 以上的版本，但是 Shardingsphere 4.1.1
         <category>技术</category>
       </categories>
       <tags>
-        <tag>Redis</tag>
         <tag>Kafka</tag>
         <tag>MySQL</tag>
+        <tag>Redis</tag>
         <tag>Canal</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>操作系统面试重点</title>
+    <url>/2021/04/24/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E9%9D%A2%E8%AF%95%E9%87%8D%E7%82%B9/</url>
+    <content><![CDATA[<h3 id="进程和线程的区别-16">进程和线程的区别 16</h3>
+<ol>
+<li>进程的状态、协程、和虚拟内存的关系</li>
+<li>开多个java进程和多个线程的区别</li>
+<li>一个进程能否访问到另一个进程的内存</li>
+<li>Java线程和系统线程的区别</li>
+</ol>
+<span id="more"></span>
+<p><strong>区别</strong></p>
+<ul>
+<li>进程是系统进行资源分配和调度的基本单位；线程是 CPU 资源分配和调度的基本单位</li>
+<li>线程依赖于进程，一个进程至少有一个线程</li>
+<li>进程有自己独立的地址空间，线程共享进程所属的地址空间</li>
+<li>上下文切换时，进程涉及到当前 CPU 环境的保存和新进程 CPU 环境的设置；线程只涉及少量寄存器内容的保存和设置 前者开销更大</li>
+</ul>
+<p><strong>协程</strong></p>
+<ul>
+<li>协程是<strong>用户态</strong>轻量级线程，完全由程序控制而不被内核管理，内核不知道协程的存在</li>
+<li>一个线程可以有多个协程，一个进程也可以有多个协程</li>
+<li>进程和线程都是同步机制，协程是异步</li>
+</ul>
+<p><strong>Java线程和系统线程的区别</strong></p>
+<ul>
+<li>底层数据结构不同， Java 是 JVM 中的实现，系统中的线程根据需求会有不同的实现</li>
+<li>状态不同， Java 线程有 New Terminated 等状态，操作系统只有ready running 和waiting 三种状态</li>
+<li>Java 线程都是在用户态的，但是系统内核线程都是在内核态下，用户是通过系统调用来调用的</li>
+</ul>
+<hr>
+<h3 id="内存模型-7">内存模型 7</h3>
+<p>虚拟内存的理解和作用（段页式、缺页中断、页面置换、内存颠簸）</p>
+<p>逻辑地址和物理地址转化</p>
+<hr>
+<p><strong>虚拟内存</strong></p>
+<p>地址空间被按页划分，每页地址被映射到对应的物理内存。但不是所有页都在内存中，一些不常用的页存在磁盘上，当程序引用到不存在于物理内存中的页时，操作系统将缺失的部分装入物理内存。逻辑上内存大于物理上的内存，但其中一部分其实存储在磁盘上（磁盘上会有一个 swap 分区用来实现置换，当内存不足时会将暂时不用的一部分取出放到 swap 分区中来为当前的程序腾出足够的内存空间），所以叫虚拟内存。优点是<strong>让程序获得更多的可用内存</strong></p>
+<p>它让程序认为它拥有一块连续的可用内存，但其实这些内存往往离散的分布在不同的物理空间</p>
+<hr>
+<p><strong>虚拟内存和常规存储</strong></p>
+<p>常规存储有两个问题</p>
+<ul>
+<li>问题一：作业运行前要一次性装入内存，如果作业大小超出内存，就无法执行</li>
+<li>问题二：作业装入内存后就一直在内存中，直到作业运行结束。期间其他作业只能等待</li>
+</ul>
+<p>针对这两个问题，虚拟内存的解决办法是</p>
+<p>针对问题一</p>
+<ul>
+<li>
+<p>根据<strong>局部性原理</strong></p>
+<p>时间上：最近被访问的页在不久的将来还会被访问</p>
+<p>空间上：内存中被访问的页周围的页也很可能被访问</p>
+</li>
+<li>
+<p>程序在运行时只将当前需要的页装入内存</p>
+</li>
+<li>
+<p>如果所需要的页都在内存中就正常运行，如果发生缺页，就申请将需要的页从磁盘调入内存</p>
+</li>
+</ul>
+<p>针对问题二</p>
+<ul>
+<li>如果内存已满，就根据页面置换算法将需要的页与当前内存中的页进行置换</li>
+</ul>
+<hr>
+<p><strong>页式存储</strong></p>
+<ul>
+<li>将内存抽象成地址空间</li>
+<li>地址空间被分成很多大小相等的块，每一块称为<strong>页</strong></li>
+<li>内存空间也按照同样的大小被划分，每一块称为<strong>页框</strong></li>
+<li><strong>页表</strong>存储着页和页框的映射表</li>
+<li>逻辑上相邻的页，对应的物理地址不一定相邻</li>
+<li>虚拟地址分为两部分，一部分为页面号，一部分为偏移量</li>
+</ul>
+<p>页太小会导致页表过大，降低对换效率，但是可以减少内碎片</p>
+<p>页太大可以提高对换速度，但是内碎片过大，降低内存利用率</p>
+<p><strong>段式存储</strong></p>
+<ul>
+<li>将进程自己的地址空间按照逻辑划分成若干段，如代码段，数据段等。内存空间页被<strong>动态</strong>地划分成长度不同的区域（段可以应付动态增长的情况），每段从 0 开始编址</li>
+<li>段式管理通过段表对应逻辑地址和物理地址</li>
+</ul>
+<p>分页主要是用于实现虚拟内存，获得更大的地址空间；分段是为了使程序和数据可以被划分为逻辑上独立的地址空间，有助于共享和保护</p>
+<p>要实现<strong>动态链接</strong>也需要段式存储。动态链接是在程序运行之前，先不把几个目标程序段连起来，而是只把主程序对应的程序段装入内存中，运行期间如果需要调用其他程序段，再把程序段装入内存并进行连接</p>
+<p><strong>段页式管理</strong></p>
+<ul>
+<li>用户进程先分段，每个段内部再分页，实现了对内存的划分以及段内存的按页分配</li>
+<li>寻址：先通过段号找到该段对应的页表；再在页表中根据页号在物理地址中找到对应的物理块号，并根据页内偏移找到数据的物理地址；第三次再根据物理地址访问数据。<strong>一共三次访问主存</strong>。</li>
+</ul>
+<p><strong>分页和分段的区别</strong></p>
+<ul>
+<li>目的不同：分页的目的是管理内存，用于虚拟内存以获得更大的地址空间；分段的目的是满足用户的需要，使程序和数据可以被划分为逻辑上独立的地址空间；</li>
+<li>大小不同：段的大小不固定，由其所完成的功能决定；页的大小固定，由系统决定；</li>
+<li>地址空间维度不同：
+<ul>
+<li>分段是二维地址空间（段号+段内偏移），因为段和段之间没有关系，段号连续的两个段，地址并不一定连续；需要给出段号和段内偏移才能确定物理地址</li>
+<li>分页是一维地址空间，页和页之间逻辑上连续，第一个页的最后一个地址和第二个页的第一个地址数值上是连续的；只需要给出一个逻辑地址就能计算出页号和页内偏移，从而确定物理地址，因为页号大小是确定的。</li>
+</ul>
+</li>
+<li>分段便于信息的保护和共享，对于可重入代码，可以专门划分一个段，其他进程的段表加入该段就可以实现代码共享；分页的共享受到限制，一个页中可能只需要共享一部分代码，但是共享的时候只能整个页一起共享；</li>
+<li>碎片：分段没有内碎片，但会产生外碎片；分页没有外碎片，但会产生内碎片（一个页填不满）
+<ul>
+<li>内碎片是占用分区内未被利用的空间</li>
+<li>外碎片是占用分区之间难以利用的空闲分区</li>
+</ul>
+</li>
+</ul>
+<hr>
+<p><strong>缺页中断</strong></p>
+<p>如果需要的页不在物理内存中，就发生缺页中断，需要将该页从磁盘掉入内存中。如果此时内存已满，就需要从内存中挑出一个与之进行置换</p>
+<hr>
+<p><strong>页面置换算法</strong></p>
+<p>页面置换算法是为了让缺页率最低</p>
+<p><strong>最佳页面置换算法</strong>：把未来很长一段时间内不会被用到的页面置换掉-理论算法</p>
+<p><strong>最近最久未使用LRU</strong>：将最近最久未使用的页面置换出去。实现方式是链表，每次一个页面被访问，把它移动到链表头，置换时候置换掉链表尾部的页面</p>
+<p><strong>先进先出FIFO</strong>：置换掉在内存中停留时间最长的页面-会把常用的页面置换出去</p>
+<p><strong>第二次机会算法</strong>：相当于优化FIFO，解决了常用页面被置换的问题。为每一个页面设置一个R位，被读和写时置为1，需要置换链表头部的页时，检查R位，如果是0就置换，如果是1，就将R置0，放入链表尾部。</p>
+<p><strong>时钟</strong>：省去第二次机会算法在链表中移动的开销，将页面首尾相连，指针指向最老的那个页面。需要置换时，判断R位是否为1，如果为1，重置为0，指针移向下一页；如果为0，把页面置换出</p>
+<hr>
+<p><strong>内存颠簸</strong></p>
+<p>本质就是频繁的页面调度。进程发生缺页中断，必须置换某一页。但是所有页都在使用，置换页面之后马上又发生缺页中断，导致系统效率急剧下降。解决策略包括：</p>
+<ul>
+<li>增加物理内存</li>
+<li>修改页面置换算法</li>
+<li>减少运行的程序数量</li>
+</ul>
+<hr>
+<h3 id="死锁-5">死锁 5</h3>
+<p>死锁的条件，说一个死锁情况，如何避免，尽量破坏哪一个来避免死锁</p>
+<p><strong>死锁的起因</strong>是互相等待对方释放占有的资源而处于永远暂停的状态</p>
+<p><strong>死锁产生的必要条件</strong></p>
+<ul>
+<li><strong>资源互斥</strong>：资源每次只能被一个线程占有</li>
+<li><strong>请求与保持</strong>：线程因请求资源而被阻塞时，对已获得的资源保持不放</li>
+<li><strong>不可抢占</strong>：线程已获得的资源，在未使用完之前不能强行剥夺</li>
+<li><strong>循环等待</strong>：若干线程形成一种头尾相接循环等待资源的关系</li>
+</ul>
+<p><strong>死锁预防</strong></p>
+<p>思想是破坏产生死锁的四个条件</p>
+<ul>
+<li>破坏互斥：某些资源不具备这个条件</li>
+<li>破坏请求与保持：一次性申请所需要的所有资源；请求资源前先释放自己拥有的资源</li>
+<li>破坏不可抢占：允许进程抢占资源</li>
+<li>破坏循环等待：<strong>锁排序法</strong>，通过指定锁的获取顺序。一个线程只有获得A锁和B锁才能对某资源进行操作，在多线程下，可以指定只有获得A锁的线程才能获得B锁，按顺序获取锁就能避免两个线程同时持有A锁和B锁出现循环等待</li>
+</ul>
+<p><strong>死锁避免</strong></p>
+<ul>
+<li>银行家算法 - 动态监测资源分配，确保处于安全状态下才进行资源分配。安全状态是指当前所有进程突然请求所有需要的资源时，有一种分配顺序能够满足所有进程</li>
+</ul>
+<p><strong>死锁解除</strong></p>
+<ul>
+<li>回滚到之前的状态</li>
+<li>杀死进程 - 按照优先级杀死进程直到死锁解除</li>
+</ul>
+<hr>
+<h3 id="IO方法-4">IO方法 4</h3>
+<p><a href="https://www.cnblogs.com/yc3110/p/10440613.html">操作系统底层原理</a><br>
+操作系统之上的应用程序都运行在用户空间，操作系统运行在内核空间，涉及到对磁盘、内存这些系统资源的访问，都需要在内核态进行。所以当应用程序要进行 IO 操作时，都需要进行系统调用。IO 操作分为<strong>准备数据</strong>和<strong>拷贝</strong>两个部分，准备数据是指将数据放置到对应的缓冲区（进程缓冲区/内核缓冲区），拷贝是指将数据从一个缓冲区拷贝到另一个缓冲区</p>
+<p><strong>阻塞式 IO</strong></p>
+<p>调用 IO 操作时，应用进程被阻塞，直到数据从内核缓冲区被复制到进程缓冲区才恢复，进行拷贝时继续阻塞。所以等待和拷贝两个阶段都处于阻塞状态</p>
+<hr>
+<p><strong>非阻塞式 IO</strong></p>
+<p>进程调用 IO 操作，如果数据还没准备好，系统会返回一个错误码，期间应用进程可以继续执行，期间会定期询问内核有没有准备好数据，如果准备好就进行拷贝。拷贝的过程依然是阻塞的</p>
+<hr>
+<p><strong>IO多路复用</strong></p>
+<p>select / poll / epoll 都是多路复用，多路复用就是通过一种机制，可以监听多个描述符，一旦某个描述符就绪，就可以通知程序进行响应的读写操作</p>
+<p>区别：</p>
+<ul>
+<li>支持的最大连接数</li>
+<li>文件描述符是否从内核空间到用户空间来回复制</li>
+<li>触发方式</li>
+<li>查询描述符的效率，是否轮询</li>
+</ul>
+<p><strong>select</strong></p>
+<ul>
+<li>将文件描述符放入<strong>集合</strong>中</li>
+<li>每次调用时将集合从用户空间拷贝到内核空间（每次都要复制，开销大）内核根据就绪状态修改集合内容</li>
+<li><strong>集合大小有限制</strong>（32位机默认只有1024），采用<strong>水平触发</strong></li>
+<li>select函数返回后，需要通过遍历集合找到就绪的文件描述符（<strong>轮询效率低</strong>），文件描述符越多，效率越低</li>
+</ul>
+<p><strong>poll</strong></p>
+<ul>
+<li>用<strong>链表</strong>存储文件描述符，所以大小没有限制</li>
+<li>其他和select一样</li>
+</ul>
+<p><strong>epoll</strong></p>
+<ul>
+<li>用红黑树来存储被监听的描述符</li>
+<li>用户空间和内核空间共享内存，避免了来回复制的开销</li>
+<li>支持的最大连接数很大，1G 可以支持 10W 左右的连接数</li>
+<li>文件描述符就绪时会调用回调函数，将描述符添加到一个链表，之后返回这个链表</li>
+<li>支持<strong>水平触发</strong>和<strong>边缘触发</strong></li>
+<li>采用<strong>边缘触发</strong>时只有活跃的描述符才会触发回调函数。所谓<strong>活跃</strong>，就是指缓冲区的状态发生变化：从不可读到可读；从不可写到可写；缓冲区的内容增多或减少</li>
+<li>采用<strong>水平触发</strong>时如果一次没有将缓冲区中的内容全部读完，下次即使缓冲区内容没有变化，还会再通知</li>
+</ul>
+<p>连接数多并且很多不活跃时使用 epoll；连接数少且多数活跃时使用前两者，因为 epoll 需要回调，性能会稍差</p>
+<hr>
+<p><strong>水平触发</strong></p>
+<p>只要一个文件描述符就绪，就会发送通知，如果用户程序没有一次性把数据读写完，再次还会通知</p>
+<p><strong>边缘触发</strong></p>
+<p>描述符从为就绪变为就绪时通知一次，如果没读完之后也不会再通知</p>
+<p>区别：边缘触发效率更高，减少了被重复触发的次数。水平触发可能会导致用户程序收到大量不需要的文件描述符</p>
+<hr>
+<p><strong>异步 IO</strong></p>
+<p>执行 IO 调用后可以立即返回，继续执行原来的操作。内核会在操作完成后通知进程。比如读操作，会在把数据放到用户指定的缓冲区后通知进程。<strong>等待和拷贝过程都不是阻塞的。</strong></p>
+<hr>
+<h3 id="进程调度算法-3">进程调度算法 3</h3>
+<p><strong>批处理系统</strong></p>
+<p>目的是保证吞吐量和周转时间</p>
+<ul>
+<li>先来先服务
+<ul>
+<li>非抢占，按照请求顺序调度，有利于长作业，不利于短作业，短作业可能需要等待很久来让长作业执行完</li>
+</ul>
+</li>
+<li>短作业优先
+<ul>
+<li>非抢占，长作业可能被饿死</li>
+</ul>
+</li>
+<li>最短剩余时间优先
+<ul>
+<li>短作业优先的抢占式版本，长作业还是可能会饥饿</li>
+</ul>
+</li>
+<li>最高响应比优先
+<ul>
+<li>计算响应比 = 1 + 等待时间 / 处理时间，平衡了长短进程，非抢占，但是开销大</li>
+</ul>
+</li>
+</ul>
+<p><strong>交互式系统</strong></p>
+<p>保证快速响应</p>
+<ul>
+<li>时间片轮转
+<ul>
+<li>所有进程按 FCFS 拍成队列，每个进程分配一个 CPU 时间片，用完后排到队尾部</li>
+<li>效率取决于时间片长短，太短会导致切换过频繁，太长实时性不能保证</li>
+</ul>
+</li>
+<li>优先级调度
+<ul>
+<li>为每个进程分配一个优先级，按优先级调度</li>
+<li>为保证低优先级等不到调度，随着等待时间的增加提高优先级</li>
+</ul>
+</li>
+<li>多级反馈队列调度
+<ul>
+<li>前两种方法的结合</li>
+<li>设置多个队列，从前到后时间片大小增加，优先级减小</li>
+<li>如果在前一个没有执行完就移到下一个队列，只有上一个队列没有进程，才执行下一个队列</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="进程间通信-3"><a href="https://mp.weixin.qq.com/s/KU2tdFbL3PSltYZQbfX_Iw">进程间通信 3</a></h3>
+<p>机制，什么时候用什么，哪个最优（共享内存？）</p>
+<p><strong>管道</strong>：传输信息量大，只适用于亲缘进程 - 半双工，数据只能单向流动。如果要双向流动需要建立两个管道。<strong>只能用于亲缘进程</strong>是因为管道没有实体，只能通过 fork 来复制父进程的文件描述符来达到通信的目的。</p>
+<p><strong>命名管道</strong>：传输信息量大，适用任何场景。<strong>可以用于不相关的进程间</strong>，因为命名管道创建了一个类型为管道的设备文件，在进程里只要使用这个设备文件就能进行通信。</p>
+<blockquote>
+<p><strong>管道其实就是内核中的一串缓存</strong>，管道一端写入的数据放到缓存中，另一端从缓存中取出数据。一端把数据放入管道后，只有等到另一端把数据取出，这一端才能正常返回。在这里理解为同步阻塞的，通信效率低</p>
+</blockquote>
+<p><strong>共享内存</strong>：传输信息量大，可适用于多个进程间通信 - <strong>允许多个进程共享一段物理内存</strong>，不同进程可以将这个内存映射到自己的地址空间，然后<strong>像访问正常内存一样访问它</strong>。进程可以通过向共享内存区域读写数据来交换信息。<strong>优点</strong>：速度快，就像使用自己的内存区域一样，不需要系统调用，不存在用户态和内核态之间的数据拷贝 <strong>缺点</strong>：存在并发问题，一般和信号量一起使用解决并发问题</p>
+<p><strong>套接字</strong>：传输信息量大，适用于不同主机间进程的通信。服务端有一个专门用于监听的 socket，当收到客户端的连接请求时，会返回一个专门用于传输数据的 socket。</p>
+<p><strong>消息队列</strong>：消息队列是保存在内核中的消息链表，每一个消息都是一个数据块，具有固定的数据类型和大小。（管道是无格式的字节流数据）局限是因为数据块大小限制，不能上传过大文件</p>
+<p><strong>信号</strong>：传输少量信息，适用任何场景</p>
+<p><strong>信号量</strong>：主要用于互斥同步，是进程通信中唯一的异步通信机制</p>
+<hr>
+<h3 id="线程间通信机制-3">线程间通信机制 3</h3>
+<p>线程间通信的目的主要是用于线程同步，没有像进程通信中用于数据交换的通信机制</p>
+<ul>
+<li>锁机制：互斥锁、读写锁</li>
+<li>可以读写同一进程中的数据进行通信，全局变量 - 因为多个线程可能更改全局变量，所以把它声明为 volatile</li>
+<li>信号量机制 semaphore</li>
+<li>信号机制 signal</li>
+</ul>
+<hr>
+<h3 id="TLB-2">TLB 2</h3>
+<p>是什么，有什么作用</p>
+<p>又被称为快表，相当于页表的cache，存储了当前最可能被访问到的页表项。提高了虚拟地址到物理地址的转换速度。在没有快表时，读写内存数据时要访问两次主存，有了快表之后就可能只要访问一次高速缓存和一次主存，提高查找速度。</p>
+<hr>
+<h3 id="线程同步机制-2">线程同步机制 2</h3>
+<ul>
+<li><strong>互斥量</strong>，是内核对象，只有拥有互斥对象才能访问互斥资源。互斥对象只有一个，所以同一时刻互斥资源只能被同一对象访问。当前线程处理完后要将互斥对象交出</li>
+<li><strong>信号量</strong>，是内核对象，允许同一时刻多个线程访问同一资源，每增加一个线程访问资源，信号量就减1</li>
+<li><strong>事件</strong>，允许线程在处理完一个任务后主动唤醒另外一个线程执行任务</li>
+<li><strong>临界区</strong>，任意时刻只允许一个线程访问临界区</li>
+</ul>
+<p><strong>互斥量和临界区的区别</strong></p>
+<p>互斥量是可以命名的，<strong>可以用于不同进程间同步</strong>；<strong>临界区只能用于同一进程中线程的同步</strong>。创建互斥量需要的资源更多，所以临界区优势是速度快，节省资源。</p>
+<hr>
+<h3 id="进程状态">进程状态</h3>
+<p>进程有三种状态：<strong>就绪态，运行态，阻塞态</strong></p>
+<p><strong>运行态和就绪态可相互转换</strong>，就绪态获得CPU资源进入运行态，运行态用完CPU资源进入就绪态</p>
+<p><strong>运行态可以转为阻塞态</strong>，当运行中的进程缺失某个资源无法进行下去时会进入阻塞态</p>
+<p><strong>阻塞态可以转化为就绪态</strong>，当阻塞态的进程获取到想要的资源时，转变为就绪态</p>
+<p>综上：就绪态和阻塞态不能相互转化</p>
+<hr>
+<h3 id="进程间socket通信和网络间socket通信的区别">进程间socket通信和网络间socket通信的区别</h3>
+<p><strong>网络间socket</strong></p>
+<ul>
+<li>建立 socket 需要一对套接字，一个运行于客户端，一个运行于服务端</li>
+<li>连接过程分为三个步骤：服务器监听，客户端请求，连接确认</li>
+<li><strong>服务器监听</strong>：服务器端套接字处于等待连接状态，等待客户端的连接请求</li>
+<li><strong>客户端请求</strong>：客户端提出连接请求，指出服务端套接字的地址和端口号，然后向服务端套接字提出连接请求</li>
+<li><strong>连接确认</strong>：服务端套接字接收到客户端的连接请求后，就响应客户端的连接请求，建立一个新的线程，把服务端套接字的描述发送给客户端，一旦客户端确认，双方就正式建立连接。</li>
+</ul>
+<hr>
+<h3 id="用户态和内核态">用户态和内核态</h3>
+<p>是系统的两个权限等级，代表不同的访问能力</p>
+<ul>
+<li>内核态可以访问内存的所有数据以及外围设备，例如硬盘网卡</li>
+<li>用户态只能受限访问内存，不能访问外围设备，不能占用 CPU</li>
+</ul>
+<p>所有应用程序都运行在用户态，需要进行一些内核操作，例如读取硬盘数据时就要进行系统调用，切换到内核态，执行完服务之后再返回用户态，并返回调用结果</p>
+<p><strong>从用户态切换到内核态的方法</strong></p>
+<ul>
+<li>系统调用</li>
+<li>异常：一些异常需要在内核态进行处理</li>
+</ul>
+<hr>
+<h3 id="磁盘寻道">磁盘寻道</h3>
+<p><strong>过程</strong></p>
+<ul>
+<li>磁头先找到对应的盘面</li>
+<li>磁头移动到对应的磁道（寻道时间）</li>
+<li>磁盘旋转到对应的扇区（旋转时间）</li>
+</ul>
+<p><strong>调度算法</strong></p>
+<p>先来先服务：公平简单，但是平均寻道时间长</p>
+<p>最短寻道优先：平均时间较短，但是会饥饿</p>
+<p>电梯算法：按照一个方向进行磁盘调度，等到该方向没有未完成请求后，改变方向</p>
+<hr>
+<h3 id="fork">fork()</h3>
+<p>创建一个与原来进程几乎完全相同的进程</p>
+]]></content>
+      <categories>
+        <category>面试</category>
+      </categories>
+      <tags>
+        <tag>操作系统</tag>
       </tags>
   </entry>
   <entry>
@@ -2561,39 +3009,6 @@ Swagger 2.9.2 依赖于 Guava 20.0 以上的版本，但是 Shardingsphere 4.1.1
       </categories>
       <tags>
         <tag>操作系统</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>MySQL 主从同步</title>
-    <url>/2021/06/22/MySQL%20%E4%B8%BB%E4%BB%8E%E5%90%8C%E6%AD%A5/</url>
-    <content><![CDATA[<h4 id="配置文件">配置文件</h4>
-<p>电台项目中消费 binlog 的服务需要对 MySQL 的配置文件进行修改，修改参数如下</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line">[<span class="string">mysqld</span>]</span><br><span class="line"><span class="string">log-bin=mysql-bin</span>    <span class="comment"># 日志记录到指定位置</span></span><br><span class="line"><span class="string">binlog-format=ROW</span>    <span class="comment"># 只要记录发生修改，就写到 binlog 中</span></span><br><span class="line"><span class="string">binlog_row_image=full</span></span><br><span class="line"><span class="string">log_slave_updates=1</span> </span><br><span class="line"><span class="string">server-id=1</span></span><br></pre></td></tr></table></figure>
-<p>log_slave_updates=1 是因为 redis 同步服务实际消费的是从节点的 binlog，而从节点是通过消费主节点的 binlog 来实现主从同步。log_slave_updates=1 所代表的就是从服务器将在主服务器收到的更新记录记录到从服务器自己的 binlog 中，由此 redis 同步服务才能消费到对应 MySQL 服务器的 binlog<br>
-如果没有该配置，会造成的情况是，主节点的数据变更后，从节点能够正常同步主节点的信息，但是 redis 同步服务却无法获取到更新信息，因为从节点没有记录 binlog<br>
-binlog_row_image=full 记录的信息最为全面<br>
-数据库中有前镜像和后镜像的概念：</p>
-<ul>
-<li>前镜像(before image): 记录修改前的内容</li>
-<li>后镜像(after image): 记录修改后的内容<br>
-对 insert 来说，只有后镜像没有前镜像；<br>
-对 update 来说，有前镜像和后镜像；<br>
-对 delete 来说，只有前镜像没有后镜像<br>
-binlog_row_image=full 可以覆盖到所有修改信息</li>
-</ul>
-<h4 id="Binlog-日志模式">Binlog 日志模式</h4>
-<p><strong>ROW Level</strong><br>
-详细记录每一行数据被修改的细节。优点是数据准确，缺点是产生的 binlog 数据量巨大，尤其是发生批量修改时<br>
-<strong>Statement Level</strong><br>
-记录的是修改记录的那条 SQL 语句。优点是数据量小，缺点是对函数和存储过程这类特殊功能的复制不友好<br>
-<strong>Mixed</strong><br>
-会根据每一条 SQL 记录来选择适合的日志格式</p>
-]]></content>
-      <categories>
-        <category>技术</category>
-      </categories>
-      <tags>
-        <tag>MySQL</tag>
       </tags>
   </entry>
   <entry>
@@ -3214,9 +3629,9 @@ Innodb 通过 Buffer Pool, LogBuffer, Redo Log, Undo Log 来实现事务，以�
         <category>面试</category>
       </categories>
       <tags>
+        <tag>MySQL</tag>
         <tag>Redis</tag>
         <tag>数据库</tag>
-        <tag>MySQL</tag>
       </tags>
   </entry>
   <entry>
@@ -3298,345 +3713,47 @@ Innodb 通过 Buffer Pool, LogBuffer, Redo Log, Undo Log 来实现事务，以�
       </tags>
   </entry>
   <entry>
-    <title>操作系统面试重点</title>
-    <url>/2021/04/24/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E9%9D%A2%E8%AF%95%E9%87%8D%E7%82%B9/</url>
-    <content><![CDATA[<h3 id="进程和线程的区别-16">进程和线程的区别 16</h3>
-<ol>
-<li>进程的状态、协程、和虚拟内存的关系</li>
-<li>开多个java进程和多个线程的区别</li>
-<li>一个进程能否访问到另一个进程的内存</li>
-<li>Java线程和系统线程的区别</li>
-</ol>
-<span id="more"></span>
-<p><strong>区别</strong></p>
+    <title>多线程执行任务抛出异常不打印日志</title>
+    <url>/2022/01/09/%E7%BA%BF%E7%A8%8B%E6%B1%A0%E6%8A%9B%E5%87%BA%E5%BC%82%E5%B8%B8%E4%B8%8D%E6%89%93%E5%8D%B0%E6%97%A5%E5%BF%97/</url>
+    <content><![CDATA[<h3 id="原因">原因</h3>
+<p>实际原因出在我写的业务方法，在最外层没有包裹一个 try/catch 语句块，导致线程执行业务方法时内部抛出了未捕获的异常，但是线程本身没有写一个默认的异常处理方法，最终 JVM 的默认处理方式是将这个异常以及堆栈信息只会被打印到控制台，而不是写到日志中。</p>
+<h4 id="原理分析">原理分析</h4>
 <ul>
-<li>进程是系统进行资源分配和调度的基本单位；线程是 CPU 资源分配和调度的基本单位</li>
-<li>线程依赖于进程，一个进程至少有一个线程</li>
-<li>进程有自己独立的地址空间，线程共享进程所属的地址空间</li>
-<li>上下文切换时，进程涉及到当前 CPU 环境的保存和新进程 CPU 环境的设置；线程只涉及少量寄存器内容的保存和设置 前者开销更大</li>
-</ul>
-<p><strong>协程</strong></p>
+<li>当一个线程因未捕获的异常而即将终止时，JVM 将使用 Thread.getUncaughtExceptionHandler() 查询该线程以获得其 UncaughtExceptionHandler</li>
+<li>调用该 handler 的 uncaughtException() 方法，将线程和异常作为参数传递。
 <ul>
-<li>协程是<strong>用户态</strong>轻量级线程，完全由程序控制而不被内核管理，内核不知道协程的存在</li>
-<li>一个线程可以有多个协程，一个进程也可以有多个协程</li>
-<li>进程和线程都是同步机制，协程是异步</li>
-</ul>
-<p><strong>Java线程和系统线程的区别</strong></p>
-<ul>
-<li>底层数据结构不同， Java 是 JVM 中的实现，系统中的线程根据需求会有不同的实现</li>
-<li>状态不同， Java 线程有 New Terminated 等状态，操作系统只有ready running 和waiting 三种状态</li>
-<li>Java 线程都是在用户态的，但是系统内核线程都是在内核态下，用户是通过系统调用来调用的</li>
-</ul>
-<hr>
-<h3 id="内存模型-7">内存模型 7</h3>
-<p>虚拟内存的理解和作用（段页式、缺页中断、页面置换、内存颠簸）</p>
-<p>逻辑地址和物理地址转化</p>
-<hr>
-<p><strong>虚拟内存</strong></p>
-<p>地址空间被按页划分，每页地址被映射到对应的物理内存。但不是所有页都在内存中，一些不常用的页存在磁盘上，当程序引用到不存在于物理内存中的页时，操作系统将缺失的部分装入物理内存。逻辑上内存大于物理上的内存，但其中一部分其实存储在磁盘上（磁盘上会有一个 swap 分区用来实现置换，当内存不足时会将暂时不用的一部分取出放到 swap 分区中来为当前的程序腾出足够的内存空间），所以叫虚拟内存。优点是<strong>让程序获得更多的可用内存</strong></p>
-<p>它让程序认为它拥有一块连续的可用内存，但其实这些内存往往离散的分布在不同的物理空间</p>
-<hr>
-<p><strong>虚拟内存和常规存储</strong></p>
-<p>常规存储有两个问题</p>
-<ul>
-<li>问题一：作业运行前要一次性装入内存，如果作业大小超出内存，就无法执行</li>
-<li>问题二：作业装入内存后就一直在内存中，直到作业运行结束。期间其他作业只能等待</li>
-</ul>
-<p>针对这两个问题，虚拟内存的解决办法是</p>
-<p>针对问题一</p>
-<ul>
-<li>
-<p>根据<strong>局部性原理</strong></p>
-<p>时间上：最近被访问的页在不久的将来还会被访问</p>
-<p>空间上：内存中被访问的页周围的页也很可能被访问</p>
-</li>
-<li>
-<p>程序在运行时只将当前需要的页装入内存</p>
-</li>
-<li>
-<p>如果所需要的页都在内存中就正常运行，如果发生缺页，就申请将需要的页从磁盘调入内存</p>
-</li>
-</ul>
-<p>针对问题二</p>
-<ul>
-<li>如果内存已满，就根据页面置换算法将需要的页与当前内存中的页进行置换</li>
-</ul>
-<hr>
-<p><strong>页式存储</strong></p>
-<ul>
-<li>将内存抽象成地址空间</li>
-<li>地址空间被分成很多大小相等的块，每一块称为<strong>页</strong></li>
-<li>内存空间也按照同样的大小被划分，每一块称为<strong>页框</strong></li>
-<li><strong>页表</strong>存储着页和页框的映射表</li>
-<li>逻辑上相邻的页，对应的物理地址不一定相邻</li>
-<li>虚拟地址分为两部分，一部分为页面号，一部分为偏移量</li>
-</ul>
-<p>页太小会导致页表过大，降低对换效率，但是可以减少内碎片</p>
-<p>页太大可以提高对换速度，但是内碎片过大，降低内存利用率</p>
-<p><strong>段式存储</strong></p>
-<ul>
-<li>将进程自己的地址空间按照逻辑划分成若干段，如代码段，数据段等。内存空间页被<strong>动态</strong>地划分成长度不同的区域（段可以应付动态增长的情况），每段从 0 开始编址</li>
-<li>段式管理通过段表对应逻辑地址和物理地址</li>
-</ul>
-<p>分页主要是用于实现虚拟内存，获得更大的地址空间；分段是为了使程序和数据可以被划分为逻辑上独立的地址空间，有助于共享和保护</p>
-<p>要实现<strong>动态链接</strong>也需要段式存储。动态链接是在程序运行之前，先不把几个目标程序段连起来，而是只把主程序对应的程序段装入内存中，运行期间如果需要调用其他程序段，再把程序段装入内存并进行连接</p>
-<p><strong>段页式管理</strong></p>
-<ul>
-<li>用户进程先分段，每个段内部再分页，实现了对内存的划分以及段内存的按页分配</li>
-<li>寻址：先通过段号找到该段对应的页表；再在页表中根据页号在物理地址中找到对应的物理块号，并根据页内偏移找到数据的物理地址；第三次再根据物理地址访问数据。<strong>一共三次访问主存</strong>。</li>
-</ul>
-<p><strong>分页和分段的区别</strong></p>
-<ul>
-<li>目的不同：分页的目的是管理内存，用于虚拟内存以获得更大的地址空间；分段的目的是满足用户的需要，使程序和数据可以被划分为逻辑上独立的地址空间；</li>
-<li>大小不同：段的大小不固定，由其所完成的功能决定；页的大小固定，由系统决定；</li>
-<li>地址空间维度不同：
-<ul>
-<li>分段是二维地址空间（段号+段内偏移），因为段和段之间没有关系，段号连续的两个段，地址并不一定连续；需要给出段号和段内偏移才能确定物理地址</li>
-<li>分页是一维地址空间，页和页之间逻辑上连续，第一个页的最后一个地址和第二个页的第一个地址数值上是连续的；只需要给出一个逻辑地址就能计算出页号和页内偏移，从而确定物理地址，因为页号大小是确定的。</li>
-</ul>
-</li>
-<li>分段便于信息的保护和共享，对于可重入代码，可以专门划分一个段，其他进程的段表加入该段就可以实现代码共享；分页的共享受到限制，一个页中可能只需要共享一部分代码，但是共享的时候只能整个页一起共享；</li>
-<li>碎片：分段没有内碎片，但会产生外碎片；分页没有外碎片，但会产生内碎片（一个页填不满）
-<ul>
-<li>内碎片是占用分区内未被利用的空间</li>
-<li>外碎片是占用分区之间难以利用的空闲分区</li>
+<li>如果线程没有实现 uncaughtException() 方法，则搜索该线程的 ThreadGroup 的异常处理器。</li>
+<li>ThreadGroup 中的默认异常处理器实现是将处理工作逐层委托给上层的 ThreadGroup，直到某个 ThreadGroup 的异常处理器能够处理该异常，否则一直传递到顶层的ThreadGroup。</li>
+<li>顶层 ThreadGroup 的异常处理器委托给默认的系统处理器（如果默认的处理器存在，默认情况下为空），否则把栈信息输出到 System.err，即输出到控制台</li>
 </ul>
 </li>
 </ul>
-<hr>
-<p><strong>缺页中断</strong></p>
-<p>如果需要的页不在物理内存中，就发生缺页中断，需要将该页从磁盘掉入内存中。如果此时内存已满，就需要从内存中挑出一个与之进行置换</p>
-<hr>
-<p><strong>页面置换算法</strong></p>
-<p>页面置换算法是为了让缺页率最低</p>
-<p><strong>最佳页面置换算法</strong>：把未来很长一段时间内不会被用到的页面置换掉-理论算法</p>
-<p><strong>最近最久未使用LRU</strong>：将最近最久未使用的页面置换出去。实现方式是链表，每次一个页面被访问，把它移动到链表头，置换时候置换掉链表尾部的页面</p>
-<p><strong>先进先出FIFO</strong>：置换掉在内存中停留时间最长的页面-会把常用的页面置换出去</p>
-<p><strong>第二次机会算法</strong>：相当于优化FIFO，解决了常用页面被置换的问题。为每一个页面设置一个R位，被读和写时置为1，需要置换链表头部的页时，检查R位，如果是0就置换，如果是1，就将R置0，放入链表尾部。</p>
-<p><strong>时钟</strong>：省去第二次机会算法在链表中移动的开销，将页面首尾相连，指针指向最老的那个页面。需要置换时，判断R位是否为1，如果为1，重置为0，指针移向下一页；如果为0，把页面置换出</p>
-<hr>
-<p><strong>内存颠簸</strong></p>
-<p>本质就是频繁的页面调度。进程发生缺页中断，必须置换某一页。但是所有页都在使用，置换页面之后马上又发生缺页中断，导致系统效率急剧下降。解决策略包括：</p>
+<h3 id="execute-和-submit-遇到未捕获异常">execute() 和 submit() 遇到未捕获异常</h3>
 <ul>
-<li>增加物理内存</li>
-<li>修改页面置换算法</li>
-<li>减少运行的程序数量</li>
+<li>如果使用 execute() 方法执行任务，在线程内部，对于未捕获的异常，并不会像在主线程中一样打印错误日志。线程 UncaughtExceptionHandler 接口中有一个 uncaughtException() 方法，如果没有实现该处理方法，JVM 最后的默认策略是使用 <code>System.err.print(&quot;Exception in thread \&quot;&quot; + t.getName() + &quot;\&quot; &quot;)</code> 输出日志到控制台，但是不会写到项目的日志文件中。如果在线程外加上 try/catch 语句也不能捕获到线程内部的异常，因为实际上线程内部的异常最后已经被 JVM 处理了，实际有效的方法是在线程所执行的业务方法外部加一层 try/catch，或者实现 uncaughtException() 方法打印日志，来保证业务方法中抛出的异常最终能被我们捕获到并在日志中被看见。</li>
+<li>如果使用 submit() 方法来执行任务，内部抛出异常不做任何处理，异常既不会打印到日志中，也不会输出到控制台，看起来就好像异常被线程吞了。实际上异常信息被存储到了线程的结果信息中，通过 Future#get 方法就能获取到内部抛出的异常，然后对异常进行捕获和处理。</li>
 </ul>
-<hr>
-<h3 id="死锁-5">死锁 5</h3>
-<p>死锁的条件，说一个死锁情况，如何避免，尽量破坏哪一个来避免死锁</p>
-<p><strong>死锁的起因</strong>是互相等待对方释放占有的资源而处于永远暂停的状态</p>
-<p><strong>死锁产生的必要条件</strong></p>
+<h3 id="总结">总结</h3>
 <ul>
-<li><strong>资源互斥</strong>：资源每次只能被一个线程占有</li>
-<li><strong>请求与保持</strong>：线程因请求资源而被阻塞时，对已获得的资源保持不放</li>
-<li><strong>不可抢占</strong>：线程已获得的资源，在未使用完之前不能强行剥夺</li>
-<li><strong>循环等待</strong>：若干线程形成一种头尾相接循环等待资源的关系</li>
-</ul>
-<p><strong>死锁预防</strong></p>
-<p>思想是破坏产生死锁的四个条件</p>
+<li>出现异常的线程会被线程池移除，线程池会新建一个线程放入</li>
+<li>在线程因未捕获的异常而面临死亡时会调用 Thread.UncaughtExceptionHandler.uncaughtException() 方法，默认会将异常信息打印到控制台</li>
+<li>execute() 内部出现未捕获异常时，默认只会输出错误信息到控制台，不会出现在日志中</li>
+<li>submit() 方法内部出现未捕获异常时，默认控制台和日志都不会有相关信息，需要通过 Future#get 方法来获取异常信息</li>
+<li>使用 exectue() 方法执行任务时，推荐挑选其中一种处理方式
 <ul>
-<li>破坏互斥：某些资源不具备这个条件</li>
-<li>破坏请求与保持：一次性申请所需要的所有资源；请求资源前先释放自己拥有的资源</li>
-<li>破坏不可抢占：允许进程抢占资源</li>
-<li>破坏循环等待：<strong>锁排序法</strong>，通过指定锁的获取顺序。一个线程只有获得A锁和B锁才能对某资源进行操作，在多线程下，可以指定只有获得A锁的线程才能获得B锁，按顺序获取锁就能避免两个线程同时持有A锁和B锁出现循环等待</li>
-</ul>
-<p><strong>死锁避免</strong></p>
-<ul>
-<li>银行家算法 - 动态监测资源分配，确保处于安全状态下才进行资源分配。安全状态是指当前所有进程突然请求所有需要的资源时，有一种分配顺序能够满足所有进程</li>
-</ul>
-<p><strong>死锁解除</strong></p>
-<ul>
-<li>回滚到之前的状态</li>
-<li>杀死进程 - 按照优先级杀死进程直到死锁解除</li>
-</ul>
-<hr>
-<h3 id="IO方法-4">IO方法 4</h3>
-<p><a href="https://www.cnblogs.com/yc3110/p/10440613.html">操作系统底层原理</a><br>
-操作系统之上的应用程序都运行在用户空间，操作系统运行在内核空间，涉及到对磁盘、内存这些系统资源的访问，都需要在内核态进行。所以当应用程序要进行 IO 操作时，都需要进行系统调用。IO 操作分为<strong>准备数据</strong>和<strong>拷贝</strong>两个部分，准备数据是指将数据放置到对应的缓冲区（进程缓冲区/内核缓冲区），拷贝是指将数据从一个缓冲区拷贝到另一个缓冲区</p>
-<p><strong>阻塞式 IO</strong></p>
-<p>调用 IO 操作时，应用进程被阻塞，直到数据从内核缓冲区被复制到进程缓冲区才恢复，进行拷贝时继续阻塞。所以等待和拷贝两个阶段都处于阻塞状态</p>
-<hr>
-<p><strong>非阻塞式 IO</strong></p>
-<p>进程调用 IO 操作，如果数据还没准备好，系统会返回一个错误码，期间应用进程可以继续执行，期间会定期询问内核有没有准备好数据，如果准备好就进行拷贝。拷贝的过程依然是阻塞的</p>
-<hr>
-<p><strong>IO多路复用</strong></p>
-<p>select / poll / epoll 都是多路复用，多路复用就是通过一种机制，可以监听多个描述符，一旦某个描述符就绪，就可以通知程序进行响应的读写操作</p>
-<p>区别：</p>
-<ul>
-<li>支持的最大连接数</li>
-<li>文件描述符是否从内核空间到用户空间来回复制</li>
-<li>触发方式</li>
-<li>查询描述符的效率，是否轮询</li>
-</ul>
-<p><strong>select</strong></p>
-<ul>
-<li>将文件描述符放入<strong>集合</strong>中</li>
-<li>每次调用时将集合从用户空间拷贝到内核空间（每次都要复制，开销大）内核根据就绪状态修改集合内容</li>
-<li><strong>集合大小有限制</strong>（32位机默认只有1024），采用<strong>水平触发</strong></li>
-<li>select函数返回后，需要通过遍历集合找到就绪的文件描述符（<strong>轮询效率低</strong>），文件描述符越多，效率越低</li>
-</ul>
-<p><strong>poll</strong></p>
-<ul>
-<li>用<strong>链表</strong>存储文件描述符，所以大小没有限制</li>
-<li>其他和select一样</li>
-</ul>
-<p><strong>epoll</strong></p>
-<ul>
-<li>用红黑树来存储被监听的描述符</li>
-<li>用户空间和内核空间共享内存，避免了来回复制的开销</li>
-<li>支持的最大连接数很大，1G 可以支持 10W 左右的连接数</li>
-<li>文件描述符就绪时会调用回调函数，将描述符添加到一个链表，之后返回这个链表</li>
-<li>支持<strong>水平触发</strong>和<strong>边缘触发</strong></li>
-<li>采用<strong>边缘触发</strong>时只有活跃的描述符才会触发回调函数。所谓<strong>活跃</strong>，就是指缓冲区的状态发生变化：从不可读到可读；从不可写到可写；缓冲区的内容增多或减少</li>
-<li>采用<strong>水平触发</strong>时如果一次没有将缓冲区中的内容全部读完，下次即使缓冲区内容没有变化，还会再通知</li>
-</ul>
-<p>连接数多并且很多不活跃时使用 epoll；连接数少且多数活跃时使用前两者，因为 epoll 需要回调，性能会稍差</p>
-<hr>
-<p><strong>水平触发</strong></p>
-<p>只要一个文件描述符就绪，就会发送通知，如果用户程序没有一次性把数据读写完，再次还会通知</p>
-<p><strong>边缘触发</strong></p>
-<p>描述符从为就绪变为就绪时通知一次，如果没读完之后也不会再通知</p>
-<p>区别：边缘触发效率更高，减少了被重复触发的次数。水平触发可能会导致用户程序收到大量不需要的文件描述符</p>
-<hr>
-<p><strong>异步 IO</strong></p>
-<p>执行 IO 调用后可以立即返回，继续执行原来的操作。内核会在操作完成后通知进程。比如读操作，会在把数据放到用户指定的缓冲区后通知进程。<strong>等待和拷贝过程都不是阻塞的。</strong></p>
-<hr>
-<h3 id="进程调度算法-3">进程调度算法 3</h3>
-<p><strong>批处理系统</strong></p>
-<p>目的是保证吞吐量和周转时间</p>
-<ul>
-<li>先来先服务
-<ul>
-<li>非抢占，按照请求顺序调度，有利于长作业，不利于短作业，短作业可能需要等待很久来让长作业执行完</li>
-</ul>
-</li>
-<li>短作业优先
-<ul>
-<li>非抢占，长作业可能被饿死</li>
-</ul>
-</li>
-<li>最短剩余时间优先
-<ul>
-<li>短作业优先的抢占式版本，长作业还是可能会饥饿</li>
-</ul>
-</li>
-<li>最高响应比优先
-<ul>
-<li>计算响应比 = 1 + 等待时间 / 处理时间，平衡了长短进程，非抢占，但是开销大</li>
+<li>业务代码最外层加上 try/catch 语句块，输出错误日志，便于问题排查</li>
+<li>实现 UncaughtExceptionHandler 接口并为线程重写一个默认的 uncaughtException 方法，在 uncaughtException 方法中打印日志</li>
 </ul>
 </li>
 </ul>
-<p><strong>交互式系统</strong></p>
-<p>保证快速响应</p>
-<ul>
-<li>时间片轮转
-<ul>
-<li>所有进程按 FCFS 拍成队列，每个进程分配一个 CPU 时间片，用完后排到队尾部</li>
-<li>效率取决于时间片长短，太短会导致切换过频繁，太长实时性不能保证</li>
-</ul>
-</li>
-<li>优先级调度
-<ul>
-<li>为每个进程分配一个优先级，按优先级调度</li>
-<li>为保证低优先级等不到调度，随着等待时间的增加提高优先级</li>
-</ul>
-</li>
-<li>多级反馈队列调度
-<ul>
-<li>前两种方法的结合</li>
-<li>设置多个队列，从前到后时间片大小增加，优先级减小</li>
-<li>如果在前一个没有执行完就移到下一个队列，只有上一个队列没有进程，才执行下一个队列</li>
-</ul>
-</li>
-</ul>
-<hr>
-<h3 id="进程间通信-3"><a href="https://mp.weixin.qq.com/s/KU2tdFbL3PSltYZQbfX_Iw">进程间通信 3</a></h3>
-<p>机制，什么时候用什么，哪个最优（共享内存？）</p>
-<p><strong>管道</strong>：传输信息量大，只适用于亲缘进程 - 半双工，数据只能单向流动。如果要双向流动需要建立两个管道。<strong>只能用于亲缘进程</strong>是因为管道没有实体，只能通过 fork 来复制父进程的文件描述符来达到通信的目的。</p>
-<p><strong>命名管道</strong>：传输信息量大，适用任何场景。<strong>可以用于不相关的进程间</strong>，因为命名管道创建了一个类型为管道的设备文件，在进程里只要使用这个设备文件就能进行通信。</p>
-<blockquote>
-<p><strong>管道其实就是内核中的一串缓存</strong>，管道一端写入的数据放到缓存中，另一端从缓存中取出数据。一端把数据放入管道后，只有等到另一端把数据取出，这一端才能正常返回。在这里理解为同步阻塞的，通信效率低</p>
-</blockquote>
-<p><strong>共享内存</strong>：传输信息量大，可适用于多个进程间通信 - <strong>允许多个进程共享一段物理内存</strong>，不同进程可以将这个内存映射到自己的地址空间，然后<strong>像访问正常内存一样访问它</strong>。进程可以通过向共享内存区域读写数据来交换信息。<strong>优点</strong>：速度快，就像使用自己的内存区域一样，不需要系统调用，不存在用户态和内核态之间的数据拷贝 <strong>缺点</strong>：存在并发问题，一般和信号量一起使用解决并发问题</p>
-<p><strong>套接字</strong>：传输信息量大，适用于不同主机间进程的通信。服务端有一个专门用于监听的 socket，当收到客户端的连接请求时，会返回一个专门用于传输数据的 socket。</p>
-<p><strong>消息队列</strong>：消息队列是保存在内核中的消息链表，每一个消息都是一个数据块，具有固定的数据类型和大小。（管道是无格式的字节流数据）局限是因为数据块大小限制，不能上传过大文件</p>
-<p><strong>信号</strong>：传输少量信息，适用任何场景</p>
-<p><strong>信号量</strong>：主要用于互斥同步，是进程通信中唯一的异步通信机制</p>
-<hr>
-<h3 id="线程间通信机制-3">线程间通信机制 3</h3>
-<p>线程间通信的目的主要是用于线程同步，没有像进程通信中用于数据交换的通信机制</p>
-<ul>
-<li>锁机制：互斥锁、读写锁</li>
-<li>可以读写同一进程中的数据进行通信，全局变量 - 因为多个线程可能更改全局变量，所以把它声明为 volatile</li>
-<li>信号量机制 semaphore</li>
-<li>信号机制 signal</li>
-</ul>
-<hr>
-<h3 id="TLB-2">TLB 2</h3>
-<p>是什么，有什么作用</p>
-<p>又被称为快表，相当于页表的cache，存储了当前最可能被访问到的页表项。提高了虚拟地址到物理地址的转换速度。在没有快表时，读写内存数据时要访问两次主存，有了快表之后就可能只要访问一次高速缓存和一次主存，提高查找速度。</p>
-<hr>
-<h3 id="线程同步机制-2">线程同步机制 2</h3>
-<ul>
-<li><strong>互斥量</strong>，是内核对象，只有拥有互斥对象才能访问互斥资源。互斥对象只有一个，所以同一时刻互斥资源只能被同一对象访问。当前线程处理完后要将互斥对象交出</li>
-<li><strong>信号量</strong>，是内核对象，允许同一时刻多个线程访问同一资源，每增加一个线程访问资源，信号量就减1</li>
-<li><strong>事件</strong>，允许线程在处理完一个任务后主动唤醒另外一个线程执行任务</li>
-<li><strong>临界区</strong>，任意时刻只允许一个线程访问临界区</li>
-</ul>
-<p><strong>互斥量和临界区的区别</strong></p>
-<p>互斥量是可以命名的，<strong>可以用于不同进程间同步</strong>；<strong>临界区只能用于同一进程中线程的同步</strong>。创建互斥量需要的资源更多，所以临界区优势是速度快，节省资源。</p>
-<hr>
-<h3 id="进程状态">进程状态</h3>
-<p>进程有三种状态：<strong>就绪态，运行态，阻塞态</strong></p>
-<p><strong>运行态和就绪态可相互转换</strong>，就绪态获得CPU资源进入运行态，运行态用完CPU资源进入就绪态</p>
-<p><strong>运行态可以转为阻塞态</strong>，当运行中的进程缺失某个资源无法进行下去时会进入阻塞态</p>
-<p><strong>阻塞态可以转化为就绪态</strong>，当阻塞态的进程获取到想要的资源时，转变为就绪态</p>
-<p>综上：就绪态和阻塞态不能相互转化</p>
-<hr>
-<h3 id="进程间socket通信和网络间socket通信的区别">进程间socket通信和网络间socket通信的区别</h3>
-<p><strong>网络间socket</strong></p>
-<ul>
-<li>建立 socket 需要一对套接字，一个运行于客户端，一个运行于服务端</li>
-<li>连接过程分为三个步骤：服务器监听，客户端请求，连接确认</li>
-<li><strong>服务器监听</strong>：服务器端套接字处于等待连接状态，等待客户端的连接请求</li>
-<li><strong>客户端请求</strong>：客户端提出连接请求，指出服务端套接字的地址和端口号，然后向服务端套接字提出连接请求</li>
-<li><strong>连接确认</strong>：服务端套接字接收到客户端的连接请求后，就响应客户端的连接请求，建立一个新的线程，把服务端套接字的描述发送给客户端，一旦客户端确认，双方就正式建立连接。</li>
-</ul>
-<hr>
-<h3 id="用户态和内核态">用户态和内核态</h3>
-<p>是系统的两个权限等级，代表不同的访问能力</p>
-<ul>
-<li>内核态可以访问内存的所有数据以及外围设备，例如硬盘网卡</li>
-<li>用户态只能受限访问内存，不能访问外围设备，不能占用 CPU</li>
-</ul>
-<p>所有应用程序都运行在用户态，需要进行一些内核操作，例如读取硬盘数据时就要进行系统调用，切换到内核态，执行完服务之后再返回用户态，并返回调用结果</p>
-<p><strong>从用户态切换到内核态的方法</strong></p>
-<ul>
-<li>系统调用</li>
-<li>异常：一些异常需要在内核态进行处理</li>
-</ul>
-<hr>
-<h3 id="磁盘寻道">磁盘寻道</h3>
-<p><strong>过程</strong></p>
-<ul>
-<li>磁头先找到对应的盘面</li>
-<li>磁头移动到对应的磁道（寻道时间）</li>
-<li>磁盘旋转到对应的扇区（旋转时间）</li>
-</ul>
-<p><strong>调度算法</strong></p>
-<p>先来先服务：公平简单，但是平均寻道时间长</p>
-<p>最短寻道优先：平均时间较短，但是会饥饿</p>
-<p>电梯算法：按照一个方向进行磁盘调度，等到该方向没有未完成请求后，改变方向</p>
-<hr>
-<h3 id="fork">fork()</h3>
-<p>创建一个与原来进程几乎完全相同的进程</p>
+<h3 id="参考">参考</h3>
+<p><a href="https://blog.51cto.com/alex4dream/4222160">【Java技术指南】「技术盲区」看看线程以及线程池的异常处理机制都有哪些？</a></p>
 ]]></content>
       <categories>
-        <category>面试</category>
+        <category>问题</category>
       </categories>
       <tags>
-        <tag>操作系统</tag>
+        <tag>Java</tag>
       </tags>
   </entry>
   <entry>
@@ -3710,6 +3827,59 @@ or you can check the docs: <a href="http://hexo.io/docs/">http://hexo.io/docs/</
       <tags>
         <tag>Hexo</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>读 Ray Dalio 的《To Help Put Recent Economic &amp; Market Moves in Perspective》</title>
+    <url>/2018/12/28/%E8%AF%BBRay%20Dalio%E7%9A%84%E3%80%8ATo%20Help%20Put%20Recent%20Economic%20&amp;%20Market%20Moves%20in%20Perspective%E3%80%8B/</url>
+    <content><![CDATA[<p>写这篇文章的目的是总结一下 Ray Dalio 文章的内容，并穿插一些自己的思考，以帮助自己更好的消化内容。</p>
+<span id="more"></span>
+<blockquote>
+<p>Ray Dalio的这篇文章是发在美股大跌的时候，有许多人问到他现在的经济是怎么回事。他的做法是介绍他使用的分析经济的框架，目的是在知道了这个框架之后，人们有能力凭自己的思考明白经济在发生什么变化。所谓<strong>授人以渔</strong>。</p>
+</blockquote>
+<p>他总结了影响市场和经济状况的三个因素，分别是：</p>
+<ol>
+<li>生产力增长</li>
+<li>短债务周期（5～10年）</li>
+<li>长债务周期（50～75年）</li>
+</ol>
+<h3 id="生产力增长">生产力增长</h3>
+<p>影响一个国家生产力增长的是竞争力和文化因素。竞争力基于与其它国家受良好教育的人的成本下的人的价值。</p>
+<p><em>（the value of people as measured by the cost of comparably educated people in other countries）</em></p>
+<p>我的理解是一个国家可以用更低的成本培养出优质人才，即有更高的人才产出效率时，这个国家的竞争力就优于其他国家。文化因素更为重要，是划分国家与国家区别的主要因素。它影响人对工作、存款、贪污、可靠性等决策。而这些决策与后续年份的增长呈高关联性。发达国家的生产力增长情况是增速变缓，该状况主要集中在人口的减少和自动化程度较高领域的工人减少。</p>
+<h3 id="借贷周期">借贷周期</h3>
+<p>借贷周期可以用来理解进几十年来的经济和市场变化。道理其实很简单，中央银行贷出钱流通到市场，提高了购买力，进而刺激了经济活动产出效益，促进经济增长；但是借出的钱是要还的，市场上的钱再被收回后，用在商品、服务和投资资产上的钱就减少了，由此经济活动减缓，经济出现负增长。</p>
+<p>中央银行所做的就是对经济的调节作用：当经济松弛时，向市场贷出钱促进经济活动；当经济持续增长过后，适当踩刹车，以提高利息的方式适当回收流动资金。在经济增长时收紧货币政策是为了抑制通货膨胀，经济增长快但是产能有限最后带来的物价上涨。</p>
+<p>Ray Dalio指出现在的美国就是在这一循环的末端，就是美联储通过加息的方式收回流动在市场上的钱，最终导致了股价下跌。具体过程为，加息变相降低了人们从其他投资渠道获得的收益，因为资金的时间价值因此变高，股市就是一例渠道。</p>
+<h3 id="三大平衡">三大平衡</h3>
+<p>市场是不断变化的，一系列经济行为的作用就是维持市场的几处保持平衡。在文章中一共提到的三类大平衡和政府促进这三大平衡的两类手段。</p>
+<blockquote>
+<h4 id="第一类平衡">第一类平衡</h4>
+</blockquote>
+<p>债务增长与偿债所需的收入和货币增长一致。借到的钱款被用来产生更多的现金流，带来收益，那么这种行为是可持续的。如果获得的现金流还不足以偿还债务利率，那么这种模式就是有问题的，会发生重大改变。</p>
+<blockquote>
+<h4 id="第二类平衡">第二类平衡</h4>
+</blockquote>
+<p>产能的利用率不能过高或过低。产能闲置导致工人失业，不利于经济发展；产能闲置过少会导致不良的通货膨胀，刺激央行实行货币紧缩政策。</p>
+<blockquote>
+<h4 id="第三类平衡">第三类平衡</h4>
+</blockquote>
+<p>预期现金回报率 &lt; 债券回报率 &lt; 股票回报率。这三类回报利差促进市场和经济的健康运作，因为他们创造了借款、贷款和生产，从而促进资金的健康流动。</p>
+<h3 id="两类政策">两类政策</h3>
+<p>为了维持这三类平衡，政府拥有两类政策。</p>
+<blockquote>
+<h4 id="货币政策">货币政策</h4>
+</blockquote>
+<p>货币政策是指央行通过改变货币的数量和价值来影响经济活动。当债务增长缓慢且产能过低时，央行增加金融系统中的货币数量，促进短期利率和国债利率相比与股票收益的下降。所以促使人们购买更多股票，推动股价上升。股价上升就意味着许多人手上的资产价值升高，从而有更多的钱进行借贷和消费。当债务过快且产能利用紧张时（意味着通货膨胀率上升），央行的措施和产生的影响就与之相反。央行所使用的三类货币政策为利率政策、量化宽松和针对消费者的货币刺激政策。当货币的短期利率降到零时，央行就采取量化宽松政策，即加印货币。</p>
+<blockquote>
+<h4 id="财政政策">财政政策</h4>
+</blockquote>
+<p>财政政策是指政府来管理信贷和货币的分布状况。政府可以通过消费和征税两种途径来影响经济，如果消费多，征税少，这就刺激经济发展；反过来就抑制经济发展。</p>
+<p>总而言之，政策制定者通过这两种杠杆来打破这三类平衡以促进经济发展，又或者帮助调整这三类平衡来调节经济。Ray Dalio想传达的就是以上这些思想。通过这些思想，我以后可以观察市场的情况，并分析宏观上的原因，弄清楚这时候经济发生了什么事。</p>
+<p><strong>原文链接：</strong><blockquote><footer><strong>Ray Dalio</strong><cite><a href="https://www.linkedin.com/pulse/help-put-recent-economic-market-moves-perspective-ray-dalio/">To Help Put Recent Economic & Market Moves in Perspective</a></cite></footer></blockquote></p>
+]]></content>
+      <categories>
+        <category>随笔</category>
+      </categories>
   </entry>
   <entry>
     <title>计算机网络面试重点</title>
@@ -4153,59 +4323,6 @@ ps:无比特差错与无传输差错区别：无传输差错还包括帧丢失�
       </tags>
   </entry>
   <entry>
-    <title>读 Ray Dalio 的《To Help Put Recent Economic &amp; Market Moves in Perspective》</title>
-    <url>/2018/12/28/%E8%AF%BBRay%20Dalio%E7%9A%84%E3%80%8ATo%20Help%20Put%20Recent%20Economic%20&amp;%20Market%20Moves%20in%20Perspective%E3%80%8B/</url>
-    <content><![CDATA[<p>写这篇文章的目的是总结一下 Ray Dalio 文章的内容，并穿插一些自己的思考，以帮助自己更好的消化内容。</p>
-<span id="more"></span>
-<blockquote>
-<p>Ray Dalio的这篇文章是发在美股大跌的时候，有许多人问到他现在的经济是怎么回事。他的做法是介绍他使用的分析经济的框架，目的是在知道了这个框架之后，人们有能力凭自己的思考明白经济在发生什么变化。所谓<strong>授人以渔</strong>。</p>
-</blockquote>
-<p>他总结了影响市场和经济状况的三个因素，分别是：</p>
-<ol>
-<li>生产力增长</li>
-<li>短债务周期（5～10年）</li>
-<li>长债务周期（50～75年）</li>
-</ol>
-<h3 id="生产力增长">生产力增长</h3>
-<p>影响一个国家生产力增长的是竞争力和文化因素。竞争力基于与其它国家受良好教育的人的成本下的人的价值。</p>
-<p><em>（the value of people as measured by the cost of comparably educated people in other countries）</em></p>
-<p>我的理解是一个国家可以用更低的成本培养出优质人才，即有更高的人才产出效率时，这个国家的竞争力就优于其他国家。文化因素更为重要，是划分国家与国家区别的主要因素。它影响人对工作、存款、贪污、可靠性等决策。而这些决策与后续年份的增长呈高关联性。发达国家的生产力增长情况是增速变缓，该状况主要集中在人口的减少和自动化程度较高领域的工人减少。</p>
-<h3 id="借贷周期">借贷周期</h3>
-<p>借贷周期可以用来理解进几十年来的经济和市场变化。道理其实很简单，中央银行贷出钱流通到市场，提高了购买力，进而刺激了经济活动产出效益，促进经济增长；但是借出的钱是要还的，市场上的钱再被收回后，用在商品、服务和投资资产上的钱就减少了，由此经济活动减缓，经济出现负增长。</p>
-<p>中央银行所做的就是对经济的调节作用：当经济松弛时，向市场贷出钱促进经济活动；当经济持续增长过后，适当踩刹车，以提高利息的方式适当回收流动资金。在经济增长时收紧货币政策是为了抑制通货膨胀，经济增长快但是产能有限最后带来的物价上涨。</p>
-<p>Ray Dalio指出现在的美国就是在这一循环的末端，就是美联储通过加息的方式收回流动在市场上的钱，最终导致了股价下跌。具体过程为，加息变相降低了人们从其他投资渠道获得的收益，因为资金的时间价值因此变高，股市就是一例渠道。</p>
-<h3 id="三大平衡">三大平衡</h3>
-<p>市场是不断变化的，一系列经济行为的作用就是维持市场的几处保持平衡。在文章中一共提到的三类大平衡和政府促进这三大平衡的两类手段。</p>
-<blockquote>
-<h4 id="第一类平衡">第一类平衡</h4>
-</blockquote>
-<p>债务增长与偿债所需的收入和货币增长一致。借到的钱款被用来产生更多的现金流，带来收益，那么这种行为是可持续的。如果获得的现金流还不足以偿还债务利率，那么这种模式就是有问题的，会发生重大改变。</p>
-<blockquote>
-<h4 id="第二类平衡">第二类平衡</h4>
-</blockquote>
-<p>产能的利用率不能过高或过低。产能闲置导致工人失业，不利于经济发展；产能闲置过少会导致不良的通货膨胀，刺激央行实行货币紧缩政策。</p>
-<blockquote>
-<h4 id="第三类平衡">第三类平衡</h4>
-</blockquote>
-<p>预期现金回报率 &lt; 债券回报率 &lt; 股票回报率。这三类回报利差促进市场和经济的健康运作，因为他们创造了借款、贷款和生产，从而促进资金的健康流动。</p>
-<h3 id="两类政策">两类政策</h3>
-<p>为了维持这三类平衡，政府拥有两类政策。</p>
-<blockquote>
-<h4 id="货币政策">货币政策</h4>
-</blockquote>
-<p>货币政策是指央行通过改变货币的数量和价值来影响经济活动。当债务增长缓慢且产能过低时，央行增加金融系统中的货币数量，促进短期利率和国债利率相比与股票收益的下降。所以促使人们购买更多股票，推动股价上升。股价上升就意味着许多人手上的资产价值升高，从而有更多的钱进行借贷和消费。当债务过快且产能利用紧张时（意味着通货膨胀率上升），央行的措施和产生的影响就与之相反。央行所使用的三类货币政策为利率政策、量化宽松和针对消费者的货币刺激政策。当货币的短期利率降到零时，央行就采取量化宽松政策，即加印货币。</p>
-<blockquote>
-<h4 id="财政政策">财政政策</h4>
-</blockquote>
-<p>财政政策是指政府来管理信贷和货币的分布状况。政府可以通过消费和征税两种途径来影响经济，如果消费多，征税少，这就刺激经济发展；反过来就抑制经济发展。</p>
-<p>总而言之，政策制定者通过这两种杠杆来打破这三类平衡以促进经济发展，又或者帮助调整这三类平衡来调节经济。Ray Dalio想传达的就是以上这些思想。通过这些思想，我以后可以观察市场的情况，并分析宏观上的原因，弄清楚这时候经济发生了什么事。</p>
-<p><strong>原文链接：</strong><blockquote><footer><strong>Ray Dalio</strong><cite><a href="https://www.linkedin.com/pulse/help-put-recent-economic-market-moves-perspective-ray-dalio/">To Help Put Recent Economic & Market Moves in Perspective</a></cite></footer></blockquote></p>
-]]></content>
-      <categories>
-        <category>随笔</category>
-      </categories>
-  </entry>
-  <entry>
     <title>面试常考设计模式</title>
     <url>/2021/04/24/%E9%9D%A2%E8%AF%95%E5%B8%B8%E8%80%83%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</url>
     <content><![CDATA[<h3 id="单例模式-4">单例模式 4</h3>
@@ -4256,49 +4373,5 @@ ps:无比特差错与无传输差错区别：无传输差错还包括帧丢失�
       <categories>
         <category>随笔</category>
       </categories>
-  </entry>
-  <entry>
-    <title>多线程执行任务抛出异常不打印日志</title>
-    <url>/2022/01/09/%E7%BA%BF%E7%A8%8B%E6%B1%A0%E6%8A%9B%E5%87%BA%E5%BC%82%E5%B8%B8%E4%B8%8D%E6%89%93%E5%8D%B0%E6%97%A5%E5%BF%97/</url>
-    <content><![CDATA[<h3 id="原因">原因</h3>
-<p>实际原因出在我写的业务方法，在最外层没有包裹一个 try/catch 语句块，导致线程执行业务方法时内部抛出了未捕获的异常，但是线程本身没有写一个默认的异常处理方法，最终 JVM 的默认处理方式是将这个异常以及堆栈信息只会被打印到控制台，而不是写到日志中。</p>
-<h4 id="原理分析">原理分析</h4>
-<ul>
-<li>当一个线程因未捕获的异常而即将终止时，JVM 将使用 Thread.getUncaughtExceptionHandler() 查询该线程以获得其 UncaughtExceptionHandler</li>
-<li>调用该 handler 的 uncaughtException() 方法，将线程和异常作为参数传递。
-<ul>
-<li>如果线程没有实现 uncaughtException() 方法，则搜索该线程的 ThreadGroup 的异常处理器。</li>
-<li>ThreadGroup 中的默认异常处理器实现是将处理工作逐层委托给上层的 ThreadGroup，直到某个 ThreadGroup 的异常处理器能够处理该异常，否则一直传递到顶层的ThreadGroup。</li>
-<li>顶层 ThreadGroup 的异常处理器委托给默认的系统处理器（如果默认的处理器存在，默认情况下为空），否则把栈信息输出到 System.err，即输出到控制台</li>
-</ul>
-</li>
-</ul>
-<h3 id="execute-和-submit-遇到未捕获异常">execute() 和 submit() 遇到未捕获异常</h3>
-<ul>
-<li>如果使用 execute() 方法执行任务，在线程内部，对于未捕获的异常，并不会像在主线程中一样打印错误日志。线程 UncaughtExceptionHandler 接口中有一个 uncaughtException() 方法，如果没有实现该处理方法，JVM 最后的默认策略是使用 <code>System.err.print(&quot;Exception in thread \&quot;&quot; + t.getName() + &quot;\&quot; &quot;)</code> 输出日志到控制台，但是不会写到项目的日志文件中。如果在线程外加上 try/catch 语句也不能捕获到线程内部的异常，因为实际上线程内部的异常最后已经被 JVM 处理了，实际有效的方法是在线程所执行的业务方法外部加一层 try/catch，或者实现 uncaughtException() 方法打印日志，来保证业务方法中抛出的异常最终能被我们捕获到并在日志中被看见。</li>
-<li>如果使用 submit() 方法来执行任务，内部抛出异常不做任何处理，异常既不会打印到日志中，也不会输出到控制台，看起来就好像异常被线程吞了。实际上异常信息被存储到了线程的结果信息中，通过 Future#get 方法就能获取到内部抛出的异常，然后对异常进行捕获和处理。</li>
-</ul>
-<h3 id="总结">总结</h3>
-<ul>
-<li>出现异常的线程会被线程池移除，线程池会新建一个线程放入</li>
-<li>在线程因未捕获的异常而面临死亡时会调用 Thread.UncaughtExceptionHandler.uncaughtException() 方法，默认会将异常信息打印到控制台</li>
-<li>execute() 内部出现未捕获异常时，默认只会输出错误信息到控制台，不会出现在日志中</li>
-<li>submit() 方法内部出现未捕获异常时，默认控制台和日志都不会有相关信息，需要通过 Future#get 方法来获取异常信息</li>
-<li>使用 exectue() 方法执行任务时，推荐挑选其中一种处理方式
-<ul>
-<li>业务代码最外层加上 try/catch 语句块，输出错误日志，便于问题排查</li>
-<li>实现 UncaughtExceptionHandler 接口并为线程重写一个默认的 uncaughtException 方法，在 uncaughtException 方法中打印日志</li>
-</ul>
-</li>
-</ul>
-<h3 id="参考">参考</h3>
-<p><a href="https://blog.51cto.com/alex4dream/4222160">【Java技术指南】「技术盲区」看看线程以及线程池的异常处理机制都有哪些？</a></p>
-]]></content>
-      <categories>
-        <category>问题</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-      </tags>
   </entry>
 </search>

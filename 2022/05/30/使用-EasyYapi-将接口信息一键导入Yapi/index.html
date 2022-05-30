@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yoursite.com","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.8.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="入职了新公司后，我接触到了 Yapi 这样一款强大的接口管理平台，但是相比于 Swagger，接口的创建和信息的更新在 Yapi 上显得要麻烦许多，还好在 IDEA 上有 EasyYapi 这样一款基于 Java Doc 注释生成接口信息的插件，让 Yapi 管理项目接口文档这一过程高效了很多。 安装插件 我们在 IDEA 上安装 EasyYapi 插件，可以直接搜索名字进行下载，也可以通过链接下">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用 EasyYapi 将接口信息一键导入Yapi">
+<meta property="og:url" content="http://yoursite.com/2022/05/30/%E4%BD%BF%E7%94%A8-EasyYapi-%E5%B0%86%E6%8E%A5%E5%8F%A3%E4%BF%A1%E6%81%AF%E4%B8%80%E9%94%AE%E5%AF%BC%E5%85%A5Yapi/index.html">
+<meta property="og:site_name" content="ABMIS">
+<meta property="og:description" content="入职了新公司后，我接触到了 Yapi 这样一款强大的接口管理平台，但是相比于 Swagger，接口的创建和信息的更新在 Yapi 上显得要麻烦许多，还好在 IDEA 上有 EasyYapi 这样一款基于 Java Doc 注释生成接口信息的插件，让 Yapi 管理项目接口文档这一过程高效了很多。 安装插件 我们在 IDEA 上安装 EasyYapi 插件，可以直接搜索名字进行下载，也可以通过链接下">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://blog-1252654208.cos.ap-nanjing.myqcloud.com/img/1.png">
+<meta property="og:image" content="https://blog-1252654208.cos.ap-nanjing.myqcloud.com/img/2.jpg">
+<meta property="og:image" content="https://blog-1252654208.cos.ap-nanjing.myqcloud.com/img/3.jpg">
+<meta property="og:image" content="https://blog-1252654208.cos.ap-nanjing.myqcloud.com/img/4.png">
+<meta property="og:image" content="https://blog-1252654208.cos.ap-nanjing.myqcloud.com/img/5.png">
+<meta property="og:image" content="https://blog-1252654208.cos.ap-nanjing.myqcloud.com/img/6.png">
+<meta property="og:image" content="https://blog-1252654208.cos.ap-nanjing.myqcloud.com/img/7.png">
+<meta property="article:published_time" content="2022-05-30T09:08:08.000Z">
+<meta property="article:modified_time" content="2022-05-30T09:26:52.663Z">
+<meta property="article:author" content="abmis">
+<meta property="article:tag" content="Yapi">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://blog-1252654208.cos.ap-nanjing.myqcloud.com/img/1.png">
+
+
+<link rel="canonical" href="http://yoursite.com/2022/05/30/%E4%BD%BF%E7%94%A8-EasyYapi-%E5%B0%86%E6%8E%A5%E5%8F%A3%E4%BF%A1%E6%81%AF%E4%B8%80%E9%94%AE%E5%AF%BC%E5%85%A5Yapi/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://yoursite.com/2022/05/30/%E4%BD%BF%E7%94%A8-EasyYapi-%E5%B0%86%E6%8E%A5%E5%8F%A3%E4%BF%A1%E6%81%AF%E4%B8%80%E9%94%AE%E5%AF%BC%E5%85%A5Yapi/","path":"2022/05/30/使用-EasyYapi-将接口信息一键导入Yapi/","title":"使用 EasyYapi 将接口信息一键导入Yapi"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>使用 EasyYapi 将接口信息一键导入Yapi | ABMIS</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">ABMIS</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-照片"><a href="/photos/" rel="section"><i class="fa fa-camera fa-fw"></i>照片</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E6%8F%92%E4%BB%B6"><span class="nav-number">1.</span> <span class="nav-text">安装插件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AF%BC%E5%87%BA-API"><span class="nav-number">2.</span> <span class="nav-text">导出 API</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%9B%E9%98%B6"><span class="nav-number">3.</span> <span class="nav-text">进阶</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%B1%BB%E6%B3%A8%E9%87%8A"><span class="nav-number">3.1.</span> <span class="nav-text">类注释</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%96%B9%E6%B3%95%E6%B3%A8%E9%87%8A"><span class="nav-number">3.2.</span> <span class="nav-text">方法注释</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B1%9E%E6%80%A7%E6%B3%A8%E9%87%8A"><span class="nav-number">3.3.</span> <span class="nav-text">属性注释</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Java-Doc"><span class="nav-number">4.</span> <span class="nav-text">Java Doc</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">5.</span> <span class="nav-text">参考</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="abmis"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">abmis</p>
+  <div class="site-description" itemprop="description">Know your game.</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">36</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">23</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/simba426" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;simba426" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://instagram.com/woody_simba" title="Instagram → https:&#x2F;&#x2F;instagram.com&#x2F;woody_simba" rel="noopener" target="_blank"><i class="fab fa-instagram fa-fw"></i>Instagram</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://t.me/abmis_reverse" title="Telegram → https:&#x2F;&#x2F;t.me&#x2F;abmis_reverse" rel="noopener" target="_blank"><i class="fab fa-telegram fa-fw"></i>Telegram</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/05/30/%E4%BD%BF%E7%94%A8-EasyYapi-%E5%B0%86%E6%8E%A5%E5%8F%A3%E4%BF%A1%E6%81%AF%E4%B8%80%E9%94%AE%E5%AF%BC%E5%85%A5Yapi/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="abmis">
+      <meta itemprop="description" content="Know your game.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ABMIS">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          使用 EasyYapi 将接口信息一键导入Yapi
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2022-05-30 17:08:08 / 修改时间：17:26:52" itemprop="dateCreated datePublished" datetime="2022-05-30T17:08:08+08:00">2022-05-30</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%95%88%E7%8E%87/" itemprop="url" rel="index"><span itemprop="name">效率</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>入职了新公司后，我接触到了 Yapi 这样一款强大的接口管理平台，但是相比于 Swagger，接口的创建和信息的更新在 Yapi 上显得要麻烦许多，还好在 IDEA 上有 EasyYapi 这样一款基于 Java Doc 注释生成接口信息的插件，让 Yapi 管理项目接口文档这一过程高效了很多。</p>
+<h3 id="安装插件">安装插件</h3>
+<p>我们在 IDEA 上安装 EasyYapi 插件，可以直接搜索名字进行下载，也可以通过链接下载 <a target="_blank" rel="noopener" href="https://plugins.jetbrains.com/plugin/12458-easyyapi">EasyYapi - IntelliJ IDEs Plugin | Marketplace</a></p>
+<h3 id="导出-API">导出 API</h3>
+<p>在安装完插件之后，就可以按步骤进行接口信息导出了。<br>
+首先，在项目目录中选定接口所在的文件夹，然后使用快捷键<code>alt shift E(windows)/ctrl E(mac)</code> , 然后选择要导出的接口，点击绿色的 ☑️ 进行导出</p>
+<center>
+    <img style="border-radius: 0.3125em;
+    box-shadow: 0 2px 4px 0 rgba(34,36,38,.12),0 2px 10px 0 rgba(34,36,38,.08);" 
+    src="https://blog-1252654208.cos.ap-nanjing.myqcloud.com/img/1.png">
+</center>
+如果是初次使用，在导出期间需要按照提示输入 Yapi 服务的地址，以及 Yapi 项目的 token。其中项目的 token 在如下路径可以找到
+<center>
+    <img style="border-radius: 0.3125em;
+    box-shadow: 0 2px 4px 0 rgba(34,36,38,.12),0 2px 10px 0 rgba(34,36,38,.08);" 
+    src="https://blog-1252654208.cos.ap-nanjing.myqcloud.com/img/2.jpg">
+</center>
+看到终端出现如下输出，说明导出成功
+<center>
+    <img style="border-radius: 0.3125em;
+    box-shadow: 0 2px 4px 0 rgba(34,36,38,.12),0 2px 10px 0 rgba(34,36,38,.08);" 
+    src="https://blog-1252654208.cos.ap-nanjing.myqcloud.com/img/3.jpg">
+</center>
+点击链接，可以看到接口信息已经同步到 Yapi 的项目中
+<center>
+    <img style="border-radius: 0.3125em;
+    box-shadow: 0 2px 4px 0 rgba(34,36,38,.12),0 2px 10px 0 rgba(34,36,38,.08);" 
+    src="https://blog-1252654208.cos.ap-nanjing.myqcloud.com/img/4.png">
+</center>
+<h3 id="进阶">进阶</h3>
+<p>EasyYapi 是通过解析 Java Doc 注释来生成接口信息，如果按照 Java Doc 格式编写注释就可以在 Yapi 中补充更多的接口信息</p>
+<h4 id="类注释">类注释</h4>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 设备控制器</span></span><br><span class="line"><span class="comment"> * 对设备进行控制和管理</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> XZN1WX</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2022/05/30</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="meta">@RequestMapping(&quot;/api/device&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DeviceController</span> </span>&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注释的第一行为分类名称，第二行为分类注释</p>
+<center>
+    <img style="border-radius: 0.3125em;
+    box-shadow: 0 2px 4px 0 rgba(34,36,38,.12),0 2px 10px 0 rgba(34,36,38,.08);" 
+    src="https://blog-1252654208.cos.ap-nanjing.myqcloud.com/img/5.png">
+</center>
+<h4 id="方法注释">方法注释</h4>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 添加</span></span><br><span class="line"><span class="comment"> * 添加一台新的设备</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> input 输入</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> &#123;<span class="doctag">@link</span> String&#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@PostMapping()</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Output <span class="title">add</span><span class="params">(<span class="meta">@ModelAttribute</span> Input input)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> Output();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注释第一行是接口名，第二行是接口注释</p>
+<center>
+    <img style="border-radius: 0.3125em;
+    box-shadow: 0 2px 4px 0 rgba(34,36,38,.12),0 2px 10px 0 rgba(34,36,38,.08);" 
+    src="https://blog-1252654208.cos.ap-nanjing.myqcloud.com/img/6.png">
+</center>
+<h4 id="属性注释">属性注释</h4>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Output</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 参数1</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> String var1;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 参数2</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> Integer var2;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 参数3</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> Date var3;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>属性注释中的内容对应了返回数据的备注信息</p>
+<center>
+    <img style="border-radius: 0.3125em;
+    box-shadow: 0 2px 4px 0 rgba(34,36,38,.12),0 2px 10px 0 rgba(34,36,38,.08);" 
+    src="https://blog-1252654208.cos.ap-nanjing.myqcloud.com/img/7.png">
+</center>
+<h3 id="Java-Doc">Java Doc</h3>
+<p>为了更加便捷地生成 Java Doc，可以安装 Easy JavaDoc 插件：<a target="_blank" rel="noopener" href="https://blog.csdn.net/cnds123321/article/details/119767380">IDEA插件系列(29):Easy Javadoc插件–快速生成javadoc文档注释_二木成林的博客-CSDN博客_idea javadoc插件</a></p>
+<h3 id="参考">参考</h3>
+<ol>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MzA4ODIyMzEwMg==&amp;mid=2447536892&amp;idx=1&amp;sn=b49f4f39ae39c83744f27df29e41a107&amp;chksm=843baeedb34c27fb712b1b21bdd37891ca82249838b87f7aaf042ad9835dcb98ddd21f44c731&amp;scene=21#wechat_redirect">SpringBoot使用EasyYapi对代码0侵入实现API接口一键发布到YApi - 第422篇</a></li>
+<li><a target="_blank" rel="noopener" href="https://wuqian.blog.csdn.net/article/details/124265594?spm=1001.2101.3001.6661.1&amp;utm_medium=distribute.pc_relevant_t0.none-task-blog-2%7Edefault%7ECTRLIST%7ERate-1-124265594-blog-121486802.pc_relevant_paycolumn_v3&amp;depth_1-utm_source=distribute.pc_relevant_t0.none-task-blog-2%7Edefault%7ECTRLIST%7ERate-1-124265594-blog-121486802.pc_relevant_paycolumn_v3&amp;utm_relevant_index=1">SpringBoot使用EasyYapi对代码0侵入实现API接口一键发布到YApi的进阶使用 - 第423篇_悟纤的博客-CSDN博客_easyyapi</a></li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Yapi/" rel="tag"># Yapi</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/01/09/%E7%BA%BF%E7%A8%8B%E6%B1%A0%E6%8A%9B%E5%87%BA%E5%BC%82%E5%B8%B8%E4%B8%8D%E6%89%93%E5%8D%B0%E6%97%A5%E5%BF%97/" rel="prev" title="多线程执行任务抛出异常不打印日志">
+                  <i class="fa fa-chevron-left"></i> 多线程执行任务抛出异常不打印日志
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ABMIS Version 2.0</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
